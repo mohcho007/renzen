@@ -54,6 +54,10 @@ import {
   type L27ExtraItem,
   type L27Service,
 } from "@/lib/flytterengoring";
+import {
+  parseL27BookingError,
+  resolveL27BookingId,
+} from "@/lib/bookCleaningL27";
 import { serviceDeduction } from "@/lib/serviceDeduction";
 import { L27_API_PATH } from "@/lib/urls";
 
@@ -909,13 +913,13 @@ function FlytBookingWizardForm() {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             action: "booking",
-            email,
-            first_name: firstName,
-            last_name: lastName,
-            address,
-            city,
-            zip,
-            phone,
+            email: email.trim(),
+            first_name: firstName.trim(),
+            last_name: lastName.trim(),
+            address: address.trim(),
+            city: city.trim(),
+            zip: zip.trim(),
+            phone: phone.trim(),
             frequency_id: String(FLYT_FREQUENCY_ID),
             service_date: dateStr,
             arrival_window: selectedSlot?.arrivalWindow ?? 60,
@@ -928,17 +932,20 @@ function FlytBookingWizardForm() {
           }),
         });
         const resData = await response.json();
-        if (resData.success && resData.data?.booking_id) {
-          setBookingId(String(resData.data.booking_id));
-          setIsDone(true);
-        } else if (resData.success && resData.data?.id) {
-          setBookingId(String(resData.data.id));
-          setIsDone(true);
-        } else {
+        const resolvedBookingId = resolveL27BookingId(resData.data);
+        if (!resData.success || !resolvedBookingId) {
           setError(
-            resData.message || "Der opstod en fejl under oprettelsen af din booking.",
+            parseL27BookingError(
+              resData.details,
+              resData.message ||
+                "Der opstod en fejl under oprettelsen af din booking.",
+            ),
           );
+          return;
         }
+
+        setBookingId(resolvedBookingId);
+        setIsDone(true);
       } catch (err) {
         setError(
           err instanceof Error

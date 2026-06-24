@@ -163,19 +163,46 @@ export function resolveL27BookingId(data: unknown): string | null {
   return null;
 }
 
-export function parseL27BookingError(details: unknown, fallback: string): string {
-  if (!details || typeof details !== "object") return fallback;
-
-  const services = (details as { services?: Array<{ message?: string }> })
-    .services;
-  const message = services?.[0]?.message;
-  if (!message) return fallback;
-
+function mapL27ValidationMessage(message: string): string {
   if (/cannot be booked this time/i.test(message)) {
     return "Det valgte tidspunkt er ikke ledigt i Launch27. Vælg en anden dato eller et andet tidspunkt.";
   }
 
+  if (/must be customer, not a staff member/i.test(message)) {
+    return "Den indtastede e-mail er knyttet til en medarbejderkonto i vores bookingsystem. Brug venligst en anden e-mailadresse til bookingen.";
+  }
+
   return message;
+}
+
+function extractL27FieldValidationMessage(
+  details: Record<string, unknown>,
+): string | undefined {
+  for (const errors of Object.values(details)) {
+    if (!Array.isArray(errors)) continue;
+    for (const error of errors) {
+      if (!error || typeof error !== "object") continue;
+      const message = (error as { message?: string }).message;
+      if (message) return message;
+    }
+  }
+  return undefined;
+}
+
+export function parseL27BookingError(details: unknown, fallback: string): string {
+  if (!details || typeof details !== "object") return fallback;
+
+  const record = details as Record<string, unknown>;
+  const services = record.services;
+  if (Array.isArray(services) && services[0] && typeof services[0] === "object") {
+    const message = (services[0] as { message?: string }).message;
+    if (message) return mapL27ValidationMessage(message);
+  }
+
+  const fieldMessage = extractL27FieldValidationMessage(record);
+  if (fieldMessage) return mapL27ValidationMessage(fieldMessage);
+
+  return fallback;
 }
 
 function normalizeLabel(value: string) {
