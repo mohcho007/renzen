@@ -31,14 +31,10 @@ export const metadata: Metadata = {
     template: "%s",
   },
   description: bookOnlineDescription(),
+  manifest: "/favicon/site.webmanifest",
   icons: {
-    icon: [
-      {
-        url: "/favicon/favicon-192x192.png",
-        type: "image/png",
-        sizes: "192x192",
-      },
-    ],
+    icon: [{ url: "/favicon/favicon.png", type: "image/png", sizes: "237x242" }],
+    apple: [{ url: "/favicon/favicon.png", type: "image/png", sizes: "237x242" }],
   },
   openGraph: {
     title: `Rengøring ⇒ Book nemt og trygt hos Renzen`,
