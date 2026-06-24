@@ -11,6 +11,12 @@ import {
 } from "react";
 import { useRouter } from "next/navigation";
 import { useElements, useStripe } from "@stripe/react-stripe-js";
+import { fetchL27SpotsRange } from "@/lib/l27Client";
+import {
+  isBookableSlotInSpots,
+  normalizeL27SpotsToSlots,
+  type L27Spot,
+} from "@/lib/l27Spots";
 import { L27_API_PATH } from "@/lib/urls";
 import Image from "next/image";
 import { createStripeCardToken } from "@/components/payment/createStripeCardToken";
@@ -62,18 +68,6 @@ type TimeSlot = {
   startMinute: number;
   label: string;
   arrivalWindow: number;
-};
-
-type L27Spot = {
-  free: boolean;
-  past: boolean;
-  start_hour?: number;
-  hours?: number;
-  hour?: number;
-  start_minute?: number;
-  minutes?: number;
-  minute?: number;
-  arrival_window?: number;
 };
 
 import {
@@ -177,6 +171,8 @@ const STEPS = [
   "betaling",
 ] as const;
 
+const DATO_STEP_INDEX = STEPS.indexOf("dato");
+
 type StepId = (typeof STEPS)[number];
 
 function toLocalYmd(date: Date) {
@@ -206,38 +202,18 @@ function formatReceiptDelta(amount: number, positive: boolean) {
   return `${prefix}${formatKrAmount(Math.abs(amount))} kr.`;
 }
 
-function getSpotTime(spot: L27Spot) {
-  const h =
-    spot.start_hour ??
-    spot.hours ??
-    spot.hour ??
-    0;
-  const m =
-    spot.start_minute ??
-    spot.minutes ??
-    spot.minute ??
-    0;
-  return { hour: h, minute: m };
-}
-
-function getSpotLabel(spot: L27Spot) {
-  const { hour, minute } = getSpotTime(spot);
-  const startMin = hour * 60 + minute;
-  const windowMin = spot.arrival_window || 60;
-  const endMin = startMin + windowMin;
-  const endHour = Math.floor((endMin % 1440) / 60);
-  const endMinute = endMin % 60;
-  const pad = (n: number) => String(n).padStart(2, "0");
-  return `${pad(hour)}:${pad(minute)} – ${pad(endHour)}:${pad(endMinute)}`;
-}
-
-function spotMatchesSlot(spot: L27Spot, slot: TimeSlot) {
-  const { hour, minute } = getSpotTime(spot);
-  return (
-    hour === slot.startHour &&
-    minute === slot.startMinute &&
-    (spot.arrival_window || 60) === slot.arrivalWindow
-  );
+function toTimeSlot(slot: {
+  startHour: number;
+  startMinute: number;
+  label: string;
+  arrivalWindow: number;
+}): TimeSlot {
+  return {
+    startHour: slot.startHour,
+    startMinute: slot.startMinute,
+    label: slot.label,
+    arrivalWindow: slot.arrivalWindow,
+  };
 }
 
 function nextWeekdays(weekOffset: number) {
@@ -598,6 +574,27 @@ function DealTypeformWizardForm({
     useDawaPostcode(isServedPostcode);
   const { fetchSuggestions: fetchAddressSuggestions } = useDawaAddress();
 
+  const refreshSpots = useCallback(async () => {
+    setLoadingSpots(true);
+    setSpotsFetchState("loading");
+    try {
+      const result = await fetchL27SpotsRange(
+        toLocalYmd(new Date()),
+        SPOTS_RANGE_DAYS,
+      );
+      if (!result.ok) {
+        setSpotsFetchState("error");
+        return;
+      }
+      setSpotsCache(result.cache);
+      setSpotsFetchState("ready");
+    } catch {
+      setSpotsFetchState("error");
+    } finally {
+      setLoadingSpots(false);
+    }
+  }, []);
+
   useEffect(() => {
     if (!isBook2) {
       setActualM2Input(String(pkg.m2));
@@ -907,47 +904,9 @@ function DealTypeformWizardForm({
   }, [detailsOpen]);
 
   useEffect(() => {
-    const fetchSpots = async () => {
-      setLoadingSpots(true);
-      setSpotsFetchState("loading");
-      try {
-        const response = await fetch(L27_API_PATH, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            action: "spots",
-            date: toLocalYmd(new Date()),
-            days: 42,
-          }),
-        });
-        if (!response.ok) {
-          console.error("L27 spots fetch failed:", response.status, response.statusText);
-          setSpotsFetchState("error");
-          return;
-        }
-        const resData = await response.json();
-        if (resData.success && Array.isArray(resData.data)) {
-          const cache: Record<string, L27Spot[]> = {};
-          resData.data.forEach((day: { date?: string; spots?: L27Spot[] }) => {
-            if (day?.date && Array.isArray(day.spots)) {
-              cache[day.date] = day.spots;
-            }
-          });
-          setSpotsCache(cache);
-          setSpotsFetchState(
-            Object.keys(cache).length > 0 ? "ready" : "error",
-          );
-        } else {
-          setSpotsFetchState("error");
-        }
-      } catch {
-        setSpotsFetchState("error");
-      } finally {
-        setLoadingSpots(false);
-      }
-    };
-    fetchSpots();
-  }, []);
+    if (stepIndex < DATO_STEP_INDEX) return;
+    void refreshSpots();
+  }, [stepIndex, refreshSpots]);
 
   const freeSpotsForDate = useCallback(
     (dateStr: string) => {
@@ -970,8 +929,9 @@ function DealTypeformWizardForm({
 
   const isSelectedSlotBookable = useMemo(() => {
     if (!selectedDate || !selectedSlot || !spotsLoaded) return false;
-    return freeSpotsForDate(selectedDate).some((spot) =>
-      spotMatchesSlot(spot, selectedSlot),
+    return isBookableSlotInSpots(
+      freeSpotsForDate(selectedDate),
+      selectedSlot,
     );
   }, [selectedDate, selectedSlot, spotsLoaded, freeSpotsForDate]);
 
@@ -1002,59 +962,14 @@ function DealTypeformWizardForm({
     };
     if (!selectedDate) return empty;
 
-    const spots = freeSpotsForDate(selectedDate);
-    if (spots.length === 0) {
-      return empty;
-    }
-
-    let maxWindow = 0;
-    let widestSpot: L27Spot | null = null;
-
-    spots.forEach((spot) => {
-      const window = spot.arrival_window || 60;
-      if (window > maxWindow) {
-        maxWindow = window;
-        widestSpot = spot;
-      }
-    });
-
-    let allDaySlot: TimeSlot | null = null;
-    if (widestSpot && maxWindow >= 240) {
-      const { hour, minute } = getSpotTime(widestSpot);
-      allDaySlot = {
-        startHour: hour,
-        startMinute: minute,
-        label: getSpotLabel(widestSpot),
-        arrivalWindow: maxWindow,
-      };
-    }
-
-    const morningSlots: TimeSlot[] = [];
-    const afternoonSlots: TimeSlot[] = [];
-
-    spots.forEach((spot) => {
-      if (spot === widestSpot && maxWindow >= 240) return;
-      const { hour, minute } = getSpotTime(spot);
-      const slotObj: TimeSlot = {
-        startHour: hour,
-        startMinute: minute,
-        label: getSpotLabel(spot),
-        arrivalWindow: spot.arrival_window || 60,
-      };
-      if (hour < 12) {
-        morningSlots.push(slotObj);
-      } else {
-        afternoonSlots.push(slotObj);
-      }
-    });
-
-    const sortSlots = (a: TimeSlot, b: TimeSlot) =>
-      a.startHour * 60 + a.startMinute - (b.startHour * 60 + b.startMinute);
-
-    morningSlots.sort(sortSlots);
-    afternoonSlots.sort(sortSlots);
-
-    return { morningSlots, afternoonSlots, allDaySlot };
+    const normalized = normalizeL27SpotsToSlots(freeSpotsForDate(selectedDate));
+    return {
+      morningSlots: normalized.morningSlots.map(toTimeSlot),
+      afternoonSlots: normalized.afternoonSlots.map(toTimeSlot),
+      allDaySlot: normalized.allDaySlot
+        ? toTimeSlot(normalized.allDaySlot)
+        : null,
+    };
   }, [selectedDate, freeSpotsForDate]);
 
   const activeFrequency = useMemo(
@@ -1278,43 +1193,6 @@ function DealTypeformWizardForm({
     ],
   );
 
-  const refreshSpots = useCallback(async () => {
-    setLoadingSpots(true);
-    setSpotsFetchState("loading");
-    try {
-      const response = await fetch(L27_API_PATH, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          action: "spots",
-          date: toLocalYmd(new Date()),
-          days: 42,
-        }),
-      });
-      if (!response.ok) {
-        setSpotsFetchState("error");
-        return;
-      }
-      const resData = await response.json();
-      if (resData.success && Array.isArray(resData.data)) {
-        const cache: Record<string, L27Spot[]> = {};
-        resData.data.forEach((day: { date?: string; spots?: L27Spot[] }) => {
-          if (day?.date && Array.isArray(day.spots)) {
-            cache[day.date] = day.spots;
-          }
-        });
-        setSpotsCache(cache);
-        setSpotsFetchState(Object.keys(cache).length > 0 ? "ready" : "error");
-      } else {
-        setSpotsFetchState("error");
-      }
-    } catch {
-      setSpotsFetchState("error");
-    } finally {
-      setLoadingSpots(false);
-    }
-  }, []);
-
   const fetchL27Estimate = useCallback(
     async (discountCode?: string) => {
       if (
@@ -1337,7 +1215,6 @@ function DealTypeformWizardForm({
           pricing_param_quantity: effectiveM2,
           frequency_id: billingFrequencyId,
           service_date: serviceDate,
-          arrival_window: selectedSlot.arrivalWindow,
           extras: bookingExtrasPayload,
           ...(clubSelected && chosenFrequency.type !== "oneoff"
             ? { welcome_deal: true }
@@ -2253,6 +2130,25 @@ function DealTypeformWizardForm({
           );
           return;
         }
+
+        const dayResult = await fetchL27SpotsRange(selectedDate, 1);
+        const daySpots = dayResult.cache[selectedDate] ?? [];
+        if (
+          !dayResult.ok ||
+          !selectedSlot ||
+          !isBookableSlotInSpots(daySpots, selectedSlot)
+        ) {
+          if (dayResult.ok) {
+            setSpotsCache((prev) => ({ ...prev, ...dayResult.cache }));
+          }
+          setSelectedSlot(null);
+          setError(
+            "Det valgte tidspunkt er ikke længere ledigt. Gå tilbage og vælg en anden dato eller tid.",
+          );
+          return;
+        }
+        setSpotsCache((prev) => ({ ...prev, ...dayResult.cache }));
+
         const stripeToken = await createStripeCardToken(stripe, elements);
         const dateStr = `${selectedDate}T${String(selectedSlot!.startHour).padStart(2, "0")}:${String(selectedSlot!.startMinute).padStart(2, "0")}:00`;
         const customFields = buildBookCleaningCustomFieldsPayload(
