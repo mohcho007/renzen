@@ -171,8 +171,6 @@ const STEPS = [
   "betaling",
 ] as const;
 
-const DATO_STEP_INDEX = STEPS.indexOf("dato");
-
 type StepId = (typeof STEPS)[number];
 
 function toLocalYmd(date: Date) {
@@ -574,22 +572,28 @@ function DealTypeformWizardForm({
     useDawaPostcode(isServedPostcode);
   const { fetchSuggestions: fetchAddressSuggestions } = useDawaAddress();
 
+  const spotsCacheRef = useRef(spotsCache);
+  spotsCacheRef.current = spotsCache;
+
   const refreshSpots = useCallback(async () => {
-    setLoadingSpots(true);
-    setSpotsFetchState("loading");
+    const hasCache = Object.keys(spotsCacheRef.current).length > 0;
+    if (!hasCache) {
+      setLoadingSpots(true);
+      setSpotsFetchState("loading");
+    }
     try {
       const result = await fetchL27SpotsRange(
         toLocalYmd(new Date()),
         SPOTS_RANGE_DAYS,
       );
       if (!result.ok) {
-        setSpotsFetchState("error");
+        if (!hasCache) setSpotsFetchState("error");
         return;
       }
       setSpotsCache(result.cache);
       setSpotsFetchState("ready");
     } catch {
-      setSpotsFetchState("error");
+      if (!hasCache) setSpotsFetchState("error");
     } finally {
       setLoadingSpots(false);
     }
@@ -904,9 +908,9 @@ function DealTypeformWizardForm({
   }, [detailsOpen]);
 
   useEffect(() => {
-    if (stepIndex < DATO_STEP_INDEX) return;
+    if (step !== "dato") return;
     void refreshSpots();
-  }, [stepIndex, refreshSpots]);
+  }, [step, refreshSpots]);
 
   const freeSpotsForDate = useCallback(
     (dateStr: string) => {
@@ -928,17 +932,20 @@ function DealTypeformWizardForm({
   );
 
   const isSelectedSlotBookable = useMemo(() => {
-    if (!selectedDate || !selectedSlot || !spotsLoaded) return false;
-    return isBookableSlotInSpots(
-      freeSpotsForDate(selectedDate),
-      selectedSlot,
-    );
-  }, [selectedDate, selectedSlot, spotsLoaded, freeSpotsForDate]);
+    if (!selectedDate || !selectedSlot) return false;
+    const spots = freeSpotsForDate(selectedDate);
+    if (spots.length === 0) return false;
+    return isBookableSlotInSpots(spots, selectedSlot);
+  }, [selectedDate, selectedSlot, freeSpotsForDate]);
 
   useEffect(() => {
-    if (!selectedSlot || isSelectedSlotBookable) return;
-    setSelectedSlot(null);
-  }, [selectedSlot, isSelectedSlotBookable]);
+    if (!selectedSlot || !selectedDate) return;
+    const spots = freeSpotsForDate(selectedDate);
+    if (spots.length === 0) return;
+    if (!isBookableSlotInSpots(spots, selectedSlot)) {
+      setSelectedSlot(null);
+    }
+  }, [selectedSlot, selectedDate, freeSpotsForDate]);
 
   const handleCalendarDateSelect = useCallback((dateStr: string) => {
     setSelectedDate(dateStr);
@@ -1829,7 +1836,7 @@ function DealTypeformWizardForm({
                 {zip} {city}
               </span>
             </div>
-            {showPricingSummary && stepIndex > frekvensStepIndex && (
+            {showPricingSummary && stepIndex >= datoStepIndex && selectedDate && (
               <>
                 <div className={styles.selectionCell}>
                   <span className={styles.selectionLabel}>Dato</span>
@@ -1840,7 +1847,7 @@ function DealTypeformWizardForm({
                 <div className={styles.selectionCell}>
                   <span className={styles.selectionLabel}>Tid</span>
                   <span className={styles.selectionValue}>
-                    {selectedSlot?.label.split(" – ")[0] ?? "—"}
+                    {selectedSlot?.label ?? "—"}
                   </span>
                 </div>
               </>
@@ -2124,9 +2131,9 @@ function DealTypeformWizardForm({
     if (step === "betaling") {
       setIsSubmitting(true);
       try {
-        if (!isSelectedSlotBookable) {
+        if (!selectedDate || !selectedSlot) {
           setError(
-            "Det valgte tidspunkt er ikke længere ledigt. Vælg en anden dato eller tid.",
+            "Vælg dato og tid før du bekræfter bookingen.",
           );
           return;
         }
