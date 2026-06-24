@@ -1,17 +1,26 @@
-import { Suspense } from 'react';
-import BookingWizard from '@/components/booking/BookingWizard';
-import { SiteHeader } from '@/components/site/SiteHeader';
+import { Suspense } from "react";
+import Dealside2LandingPage from "@/components/dealside/Dealside2LandingPage";
+import { INTRO_CLEANING_FROM_KR } from "@/data/pricing";
+import { bookOnlineDescription, liveStyleTitle } from "@/lib/metadataCopy";
+import { createStaticPageMetadata } from "@/lib/siteMetadata";
+import "@/app/dealpage2/dealpage2.css";
+
+export const metadata = createStaticPageMetadata({
+  title: liveStyleTitle("Book rengøring", "Se pris med det samme"),
+  description: `${bookOnlineDescription()} Intro fra ${INTRO_CLEANING_FROM_KR} kr. med Renzen Klub eller engangsrengøring til listepris.`,
+  path: "/book-rengoering/",
+});
 
 export default function BookRengoeringPage() {
   return (
-    <div className="min-h-screen bg-[#f8fafc] text-foreground font-sans flex flex-col">
-      <SiteHeader />
-      <main className="flex-1 w-full max-w-[1240px] mx-auto px-4 py-6 md:py-10">
-        
-        <Suspense fallback={<div className="text-center p-10">Henter booking form...</div>}>
-          <BookingWizard />
-        </Suspense>
-      </main>
-    </div>
+    <Suspense
+      fallback={
+        <div className="flex min-h-screen items-center justify-center bg-[#fbfaf5] text-sm font-medium text-[#536159]">
+          Henter booking…
+        </div>
+      }
+    >
+      <Dealside2LandingPage wizardVariant="book2" />
+    </Suspense>
   );
 }

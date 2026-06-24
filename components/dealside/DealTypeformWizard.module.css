@@ -178,6 +178,32 @@
   border-bottom-color: var(--tf-accent);
 }
 
+.entryOtherField {
+  margin-top: 1.25rem;
+}
+
+.entryOtherInput {
+  width: 100%;
+  margin-top: 0.5rem;
+  border: 1px solid var(--tf-line);
+  border-radius: 12px;
+  background: #fff;
+  padding: 14px 16px;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.5;
+  color: var(--tf-ink);
+  resize: vertical;
+  min-height: 120px;
+  outline: none;
+  transition: border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.entryOtherInput:focus {
+  border-color: var(--tf-accent);
+  box-shadow: 0 0 0 3px rgba(32, 109, 105, 0.12);
+}
+
 .addressAutocomplete {
   position: relative;
 }
@@ -1632,6 +1658,94 @@
 
 .receiptPaymentNote .selectionCell {
   grid-column: 1 / -1;
+}
+
+.promoSection {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid rgb(26 51 40 / 10%);
+}
+
+.promoToggle {
+  border: none;
+  background: none;
+  padding: 0;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--tf-accent);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.promoLabel {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--tf-ink-soft);
+}
+
+.promoControls {
+  display: flex;
+  gap: 8px;
+}
+
+.promoInput {
+  flex: 1;
+  min-width: 0;
+  border: 1px solid var(--tf-line);
+  border-radius: 10px;
+  background: #fff;
+  padding: 10px 12px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--tf-ink);
+  outline: none;
+}
+
+.promoInput:focus {
+  border-color: var(--tf-accent);
+}
+
+.promoBtn {
+  flex-shrink: 0;
+  border: none;
+  border-radius: 10px;
+  background: var(--tf-accent);
+  padding: 10px 14px;
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: #fff;
+  cursor: pointer;
+}
+
+.promoBtn:disabled {
+  opacity: 0.65;
+  cursor: wait;
+}
+
+.promoBtnRemove {
+  background: #fff;
+  color: var(--tf-ink-soft);
+  border: 1px solid var(--tf-line);
+}
+
+.promoMsgSuccess,
+.promoMsgError {
+  margin: 8px 0 0;
+  font-size: 0.78rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.promoMsgSuccess {
+  color: var(--tf-accent);
+}
+
+.promoMsgError {
+  color: var(--tf-error);
 }
 
 .receiptSection {

@@ -182,7 +182,7 @@ function ConfirmationContent({
             ) : null}
 
             <div className="bcTotal">
-              <span>Total i dag</span>
+              <span>Samlet pris</span>
               <strong>{formatKr(payload.totalTodayKr)}</strong>
             </div>
 
@@ -251,7 +251,7 @@ function FallbackContent() {
             lige har booket, tjek din e-mail — ellers kan du starte en ny booking her.
           </p>
           <div className="bcCtas">
-            <Link href="/book-rengoering2/" className="bcCtaPrimary">
+            <Link href="/book-rengoering/" className="bcCtaPrimary">
               Book rengøring
             </Link>
             <Link href="/kontakt/" className="bcCtaSecondary">

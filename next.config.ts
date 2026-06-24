@@ -23,20 +23,6 @@ const nextConfig: NextConfig = {
       },
     ];
   },
-  async redirects() {
-    return [
-      {
-        source: "/dealside",
-        destination: "/klub/",
-        permanent: true,
-      },
-      {
-        source: "/dealside/:path*",
-        destination: "/klub/:path*",
-        permanent: true,
-      },
-    ];
-  },
   images: {
     qualities: [75, 90],
     remotePatterns: [

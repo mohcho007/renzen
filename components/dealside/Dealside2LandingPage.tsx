@@ -15,6 +15,7 @@ import {
 import {
   DEAL_PACKAGES,
   type DealPackage,
+  getPackageTierForM2,
 } from "@/components/dealside/dealPackages";
 import {
   KLUB_ANNUAL_KR,
@@ -85,11 +86,22 @@ const faqs = [
 const DEFAULT_BOOK2_PACKAGE =
   DEAL_PACKAGES.find((pkg) => pkg.popular) ?? DEAL_PACKAGES[1];
 
-function getPackageFromM2Param(m2Param: string | null): DealPackage | null {
+function parseM2Param(m2Param: string | null): number | null {
   if (!m2Param) return null;
   const m2 = Number.parseInt(m2Param, 10);
-  if (!Number.isFinite(m2)) return null;
-  return DEAL_PACKAGES.find((pkg) => pkg.m2 === m2) ?? null;
+  if (!Number.isFinite(m2) || m2 <= 0) return null;
+  return m2;
+}
+
+function getPackageFromM2Param(m2Param: string | null): DealPackage | null {
+  const m2 = parseM2Param(m2Param);
+  if (m2 == null) return null;
+  return getPackageTierForM2(m2);
+}
+
+function parsePostcodeParam(postcodeParam: string | null): string | undefined {
+  const postcode = postcodeParam?.replace(/\D/g, "").slice(0, 4);
+  return postcode?.length === 4 ? postcode : undefined;
 }
 
 export default function Dealside2LandingPage({
@@ -101,6 +113,14 @@ export default function Dealside2LandingPage({
   const searchParams = useSearchParams();
   const isBook2 = wizardVariant === "book2";
   const fromKlub = isBook2 && searchParams.get("from") === "klub";
+  const m2FromQuery = useMemo(
+    () => (isBook2 ? parseM2Param(searchParams.get("m2")) : null),
+    [isBook2, searchParams],
+  );
+  const postcodeFromQuery = useMemo(
+    () => (isBook2 ? parsePostcodeParam(searchParams.get("postcode")) : undefined),
+    [isBook2, searchParams],
+  );
   const pkgFromQuery = useMemo(
     () => (isBook2 ? getPackageFromM2Param(searchParams.get("m2")) : null),
     [isBook2, searchParams],
@@ -141,7 +161,8 @@ export default function Dealside2LandingPage({
         pkg={selectedPackage}
         onBack={handleBack}
         variant={wizardVariant}
-        initialActualM2={pkgFromQuery?.m2}
+        initialActualM2={m2FromQuery ?? pkgFromQuery?.m2}
+        initialPostcode={postcodeFromQuery}
         initialClubSelected={fromKlub ? true : undefined}
       />
     );

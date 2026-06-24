@@ -73,7 +73,7 @@ export default function DealsideLandingPage() {
   const selectPackage = (m2: number) => {
     const pkg = DEAL_PACKAGES.find((p) => p.m2 === m2);
     if (!pkg) return;
-    router.push(`/book-rengoering2?m2=${pkg.m2}&from=klub`);
+    router.push(`/book-rengoering?m2=${pkg.m2}&from=klub`);
   };
 
   const featured = packages.find((pkg) => pkg.popular)!;

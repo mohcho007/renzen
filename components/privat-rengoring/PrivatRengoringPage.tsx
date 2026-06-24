@@ -144,6 +144,7 @@ export function PrivatRengoringPage() {
                 showPostcodeIcon={false}
                 wideInputs
                 className="relative z-10 mt-9"
+                submitPath="/book-rengoering"
               />
 
               <div className="relative z-10 mt-5 flex flex-wrap gap-x-6 gap-y-2 text-xs font-semibold text-[#536159]">

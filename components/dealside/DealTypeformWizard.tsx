@@ -93,47 +93,16 @@ type L27Spot = {
   arrival_window?: number;
 };
 
-const ENTRY_OPTIONS = [
-  "Jeg er hjemme",
-  "Nøglen ligger i postkasse",
-  "Nøgleboks kode medsendes",
-];
-
-/** Mock until wired as L27 extra with quantity. */
-const CLEANLINESS_LEVELS = [
-  {
-    id: "clean",
-    label: "Pæn og velholdt",
-    sub: "Let at holde — standard tid",
-    surchargeKr: 0,
-  },
-  {
-    id: "normal",
-    label: "Normal brug",
-    sub: "Typisk hverdagsrod",
-    surchargeKr: 0,
-  },
-  {
-    id: "extra",
-    label: "Trænger til ekstra tid",
-    sub: "Mere oprydning før rengøring",
-    surchargeKr: 199,
-  },
-  {
-    id: "heavy",
-    label: "Meget beskidt",
-    sub: "Kræver væsentligt mere tid",
-    surchargeKr: 399,
-  },
-] as const;
-
-const LAST_CLEANED_OPTIONS = [
-  "Inden for 1 uge",
-  "1–2 uger siden",
-  "2–4 uger siden",
-  "Over 1 måned siden",
-  "Ved ikke",
-] as const;
+import {
+  BOOK_CLEANLINESS_LEVELS,
+  BOOK_ENTRY_OPTIONS,
+  BOOK_LAST_CLEANED_OPTIONS,
+  buildBookCleaningCustomFieldsPayload,
+  buildBookCleaningExtrasPayload,
+  type BookEntryOptionId,
+  type BookCleanlinessLevelId,
+} from "@/lib/bookCleaningL27";
+import type { L27CustomField } from "@/lib/flytterengoring";
 
 type BookExtra = {
   id: string;
@@ -171,19 +140,6 @@ function isSelectableL27Extra(extra: {
     return false;
   }
   return true;
-}
-
-function formatBookingExtrasPayload(
-  selected: Record<string, number>,
-  recurring: boolean,
-) {
-  return Object.entries(selected)
-    .filter(([, qty]) => qty > 0)
-    .map(([id, qty]) => ({
-      id: parseInt(id, 10),
-      quantity: qty,
-      recurring,
-    }));
 }
 
 function cleanlinessReceiptSubline(levelId: string): string {
@@ -524,6 +480,7 @@ type DealTypeformWizardProps = {
   onBack: () => void;
   variant?: DealWizardVariant;
   initialActualM2?: number;
+  initialPostcode?: string;
   initialClubSelected?: boolean;
 };
 
@@ -540,6 +497,7 @@ function DealTypeformWizardForm({
   onBack,
   variant = "dealpage2",
   initialActualM2,
+  initialPostcode,
   initialClubSelected,
 }: DealTypeformWizardProps) {
   const stripe = useStripe();
@@ -564,7 +522,8 @@ function DealTypeformWizardForm({
   const [showAddressSuggestions, setShowAddressSuggestions] = useState(false);
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedSlot, setSelectedSlot] = useState<TimeSlot | null>(null);
-  const [entryMethod, setEntryMethod] = useState("");
+  const [entryMethod, setEntryMethod] = useState<BookEntryOptionId | "">("");
+  const [entryOtherDetails, setEntryOtherDetails] = useState("");
   const [bookFrequencyId, setBookFrequencyId] = useState(DEFAULT_FREQUENCY_ID);
   const [recurringFrequencyId, setRecurringFrequencyId] = useState(DEFAULT_FREQUENCY_ID);
   const [clubSelected, setClubSelected] = useState(
@@ -583,6 +542,13 @@ function DealTypeformWizardForm({
   const [cardComplete, setCardComplete] = useState(false);
   const [cardError, setCardError] = useState<string | null>(null);
   const [termsAccepted, setTermsAccepted] = useState(false);
+  const [promoInput, setPromoInput] = useState("");
+  const [promoCode, setPromoCode] = useState("");
+  const [promoDiscountKr, setPromoDiscountKr] = useState(0);
+  const [promoMsg, setPromoMsg] = useState("");
+  const [promoIsError, setPromoIsError] = useState(false);
+  const [showPromoInput, setShowPromoInput] = useState(false);
+  const [isValidatingPromo, setIsValidatingPromo] = useState(false);
 
   const [spotsCache, setSpotsCache] = useState<Record<string, L27Spot[]>>({});
   const [loadingSpots, setLoadingSpots] = useState(true);
@@ -609,10 +575,18 @@ function DealTypeformWizardForm({
         : ""
       : String(pkg.m2),
   );
-  const [cleanlinessLevel, setCleanlinessLevel] = useState("");
+  const [cleanlinessLevel, setCleanlinessLevel] = useState<
+    BookCleanlinessLevelId | ""
+  >("");
   const [lastCleaned, setLastCleaned] = useState("");
   const [availableExtras, setAvailableExtras] = useState<BookExtra[]>(
     BOOK_EXTRAS_FALLBACK,
+  );
+  const [serviceExtras, setServiceExtras] = useState<
+    { id: string; name: string; price: number }[]
+  >([]);
+  const [bookCustomFields, setBookCustomFields] = useState<L27CustomField[]>(
+    [],
   );
   const [selectedExtras, setSelectedExtras] = useState<Record<string, number>>(
     {},
@@ -635,6 +609,23 @@ function DealTypeformWizardForm({
   }, [pkg.m2, isBook2]);
 
   useEffect(() => {
+    const postcode = initialPostcode?.replace(/\D/g, "").slice(0, 4);
+    if (!postcode || postcode.length !== 4) return;
+
+    void lookupPostnummer(postcode).then((result) => {
+      if (!result) {
+        setPostcodeQuery(postcode);
+        setZip(postcode);
+        setCity("");
+        return;
+      }
+      setPostcodeQuery(result.tekst);
+      setZip(result.nr);
+      setCity(isServedPostcode(result.nr) ? result.navn : "");
+    });
+  }, [initialPostcode, lookupPostnummer]);
+
+  useEffect(() => {
     let cancelled = false;
 
     const loadExtras = async () => {
@@ -652,26 +643,38 @@ function DealTypeformWizardForm({
           const service = (
             resData.data as { id: number; extras?: unknown[] }[]
           ).find((item) => item.id === L27_SERVICE_ID);
-          const extras = (service?.extras ?? [])
+          const allExtras = (service?.extras ?? []).map((extra) => {
+            const item = extra as {
+              id: number;
+              name: string;
+              price: number | string;
+              quantity_based?: boolean;
+              mandatory?: boolean;
+            };
+            return {
+              id: String(item.id),
+              name: item.name,
+              price: Number(item.price) || 0,
+              quantityBased: !!item.quantity_based,
+              mandatory: !!item.mandatory,
+            };
+          });
+          const extras = allExtras
             .filter((extra) =>
-              isSelectableL27Extra(
-                extra as { name?: string; mandatory?: boolean },
-              ),
+              isSelectableL27Extra({
+                name: extra.name,
+                mandatory: extra.mandatory,
+              }),
             )
-            .map((extra) => {
-              const item = extra as {
-                id: number;
-                name: string;
-                price: number | string;
-                quantity_based?: boolean;
-              };
-              return {
-                id: String(item.id),
-                name: item.name,
-                price: Number(item.price) || 0,
-                quantityBased: !!item.quantity_based,
-              };
-            });
+            .map(({ id, name, price, quantityBased }) => ({
+              id,
+              name,
+              price,
+              quantityBased,
+            }));
+          setServiceExtras(
+            allExtras.map(({ id, name, price }) => ({ id, name, price })),
+          );
           if (extras.length > 0) {
             setAvailableExtras(extras);
           }
@@ -688,6 +691,32 @@ function DealTypeformWizardForm({
     };
 
     loadExtras();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    const loadCustomFields = async () => {
+      try {
+        const response = await fetch(L27_API_PATH, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ action: "custom_fields" }),
+        });
+        const resData = await response.json();
+        if (cancelled || !resData.success || !Array.isArray(resData.data)) {
+          return;
+        }
+        setBookCustomFields(resData.data as L27CustomField[]);
+      } catch {
+        // Custom fields are optional until configured in Launch27.
+      }
+    };
+
+    void loadCustomFields();
     return () => {
       cancelled = true;
     };
@@ -1149,7 +1178,7 @@ function DealTypeformWizardForm({
   ]);
 
   const cleanlinessSurcharge = useMemo(() => {
-    const level = CLEANLINESS_LEVELS.find(
+    const level = BOOK_CLEANLINESS_LEVELS.find(
       (option) => option.id === cleanlinessLevel,
     );
     return level?.surchargeKr ?? 0;
@@ -1169,9 +1198,19 @@ function DealTypeformWizardForm({
 
   const engangsReceiptGrandTotal = pricing.firstVisitGross + tilvalgReceiptTotal;
 
+  const receiptPromoDiscountKr = promoCode ? promoDiscountKr : 0;
+  const klubReceiptGrandTotalWithPromo = Math.max(
+    0,
+    klubReceiptGrandTotal - receiptPromoDiscountKr,
+  );
+  const engangsReceiptGrandTotalWithPromo = Math.max(
+    0,
+    engangsReceiptGrandTotal - receiptPromoDiscountKr,
+  );
+
   const selectedCleanlinessLabel = useMemo(
     () =>
-      CLEANLINESS_LEVELS.find((option) => option.id === cleanlinessLevel)
+      BOOK_CLEANLINESS_LEVELS.find((option) => option.id === cleanlinessLevel)
         ?.label ?? "",
     [cleanlinessLevel],
   );
@@ -1207,12 +1246,123 @@ function DealTypeformWizardForm({
 
   const bookingExtrasPayload = useMemo(
     () =>
-      formatBookingExtrasPayload(
+      buildBookCleaningExtrasPayload(
         selectedExtras,
         chosenFrequency.type === "recurring" && clubSelected,
+        cleanlinessLevel,
+        serviceExtras,
       ),
-    [selectedExtras, chosenFrequency.type, clubSelected],
+    [
+      selectedExtras,
+      chosenFrequency.type,
+      clubSelected,
+      cleanlinessLevel,
+      serviceExtras,
+    ],
   );
+
+  const fetchL27Estimate = useCallback(
+    async (discountCode?: string) => {
+      if (!selectedDate || !selectedSlot || effectiveM2 === null) return null;
+
+      const serviceDate = `${selectedDate}T${String(selectedSlot.startHour).padStart(2, "0")}:${String(selectedSlot.startMinute).padStart(2, "0")}:00`;
+      const response = await fetch(L27_API_PATH, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          action: "estimate",
+          service_id: "213",
+          pricing_param_id: "86",
+          pricing_param_quantity: effectiveM2,
+          frequency_id: billingFrequencyId,
+          service_date: serviceDate,
+          extras: bookingExtrasPayload,
+          ...(discountCode ? { discount_code: discountCode } : {}),
+        }),
+      });
+      const resData = await response.json();
+      if (!resData.success) return null;
+
+      const total = Number(resData.data?.total);
+      return Number.isFinite(total) ? total : null;
+    },
+    [
+      selectedDate,
+      selectedSlot,
+      effectiveM2,
+      billingFrequencyId,
+      bookingExtrasPayload,
+    ],
+  );
+
+  useEffect(() => {
+    setPromoCode("");
+    setPromoInput("");
+    setPromoDiscountKr(0);
+    setPromoMsg("");
+    setPromoIsError(false);
+    setShowPromoInput(false);
+  }, [
+    billingFrequencyId,
+    effectiveM2,
+    selectedDate,
+    selectedSlot,
+    clubSelected,
+    cleanlinessLevel,
+    selectedExtras,
+  ]);
+
+  const handlePromoApply = useCallback(async () => {
+    setPromoIsError(false);
+    setPromoMsg("");
+
+    const code = promoInput.trim().toUpperCase();
+    if (!code) {
+      setPromoIsError(true);
+      setPromoMsg("Indtast en rabatkode.");
+      return;
+    }
+    if (!selectedDate || !selectedSlot) {
+      setPromoIsError(true);
+      setPromoMsg("Vælg dato og tid først.");
+      return;
+    }
+
+    setIsValidatingPromo(true);
+    try {
+      const baseTotal = await fetchL27Estimate();
+      const discountedTotal = await fetchL27Estimate(code);
+      if (baseTotal === null || discountedTotal === null) {
+        setPromoIsError(true);
+        setPromoMsg("Ugyldig rabatkode.");
+        return;
+      }
+
+      const discount = Math.max(0, Math.round(baseTotal - discountedTotal));
+      if (discount <= 0) {
+        setPromoIsError(true);
+        setPromoMsg("Rabatkoden kan ikke bruges på denne booking.");
+        return;
+      }
+
+      setPromoCode(code);
+      setPromoDiscountKr(discount);
+      setPromoMsg(`Rabatkode ${code} er tilføjet.`);
+    } catch {
+      setPromoIsError(true);
+      setPromoMsg("Kunne ikke kontrollere rabatkoden. Prøv igen.");
+    } finally {
+      setIsValidatingPromo(false);
+    }
+  }, [fetchL27Estimate, promoInput, selectedDate, selectedSlot]);
+
+  const handlePromoRemove = useCallback(() => {
+    setPromoCode("");
+    setPromoInput("");
+    setPromoDiscountKr(0);
+    setPromoMsg("");
+    setPromoIsError(false);
+  }, []);
 
   const introCleaningDueKr = useMemo(() => {
     if (introTierExceeded) return pricing.firstVisitIntro;
@@ -1257,6 +1407,9 @@ function DealTypeformWizardForm({
     return true;
   })();
   const showKlubSummary = clubSelected && showPricingSummary;
+  const displayReceiptGrandTotal = showKlubSummary
+    ? klubReceiptGrandTotalWithPromo
+    : engangsReceiptGrandTotalWithPromo;
 
   const klubColumnFrequency = useMemo(
     () => getFrequencyOption(isBook2 ? bookFrequencyId : recurringFrequencyId),
@@ -1607,7 +1760,87 @@ function DealTypeformWizardForm({
     );
   };
 
+  const renderPromoDiscountRow = () => {
+    if (receiptPromoDiscountKr <= 0 || !promoCode) return null;
+    return (
+      <div className={`${styles.receiptRow} ${styles.receiptRowGreen}`}>
+        <span>Rabatkode ({promoCode})</span>
+        <strong>{formatReceiptDelta(receiptPromoDiscountKr, false)}</strong>
+      </div>
+    );
+  };
+
+  const renderPromoSection = () => {
+    if (!showPricingSummary) return null;
+
+    return (
+      <div className={styles.promoSection}>
+        {!showPromoInput && !promoCode ? (
+          <button
+            type="button"
+            className={styles.promoToggle}
+            onClick={() => setShowPromoInput(true)}
+          >
+            Har du en rabatkode?
+          </button>
+        ) : (
+          <>
+            <label className={styles.promoLabel} htmlFor="deal-promo-input">
+              Rabatkode
+            </label>
+            <div className={styles.promoControls}>
+              <input
+                id="deal-promo-input"
+                type="text"
+                className={styles.promoInput}
+                placeholder="Indtast kode"
+                value={promoInput}
+                onChange={(event) => setPromoInput(event.target.value)}
+                disabled={!!promoCode || isValidatingPromo}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter") {
+                    event.preventDefault();
+                    if (!promoCode) void handlePromoApply();
+                  }
+                }}
+              />
+              <button
+                type="button"
+                className={`${styles.promoBtn} ${promoCode ? styles.promoBtnRemove : ""}`}
+                onClick={() => {
+                  if (promoCode) {
+                    handlePromoRemove();
+                  } else {
+                    void handlePromoApply();
+                  }
+                }}
+                disabled={isValidatingPromo}
+              >
+                {isValidatingPromo
+                  ? "Tjekker…"
+                  : promoCode
+                    ? "Fjern"
+                    : "Tilføj"}
+              </button>
+            </div>
+            {promoMsg && (
+              <p
+                className={
+                  promoIsError ? styles.promoMsgError : styles.promoMsgSuccess
+                }
+                role={promoIsError ? "alert" : "status"}
+              >
+                {promoMsg}
+              </p>
+            )}
+          </>
+        )}
+      </div>
+    );
+  };
+
   const renderReceipt = (compact = false) => {
+    const totalLabel = isBook2 ? "Samlet pris" : "Total i dag";
     const klubMonthlyLabel = KLUB_ANNUAL_MONTHLY_EQUIVALENT_KR.toLocaleString(
       "da-DK",
       { minimumFractionDigits: 2, maximumFractionDigits: 2 },
@@ -1691,9 +1924,10 @@ function DealTypeformWizardForm({
                 {renderTilvalgReceiptRows()}
               </div>
               <div className={styles.receiptTotals}>
+                {renderPromoDiscountRow()}
                 <div className={styles.receiptFirstVisitTotal}>
-                  <span>Total i dag</span>
-                  <strong>{formatReceiptKr(engangsReceiptGrandTotal)}</strong>
+                  <span>{totalLabel}</span>
+                  <strong>{formatReceiptKr(engangsReceiptGrandTotalWithPromo)}</strong>
                 </div>
               </div>
             </div>
@@ -1803,9 +2037,10 @@ function DealTypeformWizardForm({
             </div>
 
             <div className={styles.receiptTotals}>
+              {renderPromoDiscountRow()}
               <div className={styles.receiptFirstVisitTotal}>
-                <span>Total i dag</span>
-                <strong>{formatReceiptKr(klubReceiptGrandTotal)}</strong>
+                <span>{totalLabel}</span>
+                <strong>{formatReceiptKr(klubReceiptGrandTotalWithPromo)}</strong>
               </div>
             </div>
 
@@ -1848,6 +2083,8 @@ function DealTypeformWizardForm({
           </>
         )}
 
+        {renderPromoSection()}
+
         <div className={styles.receiptPaymentNote}>
           <div className={styles.selectionCell}>
             <span className={styles.selectionLabel}>Betaling</span>
@@ -1880,7 +2117,10 @@ function DealTypeformWizardForm({
       case "tilvalg":
         return true;
       case "adgang":
-        return !!entryMethod;
+        return (
+          !!entryMethod &&
+          (entryMethod !== "other" || entryOtherDetails.trim().length > 0)
+        );
       case "kontakt":
         return (
           postnummerFilled &&
@@ -1904,6 +2144,7 @@ function DealTypeformWizardForm({
     selectedSlot,
     billingFrequencyId,
     entryMethod,
+    entryOtherDetails,
     firstName,
     lastName,
     email,
@@ -1926,6 +2167,13 @@ function DealTypeformWizardForm({
       try {
         const stripeToken = await createStripeCardToken(stripe, elements);
         const dateStr = `${selectedDate}T${String(selectedSlot!.startHour).padStart(2, "0")}:${String(selectedSlot!.startMinute).padStart(2, "0")}:00`;
+        const customFields = buildBookCleaningCustomFieldsPayload(
+          bookCustomFields,
+          entryMethod,
+          entryOtherDetails,
+          cleanlinessLevel,
+          lastCleaned,
+        );
         const response = await fetch(L27_API_PATH, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -1947,6 +2195,8 @@ function DealTypeformWizardForm({
             service_id: "213",
             pricing_param_id: "86",
             pricing_param_quantity: effectiveM2 ?? parseInt(actualM2Input, 10),
+            ...(customFields ? { custom_fields: customFields } : {}),
+            ...(promoCode ? { discount_code: promoCode } : {}),
           }),
         });
         const resData = await response.json();
@@ -1991,8 +2241,8 @@ function DealTypeformWizardForm({
             squareMeters: effectiveM2 ?? parseInt(actualM2Input, 10),
             isKlub: book2KlubSummary,
             totalTodayKr: book2KlubSummary
-              ? klubReceiptGrandTotal
-              : engangsReceiptGrandTotal,
+              ? klubReceiptGrandTotalWithPromo
+              : engangsReceiptGrandTotalWithPromo,
             recurringKr:
               book2KlubSummary && chosenFrequency.type === "recurring"
                 ? pricing.ongoingGross
@@ -2043,6 +2293,11 @@ function DealTypeformWizardForm({
     clubSelected,
     isOneTime,
     bookingExtrasPayload,
+    bookCustomFields,
+    entryMethod,
+    entryOtherDetails,
+    cleanlinessLevel,
+    lastCleaned,
     isBook2,
     router,
     selectedExtras,
@@ -2056,6 +2311,10 @@ function DealTypeformWizardForm({
     selectedCleanlinessLabel,
     cleanlinessSurcharge,
     receiptServiceLabel,
+    promoCode,
+    promoDiscountKr,
+    klubReceiptGrandTotalWithPromo,
+    engangsReceiptGrandTotalWithPromo,
     stripe,
     elements,
   ]);
@@ -2928,7 +3187,7 @@ function DealTypeformWizardForm({
 
               <p className={styles.stepSectionLabel}>Rengøringsstand</p>
               <div className={styles.choiceList}>
-                {CLEANLINESS_LEVELS.map((option) => (
+                {BOOK_CLEANLINESS_LEVELS.map((option) => (
                   <button
                     key={option.id}
                     type="button"
@@ -2954,7 +3213,7 @@ function DealTypeformWizardForm({
 
               <p className={styles.stepSectionLabel}>Hvornår blev der sidst gjort rent?</p>
               <div className={styles.choiceList}>
-                {LAST_CLEANED_OPTIONS.map((option) => (
+                {BOOK_LAST_CLEANED_OPTIONS.map((option) => (
                   <button
                     key={option}
                     type="button"
@@ -2975,17 +3234,38 @@ function DealTypeformWizardForm({
                 Vælg den løsning, der passer til dit hjem.
               </p>
               <div className={styles.choiceList}>
-                {ENTRY_OPTIONS.map((option) => (
+                {BOOK_ENTRY_OPTIONS.map((option) => (
                   <button
-                    key={option}
+                    key={option.id}
                     type="button"
-                    className={`${styles.choice} ${entryMethod === option ? styles.choiceSelected : ""}`}
-                    onClick={() => setEntryMethod(option)}
+                    className={`${styles.choice} ${entryMethod === option.id ? styles.choiceSelected : ""}`}
+                    onClick={() => {
+                      setEntryMethod(option.id);
+                      if (option.id !== "other") {
+                        setEntryOtherDetails("");
+                      }
+                    }}
                   >
-                    <span className={styles.choiceTitle}>{option}</span>
+                    <span className={styles.choiceTitle}>{option.label}</span>
                   </button>
                 ))}
               </div>
+              {entryMethod === "other" && (
+                <div className={styles.entryOtherField}>
+                  <label className={styles.fieldLabel} htmlFor="book-entry-other">
+                    Beskriv adgangen
+                  </label>
+                  <textarea
+                    id="book-entry-other"
+                    className={styles.entryOtherInput}
+                    value={entryOtherDetails}
+                    onChange={(event) => setEntryOtherDetails(event.target.value)}
+                    placeholder="Beskriv hvordan vi får adgang til boligen"
+                    rows={4}
+                    autoFocus
+                  />
+                </div>
+              )}
             </>
           )}
 
@@ -3116,11 +3396,7 @@ function DealTypeformWizardForm({
           <div className={styles.mobileCheckoutLeft}>
             <p className={styles.mobileCheckoutPrice}>
               {showPricingSummary
-                ? formatKr(
-                    showKlubSummary
-                      ? klubReceiptGrandTotal
-                      : engangsReceiptGrandTotal,
-                  )
+                ? formatKr(displayReceiptGrandTotal)
                 : "—"}
             </p>
             {showPricingSummary && (

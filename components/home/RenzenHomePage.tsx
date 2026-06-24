@@ -47,6 +47,7 @@ export function RenzenHomePage() {
                 showPostcodeIcon={false}
                 wideInputs
                 className={homeStyles.heroForm}
+                submitPath="/book-rengoering"
               />
 
               <div className={homeStyles.trustRow}>

@@ -88,7 +88,7 @@ export default function PriceCalculator({
     finalCostAfterFradrag = Math.round(totalPrice * 0.74);
     
     // Redirect URL for Flytterengøring
-    bookUrl = `https://renzen.dk/book-rengoering/?category_id=4&service_id=214&pricing_param_quantity=${sqm}&stand=${stand}`;
+    bookUrl = `/flytterengoring/book/?sqm=${sqm}&stand=${stand}`;
   } else if (serviceSlug === 'airbnb-rengoring') {
     // Airbnb sizes: standard formula once (no discount) for fixed sizes
     // Uses the standard formula: basePrice + pricePerSqm per m².
@@ -96,7 +96,7 @@ export default function PriceCalculator({
     finalCostAfterFradrag = Math.round(totalPrice * 0.74);
     
     // Redirect URL for Airbnb
-    bookUrl = `https://renzen.dk/book-rengoering/?category_id=5&service_id=215&pricing_param_quantity=${airbnbSize}`;
+    bookUrl = `/airbnb-rengoring/forespoergsel/?m2=${airbnbSize}`;
   } else {
     // Standard and Privat cleaning
     const basePrice = listPriceKr(sqm);
@@ -104,11 +104,7 @@ export default function PriceCalculator({
     finalCostAfterFradrag = Math.round(totalPrice * 0.74);
     
     // Redirect URL for regular cleaning matching WP format exactly
-    bookUrl = `https://renzen.dk/book-rengoering/` +
-      `?category_id=3` +
-      `&service_id=213` +
-      `&pricing_param_quantity=${sqm}` +
-      `&frequency_id=${frequencyMap[frequencyIndex].id}`;
+    bookUrl = `/book-rengoering/?m2=${sqm}`;
   }
 
   // Stand details helper descriptions
