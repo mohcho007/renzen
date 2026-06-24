@@ -28,7 +28,6 @@ import {
   buildFlytReceiptBreakdown,
   normalizeL27EstimateData,
   clampFlytSqm,
-  findFlytEntryCustomField,
   FLYT_ARRIVAL_SLOTS,
   FLYT_DEFAULT_STAND,
   FLYT_ENTRY_OPTIONS,
@@ -47,6 +46,7 @@ import {
   getFlytStandConfirmationExtra,
   isFlytAllowedArrivalSlot,
   isFlytHiddenL27Extra,
+  isFlytL27ServiceId,
   isFlytManagedExtraId,
   type FlytEntryOptionId,
   type L27CustomField,
@@ -325,9 +325,7 @@ function FlytBookingWizardForm() {
 
   const [entryMethod, setEntryMethod] = useState<FlytEntryOptionId | "">("");
   const [entryOtherDetails, setEntryOtherDetails] = useState("");
-  const [entryCustomField, setEntryCustomField] = useState<
-    L27CustomField | undefined
-  >(undefined);
+  const [flytCustomFields, setFlytCustomFields] = useState<L27CustomField[]>([]);
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -580,9 +578,7 @@ function FlytBookingWizardForm() {
         });
         const resData = await response.json();
         if (resData.success && Array.isArray(resData.data)) {
-          setEntryCustomField(
-            findFlytEntryCustomField(resData.data as L27CustomField[]),
-          );
+          setFlytCustomFields(resData.data as L27CustomField[]);
         }
       } catch {
         /* optional — booking still works without L27 custom field mapping */
@@ -901,13 +897,26 @@ function FlytBookingWizardForm() {
     if (step === "betaling") {
       setIsSubmitting(true);
       try {
+        if (!isFlytL27ServiceId(stand.serviceId)) {
+          setError(
+            "Ugyldig flytterengøringsydelse. Gå tilbage til prisberegneren og start forfra.",
+          );
+          return;
+        }
+
         const stripeToken = await createStripeCardToken(stripe, elements);
         const dateStr = `${selectedDate}T${String(selectedSlot!.startHour).padStart(2, "0")}:${String(selectedSlot!.startMinute).padStart(2, "0")}:00`;
         const customFields = buildFlytEntryCustomFieldsPayload(
-          entryCustomField,
+          flytCustomFields,
           entryMethod as FlytEntryOptionId,
           entryOtherDetails,
         );
+        if (!customFields) {
+          setError(
+            "Adgang til boligen kunne ikke sendes til bookingsystemet. Gå tilbage til adgangstrinnet og prøv igen.",
+          );
+          return;
+        }
         const response = await fetch(L27_API_PATH, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -928,7 +937,7 @@ function FlytBookingWizardForm() {
             service_id: String(stand.serviceId),
             pricing_param_id: String(stand.pricingParamId),
             pricing_param_quantity: sqm,
-            ...(customFields ? { custom_fields: customFields } : {}),
+            custom_fields: customFields,
           }),
         });
         const resData = await response.json();
@@ -975,7 +984,7 @@ function FlytBookingWizardForm() {
     hiddenMandatoryExtras,
     stand,
     sqm,
-    entryCustomField,
+    flytCustomFields,
     entryMethod,
     entryOtherDetails,
     stripe,

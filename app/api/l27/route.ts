@@ -7,6 +7,32 @@ import {
 
 export const dynamic = "force-dynamic";
 
+function parseRequiredServiceId(
+  value: unknown,
+  fallback?: number,
+): number | null {
+  if (value !== undefined && value !== null && value !== "") {
+    const parsed = parseInt(String(value), 10);
+    if (Number.isFinite(parsed) && parsed > 0) return parsed;
+    return null;
+  }
+  if (fallback !== undefined && fallback > 0) return fallback;
+  return null;
+}
+
+function parseRequiredPricingParamId(
+  value: unknown,
+  fallback?: number,
+): number | null {
+  if (value !== undefined && value !== null && value !== "") {
+    const parsed = parseInt(String(value), 10);
+    if (Number.isFinite(parsed) && parsed > 0) return parsed;
+    return null;
+  }
+  if (fallback !== undefined && fallback > 0) return fallback;
+  return null;
+}
+
 export async function POST(req: NextRequest) {
   const subdomain = process.env.LAUNCH27_SUBDOMAIN;
   const apiKey = process.env.LAUNCH27_API_KEY;
@@ -93,22 +119,29 @@ export async function POST(req: NextRequest) {
         mode: "new",
       };
     } else if (action === "estimate") {
+      const serviceId = parseRequiredServiceId(payload.service_id);
+      const pricingParamId = parseRequiredPricingParamId(payload.pricing_param_id);
+      if (!serviceId || !pricingParamId) {
+        return NextResponse.json(
+          {
+            success: false,
+            message:
+              "Missing or invalid service_id / pricing_param_id for estimate.",
+          },
+          { status: 400 },
+        );
+      }
+
       endpoint = "booking/estimate_price";
       apiPayload = {
         service_date: payload.service_date,
         frequency_id: parseInt(payload.frequency_id, 10),
         services: [
           {
-            id: parseInt(
-              payload.service_id || String(L27_BOOK_SERVICE_ID),
-              10,
-            ),
+            id: serviceId,
             pricing_parameters: [
               {
-                id: parseInt(
-                  payload.pricing_param_id || String(L27_BOOK_PRICING_PARAM_ID),
-                  10,
-                ),
+                id: pricingParamId,
                 quantity: parseInt(payload.pricing_param_quantity, 10),
               },
             ],
@@ -120,6 +153,25 @@ export async function POST(req: NextRequest) {
         apiPayload.discount_code = payload.discount_code;
       }
     } else if (action === "booking") {
+      const serviceId = parseRequiredServiceId(
+        payload.service_id,
+        L27_BOOK_SERVICE_ID,
+      );
+      const pricingParamId = parseRequiredPricingParamId(
+        payload.pricing_param_id,
+        L27_BOOK_PRICING_PARAM_ID,
+      );
+      if (!serviceId || !pricingParamId) {
+        return NextResponse.json(
+          {
+            success: false,
+            message:
+              "Missing or invalid service_id / pricing_param_id for booking.",
+          },
+          { status: 400 },
+        );
+      }
+
       endpoint = "booking";
       apiPayload = {
         user: {
@@ -136,16 +188,10 @@ export async function POST(req: NextRequest) {
         arrival_window: parseInt(payload.arrival_window || "0", 10),
         services: [
           {
-            id: parseInt(
-              payload.service_id || String(L27_BOOK_SERVICE_ID),
-              10,
-            ),
+            id: serviceId,
             pricing_parameters: [
               {
-                id: parseInt(
-                  payload.pricing_param_id || String(L27_BOOK_PRICING_PARAM_ID),
-                  10,
-                ),
+                id: pricingParamId,
                 quantity: parseInt(payload.pricing_param_quantity, 10),
               },
             ],

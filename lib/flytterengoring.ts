@@ -1,4 +1,9 @@
 import {
+  buildBookEntryCustomFieldPayload,
+  findBookEntryCustomField,
+  type BookEntryOptionId,
+} from "@/lib/bookCleaningL27";
+import {
   calculatePriceAfterServiceDeduction,
   serviceDeduction,
 } from "@/lib/serviceDeduction";
@@ -605,81 +610,31 @@ export type L27CustomField = {
   select_values?: L27CustomFieldOption[];
 };
 
-function normalizeFlytLabel(value: string) {
-  return value.trim().toLowerCase();
+/** Flytterengøring L27 services (stand 1–5). Not book-rengoering service 246. */
+export const FLYT_L27_SERVICE_IDS = Object.values(
+  FLYT_SCALE_TO_SERVICE_ID,
+) as number[];
+
+export function isFlytL27ServiceId(serviceId: number): boolean {
+  return FLYT_L27_SERVICE_IDS.includes(serviceId);
 }
 
-function getL27CustomFieldOptions(field: L27CustomField): L27CustomFieldOption[] {
-  for (const key of [
-    "values",
-    "options",
-    "choices",
-    "field_values",
-    "select_values",
-  ] as const) {
-    const options = field[key];
-    if (Array.isArray(options) && options.length > 0) return options;
-  }
-  return [];
-}
-
-function getL27CustomFieldOptionLabel(option: L27CustomFieldOption) {
-  return String(option.label ?? option.name ?? option.value ?? "");
-}
-
+/** Same L27 adgangsfelt as book-rengoering — matched live from /booking/custom_fields. */
 export function findFlytEntryCustomField(
   fields: L27CustomField[],
 ): L27CustomField | undefined {
-  const withOptions = fields.filter(
-    (field) => getL27CustomFieldOptions(field).length > 0,
-  );
-
-  const byLabel = withOptions.find((field) => {
-    const label = normalizeFlytLabel(field.label ?? field.name ?? "");
-    return /adgang|indgang|nøgle|entry/.test(label);
-  });
-  if (byLabel) return byLabel;
-
-  return withOptions.find((field) => {
-    const optionLabels = getL27CustomFieldOptions(field).map((option) =>
-      normalizeFlytLabel(getL27CustomFieldOptionLabel(option)),
-    );
-    const required = FLYT_ENTRY_OPTIONS.map((option) =>
-      normalizeFlytLabel(option.label),
-    );
-    return required.every((label) => optionLabels.includes(label));
-  });
+  return findBookEntryCustomField(fields);
 }
 
 export function buildFlytEntryCustomFieldsPayload(
-  field: L27CustomField | undefined,
+  fields: L27CustomField[],
   entryId: FlytEntryOptionId,
   otherDetails: string,
 ): { id: number; values: { id: string | number; other?: string }[] }[] | undefined {
-  if (!field?.id) return undefined;
-
-  const entryOption = FLYT_ENTRY_OPTIONS.find((option) => option.id === entryId);
-  if (!entryOption) return undefined;
-
-  const l27Option = getL27CustomFieldOptions(field).find(
-    (option) =>
-      normalizeFlytLabel(getL27CustomFieldOptionLabel(option)) ===
-      normalizeFlytLabel(entryOption.label),
+  const entryPayload = buildBookEntryCustomFieldPayload(
+    findBookEntryCustomField(fields),
+    entryId as BookEntryOptionId,
+    otherDetails,
   );
-  if (!l27Option) return undefined;
-
-  const optionId = l27Option.id ?? l27Option.value;
-  if (optionId === undefined || optionId === "") return undefined;
-
-  const value: { id: string | number; other?: string } = {
-    id: typeof optionId === "number" ? optionId : String(optionId),
-  };
-
-  if (entryId === "other") {
-    const other = otherDetails.trim();
-    if (!other) return undefined;
-    value.other = other;
-  }
-
-  return [{ id: field.id, values: [value] }];
+  return entryPayload ? [entryPayload] : undefined;
 }
