@@ -4,6 +4,9 @@ import { cities } from "@/data/cities";
 import { SERVICE_INQUIRY_SLUGS } from "@/lib/serviceInquiry";
 import { BOLIGSERVICE_SLUGS } from "@/components/boligservice/boligserviceContent";
 import { siteConfig } from "@/lib/siteConfig";
+import { getAirbnbServedCitySlugs } from "@/components/service-inquiry/airbnbCityContent";
+
+const AIRBNB_SERVED_CITY_SLUGS = new Set(getAirbnbServedCitySlugs());
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = siteConfig.origin;
@@ -68,6 +71,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     .filter((service) => service.indexable)
     .forEach((service) => {
       cities.forEach((city) => {
+        if (
+          service.slug === "airbnb-rengoring" &&
+          !AIRBNB_SERVED_CITY_SLUGS.has(city.slug)
+        ) {
+          return;
+        }
         const isIndexable = service.indexable && (city.indexableServices?.includes(service.slug) ?? true);
         if (isIndexable) {
           dynamicRoutes.push({

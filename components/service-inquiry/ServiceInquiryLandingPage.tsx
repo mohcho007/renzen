@@ -352,7 +352,7 @@ export function ServiceInquiryLandingPage({
                 </ul>
                 <Link
                   href={forespoergselPath}
-                  className="mt-10 inline-flex min-h-12 items-center gap-2 rounded-[3px] bg-[#173c2c] px-6 text-sm font-bold text-[#f6f2e8] transition-colors hover:bg-[#41614f]"
+                  className="mt-10 inline-flex min-h-12 cursor-pointer items-center gap-2 rounded-[3px] bg-[#173c2c] px-6 text-sm font-bold text-[#f6f2e8] transition-colors hover:bg-[#41614f]"
                 >
                   Send forespørgsel
                   <ArrowRight size={16} />
@@ -395,7 +395,7 @@ export function ServiceInquiryLandingPage({
               </ul>
               <Link
                 href={forespoergselPath}
-                className="mt-12 inline-flex min-h-12 items-center gap-2 rounded-[3px] bg-[#173c2c] px-6 text-sm font-bold text-[#f6f2e8] transition-colors hover:bg-[#41614f]"
+                className="mt-12 inline-flex min-h-12 cursor-pointer items-center gap-2 rounded-[3px] bg-[#173c2c] px-6 text-sm font-bold text-[#f6f2e8] transition-colors hover:bg-[#41614f]"
               >
                 Få et uforpligtende tilbud
                 <ArrowRight size={16} />
@@ -421,7 +421,7 @@ export function ServiceInquiryLandingPage({
                   <Link
                     key={city.slug}
                     href={getServiceCityUrl(config.slug, city.slug)}
-                    className="flex min-h-12 items-center justify-center rounded-[3px] border border-[#ccd2ca] bg-white px-4 text-center text-sm font-bold text-[#173c2c] transition-colors hover:border-[#41614f] hover:text-[#41614f]"
+                    className="flex min-h-12 cursor-pointer items-center justify-center rounded-[3px] border border-[#ccd2ca] bg-white px-4 text-center text-sm font-bold text-[#173c2c] transition-colors hover:border-[#41614f] hover:text-[#41614f]"
                   >
                     {city.name}
                   </Link>
@@ -473,7 +473,7 @@ export function ServiceInquiryLandingPage({
                 <p className="mt-12 text-center">
                   <Link
                     href="/faq/"
-                    className="inline-flex items-center gap-2 text-sm font-bold text-[#173c2c] underline decoration-[#b8c9b8] underline-offset-4 transition-colors hover:text-[#41614f] hover:decoration-[#41614f]"
+                    className="inline-flex cursor-pointer items-center gap-2 text-sm font-bold text-[#173c2c] underline decoration-[#b8c9b8] underline-offset-4 transition-colors hover:text-[#41614f] hover:decoration-[#41614f]"
                   >
                     Se alle spørgsmål
                     <ArrowRight size={15} />
@@ -492,7 +492,7 @@ export function ServiceInquiryLandingPage({
             <div className="flex shrink-0 flex-col gap-3 sm:flex-row">
               <Link
                 href={forespoergselPath}
-                className="inline-flex min-h-12 items-center justify-center gap-2 rounded-[3px] border border-transparent bg-[#f1e9d8] px-6 text-sm font-bold text-[#173c2c] transition-colors hover:border-white/30 hover:bg-transparent hover:text-[#f6f2e8]"
+                className="inline-flex min-h-12 cursor-pointer items-center justify-center gap-2 rounded-[3px] border border-transparent bg-[#f1e9d8] px-6 text-sm font-bold text-[#173c2c] transition-colors hover:border-white/30 hover:bg-transparent hover:text-[#f6f2e8]"
               >
                 {config.bottomCtaLabel ?? "Få et uforpligtende tilbud"}
                 <ArrowRight size={16} />
@@ -500,7 +500,7 @@ export function ServiceInquiryLandingPage({
               {config.showKlubSections && (
                 <Link
                   href="/klub/"
-                  className="inline-flex min-h-12 items-center justify-center gap-2 rounded-[3px] border border-white/30 px-6 text-sm font-bold text-white transition-colors hover:border-transparent hover:bg-[#f1e9d8] hover:text-[#173c2c]"
+                  className="inline-flex min-h-12 cursor-pointer items-center justify-center gap-2 rounded-[3px] border border-white/30 px-6 text-sm font-bold text-white transition-colors hover:border-transparent hover:bg-[#f1e9d8] hover:text-[#173c2c]"
                 >
                   Se introtilbud
                   <ArrowRight size={16} />

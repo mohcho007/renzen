@@ -3,12 +3,12 @@ import { cities } from "@/data/cities";
 import { INTRO_CLEANING_FROM_KR, ZEN_CREDIT_MONTHLY_KR } from "@/data/pricing";
 import { serviceFAQs } from "@/data/faqs";
 
-const introCleaningFromKrLabel = `${INTRO_CLEANING_FROM_KR} kr.`;
 import {
   ZEN_CREDIT_MEMBERSHIP_FAQ_ANSWER_DU,
   ZEN_CREDIT_MEMBERSHIP_FAQ_ANSWER_MAN,
 } from "@/lib/zenCreditServices";
 
+const introCleaningFromKrLabel = `${INTRO_CLEANING_FROM_KR} kr.`;
 const zenCreditMonthlyLabel = `${ZEN_CREDIT_MONTHLY_KR} kr./md.`;
 const zenCreditMonthlyProse = `${ZEN_CREDIT_MONTHLY_KR} kr. i Zen-kreditter hver måned`;
 
@@ -83,15 +83,11 @@ function editorialCityLink(name: string): EditorialCityLink {
   return { name: city.name, slug: city.slug };
 }
 
-const AIRBNB_EDITORIAL_CITY_NAMES = [
+/** Airbnb city links on the national page — Storkøbenhavn only (postnr. 1000–2990). */
+const AIRBNB_SERVED_EDITORIAL_CITY_NAMES = [
   "København",
   "Frederiksberg",
   "Gentofte",
-  "Aarhus",
-  "Odense",
-  "Aalborg",
-  "Roskilde",
-  "Helsingør",
 ] as const;
 
 export type EditorialCityLinksSection = {
@@ -389,10 +385,12 @@ export const serviceInquiryPages: Record<
     },
     cityLinks: {
       eyebrow: "Lokal dækning",
-      title: "Airbnb rengøring i København og resten af landet",
+      title: "Airbnb rengøring i Storkøbenhavn",
       description:
-        "Vi hjælper værter i hele Storkøbenhavn — fra Østerbro, Nørrebro og Amager til Valby og Frederiksberg — og i øvrige større byer med Airbnb-klargøring mellem gæster.",
-      cities: AIRBNB_EDITORIAL_CITY_NAMES.map(editorialCityLink),
+        "Vi hjælper Airbnb-værter i hele Storkøbenhavn (postnr. 1000–2990) med klargøring mellem gæster — fra København og Frederiksberg til Gentofte og omegn.",
+      cities: AIRBNB_SERVED_EDITORIAL_CITY_NAMES.map((name) =>
+        editorialCityLink(name),
+      ),
     },
     howItWorksEyebrow: "Sådan fungerer det",
     howItWorksTitle: "Fra forespørgsel til check-in-klar bolig.",
