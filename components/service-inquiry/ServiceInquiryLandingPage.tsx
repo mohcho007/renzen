@@ -297,7 +297,7 @@ export function ServiceInquiryLandingPage({
               {config.whyRenzen.sections.map((block, index) => (
                 <div
                   key={block.title}
-                  className={`grid gap-8 border-[#dfe2da] py-14 sm:gap-10 sm:py-16 lg:grid-cols-2 lg:items-start lg:gap-12 xl:gap-16 ${
+                  className={`grid gap-8 border-[#dfe2da] py-14 sm:gap-10 sm:py-16 lg:grid-cols-2 lg:items-center lg:gap-12 xl:gap-16 ${
                     index > 0 ? "border-t" : ""
                   }`}
                 >
