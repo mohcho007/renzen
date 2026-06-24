@@ -139,6 +139,11 @@
   margin-top: 2.25rem;
 }
 
+/* Above .trustRow — sibling rule gives all children z-index: 1 */
+.heroContent > .heroForm {
+  z-index: 20;
+}
+
 /* ---- Trust chips ---- */
 .trustRow {
   display: flex;

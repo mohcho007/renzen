@@ -140,7 +140,7 @@ export function HeroBookingForm({
   return (
     <form
       onSubmit={handleSubmit}
-      className={`${formWidth} border border-[#b9c5b9] bg-[#fbfaf5] p-2 ${className}`}
+      className={`${formWidth} border border-[#b9c5b9] bg-[#fbfaf5] p-2 ${className} relative !z-20`}
     >
       <div className={`grid gap-0 ${gridCols}`}>
         <div
@@ -171,14 +171,14 @@ export function HeroBookingForm({
           </label>
           {showZipSuggestions && zipSuggestions.length > 0 && (
             <ul
-              className="absolute left-0 right-0 top-full z-30 mt-1 max-h-48 overflow-y-auto border border-[#b9c5b9] bg-white shadow-lg"
+              className="absolute left-0 right-0 top-full z-50 mt-1 max-h-48 overflow-y-auto border border-[#b9c5b9] bg-white shadow-lg"
               role="listbox"
             >
               {zipSuggestions.map((suggestion) => (
                 <li key={suggestion.tekst} role="option">
                   <button
                     type="button"
-                    className="w-full px-4 py-2.5 text-left text-sm font-medium text-[#203129] transition-colors hover:bg-[#f3f5f1]"
+                    className="w-full bg-white px-4 py-2.5 text-left text-sm font-medium text-[#203129] transition-colors hover:bg-[#f3f5f1]"
                     onMouseDown={(event) => {
                       event.preventDefault();
                       handlePostcodeSelect(suggestion);
