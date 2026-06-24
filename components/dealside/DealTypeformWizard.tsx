@@ -81,6 +81,7 @@ import {
   L27_BOOK_SERVICE_ID,
   parseL27BookingError,
   resolveL27BookingId,
+  resolveBookExtraDisplay,
   type BookEntryOptionId,
   type BookCleanlinessLevelId,
 } from "@/lib/bookCleaningL27";
@@ -3034,8 +3035,8 @@ function DealTypeformWizardForm({
             <>
               <h1 className={styles.question}>Tilvalg til rengøringen?</h1>
               <p className={styles.hint}>
-                Vælg ekstra opgaver, du vil have med. Du kan springe over og
-                tilføje senere.
+                Giv boligen et ekstra løft — vælg de opgaver, du vil have med.
+                Du kan også springe over og tilføje senere.
               </p>
 
               {loadingExtras ? (
@@ -3045,49 +3046,58 @@ function DealTypeformWizardForm({
                   {availableExtras.map((extra) => {
                     const qty = selectedExtras[extra.id] ?? 0;
                     const isSelected = qty > 0;
+                    const display = resolveBookExtraDisplay(extra);
                     return (
                       <button
                         key={extra.id}
                         type="button"
-                        className={`${styles.extrasCard} ${isSelected ? styles.extrasCardSelected : ""}`}
+                        className={`${styles.extrasChoice} ${isSelected ? styles.extrasChoiceSelected : ""}`}
                         onClick={() => {
                           if (extra.quantityBased && isSelected) return;
                           handleExtraToggle(extra.id);
                         }}
                       >
-                        <span className={styles.extrasCardBody}>
-                          <span className={styles.extrasCardName}>
-                            {extra.name}
+                        <span className={styles.extrasChoiceMain}>
+                          <span className={styles.choiceTitle}>
+                            {display.label}
                           </span>
-                          <span className={styles.extrasCardPrice}>
-                            +{formatKr(extra.price)}
-                            {extra.quantityBased ? "/ stk." : ""}
-                          </span>
+                          <span className={styles.choiceSub}>{display.sub}</span>
                         </span>
-                        {extra.quantityBased && isSelected && (
-                          <span
-                            className={styles.extrasQty}
-                            onClick={(event) => event.stopPropagation()}
-                          >
-                            <button
-                              type="button"
-                              className={styles.extrasQtyBtn}
-                              aria-label={`Færre ${extra.name}`}
-                              onClick={() => handleExtraQtyChange(extra.id, -1)}
+                        <span className={styles.choiceAside}>
+                          {extra.quantityBased && isSelected ? (
+                            <span
+                              className={styles.extrasQty}
+                              onClick={(event) => event.stopPropagation()}
                             >
-                              −
-                            </button>
-                            <span className={styles.extrasQtyVal}>{qty}</span>
-                            <button
-                              type="button"
-                              className={styles.extrasQtyBtn}
-                              aria-label={`Flere ${extra.name}`}
-                              onClick={() => handleExtraQtyChange(extra.id, 1)}
-                            >
-                              +
-                            </button>
-                          </span>
-                        )}
+                              <button
+                                type="button"
+                                className={styles.extrasQtyBtn}
+                                aria-label={`Færre ${display.label}`}
+                                onClick={() =>
+                                  handleExtraQtyChange(extra.id, -1)
+                                }
+                              >
+                                −
+                              </button>
+                              <span className={styles.extrasQtyVal}>{qty}</span>
+                              <button
+                                type="button"
+                                className={styles.extrasQtyBtn}
+                                aria-label={`Flere ${display.label}`}
+                                onClick={() =>
+                                  handleExtraQtyChange(extra.id, 1)
+                                }
+                              >
+                                +
+                              </button>
+                            </span>
+                          ) : (
+                            <span className={styles.choicePrice}>
+                              +{formatKr(extra.price)}
+                              {extra.quantityBased ? "/stk." : ""}
+                            </span>
+                          )}
+                        </span>
                       </button>
                     );
                   })}

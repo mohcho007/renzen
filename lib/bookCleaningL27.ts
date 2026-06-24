@@ -90,6 +90,66 @@ export const BOOK_CLEANLINESS_LEVELS = [
 export type BookCleanlinessLevelId =
   (typeof BOOK_CLEANLINESS_LEVELS)[number]["id"];
 
+/** Display copy for book-rengoering tilvalg (matched by L27 extra id or name). */
+export const BOOK_EXTRAS_DISPLAY = [
+  {
+    id: "52",
+    label: "Indvendig køleskab",
+    sub: "Hylder, bakker og sider — frisk og hygiejnisk",
+    nameHints: ["køleskab", "fridge"],
+  },
+  {
+    id: "53",
+    label: "Indvendig ovn og emhætte",
+    sub: "Fedt og svider fjernes grundigt indvendigt",
+    nameHints: ["ovn", "emhætte", "oven"],
+  },
+  {
+    id: "217",
+    label: "Køkken skabe",
+    sub: "Indvendig aftørring — vælg antal skabe",
+    nameHints: ["køkken", "skab", "cabinet"],
+  },
+  {
+    id: "93",
+    label: "Afkalkning af badeværelse",
+    sub: "Fliser, armaturer og bruseniche skinner igen",
+    nameHints: ["afkalk", "bad", "badeværelse"],
+  },
+  {
+    id: "56",
+    label: "Fodpaneler",
+    sub: "Støv og pletter langs gulvet fjernes",
+    nameHints: ["fodpanel"],
+  },
+  {
+    id: "58",
+    label: "Jeg har kæledyr",
+    sub: "Ekstra tid til hår på møbler og gulve",
+    nameHints: ["kæledyr", "hund", "kat", "dyr"],
+  },
+] as const;
+
+export function resolveBookExtraDisplay(extra: {
+  id?: string | number;
+  name?: string;
+}): { label: string; sub: string } {
+  const id = String(extra.id ?? "");
+  const byId = BOOK_EXTRAS_DISPLAY.find((item) => item.id === id);
+  if (byId) return { label: byId.label, sub: byId.sub };
+
+  const name = (extra.name ?? "").toLowerCase();
+  const byHint = BOOK_EXTRAS_DISPLAY.find((item) =>
+    item.nameHints.some((hint) => name.includes(hint)),
+  );
+  if (byHint) return { label: byHint.label, sub: byHint.sub };
+
+  return {
+    label: extra.name ?? "Tilvalg",
+    sub: "Tilføj ekstra opgave til rengøringen",
+  };
+}
+
 export const BOOK_LAST_CLEANED_OPTIONS = [
   "Inden for 1 uge",
   "1–2 uger siden",
