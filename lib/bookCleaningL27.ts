@@ -23,7 +23,11 @@ export const BOOK_ENTRY_OPTIONS: BookEntryOption[] = [
   { id: "other", label: "Andet" },
 ];
 
-/** Launch27 extras on service 213 (rengøringsstand tillæg). */
+/** Book-rengoering Launch27 service (Almindelig rengøring / Boligens størrelse). */
+export const L27_BOOK_SERVICE_ID = 246;
+export const L27_BOOK_PRICING_PARAM_ID = 119;
+
+/** Launch27 extras on the book-rengoering service (rengøringsstand tillæg). */
 export const L27_EXTRA_MEGET_BESKIDT_ID = 250;
 export const L27_EXTRA_EKSTRA_TID_ID = 251;
 export const L27_EXTRA_KLUB_ID = 184;
@@ -349,7 +353,15 @@ export function buildBookCleaningExtrasPayload(
 
   Object.entries(selectedExtras).forEach(([id, qty]) => {
     if (qty <= 0) return;
-    pushUniqueExtra(payload, parseInt(id, 10), qty, recurring);
+    const meta = serviceExtras.find(
+      (extra) => parseInt(extra.id, 10) === parseInt(id, 10),
+    );
+    pushUniqueExtra(
+      payload,
+      parseInt(id, 10),
+      qty,
+      recurring && !!meta?.recurring,
+    );
   });
 
   serviceExtras
@@ -372,7 +384,7 @@ export function buildBookCleaningExtrasPayload(
       payload,
       parseInt(cleanlinessExtra.id, 10),
       1,
-      recurring,
+      recurring && !!cleanlinessExtra.recurring,
     );
   }
 

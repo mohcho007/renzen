@@ -50,7 +50,10 @@ function nextDateYmd(dateYmd: string) {
   return next.toISOString().slice(0, 10);
 }
 
-export async function fetchL27SpotsRange(date: string, days: number) {
+export async function fetchL27SpotsRange(
+  date: string,
+  days: number,
+) {
   const cache: Record<string, L27Spot[]> = {};
   let cursor = date;
   let remaining = days;

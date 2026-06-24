@@ -76,6 +76,8 @@ import {
   BOOK_LAST_CLEANED_OPTIONS,
   buildBookCleaningCustomFieldsPayload,
   buildBookCleaningExtrasPayload,
+  L27_BOOK_PRICING_PARAM_ID,
+  L27_BOOK_SERVICE_ID,
   parseL27BookingError,
   type BookEntryOptionId,
   type BookCleanlinessLevelId,
@@ -89,7 +91,7 @@ type BookExtra = {
   quantityBased: boolean;
 };
 
-const L27_SERVICE_ID = 213;
+const L27_SERVICE_ID = L27_BOOK_SERVICE_ID;
 
 const BOOK_EXTRAS_FALLBACK: BookExtra[] = [
   { id: "52", name: "Køleskab indvendigt", price: 215, quantityBased: false },
@@ -1186,14 +1188,14 @@ function DealTypeformWizardForm({
     () =>
       buildBookCleaningExtrasPayload(
         selectedExtras,
-        chosenFrequency.type === "recurring",
+        activeFrequency.type === "recurring",
         cleanlinessLevel,
         serviceExtras,
-        clubSelected && chosenFrequency.type !== "oneoff",
+        clubSelected && activeFrequency.type !== "oneoff",
       ),
     [
       selectedExtras,
-      chosenFrequency.type,
+      activeFrequency.type,
       clubSelected,
       cleanlinessLevel,
       serviceExtras,
@@ -1201,14 +1203,19 @@ function DealTypeformWizardForm({
   );
 
   const fetchL27Estimate = useCallback(
-    async (discountCode?: string) => {
+    async (
+      discountCode?: string,
+    ): Promise<
+      | { ok: true; total: number; duration?: number }
+      | { ok: false; details?: unknown; message?: string }
+    > => {
       if (
         !selectedDate ||
         !selectedSlot ||
         effectiveM2 === null ||
         !isSelectedSlotBookable
       ) {
-        return null;
+        return { ok: false, message: "Manglende dato, tid eller m²." };
       }
 
       const serviceDate = `${selectedDate}T${String(selectedSlot.startHour).padStart(2, "0")}:${String(selectedSlot.startMinute).padStart(2, "0")}:00`;
@@ -1217,24 +1224,29 @@ function DealTypeformWizardForm({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           action: "estimate",
-          service_id: "213",
-          pricing_param_id: "86",
+          service_id: String(L27_BOOK_SERVICE_ID),
+          pricing_param_id: String(L27_BOOK_PRICING_PARAM_ID),
           pricing_param_quantity: effectiveM2,
           frequency_id: billingFrequencyId,
           service_date: serviceDate,
-          arrival_window: selectedSlot.arrivalWindow,
           extras: bookingExtrasPayload,
-          ...(clubSelected && chosenFrequency.type !== "oneoff"
-            ? { welcome_deal: true }
-            : {}),
           ...(discountCode ? { discount_code: discountCode } : {}),
         }),
       });
       const resData = await response.json();
-      if (!resData.success) return null;
+      if (!resData.success) {
+        return {
+          ok: false,
+          details: resData.details,
+          message: resData.message,
+        };
+      }
 
       const total = Number(resData.data?.total);
-      return Number.isFinite(total) ? total : null;
+      if (!Number.isFinite(total)) {
+        return { ok: false, message: "Ugyldigt prissvar fra Launch27." };
+      }
+      return { ok: true, total, duration: Number(resData.data?.duration) || undefined };
     },
     [
       selectedDate,
@@ -1243,8 +1255,6 @@ function DealTypeformWizardForm({
       billingFrequencyId,
       bookingExtrasPayload,
       isSelectedSlotBookable,
-      clubSelected,
-      chosenFrequency.type,
     ],
   );
 
@@ -1290,15 +1300,36 @@ function DealTypeformWizardForm({
 
     setIsValidatingPromo(true);
     try {
-      const baseTotal = await fetchL27Estimate();
-      const discountedTotal = await fetchL27Estimate(code);
-      if (baseTotal === null || discountedTotal === null) {
+      const baseResult = await fetchL27Estimate();
+      if (!baseResult.ok) {
         setPromoIsError(true);
-        setPromoMsg("Ugyldig rabatkode.");
+        setPromoMsg(
+          parseL27BookingError(
+            baseResult.details,
+            "Kunne ikke beregne pris for det valgte tidspunkt. Vælg en anden dato eller tid.",
+          ),
+        );
+        return;
+      }
+      const discountedResult = await fetchL27Estimate(code);
+      if (!discountedResult.ok) {
+        setPromoIsError(true);
+        const timeError = parseL27BookingError(
+          discountedResult.details,
+          "",
+        );
+        setPromoMsg(
+          timeError && /tidspunkt|booked this time/i.test(timeError)
+            ? timeError
+            : "Ugyldig rabatkode.",
+        );
         return;
       }
 
-      const discount = Math.max(0, Math.round(baseTotal - discountedTotal));
+      const discount = Math.max(
+        0,
+        Math.round(baseResult.total - discountedResult.total),
+      );
       if (discount <= 0) {
         setPromoIsError(true);
         setPromoMsg("Rabatkoden kan ikke bruges på denne booking.");
@@ -2179,13 +2210,12 @@ function DealTypeformWizardForm({
             zip,
             phone,
             frequency_id: billingFrequencyId,
-            welcome_deal: clubSelected && !isOneTime,
             service_date: dateStr,
             arrival_window: selectedSlot.arrivalWindow,
             stripe_token: stripeToken,
             extras: bookingExtrasPayload,
-            service_id: "213",
-            pricing_param_id: "86",
+            service_id: String(L27_BOOK_SERVICE_ID),
+            pricing_param_id: String(L27_BOOK_PRICING_PARAM_ID),
             pricing_param_quantity: effectiveM2 ?? parseInt(actualM2Input, 10),
             ...(customFields ? { custom_fields: customFields } : {}),
             ...(promoCode ? { discount_code: promoCode } : {}),

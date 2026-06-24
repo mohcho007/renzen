@@ -40,6 +40,29 @@ export function getL27SpotArrivalWindow(spot: L27Spot): number {
   return parseSpotInt(spot.arrival_window) ?? 0;
 }
 
+function inferArrivalWindowMinutes(spot: L27Spot, freeSpots: L27Spot[]) {
+  const time = getL27SpotTime(spot);
+  if (!time) return 60;
+
+  const startMin = time.hour * 60 + time.minute;
+  const nextStart = freeSpots
+    .map((candidate) => getL27SpotTime(candidate))
+    .filter((candidate): candidate is { hour: number; minute: number } => !!candidate)
+    .map((candidate) => candidate.hour * 60 + candidate.minute)
+    .filter((candidateMin) => candidateMin > startMin)
+    .sort((a, b) => a - b)[0];
+
+  return nextStart ? Math.max(60, nextStart - startMin) : 60;
+}
+
+export function getL27SpotBookingWindow(
+  spot: L27Spot,
+  freeSpots: L27Spot[],
+): number {
+  const raw = getL27SpotArrivalWindow(spot);
+  return raw > 0 ? raw : inferArrivalWindowMinutes(spot, freeSpots);
+}
+
 function formatSlotLabel(startMin: number, endMin: number) {
   const pad = (n: number) => String(n).padStart(2, "0");
   const startHour = Math.floor(startMin / 60);
@@ -49,30 +72,21 @@ function formatSlotLabel(startMin: number, endMin: number) {
   return `${pad(startHour)}:${pad(startMinute)} – ${pad(endHour)}:${pad(endMinute)}`;
 }
 
-function formatSpotLabel(hour: number, minute: number, arrivalWindow: number) {
-  const pad = (n: number) => String(n).padStart(2, "0");
-  if (arrivalWindow === 0) {
-    return `${pad(hour)}:${pad(minute)}`;
-  }
-  const startMin = hour * 60 + minute;
-  return formatSlotLabel(startMin, startMin + arrivalWindow);
-}
-
-function slotKey(
-  slot: Pick<L27BookableSlot, "startHour" | "startMinute" | "arrivalWindow">,
-) {
-  return `${slot.startHour}-${slot.startMinute}-${slot.arrivalWindow}`;
-}
-
-function spotToBookableSlot(spot: L27Spot): L27BookableSlot | null {
+function spotToBookableSlot(
+  spot: L27Spot,
+  freeSpots: L27Spot[],
+): L27BookableSlot | null {
   const time = getL27SpotTime(spot);
   if (!time) return null;
 
-  const arrivalWindow = getL27SpotArrivalWindow(spot);
+  const startMin = time.hour * 60 + time.minute;
+  const arrivalWindow = getL27SpotBookingWindow(spot, freeSpots);
+  const endMin = startMin + arrivalWindow;
+
   return {
     startHour: time.hour,
     startMinute: time.minute,
-    label: formatSpotLabel(time.hour, time.minute, arrivalWindow),
+    label: formatSlotLabel(startMin, endMin),
     arrivalWindow,
     spot,
   };
@@ -92,9 +106,11 @@ export function normalizeL27SpotsToSlots(spots: L27Spot[]) {
   const slots: L27BookableSlot[] = [];
 
   freeSpots.forEach((spot) => {
-    const slot = spotToBookableSlot(spot);
+    const slot = spotToBookableSlot(spot, freeSpots);
     if (!slot) return;
-    const key = slotKey(slot);
+    const startMin = slot.startHour * 60 + slot.startMinute;
+    const endMin = startMin + slot.arrivalWindow;
+    const key = `${startMin}-${endMin}`;
     if (seen.has(key)) return;
     seen.add(key);
     slots.push(slot);
@@ -115,7 +131,13 @@ export function normalizeL27SpotsToSlots(spots: L27Spot[]) {
   );
 
   const rest = allDaySlot
-    ? slots.filter((slot) => slotKey(slot) !== slotKey(allDaySlot))
+    ? slots.filter((slot) => {
+        const start = slot.startHour * 60 + slot.startMinute;
+        const end = start + slot.arrivalWindow;
+        const allDayStart = allDaySlot.startHour * 60 + allDaySlot.startMinute;
+        const allDayEnd = allDayStart + allDaySlot.arrivalWindow;
+        return !(start === allDayStart && end === allDayEnd);
+      })
     : slots;
 
   const noon = 12 * 60;
@@ -134,11 +156,11 @@ export function isBookableSlotInSpots(
   spots: L27Spot[],
   selected: Pick<L27BookableSlot, "startHour" | "startMinute" | "arrivalWindow">,
 ) {
-  return spots.some((spot) => {
-    if (!spot.free || spot.past) return false;
+  const freeSpots = spots.filter((spot) => spot.free && !spot.past);
+  return freeSpots.some((spot) => {
     const time = getL27SpotTime(spot);
     if (!time) return false;
-    const arrivalWindow = getL27SpotArrivalWindow(spot);
+    const arrivalWindow = getL27SpotBookingWindow(spot, freeSpots);
     return (
       time.hour === selected.startHour &&
       time.minute === selected.startMinute &&

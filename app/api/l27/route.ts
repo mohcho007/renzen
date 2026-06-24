@@ -1,4 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
+import {
+  L27_BOOK_PRICING_PARAM_ID,
+  L27_BOOK_SERVICE_ID,
+} from "@/lib/bookCleaningL27";
 
 export const dynamic = "force-dynamic";
 
@@ -94,10 +98,16 @@ export async function POST(req: NextRequest) {
         frequency_id: parseInt(payload.frequency_id, 10),
         services: [
           {
-            id: parseInt(payload.service_id || "213", 10),
+            id: parseInt(
+              payload.service_id || String(L27_BOOK_SERVICE_ID),
+              10,
+            ),
             pricing_parameters: [
               {
-                id: parseInt(payload.pricing_param_id || "86", 10),
+                id: parseInt(
+                  payload.pricing_param_id || String(L27_BOOK_PRICING_PARAM_ID),
+                  10,
+                ),
                 quantity: parseInt(payload.pricing_param_quantity, 10),
               },
             ],
@@ -105,10 +115,6 @@ export async function POST(req: NextRequest) {
           },
         ],
       };
-      apiPayload.arrival_window = parseInt(payload.arrival_window ?? "0", 10);
-      if (payload.welcome_deal === true) {
-        apiPayload.welcome_deal = true;
-      }
       if (payload.discount_code) {
         apiPayload.discount_code = payload.discount_code;
       }
@@ -129,10 +135,16 @@ export async function POST(req: NextRequest) {
         arrival_window: parseInt(payload.arrival_window || "0", 10),
         services: [
           {
-            id: parseInt(payload.service_id || "213", 10),
+            id: parseInt(
+              payload.service_id || String(L27_BOOK_SERVICE_ID),
+              10,
+            ),
             pricing_parameters: [
               {
-                id: parseInt(payload.pricing_param_id || "86", 10),
+                id: parseInt(
+                  payload.pricing_param_id || String(L27_BOOK_PRICING_PARAM_ID),
+                  10,
+                ),
                 quantity: parseInt(payload.pricing_param_quantity, 10),
               },
             ],
@@ -144,9 +156,6 @@ export async function POST(req: NextRequest) {
       };
       if (payload.discount_code) {
         apiPayload.discount_code = payload.discount_code;
-      }
-      if (payload.welcome_deal === true) {
-        apiPayload.welcome_deal = true;
       }
       if (Array.isArray(payload.custom_fields) && payload.custom_fields.length > 0) {
         apiPayload.custom_fields = payload.custom_fields;
