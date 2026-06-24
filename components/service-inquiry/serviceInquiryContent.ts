@@ -88,6 +88,11 @@ const AIRBNB_SERVED_EDITORIAL_CITY_NAMES = [
   "København",
   "Frederiksberg",
   "Gentofte",
+  "Aarhus",
+  "Odense",
+  "Aalborg",
+  "Roskilde",
+  "Helsingør",
 ] as const;
 
 export type EditorialCityLinksSection = {
@@ -385,9 +390,9 @@ export const serviceInquiryPages: Record<
     },
     cityLinks: {
       eyebrow: "Lokal dækning",
-      title: "Airbnb rengøring i Storkøbenhavn",
+      title: "Airbnb rengøring i København og resten af landet",
       description:
-        "Vi hjælper Airbnb-værter i hele Storkøbenhavn (postnr. 1000–2990) med klargøring mellem gæster — fra København og Frederiksberg til Gentofte og omegn.",
+        "Vi hjælper værter i hele Storkøbenhavn — fra Østerbro, Nørrebro og Amager til Valby og Frederiksberg — og i øvrige større byer med Airbnb-klargøring mellem gæster.",
       cities: AIRBNB_SERVED_EDITORIAL_CITY_NAMES.map((name) =>
         editorialCityLink(name),
       ),

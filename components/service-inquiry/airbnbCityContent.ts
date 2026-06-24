@@ -1,6 +1,6 @@
 import type { City } from "@/data/cities";
 import { getCityBySlug, cities } from "@/data/cities";
-import { isAirbnbEditorialCityServed, SERVED_AREA_LABEL } from "@/lib/serviceArea";
+import { SERVED_AREA_LABEL } from "@/lib/serviceArea";
 import {
   AIRBNB_INCLUDED_ROOMS,
   serviceInquiryPages,
@@ -12,6 +12,11 @@ const AIRBNB_EDITORIAL_CITY_NAMES = [
   "København",
   "Frederiksberg",
   "Gentofte",
+  "Aarhus",
+  "Odense",
+  "Aalborg",
+  "Roskilde",
+  "Helsingør",
 ] as const;
 
 function editorialCityLink(name: string): EditorialCityLink {
@@ -19,25 +24,33 @@ function editorialCityLink(name: string): EditorialCityLink {
   if (!city) {
     throw new Error(`City not found for editorial link: ${name}`);
   }
-  if (!isAirbnbEditorialCityServed(city.slug)) {
-    throw new Error(`City outside service area: ${name}`);
-  }
   return { name: city.name, slug: city.slug };
 }
 
-export const AIRBNB_SERVED_EDITORIAL_CITIES: EditorialCityLink[] =
+export const AIRBNB_EDITORIAL_CITIES: EditorialCityLink[] =
   AIRBNB_EDITORIAL_CITY_NAMES.map(editorialCityLink);
 
-export function getAirbnbServedCitySlugs(): string[] {
-  return AIRBNB_SERVED_EDITORIAL_CITIES.map((city) => city.slug);
+/** @deprecated Use AIRBNB_EDITORIAL_CITIES */
+export const AIRBNB_SERVED_EDITORIAL_CITIES = AIRBNB_EDITORIAL_CITIES;
+
+export function getAirbnbEditorialCitySlugs(): string[] {
+  return AIRBNB_EDITORIAL_CITIES.map((city) => city.slug);
 }
 
-export function getAirbnbServedCity(citySlug: string): City | undefined {
+/** @deprecated Use getAirbnbEditorialCitySlugs */
+export function getAirbnbServedCitySlugs(): string[] {
+  return getAirbnbEditorialCitySlugs();
+}
+
+export function getAirbnbEditorialCity(citySlug: string): City | undefined {
   const city = getCityBySlug(citySlug);
   if (!city) return undefined;
-  return AIRBNB_SERVED_EDITORIAL_CITIES.some((entry) => entry.slug === city.slug)
-    ? city
-    : undefined;
+  return AIRBNB_CITY_COPY[city.slug] ? city : undefined;
+}
+
+/** @deprecated Use getAirbnbEditorialCity */
+export function getAirbnbServedCity(citySlug: string): City | undefined {
+  return getAirbnbEditorialCity(citySlug);
 }
 
 type AirbnbCityCopy = {
@@ -390,7 +403,7 @@ export function buildAirbnbCityPageConfig(
     throw new Error(`Missing Airbnb city copy for slug: ${city.slug}`);
   }
 
-  const otherCities = AIRBNB_SERVED_EDITORIAL_CITIES.filter(
+  const otherCities = AIRBNB_EDITORIAL_CITIES.filter(
     (entry) => entry.slug !== city.slug,
   );
 
