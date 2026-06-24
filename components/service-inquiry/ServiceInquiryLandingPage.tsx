@@ -20,6 +20,7 @@ import { ZEN_CREDIT_SERVICES_SECTION_INTRO } from "@/lib/zenCreditServices";
 import { ZenCreditServicesGrid } from "@/components/site/ZenCreditServicesGrid";
 import { ServiceProcessRadial } from "@/components/service-inquiry/ServiceProcessRadial";
 import ReviewSnippet from "@/components/ReviewSnippet";
+import { getServiceCityUrl } from "@/lib/urls";
 
 type ServiceInquiryLandingPageProps = {
   config: EditorialServiceLandingConfig;
@@ -362,52 +363,43 @@ export function ServiceInquiryLandingPage({
         ) : null}
 
         {config.tilvalg ? (
-          <section className="bg-[#173c2c] px-6 py-24 text-[#f6f2e8] sm:px-8 sm:py-32">
-            <div className="mx-auto grid max-w-[1200px] items-center gap-14 lg:grid-cols-[1.1fr_0.9fr]">
-              <div>
-                <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#a8c4b0]">
+          <section className="border-y border-[#dfe2da] bg-[#fbfaf5] px-6 py-24 sm:px-8 sm:py-32">
+            <div className="mx-auto max-w-[1200px]">
+              <div className="max-w-2xl">
+                <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#55705f]">
                   {config.tilvalg.eyebrow}
                 </p>
-                <h2 className="mt-4 font-display text-4xl font-semibold tracking-[-0.04em] sm:text-5xl">
+                <h2 className="mt-4 font-display text-4xl font-semibold tracking-[-0.04em] text-[#173c2c] sm:text-5xl">
                   {config.tilvalg.title}
                 </h2>
                 {config.tilvalg.description ? (
-                  <p className="mt-6 max-w-xl text-base font-medium leading-7 text-[#c8d4cb]">
+                  <p className="mt-6 text-base font-medium leading-7 text-[#667168]">
                     {config.tilvalg.description}
                   </p>
                 ) : null}
-                <ol className="mt-8 space-y-3 border-t border-white/15 pt-8">
-                  {config.tilvalg.items.map((item, index) => (
-                    <li
-                      key={item}
-                      className="flex items-start gap-3 text-sm font-semibold leading-6 text-[#e8efe9]"
-                    >
-                      <span className="font-mono text-xs font-bold text-[#a8c4b0]">
-                        {index + 1}.
-                      </span>
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ol>
-                <Link
-                  href={forespoergselPath}
-                  className="mt-10 inline-flex min-h-12 items-center gap-2 rounded-[3px] border border-white/30 px-6 text-sm font-bold text-white transition-colors hover:border-transparent hover:bg-[#f1e9d8] hover:text-[#173c2c]"
-                >
-                  Få et uforpligtende tilbud
-                  <ArrowRight size={16} />
-                </Link>
               </div>
-              {config.tilvalg.image ? (
-                <div className="relative mx-auto aspect-[9/16] w-full max-w-[260px] lg:mx-0 lg:justify-self-end">
-                  <Image
-                    src={config.tilvalg.image}
-                    alt={config.tilvalg.imageAlt ?? ""}
-                    fill
-                    sizes="260px"
-                    className="object-contain"
-                  />
-                </div>
-              ) : null}
+              <ul className={`mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 ${styles.tilvalgCardGrid}`}>
+                {config.tilvalg.items.map((item) => (
+                  <li
+                    key={item}
+                    className={`flex min-h-[7.5rem] flex-col justify-between border border-[#ccd2ca] bg-white px-6 py-5 ${styles.tilvalgCard}`}
+                  >
+                    <span className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#7b887f]">
+                      Tilvalg
+                    </span>
+                    <span className="mt-3 text-base font-semibold leading-6 text-[#173c2c]">
+                      {item}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+              <Link
+                href={forespoergselPath}
+                className="mt-12 inline-flex min-h-12 items-center gap-2 rounded-[3px] bg-[#173c2c] px-6 text-sm font-bold text-[#f6f2e8] transition-colors hover:bg-[#41614f]"
+              >
+                Få et uforpligtende tilbud
+                <ArrowRight size={16} />
+              </Link>
             </div>
           </section>
         ) : null}
@@ -428,7 +420,7 @@ export function ServiceInquiryLandingPage({
                 {config.cityLinks.cities.map((city) => (
                   <Link
                     key={city.slug}
-                    href={`/${config.slug}/${city.slug}/`}
+                    href={getServiceCityUrl(config.slug, city.slug)}
                     className="flex min-h-12 items-center justify-center rounded-[3px] border border-[#ccd2ca] bg-white px-4 text-center text-sm font-bold text-[#173c2c] transition-colors hover:border-[#41614f] hover:text-[#41614f]"
                   >
                     {city.name}

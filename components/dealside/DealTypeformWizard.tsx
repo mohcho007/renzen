@@ -328,12 +328,13 @@ function getInitialStepIndex(
   initialActualM2: number | undefined,
 ): number {
   const postcode = initialPostcode?.replace(/\D/g, "").slice(0, 4);
-  const hasPostcode = postcode?.length === 4;
+  const hasServedPostcode =
+    postcode?.length === 4 && isServedPostcode(postcode);
   const hasM2 =
     initialActualM2 != null &&
     initialActualM2 >= M2_MIN &&
     initialActualM2 <= M2_MAX;
-  if (hasPostcode && hasM2) {
+  if (hasServedPostcode && hasM2) {
     return STEPS.indexOf("frekvens");
   }
   return 0;

@@ -1,4 +1,5 @@
 import type { BoligserviceSlug, ServiceInquirySlug } from "@/lib/serviceInquiry";
+import { cities } from "@/data/cities";
 import { INTRO_CLEANING_FROM_KR, ZEN_CREDIT_MONTHLY_KR } from "@/data/pricing";
 import { serviceFAQs } from "@/data/faqs";
 
@@ -73,6 +74,25 @@ export type EditorialCityLink = {
   name: string;
   slug: string;
 };
+
+function editorialCityLink(name: string): EditorialCityLink {
+  const city = cities.find((entry) => entry.name === name);
+  if (!city) {
+    throw new Error(`City not found for editorial link: ${name}`);
+  }
+  return { name: city.name, slug: city.slug };
+}
+
+const AIRBNB_EDITORIAL_CITY_NAMES = [
+  "København",
+  "Frederiksberg",
+  "Gentofte",
+  "Aarhus",
+  "Odense",
+  "Aalborg",
+  "Roskilde",
+  "Helsingør",
+] as const;
 
 export type EditorialCityLinksSection = {
   eyebrow: string;
@@ -366,24 +386,13 @@ export const serviceInquiryPages: Record<
         "Hovedrengøring",
         "Vinduer efter behov",
       ],
-      image: "/woman-app.png",
-      imageAlt: "Renzen app til Airbnb-værter",
     },
     cityLinks: {
       eyebrow: "Lokal dækning",
       title: "Airbnb rengøring i København og resten af landet",
       description:
         "Vi hjælper værter i hele Storkøbenhavn — fra Østerbro, Nørrebro og Amager til Valby og Frederiksberg — og i øvrige større byer med Airbnb-klargøring mellem gæster.",
-      cities: [
-        { name: "København", slug: "koebenhavn" },
-        { name: "Frederiksberg", slug: "frederiksberg" },
-        { name: "Gentofte", slug: "gentofte" },
-        { name: "Aarhus", slug: "aarhus" },
-        { name: "Odense", slug: "odense" },
-        { name: "Aalborg", slug: "aalborg" },
-        { name: "Roskilde", slug: "roskilde" },
-        { name: "Helsingør", slug: "helsingoer" },
-      ],
+      cities: AIRBNB_EDITORIAL_CITY_NAMES.map(editorialCityLink),
     },
     howItWorksEyebrow: "Sådan fungerer det",
     howItWorksTitle: "Fra forespørgsel til check-in-klar bolig.",

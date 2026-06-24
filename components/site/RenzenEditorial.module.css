@@ -76,6 +76,24 @@
   clip-path: polygon(0 0, 100% 7%, 92% 100%, 0 92%);
 }
 
+.tilvalgCardGrid {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.tilvalgCard {
+  border-radius: 3px;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.tilvalgCard:hover {
+  border-color: #41614f;
+  box-shadow: 0 10px 28px rgb(23 60 44 / 6%);
+}
+
 .megaMenu {
   position: fixed;
   inset: 74px 0 auto;
