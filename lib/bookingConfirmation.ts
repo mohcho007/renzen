@@ -9,9 +9,11 @@ export type BookingConfirmationExtra = {
   quantity: number;
 };
 
+export type BookingConfirmationSource = "book2" | "flyt";
+
 export type BookingConfirmationPayload = {
   bookingId: string;
-  source: "book2";
+  source: BookingConfirmationSource;
   firstName: string;
   email: string;
   date: string;
@@ -28,6 +30,7 @@ export type BookingConfirmationPayload = {
   extras: BookingConfirmationExtra[];
   boligstandLabel?: string;
   boligstandSurchargeKr?: number;
+  standLabel?: string;
   serviceLabel: string;
   createdAt: string;
 };
@@ -63,7 +66,7 @@ function isValidPayload(value: unknown): value is BookingConfirmationPayload {
   const payload = value as BookingConfirmationPayload;
   return (
     typeof payload.bookingId === "string" &&
-    payload.source === "book2" &&
+    (payload.source === "book2" || payload.source === "flyt") &&
     typeof payload.firstName === "string" &&
     typeof payload.createdAt === "string"
   );

@@ -31,24 +31,29 @@ function formatDate(dateStr: string) {
 }
 
 function buildNextSteps(payload: BookingConfirmationPayload) {
+  const isFlyt = payload.source === "flyt";
+  const serviceNoun = isFlyt ? "flytterengøring" : "rengøring";
+
   const steps = [
     {
       title: "Bekræftelse på e-mail",
-      text: `Vi sender en bekræftelse til ${payload.email} inden for kort tid med alle detaljer om din booking.`,
+      text: `Vi sender en bekræftelse til ${payload.email} inden for kort tid med alle detaljer om din ${isFlyt ? "flytterengøring" : "booking"}.`,
     },
     {
       title: "Vi matcher dig med en Zenmester",
-      text: "Du får besked, når din rengøring er bekræftet, og vi sender en påmindelse før besøget.",
+      text: isFlyt
+        ? "Du får besked, når din flytterengøring er bekræftet, og vi sender en påmindelse før besøget."
+        : "Du får besked, når din rengøring er bekræftet, og vi sender en påmindelse før besøget.",
     },
     {
       title: "Adgang på rengøringsdagen",
-      text: "Din Zenmester ankommer i det valgte tidsrum. Sørg for, at adgang er som aftalt (nøgle, kode eller dørkode).",
+      text: `Din Zenmester ankommer i det valgte tidsrum. Sørg for, at adgang er som aftalt (nøgle, kode eller dørkode).`,
     },
     {
       title: "Fakturering efter besøget",
       text: payload.isKlub
-        ? "Du betaler ikke nu. Fakturering sker først efter rengøringen — introprisen og medlemsfordele gælder som aftalt ved booking."
-        : "Du betaler ikke nu. Fakturering sker først efter rengøringen er gennemført.",
+        ? `Du betaler ikke nu. Fakturering sker først efter ${serviceNoun}en — introprisen og medlemsfordele gælder som aftalt ved booking.`
+        : `Du betaler ikke nu. Fakturering sker først efter ${serviceNoun}en er gennemført.`,
     },
   ];
 
@@ -102,7 +107,11 @@ function ConfirmationContent({
               ✓
             </div>
             <h1 className="bcTitle">Tak, {payload.firstName}</h1>
-            <p className="bcLead">Din booking er modtaget. Her er et overblik over det, du har bestilt.</p>
+            <p className="bcLead">
+              {payload.source === "flyt"
+                ? "Din flytterengøring er modtaget. Her er et overblik over det, du har bestilt."
+                : "Din booking er modtaget. Her er et overblik over det, du har bestilt."}
+            </p>
             <p className="bcRef">
               Reference: <strong>{payload.bookingId}</strong>
             </p>
@@ -129,10 +138,19 @@ function ConfirmationContent({
                   {payload.postcode} {payload.city}
                 </span>
               </div>
-              <div className="bcSummaryItem">
-                <span className="bcSummaryLabel">Frekvens</span>
-                <span className="bcSummaryValue">{payload.frequency}</span>
-              </div>
+              {payload.source === "flyt" ? (
+                <div className="bcSummaryItem">
+                  <span className="bcSummaryLabel">Stand</span>
+                  <span className="bcSummaryValue">
+                    {payload.standLabel ?? `Stand ${payload.serviceLabel}`}
+                  </span>
+                </div>
+              ) : (
+                <div className="bcSummaryItem">
+                  <span className="bcSummaryLabel">Frekvens</span>
+                  <span className="bcSummaryValue">{payload.frequency}</span>
+                </div>
+              )}
               <div className="bcSummaryItem">
                 <span className="bcSummaryLabel">Størrelse</span>
                 <span className="bcSummaryValue">{payload.squareMeters} m²</span>
@@ -140,7 +158,7 @@ function ConfirmationContent({
               <div className="bcSummaryItem">
                 <span className="bcSummaryLabel">Type</span>
                 <span className="bcSummaryValue">
-                  {payload.serviceLabel}
+                  {payload.source === "flyt" ? "Flytterengøring" : payload.serviceLabel}
                   {payload.isKlub ? " · Renzen Klub" : ""}
                 </span>
               </div>
@@ -225,7 +243,11 @@ function ConfirmationContent({
             <Link href="/" className="bcCtaPrimary">
               Til forsiden
             </Link>
-            {payload.isKlub ? (
+            {payload.source === "flyt" ? (
+              <Link href="/flytterengoring/" className="bcCtaSecondary">
+                Tilbage til flytterengøring
+              </Link>
+            ) : payload.isKlub ? (
               <Link href="/klub/" className="bcCtaSecondary">
                 Læs om Renzen Klub
               </Link>
@@ -254,8 +276,8 @@ function FallbackContent() {
             <Link href="/book-rengoering/" className="bcCtaPrimary">
               Book rengøring
             </Link>
-            <Link href="/kontakt/" className="bcCtaSecondary">
-              Kontakt os
+            <Link href="/flytterengoring/" className="bcCtaSecondary">
+              Flytterengøring
             </Link>
           </div>
         </div>

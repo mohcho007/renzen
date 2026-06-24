@@ -39,6 +39,8 @@ import {
   formatFlytKr,
   formatFlytReceiptKr,
   getFlytBathroomExtra,
+  getFlytBathroomChargeableQty,
+  getFlytExtraById,
   getFlytFlyttesynExtra,
   getFlytSmokingExtra,
   getFlytStand,
@@ -58,6 +60,10 @@ import {
   parseL27BookingError,
   resolveL27BookingId,
 } from "@/lib/bookCleaningL27";
+import {
+  saveBookingConfirmation,
+  type BookingConfirmationPayload,
+} from "@/lib/bookingConfirmation";
 import { serviceDeduction } from "@/lib/serviceDeduction";
 import { L27_API_PATH } from "@/lib/urls";
 
@@ -342,8 +348,7 @@ function FlytBookingWizardForm() {
   >(null);
   const [isEstimating, setIsEstimating] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [bookingId, setBookingId] = useState("");
-  const [isDone, setIsDone] = useState(false);
+  const [isRedirecting, setIsRedirecting] = useState(false);
   const [error, setError] = useState("");
   const [detailsOpen, setDetailsOpen] = useState(false);
 
@@ -952,8 +957,60 @@ function FlytBookingWizardForm() {
           return;
         }
 
-        setBookingId(resolvedBookingId);
-        setIsDone(true);
+        const confirmationExtras = Object.entries(selectedExtras)
+          .filter(([, qty]) => qty > 0)
+          .flatMap(([id, qty]) => {
+            const extraId = parseInt(id, 10);
+            const managed = getFlytExtraById(extraId);
+            if (managed?.category === "stand_confirmation") return [];
+
+            const extra = availableExtras.find((item) => String(item.id) === id);
+            const unitPrice = extra?.price ?? managed?.price ?? 0;
+            if (unitPrice <= 0) return [];
+
+            const chargeQty =
+              extraId === bathroomExtra.id
+                ? getFlytBathroomChargeableQty(qty)
+                : qty;
+            if (chargeQty <= 0) return [];
+
+            const label = extra?.name ?? managed?.label ?? "Tilvalg";
+
+            return [
+              {
+                id,
+                label,
+                price: unitPrice,
+                quantity: chargeQty,
+              },
+            ];
+          });
+
+        const confirmationPayload: BookingConfirmationPayload = {
+          bookingId: resolvedBookingId,
+          source: "flyt",
+          firstName: firstName.trim(),
+          email: email.trim(),
+          date: selectedDate,
+          timeSlot:
+            selectedSlot?.label.split(" – ")[0] ?? selectedSlot?.label ?? "",
+          address: address.trim(),
+          postcode: zip.trim(),
+          city: city.trim(),
+          frequency: "Engangs",
+          frequencyId: String(FLYT_FREQUENCY_ID),
+          squareMeters: sqm,
+          isKlub: false,
+          totalTodayKr: receipt.total,
+          extras: confirmationExtras,
+          standLabel: stand.label,
+          serviceLabel: `Flytterengøring · Stand ${stand.level}`,
+          createdAt: new Date().toISOString(),
+        };
+        saveBookingConfirmation(confirmationPayload);
+        setIsRedirecting(true);
+        router.push("/booking-modtaget/");
+        return;
       } catch (err) {
         setError(
           err instanceof Error
@@ -988,6 +1045,11 @@ function FlytBookingWizardForm() {
     entryOtherDetails,
     stripe,
     elements,
+    router,
+    receipt,
+    availableExtras,
+    stand,
+    bathroomExtra,
   ]);
 
   const goBack = () => {
@@ -1043,21 +1105,12 @@ function FlytBookingWizardForm() {
     </div>
   );
 
-  if (isDone) {
+  if (isRedirecting) {
     return (
       <div className={styles.shell}>
         <main className={styles.successMain}>
           <div className={`${styles.frame} ${styles.step}`}>
-            <div className={styles.successIcon}>✓</div>
-            <h1 className={styles.successTitle}>Du er booket</h1>
-            <p className={styles.successCopy}>
-              Tak {firstName}. Vi har modtaget din flytterengøring
-              {bookingId ? ` (${bookingId})` : ""} og sender bekræftelse til{" "}
-              {email}.
-            </p>
-            <Link href="/flytterengoring/" className={styles.backBtn}>
-              Tilbage til flytterengøring
-            </Link>
+            <p className={styles.successCopy}>Sender dig videre…</p>
           </div>
         </main>
       </div>
