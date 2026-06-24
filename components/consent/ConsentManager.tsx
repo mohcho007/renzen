@@ -9,6 +9,7 @@ import {
   isValidConsent,
 } from "@/lib/consent";
 import type { ConsentState } from "@/lib/consent";
+import styles from "./ConsentManager.module.css";
 
 function readConsent(): ConsentState | null {
   try {
@@ -62,60 +63,52 @@ export function ConsentManager() {
   };
 
   return (
-    <div
-      className="fixed inset-x-0 bottom-0 z-[100] p-3 sm:p-5"
-      role="region"
-      aria-label="Cookieindstillinger"
-    >
-      <div className="mx-auto max-w-3xl rounded-2xl border border-zinc-200 bg-white p-5 shadow-2xl">
-        <div className="flex flex-col gap-4">
-          <div>
-            <h2 className="font-display text-lg font-extrabold text-brand-blue">
-              Cookies på Renzen
-            </h2>
-            <p className="mt-1 text-sm leading-relaxed text-zinc-600">
+    <div className={styles.overlay} role="region" aria-label="Cookieindstillinger">
+      <div className={styles.card}>
+        <div className={styles.cardAccent} aria-hidden="true" />
+        <div className={styles.inner}>
+          <header className={styles.header}>
+            <h2 className={styles.title}>Cookies på Renzen</h2>
+            <p className={styles.body}>
               Nødvendige teknologier holder siden i gang. Statistik og
               markedsføring aktiveres kun, hvis du vælger dem.{" "}
-              <Link
-                href="/cookiepolitik"
-                className="font-semibold text-brand-green underline"
-              >
+              <Link href="/cookiepolitik" className={styles.policyLink}>
                 Læs cookiepolitikken
               </Link>
               .
             </p>
-          </div>
+          </header>
 
           {customizing && (
-            <div className="grid gap-3 rounded-xl bg-zinc-50 p-4 sm:grid-cols-3">
-              <label className="flex items-center gap-2 text-sm font-semibold text-zinc-700">
-                <input type="checkbox" checked disabled />
-                Nødvendige
+            <div className={styles.options} role="group" aria-label="Cookiekategorier">
+              <label className={`${styles.option} ${styles.optionDisabled}`}>
+                <input type="checkbox" checked disabled readOnly />
+                <span className={styles.optionLabel}>Nødvendige</span>
               </label>
-              <label className="flex items-center gap-2 text-sm font-semibold text-zinc-700">
+              <label className={styles.option}>
                 <input
                   type="checkbox"
                   checked={statistics}
                   onChange={(event) => setStatistics(event.target.checked)}
                 />
-                Statistik
+                <span className={styles.optionLabel}>Statistik</span>
               </label>
-              <label className="flex items-center gap-2 text-sm font-semibold text-zinc-700">
+              <label className={styles.option}>
                 <input
                   type="checkbox"
                   checked={marketing}
                   onChange={(event) => setMarketing(event.target.checked)}
                 />
-                Markedsføring
+                <span className={styles.optionLabel}>Markedsføring</span>
               </label>
             </div>
           )}
 
-          <div className="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
+          <div className={styles.actions}>
             <button
               type="button"
               onClick={() => save(false, false)}
-              className="rounded-full border border-zinc-300 px-5 py-2.5 text-sm font-bold text-zinc-700 hover:bg-zinc-50"
+              className={`${styles.btn} ${styles.btnGhost}`}
             >
               Afvis valgfrie
             </button>
@@ -123,7 +116,7 @@ export function ConsentManager() {
               <button
                 type="button"
                 onClick={() => save(statistics, marketing)}
-                className="rounded-full bg-brand-blue px-5 py-2.5 text-sm font-bold text-white hover:bg-[#111943]"
+                className={`${styles.btn} ${styles.btnPrimary}`}
               >
                 Gem valg
               </button>
@@ -131,7 +124,7 @@ export function ConsentManager() {
               <button
                 type="button"
                 onClick={() => setCustomizing(true)}
-                className="rounded-full border border-brand-green px-5 py-2.5 text-sm font-bold text-brand-green hover:bg-emerald-50"
+                className={`${styles.btn} ${styles.btnOutline}`}
               >
                 Tilpas
               </button>
@@ -139,7 +132,7 @@ export function ConsentManager() {
             <button
               type="button"
               onClick={() => save(true, true)}
-              className="rounded-full bg-brand-green px-5 py-2.5 text-sm font-bold text-white hover:bg-emerald-800"
+              className={`${styles.btn} ${styles.btnPrimary}`}
             >
               Accepter alle
             </button>
