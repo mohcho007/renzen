@@ -1,0 +1,136 @@
+.embeddedShell {
+  min-height: auto;
+  border: 1px solid #d9ddd5;
+  border-radius: 4px;
+  overflow: hidden;
+  background: #faf8f3;
+}
+
+.embeddedShell .successMain {
+  min-height: 360px;
+}
+
+.summaryPanel {
+  padding-top: 44px;
+}
+
+.summaryEyebrow {
+  margin: 0 0 8px;
+  font-family: var(--font-ibm-plex-mono), monospace;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--tf-ink-muted);
+}
+
+.summaryTitle {
+  margin: 0 0 20px;
+  font-family: var(--font-bricolage-grotesque), serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  color: var(--tf-ink);
+}
+
+.summaryList {
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--tf-line);
+}
+
+.summaryRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--tf-line);
+  font-size: 0.875rem;
+}
+
+.summaryRow dt {
+  margin: 0;
+  font-weight: 600;
+  color: var(--tf-ink-soft);
+}
+
+.summaryRow dd {
+  margin: 0;
+  font-weight: 650;
+  color: var(--tf-ink);
+  text-align: right;
+}
+
+.summaryValueList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  text-align: right;
+}
+
+.summaryValueList li + li {
+  margin-top: 4px;
+}
+
+.summaryNote {
+  margin: 18px 0 0;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: var(--tf-ink-muted);
+}
+
+.weekdayRow {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.calendarSection {
+  margin-top: 20px;
+}
+
+.flexSection {
+  margin-top: 28px;
+}
+
+.calendarPanelOpen {
+  margin-top: 14px;
+}
+
+.selectedDateLabel {
+  margin: 14px 0 0;
+  padding: 10px 14px;
+  background: var(--tf-highlight);
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--tf-accent);
+}
+
+.mobileSummaryHint {
+  margin: 0;
+  font-family: var(--font-bricolage-grotesque), serif;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--tf-ink);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+}
+
+.mobileCheckoutBar {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .mobileCheckoutBar {
+    display: flex;
+  }
+}
+
+@media (min-width: 768px) {
+  .mobileCheckoutBar {
+    display: none !important;
+  }
+}

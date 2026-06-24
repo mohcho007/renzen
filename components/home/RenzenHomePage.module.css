@@ -1,0 +1,607 @@
+/* ============================================================
+   Full-bleed editorial hero (Renzen)
+   Left content respects the site container; image bleeds to
+   the right viewport edge. Distinct from Hemfrid via the green
+   palette, editorial eyebrow rule and a rectangular Klub ribbon
+   (no circular badge, no vertical strip).
+   ============================================================ */
+
+.hero {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background: #fbfaf5;
+  border-bottom: 1px solid #e3e7df;
+}
+
+.heroGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+/* ---- Left column: matches editorial hero padding (0.9fr / 1.1fr grid) ---- */
+.heroContent {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+  order: 2;
+  background: #dfe9dc;
+  padding: 3rem 1.5rem 3.25rem;
+}
+
+.heroContent > :not(.heroShape) {
+  position: relative;
+  z-index: 1;
+}
+
+.heroShape {
+  pointer-events: none;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  z-index: 0;
+  display: none;
+  width: 120px;
+  height: auto;
+  opacity: 0.7;
+}
+
+@media (min-width: 640px) {
+  .heroShape {
+    display: block;
+  }
+}
+
+@media (min-width: 1024px) {
+  .heroShape {
+    width: 160px;
+  }
+}
+
+@media (min-width: 640px) {
+  .heroContent {
+    padding: 3.5rem 2.5rem 3.75rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .heroGrid {
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    align-items: stretch;
+    min-height: 690px;
+  }
+
+  .heroContent {
+    order: unset;
+    min-height: 690px;
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+    padding-right: 4rem;
+    /* Match editorial heroes: lg:pl-[114px] lg:pr-16 lg:py-20 */
+    padding-left: 114px;
+  }
+}
+
+/* ---- Eyebrow with a thin editorial rule ---- */
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  margin-bottom: 1.6rem;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #41614f;
+}
+
+.eyebrowRule {
+  display: block;
+  width: 36px;
+  height: 1px;
+  background: #41614f;
+}
+
+.heroTitle {
+  max-width: 14ch;
+  font-family: var(--font-display), serif;
+  font-size: 46px;
+  font-weight: 600;
+  line-height: 0.97;
+  letter-spacing: -0.045em;
+  color: #173c2c;
+}
+
+@media (min-width: 640px) {
+  .heroTitle {
+    font-size: 64px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .heroTitle {
+    font-size: 78px;
+  }
+}
+
+.heroSubtext {
+  margin-top: 1.75rem;
+  max-width: 46ch;
+  font-size: 1.0625rem;
+  font-weight: 500;
+  line-height: 1.6;
+  color: #536159;
+}
+
+.heroForm {
+  margin-top: 2.25rem;
+}
+
+/* ---- Trust chips ---- */
+.trustRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+  margin-top: 1.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #536159;
+}
+
+.trustItem {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.trustIcon {
+  color: #41614f;
+}
+
+/* ---- Right column: full-bleed lifestyle image ---- */
+.heroVisual {
+  position: relative;
+  order: 1;
+}
+
+@media (min-width: 1024px) {
+  .heroVisual {
+    order: unset;
+  }
+}
+
+.heroImageWrap {
+  position: relative;
+  min-height: 290px;
+  border-top: 1px solid #e3e7df;
+  overflow: hidden;
+}
+
+@media (min-width: 640px) {
+  .heroImageWrap {
+    min-height: 290px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .heroImageWrap {
+    height: 100%;
+    min-height: 690px;
+    border-top: 0;
+    overflow: visible;
+  }
+}
+
+.heroImage {
+  object-fit: cover;
+  object-position: center;
+}
+
+/* ---- Services bento grid ---- */
+.bentoGrid {
+  display: grid;
+  gap: 1rem;
+  margin-top: 3.5rem;
+}
+
+.bentoCell {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  min-height: 260px;
+  background: #e8e6df;
+  border: 1px solid #d5dbd3;
+  transition: border-color 180ms ease;
+}
+
+.bentoCell:hover {
+  border-color: #173c2c;
+}
+
+.bentoImage {
+  object-fit: cover;
+  object-position: center;
+  transition: transform 700ms ease;
+}
+
+.bentoImageGardener {
+  object-position: 68% 22%;
+}
+
+.bentoCell:hover .bentoImage {
+  transform: scale(1.02);
+}
+
+.bentoLeadCell {
+  background: #dfe9dc;
+}
+
+.bentoDarkCell {
+  background: #d6dfd4;
+}
+
+.bentoCompactCell {
+  background: #e8e2d8;
+}
+
+/* Lead card */
+.bentoLeadPanel {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  max-width: 30rem;
+  background: #fbfaf5;
+  padding: 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .bentoLeadPanel {
+    padding: 2rem;
+  }
+}
+
+.bentoEyebrow {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #607066;
+}
+
+.bentoLeadTitle {
+  margin-top: 0.75rem;
+  font-family: var(--font-display), serif;
+  font-size: 1.875rem;
+  font-weight: 600;
+  color: #173c2c;
+}
+
+.bentoLeadHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 0.75rem;
+}
+
+.bentoLeadHead .bentoLeadTitle {
+  margin-top: 0;
+}
+
+.bentoLeadHeadArrow {
+  flex-shrink: 0;
+  color: #173c2c;
+}
+
+.bentoLeadBody {
+  margin-top: 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.5;
+  color: #667168;
+}
+
+.bentoPrice {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1.25rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #173c2c;
+}
+
+/* Dark footer bar — match compact panel height */
+.bentoDarkBar {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  z-index: 1;
+  background: #173c2c;
+  padding: 1.25rem 1.5rem;
+  color: #fff;
+}
+
+.bentoDarkTitle {
+  font-family: var(--font-display), serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1.1;
+}
+
+.bentoDarkMeta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 0.35rem;
+}
+
+.bentoDarkBody {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1.45;
+  color: rgb(255 255 255 / 70%);
+}
+
+.bentoDarkArrow {
+  flex-shrink: 0;
+}
+
+/* Compact overlay */
+.bentoCompactPanel,
+.bentoCompactPanelRight {
+  position: absolute;
+  z-index: 1;
+  background: #fbfaf5;
+  padding: 1.25rem 1.5rem;
+}
+
+.bentoCompactPanel {
+  inset-inline: 0;
+  bottom: 0;
+}
+
+.bentoCompactPanelRight {
+  right: 0;
+  bottom: 0;
+  max-width: 20rem;
+}
+
+.bentoCompactTitle {
+  font-family: var(--font-display), serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #173c2c;
+}
+
+.bentoCompactMeta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 0.35rem;
+}
+
+.bentoCompactMeta .bentoCompactBody {
+  margin-top: 0;
+}
+
+.bentoCompactMetaArrow {
+  flex-shrink: 0;
+  color: #173c2c;
+}
+
+.bentoCompactBody {
+  margin-top: 0.35rem;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1.45;
+  color: #667168;
+}
+
+.bentoCompactArrow {
+  display: block;
+  margin-top: 0.75rem;
+  color: #173c2c;
+}
+
+/* Small bento row — equal card + footer height (Vinduespudsning, Airbnb, Boligservice) */
+@media (min-width: 1024px) {
+  .bentoSmall.bentoCell {
+    height: 272px;
+    min-height: 272px;
+  }
+}
+
+.bentoSmall .bentoDarkBar,
+.bentoSmall .bentoCompactPanel {
+  min-height: 5.75rem;
+  padding-block: 1.125rem;
+  box-sizing: border-box;
+}
+
+.bentoSmall .bentoDarkTitle,
+.bentoSmall .bentoCompactTitle {
+  font-size: 1.375rem;
+  line-height: 1.15;
+}
+
+.bentoSmall .bentoDarkBody,
+.bentoSmall .bentoCompactBody {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+}
+
+/* Text-only editorial cell */
+.bentoTextCell {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: 260px;
+  padding: 1.75rem 1.5rem;
+  background: #e7e4da;
+  border-color: #c8cec4;
+}
+
+@media (min-width: 640px) {
+  .bentoTextCell {
+    padding: 2rem;
+  }
+}
+
+.bentoTextTitle {
+  margin-top: 0.75rem;
+  font-family: var(--font-display), serif;
+  font-size: 1.75rem;
+  font-weight: 600;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  color: #173c2c;
+}
+
+.bentoTextBody {
+  margin-top: 0.75rem;
+  max-width: 28ch;
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.55;
+  color: #667168;
+}
+
+.bentoTextBenefitsHeading {
+  margin-top: 1rem;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: #173c2c;
+}
+
+.bentoTextBenefits {
+  margin-top: 0.5rem;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.35rem;
+}
+
+.bentoTextBenefits li {
+  position: relative;
+  padding-left: 1rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1.4;
+  color: #3d4f45;
+}
+
+.bentoTextBenefits li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 0.3rem;
+  height: 0.3rem;
+  border-radius: 50%;
+  background: #2f7558;
+}
+
+.bentoTextPrice {
+  margin-top: 1rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #173c2c;
+}
+
+.bentoTextPriceSub {
+  margin-top: 0.25rem;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: #667168;
+}
+
+.bentoTextCta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1.25rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #173c2c;
+}
+
+.bentoMoreServices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.625rem;
+  margin-top: 2rem;
+}
+
+.bentoMoreServiceBtn {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.625rem 1.125rem;
+  border: 1px solid #dfe2da;
+  border-radius: 999px;
+  background: #fff;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #173c2c;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.bentoMoreServiceBtn:hover {
+  border-color: #2f7558;
+  background: #f4faf7;
+}
+
+/* Desktop asymmetric bento */
+@media (min-width: 1024px) {
+  .bentoGrid {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    grid-auto-rows: minmax(200px, auto);
+    gap: 1.25rem;
+  }
+
+  .bentoLead {
+    grid-column: span 7;
+    grid-row: span 2;
+    min-height: 620px;
+  }
+
+  .bentoTall {
+    grid-column: span 5;
+    min-height: 300px;
+  }
+
+  .bentoWide {
+    grid-column: span 5;
+    min-height: 300px;
+  }
+
+  .bentoSmall {
+    grid-column: span 4;
+  }
+
+  .bentoHalf {
+    grid-column: span 6;
+    min-height: 260px;
+  }
+
+  .bentoText {
+    grid-column: span 6;
+    min-height: 260px;
+  }
+
+  .bentoTextCell {
+    min-height: 272px;
+  }
+
+  .bentoTextBody {
+    max-width: 46ch;
+  }
+}

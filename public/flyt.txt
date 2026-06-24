@@ -1,0 +1,528 @@
+<div class="elementor-widget-container">
+					<!-- Maven Pro Font -->
+<link href="https://fonts.googleapis.com/css?family=Maven+Pro:400,500,700&amp;display=swap" rel="stylesheet">
+<style>
+:root {
+  --slider-main: #206d69;
+  --slider-track: #e1e5e8;
+  --slider-thumb-size: 36px;
+  --star-gold: #ffe600;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.calc-book-btn {
+  transition: all 0.3s ease;
+}
+
+.calc-book-btn.price-revealed {
+  background: #1a857f; /* Mørkere grøn når pris vises */
+  font-size: 20px;
+}
+
+.calc-book-btn:hover {
+  background: #144844;
+}
+.my-calc-wrapper .calc-widget {
+  font-family: 'Maven Pro', Arial, sans-serif;
+  max-width: 670px;
+  margin-left: 0;
+  background: #fff;
+  border-radius: 12px;
+  padding: 22px;
+  box-sizing: border-box;
+}
+
+/* Desktop Kvadratmeter section */
+.my-calc-wrapper .calc-slider-row-desktop {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.my-calc-wrapper .calc-slider-label-desktop {
+  width: 140px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #153048;
+  flex-shrink: 0;
+}
+
+.my-calc-wrapper .slider-holder-desktop {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+
+.my-calc-wrapper .calc-slider-desktop {
+  width: 100%;
+  margin-right: 18px;
+  background: transparent;
+  appearance: none;
+  height: 36px;
+  cursor: pointer;
+  position: relative;
+  margin-bottom: 0;
+  z-index: 1;
+}
+.my-calc-wrapper .calc-slider-desktop:focus { outline: none; }
+/* Chrome, Edge, Safari */
+.my-calc-wrapper .calc-slider-desktop::-webkit-slider-runnable-track {
+  height: 12px; background: var(--slider-track); border-radius: 7px; border: 1px solid #fff;
+}
+.my-calc-wrapper .calc-slider-desktop::-webkit-slider-thumb {
+  appearance: none; width: var(--slider-thumb-size); height: var(--slider-thumb-size);
+  background: var(--slider-main); border-radius: 6px; border: none; cursor: grab;
+  margin-top: -12px; position: relative; box-shadow: 0 1px 4px rgba(40,80,120,0.13); box-sizing: border-box;
+}
+.my-calc-wrapper .calc-slider-desktop:active::-webkit-slider-thumb { cursor: grabbing; }
+.my-calc-wrapper .calc-slider-desktop::-webkit-slider-thumb:before {
+  content: ''; display: block; width: 20px; height: 24px; background: transparent;
+  position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%);
+  box-shadow: -4px 0 0 0 #fff, 4px 0 0 0 #fff;
+}
+/* Firefox */
+.my-calc-wrapper .calc-slider-desktop::-moz-range-track {
+  height: 12px; background: var(--slider-track); border-radius: 7px; border: 1px solid #fff;
+}
+.my-calc-wrapper .calc-slider-desktop::-moz-range-thumb {
+  width: var(--slider-thumb-size); height: var(--slider-thumb-size); background: var(--slider-main);
+  border-radius: 6px; border: none; cursor: grab; position: relative;
+  box-shadow: 0 1px 4px rgba(40,80,120,0.13); box-sizing: border-box;
+}
+.my-calc-wrapper .calc-slider-desktop:active::-moz-range-thumb { cursor: grabbing; }
+.my-calc-wrapper .calc-slider-desktop::-moz-focus-outer { border: 0; }
+/* IE/Edge */
+.my-calc-wrapper .calc-slider-desktop::-ms-fill-lower,
+.my-calc-wrapper .calc-slider-desktop::-ms-fill-upper {
+  background: var(--slider-track); border-radius: 7px; border: 1px solid #fff;
+}
+.my-calc-wrapper .calc-slider-desktop::-ms-thumb {
+  width: var(--slider-thumb-size); height: var(--slider-thumb-size); background: var(--slider-main);
+  border-radius: 6px; border: none; cursor: grab; position: relative;
+  box-shadow: 0 1px 4px rgba(40,80,120,0.13);
+}
+.my-calc-wrapper .calc-slider-desktop:active::-ms-thumb { cursor: grabbing; }
+.my-calc-wrapper .calc-slider-value-desktop {
+  font-size: 19px; color: #153048; background: #e6f1fa; padding: 6px 14px;
+  border-radius: 8px; font-weight: 700; min-width: 105px; text-align: center; margin-left: 5px;
+  font-family: 'Maven Pro', Arial, sans-serif; flex-shrink: 0;
+}
+
+/* Mobile Kvadratmeter section */
+.my-calc-wrapper .calc-slider-row-mobile {
+  display: none; flex-direction: column; align-items: flex-start; margin-bottom: 20px;
+}
+.my-calc-wrapper .calc-slider-label-value-wrapper-mobile {
+  display: flex; justify-content: space-between; width: 100%; align-items: center; margin-bottom: 10px;
+}
+.my-calc-wrapper .calc-slider-label-mobile { font-size: 16px; font-weight: 700; color: #153048; text-align: left; }
+.my-calc-wrapper .calc-slider-value-mobile {
+  font-size: 17px; color: #153048; background: #e6f1fa; padding: 8px 12px; border-radius: 8px;
+  font-weight: 700; min-width: 80px; text-align: center; font-family: 'Maven Pro', Arial, sans-serif;
+}
+.my-calc-wrapper .slider-holder-mobile {
+  width: 100%; display: flex; align-items: center; min-width: 0;
+}
+.my-calc-wrapper .calc-slider-mobile {
+  width: 100%; background: transparent; appearance: none; height: 44px; cursor: pointer; position: relative; margin-bottom: 0; z-index: 1;
+}
+.my-calc-wrapper .calc-slider-mobile:focus { outline: none; }
+/* Chrome, Edge, Safari */
+.my-calc-wrapper .calc-slider-mobile::-webkit-slider-runnable-track {
+  height: 12px; background: var(--slider-track); border-radius: 7px; border: 1px solid #fff;
+}
+.my-calc-wrapper .calc-slider-mobile::-webkit-slider-thumb {
+  appearance: none; width: 44px; height: 44px; background: var(--slider-main); border-radius: 6px; border: none; cursor: grab;
+  margin-top: -16px; position: relative; box-shadow: 0 1px 4px rgba(40,80,120,0.13); box-sizing: border-box;
+}
+.my-calc-wrapper .calc-slider-mobile:active::-webkit-slider-thumb { cursor: grabbing; }
+.my-calc-wrapper .calc-slider-mobile::-webkit-slider-thumb:before {
+  content: ''; display: block; width: 20px; height: 24px; background: transparent; position: absolute;
+  left: 50%; top: 50%; transform: translate(-50%,-50%); box-shadow: -4px 0 0 0 #fff, 4px 0 0 0 #fff;
+}
+/* Firefox */
+.my-calc-wrapper .calc-slider-mobile::-moz-range-track {
+  height: 12px; background: var(--slider-track); border-radius: 7px; border: 1px solid #fff;
+}
+.my-calc-wrapper .calc-slider-mobile::-moz-range-thumb {
+  width: 44px; height: 44px; background: var(--slider-main); border-radius: 6px; border: none; cursor: grab;
+  position: relative; box-shadow: 0 1px 4px rgba(40,80,120,0.13); box-sizing: border-box;
+}
+.my-calc-wrapper .calc-slider-mobile:active::-moz-range-thumb { cursor: grabbing; }
+.my-calc-wrapper .calc-slider-mobile::-moz-focus-outer { border: 0; }
+/* IE/Edge */
+.my-calc-wrapper .calc-slider-mobile::-ms-fill-lower,
+.my-calc-wrapper .calc-slider-mobile::-ms-fill-upper {
+  background: var(--slider-track); border-radius: 7px; border: 1px solid #fff;
+}
+.my-calc-wrapper .calc-slider-mobile::-ms-thumb {
+  width: 44px; height: 44px; background: var(--slider-main); border-radius: 6px; border: none; cursor: grab; position: relative;
+  box-shadow: 0 1px 4px rgba(40,80,120,0.13);
+}
+.my-calc-wrapper .calc-slider-mobile:active::-ms-thumb { cursor: grabbing; }
+
+.my-calc-wrapper .calc-slider-value-desktop,
+.my-calc-wrapper .calc-slider-value-mobile {
+  cursor: pointer;
+}
+
+.scale-row {
+  margin-bottom: 12px;
+}
+.scale-label {
+  font-weight: 600;
+  font-size: 16px;
+  color: #153048;
+  margin-bottom: 6px;
+}
+.scale-select {
+  font-size: 15px;
+  padding: 7px 8px;
+  border-radius: 7px;
+  border: 1.5px solid #e1e5e8;
+  background: #f7fafc;
+  color: #153048;
+  font-family: inherit;
+  width: 100%;
+  margin-bottom: 8px;
+  outline: none;
+}
+.scale-info-text {
+  color: #143048;
+  background: #f4f7fa;
+  border-radius: 7px;
+  font-size: 14px;
+  padding: 11px 12px 8px 12px;
+  margin-bottom: 14px;
+  line-height: 1.4;
+  font-family: inherit;
+}
+
+/* Book button */
+.my-calc-wrapper .calc-book-btn {
+  width: 100%;
+  background: var(--slider-main);
+  color: #fff;
+  font-size: 22px;
+  font-weight: 700;
+  padding: 22px 0;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 6px;
+  transition: background 0.13s;
+  letter-spacing: 0.2px;
+  font-family: 'Maven Pro', Arial, sans-serif;
+  text-align: center;
+}
+.my-calc-wrapper .calc-book-btn:hover { background: #144844; }
+
+.my-calc-wrapper .star-rating-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 11px;
+  margin-top: 22px;
+}
+.my-calc-wrapper .review-faces {
+  width: 70px;
+  height: 30px;
+  border-radius: 22px;
+  object-fit: cover;
+  display: block;
+  background: #fff;
+  box-shadow: 0 1px 4px rgba(40,80,120,0.13);
+  flex-shrink: 0;
+}
+.my-calc-wrapper .stars {
+  color: #ffe600;
+  font-size: 27px;
+  letter-spacing: 2px;
+  margin-right: 7px;
+  vertical-align: middle;
+  text-shadow: 0 1px 2px rgba(100,90,30,0.08);
+  flex-shrink: 0;
+}
+.my-calc-wrapper .reviewtext {
+  font-size: 14px;
+  color: #fff;
+  font-weight: 600;
+  background: #206d69;
+  padding: 7px 16px 7px 9px;
+  border-radius: 8px;
+  margin-left: 10px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+@media (max-width: 768px) {
+  .my-calc-wrapper .calc-slider-row-desktop { display: none; }
+  .my-calc-wrapper .calc-slider-row-mobile { display: flex; }
+  .my-calc-wrapper .calc-widget {
+    padding: 16px; border-radius: 10px; max-width: 100%; margin: 0 auto;
+  }
+}
+
+@media (min-width: 769px) {
+  .my-calc-wrapper .calc-slider-row-mobile { display: none; }
+  .my-calc-wrapper .calc-slider-row-desktop { display: flex; }
+}
+
+
+</style>
+
+<div class="my-calc-wrapper">
+  <div class="calc-widget">
+    <!-- Desktop Kvadratmeter Section -->
+    <div class="calc-slider-row-desktop">
+      <div class="calc-slider-label-desktop">Kvadratmeter:</div>
+      <div class="slider-holder-desktop">
+        <input type="range" min="50" max="300" step="1" value="50" id="calc-sqm-desktop" class="calc-slider-desktop">
+      </div>
+      <div class="calc-slider-value-desktop">
+        <span id="calc-sqm-value-desktop" tabindex="0">50</span> m²
+      </div>
+    </div>
+    <!-- Mobile Kvadratmeter Section -->
+    <div class="calc-slider-row-mobile">
+      <div class="calc-slider-label-value-wrapper-mobile">
+        <div class="calc-slider-label-mobile">Kvadratmeter:</div>
+        <div class="calc-slider-value-mobile">
+          <span id="calc-sqm-value-mobile" tabindex="0">50</span> m²
+        </div>
+      </div>
+      <div class="slider-holder-mobile">
+        <input type="range" min="50" max="300" step="1" value="50" id="calc-sqm-mobile" class="calc-slider-mobile">
+      </div>
+    </div>
+    <!-- Flytterengøring Stand Dropdown -->
+    <div class="scale-row">
+      <div class="scale-label">Vælg boligens stand:</div>
+      <select id="scale-select" class="scale-select">
+        <option value="1">1 - Boligen er ren og nyligt rengjort</option>
+        <option value="2">2 - Boligen er vedligeholdt, men ikke rengjort for nylig</option>
+        <option value="3">3 - Boligen er forsømt og ikke rengjort for nylig</option>
+        <option value="4">4 - Boligen er alvorligt misligholdt</option>
+        <option value="5">5 - Boligen er i værst mulige stand</option>
+      </select>
+      <div class="scale-info-text" id="scale-info">Boligen er pæn og velholdt. Der er ikke noget synligt snavs, og de fleste områder skal blot støvsuges og tørres af med en klud. Køleskab og ovn er næsten helt rene og behøver kun en hurtig aftørring. Badeværelset er uden kalk og kræver minimal indsats.</div>
+    </div>
+    <!-- Knappen starter uden pris -->
+<button id="calc-book-btn" class="calc-book-btn" data-state="initial">
+  <span id="btn-text">Se din pris og book flytterengøring →</span>
+  <span id="btn-price" style="display:none;">BOOK FLYTTERENGØRING TIL DKK <span id="calc-price">2.000</span>,-</span>
+</button>
+
+<!-- Pris-info skjult indtil klik -->
+<div id="price-reveal-box" style="display:none; margin-top:15px; padding:15px; background:#f0f7f6; border-radius:8px; text-align:center; animation:fadeIn 0.3s;">
+  <div style="font-size:16px; color:#206d69; margin-bottom:5px;">
+    Pris efter servicefradrag (<strong>26%</strong>):
+  </div>
+  <div style="font-size:28px; font-weight:700; color:#206d69;">
+    <span id="calc-price-after-tax-display">1.480</span> kr.
+  </div>
+  <div style="font-size:13px; color:#666; margin-top:5px;">
+    Du betaler <span id="reveal-total-price">2.000</span> kr. – spar <span id="savings-amount">520</span> kr. på skatten<br>
+    <a href="https://skat.dk/servicefradrag" target="_blank" style="color:#206d69; font-size:11px;" rel="nofollow noopener">Læs mere om fradrag</a>
+  </div>
+</div>
+
+    <div class="star-rating-row">
+      <img decoding="async" src="https://renzen.dk/wp-content/uploads/2024/05/tilfredse-kunder-min.png" class="review-faces" alt="Tilfredse kunder">
+      <span class="stars">★★★★★</span>
+      <span class="reviewtext">
+        800+ flytterengøringer bestået ved flyttesyn
+      </span>
+    </div>
+  </div>
+</div>
+<script>
+(function() {
+  const scaleTexts = [
+    "Boligen er pæn og velholdt. Der er ikke noget synligt snavs, og de fleste områder skal blot støvsuges og tørres af med en klud. Køleskab og ovn er næsten helt rene og behøver kun en hurtig aftørring. Badeværelset er uden kalk og kræver minimal indsats.",
+    "Boligen er generelt pæn og godt vedligeholdt. Der er almindeligt snavs efter lidt tid uden rengøring, men intet der er indgroet. Køleskabet og ovnen er blevet holdt nogenlunde rene og skal blot friskes op. Der er kun lidt kalk på badeværelset og toilettet, da det er blevet fjernet løbende.",
+    "Boligen har ikke fået en grundig rengøring i et stykke tid og trænger til en kærlig hånd. Der er tydeligt snavs efter nogle måneder uden vedligeholdelse. Køleskab og/eller ovn er beskidte, men kan rengøres med lidt ekstra indsats og stærkere midler. Der er kalk på badeværelse og toilet, men ikke mere end det kan fjernes ved almindelig afkalkning.",
+    "Boligen fremstår i en meget beskidt og forsømt stand efter længere tid uden grundig rengøring. Der er fastgroet snavs flere steder, som kræver en ekstra indsats. Køleskab og ovn forventes at være kraftigt tilsmudsede og vil skulle rengøres med mere effektive midler. Badeværelse og toilet har formentligt en del kalk, og nogle områder kan være så medtagede, at de ikke kan gøres helt rene. Vi vil dog naturligvis gøre vores bedste med de midler og metoder, vi har til rådighed, for at få boligen til at fremstå så ren som muligt.",
+    "Boligen fremstår i stærkt forsømt stand og kræver en omfattende og ressourcetung rengøring for at bringes op på et acceptabelt niveau. Hårde hvidevarer, herunder køleskab og ovn, vurderes at være i markant dårlig stand og vil kræve intensiv rengøring med kraftige midler. Badeværelse og toilet er præget af betydelige kalkaflejringer, hvor slibning kan blive nødvendigt for en tilfredsstillende afrensning. Det skal bemærkes, at visse former for snavs og kalk kan være så indgroede, at fuld fjernelse ikke kan garanteres. Renzen vil naturligvis gøre sit yderste for at opnå det bedst mulige resultat inden for de givne rammer."
+  ];
+  const scalePrices = [40, 53, 71, 115, 180.5];
+  const scaleToServiceId = { 1: 119, 2: 115, 3: 116, 4: 117, 5: 118 };
+
+  // Elements
+  const sqmSliderDesktop = document.getElementById('calc-sqm-desktop');
+  const sqmSliderMobile = document.getElementById('calc-sqm-mobile');
+  const sqmValueDesktop = document.getElementById('calc-sqm-value-desktop');
+  const sqmValueMobile = document.getElementById('calc-sqm-value-mobile');
+  const priceSpan = document.getElementById('calc-price');
+  const scaleSelect = document.getElementById('scale-select');
+  const scaleInfo = document.getElementById('scale-info');
+  const bookBtn = document.getElementById('calc-book-btn');
+
+  function getCurrentSlider() {
+    if (window.innerWidth <= 768) return sqmSliderMobile;
+    return sqmSliderDesktop;
+  }
+
+  function updatePrice(val) {
+    const slider = getCurrentSlider();
+    const sqm = val !== undefined ? parseInt(val, 10) : parseInt(slider.value, 10);
+    const scaleIdx = parseInt(scaleSelect.value) - 1;
+    
+    sqmValueDesktop.textContent = sqm;
+    sqmValueMobile.textContent = sqm;
+    
+    const totalPrice = Math.round(sqm * scalePrices[scaleIdx]);
+    const savings = Math.round(totalPrice * 0.26);
+    const afterFradrag = totalPrice - savings;
+    
+    // Update button price
+    if (priceSpan) {
+      priceSpan.textContent = totalPrice.toLocaleString('da-DK');
+    }
+    
+    // Update reveal box price (if exists)
+    const afterTaxDisplay = document.getElementById('calc-price-after-tax-display');
+    if (afterTaxDisplay) {
+      afterTaxDisplay.textContent = afterFradrag.toLocaleString('da-DK');
+    }
+    
+    // Update savings text in reveal box (if exists)
+    const savingsEl = document.getElementById('savings-amount');
+    if (savingsEl) {
+      savingsEl.textContent = savings.toLocaleString('da-DK');
+    }
+    
+    // Update total price text in reveal box (if exists)
+    const totalPriceEl = document.getElementById('reveal-total-price');
+    if (totalPriceEl) {
+      totalPriceEl.textContent = totalPrice.toLocaleString('da-DK');
+    }
+    
+    // Update scale description
+    if (scaleInfo) {
+      scaleInfo.textContent = scaleTexts[scaleIdx];
+    }
+  }
+
+  // Editable m2
+  function setEditable(span, slider) {
+    span.addEventListener('click', function () {
+      if (span.querySelector('input')) return;
+      const currentVal = span.textContent.trim();
+      const input = document.createElement('input');
+      input.type = 'number';
+      input.value = currentVal;
+      input.min = 0;
+      input.max = 299;
+      input.className = 'calc-sqm-edit-input';
+      input.style.width = '80px';
+      span.textContent = '';
+      span.appendChild(input);
+      input.focus();
+
+      function finishEdit() {
+        let val = Math.max(0, Math.min(299, parseInt(input.value, 10) || 0));
+        slider.value = val;
+        span.textContent = val;
+        syncAll(val);
+      }
+
+      input.addEventListener('blur', finishEdit);
+      input.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') { input.blur(); }
+        if (e.key === 'Escape') { span.textContent = slider.value; }
+      });
+    });
+  }
+
+  setEditable(sqmValueDesktop, sqmSliderDesktop);
+  setEditable(sqmValueMobile, sqmSliderMobile);
+
+  function syncAll(val) {
+    updatePrice(val);
+  }
+
+  // Event listeners
+  ['input', 'change'].forEach(evt => {
+    sqmSliderDesktop.addEventListener(evt, function() {
+      sqmSliderMobile.value = this.value;
+      syncAll(this.value);
+    });
+    sqmSliderMobile.addEventListener(evt, function() {
+      sqmSliderDesktop.value = this.value;
+      syncAll(this.value);
+    });
+    scaleSelect.addEventListener(evt, function() {
+      syncAll();
+    });
+  });
+
+  window.addEventListener('resize', function() {
+    const val = getCurrentSlider().value;
+    sqmSliderDesktop.value = val;
+    sqmSliderMobile.value = val;
+    syncAll(val);
+  });
+
+  // Init
+  const initialVal = sqmSliderDesktop.value;
+  sqmSliderMobile.value = initialVal;
+  updatePrice(initialVal);
+
+  // Button click handler
+  bookBtn.addEventListener('click', function(e){
+    e.preventDefault();
+    
+    const currentState = bookBtn.getAttribute('data-state');
+    
+    if (currentState === 'initial') {
+      // Første klik: Vis pris og ændr knap
+      revealPriceAndProceed();
+    } else {
+      // Andet klik: Gå til booking
+      proceedToBooking();
+    }
+  });
+
+  function revealPriceAndProceed() {
+    // Opdater knap
+    bookBtn.setAttribute('data-state', 'priced');
+    document.getElementById('btn-text').style.display = 'none';
+    document.getElementById('btn-price').style.display = 'inline';
+    bookBtn.classList.add('price-revealed');
+    
+    // Sikrer at priserne er opdaterede før visning
+    updatePrice();
+    
+    // Vis pris-boksen med fradrag
+    const priceBox = document.getElementById('price-reveal-box');
+    if (priceBox) {
+      priceBox.style.display = 'block';
+      priceBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+    
+    // Track event (hvis du har analytics)
+    if (typeof gtag !== 'undefined') {
+      gtag('event', 'price_reveal', {
+        'price': priceSpan ? priceSpan.textContent : '',
+        'sqm': getCurrentSlider().value,
+        'condition': scaleSelect.value
+      });
+    }
+  }
+
+  function proceedToBooking() {
+    const scale = parseInt(scaleSelect.value, 10);
+    const sqm = parseInt(getCurrentSlider().value, 10);
+    const serviceId = scaleToServiceId[scale] || 119;
+    const url = `https://renzen.dk/book-rengoering/?category_id=4&service_id=${serviceId}&pricing_param_quantity=${sqm}`;
+    window.location.href = url;
+  }
+
+})();
+</script>
+				</div>

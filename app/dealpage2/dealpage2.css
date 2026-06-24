@@ -1,0 +1,395 @@
+/* Deal page 2 — simplified deal funnel form */
+
+.dealpage2-wizard {
+  --deal-green: #173c2c;
+  --deal-green-dark: #0f2d20;
+  --deal-mint: #dfe9dc;
+  --deal-cream: #fbfaf5;
+  --deal-panel: #e7e4da;
+  --deal-muted: #69746c;
+  --deal-border: #bcc5bc;
+}
+
+/* Layout: tighter editorial grid */
+.dealpage2-wizard .l27-deal-flow #l27-booking-form-container {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  gap: 28px;
+  align-items: start;
+}
+
+@media (max-width: 980px) {
+  .dealpage2-wizard .l27-deal-flow #l27-booking-form-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+.dealpage2-wizard .l27-deal-flow .l27-main-column {
+  min-width: 0;
+}
+
+.dealpage2-wizard .l27-deal-flow .l27-main-content {
+  border: 1px solid var(--deal-border) !important;
+  border-radius: 4px !important;
+  background: var(--deal-cream) !important;
+  box-shadow: none !important;
+  padding: 28px !important;
+}
+
+.dealpage2-wizard .l27-deal-flow .l27-sidebar {
+  width: 100%;
+  position: sticky;
+  top: 120px;
+}
+
+.dealpage2-wizard .l27-deal-flow .l27-summary-card {
+  border: 1px solid var(--deal-border) !important;
+  border-radius: 4px !important;
+  background: var(--deal-panel) !important;
+  box-shadow: none !important;
+  padding: 20px !important;
+}
+
+/* Step tabs instead of thin progress bar */
+.dealpage2-wizard .l27-deal-steps {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0;
+  border: 1px solid var(--deal-border);
+  background: var(--deal-cream);
+  margin-bottom: 8px;
+}
+
+.dealpage2-wizard .l27-deal-step {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 14px;
+  border-right: 1px solid var(--deal-border);
+  color: var(--deal-muted);
+}
+
+.dealpage2-wizard .l27-deal-step:last-child {
+  border-right: none;
+}
+
+.dealpage2-wizard .l27-deal-step-number {
+  font-family: var(--font-ibm-plex-mono), monospace;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.dealpage2-wizard .l27-deal-step-label {
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.dealpage2-wizard .l27-deal-step--active {
+  background: var(--deal-mint);
+  color: var(--deal-green);
+}
+
+.dealpage2-wizard .l27-deal-step--completed {
+  background: #edf2ea;
+  color: var(--deal-green);
+}
+
+@media (max-width: 640px) {
+  .dealpage2-wizard .l27-deal-steps {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .dealpage2-wizard .l27-deal-step:nth-child(2) {
+    border-right: none;
+  }
+
+  .dealpage2-wizard .l27-deal-step:nth-child(1),
+  .dealpage2-wizard .l27-deal-step:nth-child(2) {
+    border-bottom: 1px solid var(--deal-border);
+  }
+}
+
+/* Locked offer summary on step 1 */
+.dealpage2-wizard .l27-deal-locked-offer {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0;
+  margin-bottom: 20px;
+  border: 1px solid var(--deal-border);
+  background: var(--deal-mint);
+}
+
+.dealpage2-wizard .l27-deal-locked-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 16px 18px;
+  border-right: 1px solid rgba(23, 60, 44, 0.12);
+}
+
+.dealpage2-wizard .l27-deal-locked-item:last-child {
+  border-right: none;
+}
+
+.dealpage2-wizard .l27-deal-locked-label {
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #5a7162;
+}
+
+.dealpage2-wizard .l27-deal-locked-item strong {
+  font-family: var(--font-bricolage-grotesque), "Bricolage Grotesque", sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--deal-green);
+}
+
+@media (max-width: 720px) {
+  .dealpage2-wizard .l27-deal-locked-offer {
+    grid-template-columns: 1fr;
+  }
+
+  .dealpage2-wizard .l27-deal-locked-item {
+    border-right: none;
+    border-bottom: 1px solid rgba(23, 60, 44, 0.12);
+  }
+
+  .dealpage2-wizard .l27-deal-locked-item:last-child {
+    border-bottom: none;
+  }
+}
+
+/* Editorial address form — like homepage hero */
+.dealpage2-wizard .l27-deal-address-form {
+  border: 1px solid var(--deal-border) !important;
+  background: var(--deal-cream) !important;
+  padding: 2px !important;
+}
+
+.dealpage2-wizard .l27-deal-address-form .l27-field-group {
+  margin-bottom: 0 !important;
+}
+
+.dealpage2-wizard .l27-deal-address-form .l27-field-group label {
+  font-size: 0.68rem !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.14em !important;
+  text-transform: uppercase !important;
+  color: #7b887f !important;
+}
+
+.dealpage2-wizard .l27-deal-address-form #l27-address-step1 {
+  min-height: 58px;
+  border: none !important;
+  border-bottom: 1px solid #d8ddd5 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  padding: 10px 16px !important;
+  font-weight: 600 !important;
+}
+
+.dealpage2-wizard .l27-deal-address-form .l27-field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 !important;
+}
+
+.dealpage2-wizard .l27-deal-address-form .l27-field-row .l27-field-group:first-child {
+  border-right: 1px solid #d8ddd5;
+}
+
+.dealpage2-wizard .l27-deal-address-form .l27-field-row input {
+  min-height: 58px;
+  border: none !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  padding: 10px 16px !important;
+  font-weight: 600 !important;
+}
+
+.dealpage2-wizard .l27-deal-address-form .l27-postcode-badge {
+  margin: 0 !important;
+  border-radius: 0 !important;
+  border-top: 1px solid #d8ddd5;
+  background: #edf2ea !important;
+  color: var(--deal-green) !important;
+  padding: 10px 16px !important;
+  font-size: 0.82rem !important;
+  font-weight: 700 !important;
+}
+
+/* Compact trust strip replaces live review carousel */
+.dealpage2-wizard .l27-deal-trust-strip {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  margin-bottom: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(23, 60, 44, 0.12);
+}
+
+.dealpage2-wizard .l27-deal-trust-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.dealpage2-wizard .l27-deal-trust-item strong {
+  font-family: var(--font-bricolage-grotesque), "Bricolage Grotesque", sans-serif;
+  font-size: 0.95rem;
+  color: var(--deal-green);
+}
+
+.dealpage2-wizard .l27-deal-trust-item span {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--deal-muted);
+}
+
+/* Optional extras accordion on step 2 */
+.dealpage2-wizard .l27-deal-extras-accordion {
+  margin-top: 24px;
+  border: 1px solid var(--deal-border);
+  background: var(--deal-cream);
+}
+
+.dealpage2-wizard .l27-deal-extras-toggle {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 16px;
+  border: none;
+  background: transparent;
+  color: var(--deal-green);
+  font-size: 0.92rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.dealpage2-wizard .l27-deal-extras-toggle-icon {
+  display: inline-flex;
+  width: 24px;
+  height: 24px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--deal-border);
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.dealpage2-wizard .l27-deal-extras-panel {
+  border-top: 1px solid var(--deal-border);
+  padding: 16px;
+}
+
+.dealpage2-wizard .l27-deal-extras-copy {
+  margin: 0 0 14px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--deal-muted);
+}
+
+/* Buttons and accents */
+.dealpage2-wizard .l27-deal-flow .l27-step-btn-primary,
+.dealpage2-wizard .l27-deal-flow #l27-submit-button {
+  min-height: 48px !important;
+  border-radius: 3px !important;
+  background: var(--deal-green) !important;
+  border-color: var(--deal-green) !important;
+  font-weight: 800 !important;
+}
+
+.dealpage2-wizard .l27-deal-flow .l27-step-btn-primary:hover:not(:disabled),
+.dealpage2-wizard .l27-deal-flow #l27-submit-button:hover:not(:disabled) {
+  background: var(--deal-green-dark) !important;
+  border-color: var(--deal-green-dark) !important;
+}
+
+.dealpage2-wizard .l27-deal-flow .l27-step-btn {
+  border-radius: 3px !important;
+  border-color: #aeb9af !important;
+  color: var(--deal-green) !important;
+}
+
+.dealpage2-wizard .l27-deal-flow h2,
+.dealpage2-wizard .l27-deal-flow h3,
+.dealpage2-wizard .l27-deal-flow h4 {
+  color: var(--deal-green) !important;
+  font-family: var(--font-bricolage-grotesque), "Bricolage Grotesque", sans-serif !important;
+}
+
+/* Kill SaaS teal + rounded cards inside deal flow */
+.dealpage2-wizard .l27-deal-flow [style*="#206d69"],
+.dealpage2-wizard .l27-deal-flow [style*="rgb(32, 109, 105)"] {
+  color: var(--deal-green) !important;
+}
+
+.dealpage2-wizard .l27-deal-flow .l27-frequency-type-card,
+.dealpage2-wizard .l27-deal-flow .l27-extra-pill-btn,
+.dealpage2-wizard .l27-deal-flow .l27-date-tile,
+.dealpage2-wizard .l27-deal-flow .l27-time-slot,
+.dealpage2-wizard .l27-deal-flow .l27-custom-btn {
+  border-radius: 3px !important;
+  box-shadow: none !important;
+}
+
+.dealpage2-wizard .l27-deal-flow .l27-extra-pill-btn.selected,
+.dealpage2-wizard .l27-deal-flow .l27-custom-btn.selected,
+.dealpage2-wizard .l27-deal-flow .l27-time-slot.selected,
+.dealpage2-wizard .l27-deal-flow .l27-date-tile.selected {
+  border-color: var(--deal-green) !important;
+  background: #edf2ea !important;
+}
+
+.dealpage2-wizard .l27-deal-flow .l27-steps-footer {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--deal-border);
+}
+
+/* Landing page — pointer on interactive elements */
+.dealpage2-landing a,
+.dealpage2-landing button:not(:disabled),
+.dealpage2-landing [role="button"]:not(:disabled) {
+  cursor: pointer;
+}
+
+.dealpage2-landing button:disabled,
+.dealpage2-landing [role="button"]:disabled {
+  cursor: not-allowed;
+}
+
+.dealpage2-package-card {
+  cursor: pointer;
+  transition:
+    border-color 180ms ease,
+    background-color 180ms ease,
+    transform 180ms ease;
+}
+
+.dealpage2-package-card:disabled {
+  cursor: not-allowed;
+}
+
+.dealpage2-package-card:hover:not(:disabled) {
+  transform: translateY(-2px);
+}
+
+.dealpage2-package-card:focus-visible {
+  outline: 2px solid #173c2c;
+  outline-offset: 2px;
+}
+
+.dealpage2-cta-btn {
+  cursor: pointer;
+}
+
+.dealpage2-cta-btn:disabled {
+  cursor: not-allowed;
+}

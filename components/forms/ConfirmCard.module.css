@@ -1,0 +1,78 @@
+.confirmCard {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  width: 100%;
+  margin-top: 10px;
+  padding: 14px 16px;
+  border: 1.5px solid var(--tf-line);
+  border-radius: 8px;
+  background: var(--tf-surface);
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.confirmCard:hover {
+  border-color: #b8c4bc;
+}
+
+.confirmCardSelected {
+  border-color: var(--tf-accent);
+  background: var(--tf-highlight);
+}
+
+.confirmCardCheck {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  margin-top: 1px;
+  border: 1.5px solid var(--tf-line);
+  border-radius: 6px;
+  background: #fff;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--tf-accent);
+}
+
+.confirmCardSelected .confirmCardCheck {
+  border-color: var(--tf-accent);
+  background: #fff;
+}
+
+.confirmCardText {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.confirmCardLabel {
+  font-size: 0.92rem;
+  line-height: 1.45;
+  font-weight: 600;
+  color: var(--tf-ink);
+}
+
+.confirmCardLabel a,
+.confirmCardText a {
+  color: var(--tf-accent);
+  text-decoration: underline;
+  font-weight: 650;
+}
+
+.confirmCardDescription {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--tf-ink-soft);
+  line-height: 1.45;
+}
+
+.confirmCardDescription a {
+  color: var(--tf-accent);
+  text-decoration: underline;
+  font-weight: 650;
+}

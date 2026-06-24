@@ -1,0 +1,1561 @@
+/* Premium typography antialiasing */
+html, body, button, input, select, textarea, div, span, p, h1, h2, h3, h4, h5, h6, label {
+  -webkit-font-smoothing: antialiased !important;
+  -moz-osx-font-smoothing: grayscale !important;
+  text-rendering: optimizeLegibility !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  letter-spacing: -0.02em !important;
+}
+
+p, span, label, input, button {
+  letter-spacing: -0.01em;
+}
+
+.l27-dealside-wizard-container {
+  background: #ffffff;
+  border: 1px solid rgba(25, 34, 81, 0.08);
+  border-radius: 12px;
+  padding: 28px;
+  max-width: 600px;
+  margin: 0 auto;
+  box-shadow: 0 4px 24px rgba(25, 34, 81, 0.03);
+}
+.wizard-progress-bar {
+  background: #f1f5f9;
+  height: 6px;
+  border-radius: 99px;
+  overflow: hidden;
+  margin-bottom: 14px;
+}
+.progress-fill {
+  background: #206d69;
+  height: 100%;
+  transition: width 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.wizard-step-indicator {
+  font-size: 0.8rem;
+  color: #206d69;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 24px;
+  font-family: var(--font-mono), monospace;
+}
+.wizard-step h2 {
+  font-size: 1.6rem;
+  font-weight: 850;
+  color: #192251;
+  line-height: 1.25;
+  margin-bottom: 8px;
+  font-family: var(--font-display), "Bricolage Grotesque", sans-serif;
+  letter-spacing: -0.02em;
+}
+.step-desc {
+  font-size: 0.92rem;
+  color: rgba(25, 34, 81, 0.7);
+  margin-bottom: 28px;
+  line-height: 1.5;
+}
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 18px;
+  text-align: left;
+}
+.input-group label {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #192251;
+}
+.input-group input {
+  padding: 10px 14px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  color: #192251;
+  background: #ffffff;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  box-shadow: 0 1px 2px rgba(25, 34, 81, 0.02);
+}
+.input-group input:focus {
+  border-color: #206d69;
+  background: #fff;
+  box-shadow: 0 0 0 1px #206d69, 0 1px 2px rgba(25, 34, 81, 0.02);
+  outline: none;
+}
+.inputs-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.zip-status-badge {
+  font-size: 0.8rem;
+  font-weight: 750;
+  margin-top: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.zip-status-badge.success {
+  color: #206d69;
+}
+.zip-status-badge.error {
+  color: #b91c1c;
+}
+.packages-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+@media (min-width: 480px) {
+  .packages-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+.package-card {
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  padding: 18px;
+  cursor: pointer;
+  text-align: left;
+  background: #fff;
+  position: relative;
+  overflow: visible;
+}
+.package-card:hover {
+  border-color: #206d69;
+  background: #e1f2ef;
+}
+.package-card.active {
+  border-color: #206d69;
+  background: #e1f2ef;
+}
+.package-title {
+  font-weight: 850;
+  color: #192251;
+  font-size: 1.1rem;
+  font-family: var(--font-display), sans-serif;
+}
+.package-rooms {
+  font-size: 0.82rem;
+  color: rgba(25, 34, 81, 0.7);
+  margin-top: 3px;
+  font-weight: 500;
+}
+.package-price-row {
+  margin-top: 12px;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+.price-old {
+  font-size: 0.85rem;
+  color: rgba(25, 34, 81, 0.4);
+  text-decoration: line-through;
+  font-weight: 600;
+}
+.price-new {
+  font-size: 1.4rem;
+  font-weight: 850;
+  color: #192251;
+}
+.package-savings {
+  display: inline-block;
+  background: #e6f4ea;
+  color: #166534;
+  font-size: 0.75rem;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: 8px;
+  margin-top: 10px;
+  font-family: var(--font-mono), monospace;
+}
+.cleaners-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+.cleaner-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  padding: 16px;
+  cursor: pointer;
+  background: #fff;
+  position: relative;
+  text-align: center;
+}
+.cleaner-card:hover {
+  border-color: #206d69;
+  background: #e1f2ef;
+}
+.cleaner-card.active {
+  border-color: #206d69;
+  background: #e1f2ef;
+}
+.cleaner-avatar {
+  width: 48px;
+  height: 48px;
+  margin-right: 0 !important;
+  margin-bottom: 8px;
+  border: none !important;
+}
+.cleaner-details {
+  flex: none;
+  text-align: center;
+  width: 100%;
+}
+.cleaner-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+.cleaner-name {
+  font-weight: 850;
+  color: #192251;
+  font-size: 0.95rem;
+  font-family: var(--font-display), sans-serif;
+}
+.cleaner-rating {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #166534;
+  background: #e6f4ea;
+  padding: 2px 6px;
+  border-radius: 6px;
+}
+.cleaner-specialty {
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: #206d69;
+  margin-top: 4px;
+}
+.cleaner-desc {
+  font-size: 0.75rem;
+  color: rgba(25, 34, 81, 0.5);
+  margin-top: 2px;
+  line-height: 1.3;
+}
+.cleaner-select-checkbox {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+}
+.checkbox-ring {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1px solid #cbd5e1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+}
+.cleaner-card.active .checkbox-ring {
+  border-color: #206d69;
+  background: #fff;
+}
+.checkbox-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #206d69;
+  transform: scale(0);
+}
+.cleaner-card.active .checkbox-dot {
+  transform: scale(1);
+}
+/* ─── Horizontal Date Selector (Matching Book-Rengøring but brand style) ─── */
+.l27-date-row {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding-bottom: 12px;
+  scrollbar-width: none; /* Firefox */
+}
+.l27-date-row::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+@media (min-width: 576px) {
+  .l27-date-row {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    overflow-x: visible;
+    padding-bottom: 0;
+  }
+}
+
+.l27-date-tile {
+  background: #fff;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 12px;
+  padding: 10px 6px;
+  min-height: 84px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  cursor: pointer;
+  user-select: none;
+  min-width: 68px;
+  outline: none;
+  font-family: inherit;
+}
+.l27-date-tile:hover:not(:disabled) {
+  border-color: #206d69;
+  background: #e1f2ef;
+}
+.l27-date-tile.selected {
+  border-color: #206d69;
+  background: #e1f2ef;
+  box-shadow: none;
+}
+.l27-date-tile.disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+.l27-date-tile .day-name {
+  font-size: 10px;
+  font-weight: 750;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.l27-date-tile.selected .day-name {
+  color: #206d69;
+}
+.l27-date-tile .day-num {
+  font-size: 17px;
+  font-weight: 850;
+  color: #192251;
+  line-height: 1.15;
+}
+.l27-date-tile .day-month {
+  font-size: 10px;
+  font-weight: 600;
+  color: #94a3b8;
+}
+
+/* Calendar Button (Dashed) */
+.l27-date-tile.calendar-tile {
+  border-style: dashed;
+  border-color: #cbd5e1;
+  background: #fff;
+}
+.l27-date-tile.calendar-tile:hover {
+  border-color: #206d69;
+}
+.l27-date-tile.calendar-tile.selected {
+  border-style: solid;
+  border-color: #206d69;
+  background: #e1f2ef;
+}
+.l27-date-tile.calendar-tile.active-dropdown {
+  border-color: #206d69;
+  background: #e1f2ef;
+}
+
+/* Open calendar dropdown */
+.l27-open-calendar {
+  width: 100%;
+  background: #fff;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 14px;
+  padding: 16px;
+  box-shadow: 0 8px 24px rgba(25, 34, 81, 0.03);
+}
+
+.l27-cal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.l27-cal-month {
+  font-size: 15px;
+  font-weight: 750;
+  color: #192251;
+  text-transform: capitalize;
+}
+
+.l27-cal-nav {
+  width: 32px;
+  height: 32px;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 8px;
+  background: #fff;
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.l27-cal-nav:hover {
+  border-color: #206d69;
+  color: #206d69;
+}
+
+.l27-cal-grid {
+  display: grid;
+  grid-template-columns: 28px repeat(7, 1fr);
+  gap: 4px;
+}
+
+.l27-cal-dow {
+  font-size: 11px;
+  font-weight: 750;
+  color: #64748b;
+  text-align: center;
+  padding: 4px 0;
+}
+
+.l27-cal-week {
+  font-size: 10px;
+  font-weight: 600;
+  color: #94a3b8;
+  text-align: center;
+  padding: 8px 0;
+}
+
+.l27-cal-day {
+  height: 32px;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  background: #fff;
+  cursor: pointer;
+  padding: 0;
+}
+
+.l27-cal-day .l27-cal-num {
+  display: inline-flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 600;
+  color: #192251;
+}
+
+.l27-cal-day:hover:not(:disabled) {
+  border-color: #206d69;
+  background: #e1f2ef;
+}
+
+.l27-cal-day.is-selected {
+  background: #206d69;
+  border-color: #206d69;
+}
+
+.l27-cal-day.is-selected .l27-cal-num {
+  color: #fff;
+}
+
+.l27-cal-day:disabled {
+  opacity: 0.25;
+  cursor: not-allowed;
+}
+
+.l27-cal-day.is-out {
+  opacity: 0.25;
+}
+
+/* Time Slots */
+.l27-time-grid {
+  display: block;
+  width: 100%;
+}
+
+.l27-time-slot {
+  padding: 10px 12px;
+  text-align: center;
+  font-size: 0.9rem;
+  font-weight: 700;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 10px;
+  cursor: pointer;
+  background: #fff;
+  color: #192251;
+}
+
+.l27-time-slot:hover {
+  border-color: #206d69;
+  background: #e1f2ef;
+  color: #206d69;
+}
+
+.l27-time-slot.selected {
+  border-color: #206d69;
+  background: #e1f2ef;
+  color: #206d69;
+}
+
+.l27-time-slot--wide {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  text-align: left;
+}
+
+.l27-time-slot-inner {
+  display: flex;
+  flex-direction: column;
+}
+
+.l27-time-slot-title {
+  font-weight: 850;
+  font-size: 0.9rem;
+  color: #192251;
+}
+.l27-time-slot.selected .l27-time-slot-title {
+  color: #206d69;
+}
+
+.l27-time-slot-range {
+  font-size: 0.78rem;
+  color: rgba(25, 34, 81, 0.6);
+}
+
+.l27-badge-best {
+  font-size: 0.7rem;
+  font-weight: 800;
+  background: #e6f4ea;
+  color: #166534;
+  padding: 2px 8px;
+  border-radius: 6px;
+  text-transform: uppercase;
+}
+
+.l27-hint {
+  font-size: 0.85rem;
+  color: rgba(25, 34, 81, 0.5);
+  text-align: center;
+  padding: 16px 0;
+  font-weight: 500;
+}
+
+.section-sub {
+  font-size: 1.05rem;
+  font-weight: 850;
+  color: #192251;
+  margin-top: 28px;
+  margin-bottom: 14px;
+  text-align: left;
+  font-family: var(--font-display), sans-serif;
+}
+.slot-title {
+  display: block;
+  font-weight: 850;
+  font-size: 0.95rem;
+  color: #192251;
+}
+.slot-desc {
+  display: block;
+  font-size: 0.8rem;
+  color: rgba(25, 34, 81, 0.6);
+  margin-top: 4px;
+}
+.payment-card-input-box {
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 18px;
+  background: #fdfdfd;
+  margin-bottom: 18px;
+}
+.payment-card-input-box .input-group {
+  margin-bottom: 0;
+}
+.summary-price-card {
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 20px;
+  background: #fff;
+  margin-bottom: 20px;
+  text-align: left;
+  box-shadow: 0 1px 3px rgba(25, 34, 81, 0.01);
+}
+.summary-price-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 12px;
+}
+.summary-price-row.ongoing {
+  padding-top: 12px;
+  padding-bottom: 0;
+}
+.summary-price-row.border-top {
+  border-top: 1px dashed rgba(25, 34, 81, 0.15);
+}
+.row-labels {
+  display: flex;
+  flex-direction: column;
+}
+.main-label {
+  font-weight: 800;
+  color: #192251;
+  font-size: 0.98rem;
+  font-family: var(--font-display), sans-serif;
+}
+.sub-label {
+  font-size: 0.8rem;
+  color: rgba(25, 34, 81, 0.65);
+  margin-top: 2px;
+}
+.sub-label strong {
+  color: #192251;
+}
+.row-val {
+  font-weight: 850;
+  font-size: 1.25rem;
+  color: #192251;
+}
+.summary-savings-badge {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #e6f4ea;
+  border: 1px solid rgba(32, 109, 105, 0.15);
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: #166534;
+  margin-top: 14px;
+}
+.summary-pay-today-alert {
+  background: #fffbf0;
+  border: 1.5px solid #fde68a;
+  padding: 16px;
+  border-radius: 12px;
+  margin-top: 14px;
+}
+.summary-pay-today-alert .header-row {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 850;
+  color: #000000;
+  font-size: 1rem;
+}
+.summary-pay-today-alert p {
+  font-size: 0.82rem;
+  color: #000000;
+  line-height: 1.4;
+  margin: 6px 0 0 0;
+  font-weight: 600;
+}
+.terms-checkbox-container {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: 18px;
+  text-align: left;
+}
+.custom-checkbox-input {
+  position: absolute !important;
+  opacity: 0 !important;
+  width: 0 !important;
+  height: 0 !important;
+  pointer-events: none;
+}
+.custom-checkbox-label {
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 12px !important;
+  cursor: pointer;
+  user-select: none;
+}
+.custom-checkbox-box {
+  width: 18px;
+  height: 18px;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.custom-check-icon {
+  width: 12px;
+  height: 12px;
+  color: #fff;
+  stroke-dasharray: 22;
+  stroke-dashoffset: 22;
+}
+.custom-checkbox-input:checked + .custom-checkbox-label .custom-checkbox-box {
+  background: #206d69;
+  border-color: #206d69;
+}
+.custom-checkbox-input:checked + .custom-checkbox-label .custom-check-icon {
+  stroke-dashoffset: 0;
+}
+.checkbox-text-label {
+  font-size: 0.82rem;
+  color: rgba(25, 34, 81, 0.8);
+  line-height: 1.45;
+  font-weight: 600;
+}
+.error-alert-box {
+  background: #fef2f2;
+  border: 1.5px solid #fecaca;
+  color: #991b1b;
+  padding: 14px;
+  border-radius: 12px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  margin-bottom: 18px;
+  text-align: left;
+}
+.wizard-navigation-buttons {
+  display: flex;
+  gap: 12px;
+  margin-top: 28px;
+}
+.btn-primary {
+  flex: 1;
+  background: #206d69;
+  color: #ffffff;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+  position: relative;
+  overflow: hidden;
+}
+.btn-primary:hover:not(:disabled) {
+  background: #17524f;
+}
+.btn-primary:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+.btn-secondary {
+  background: #ffffff;
+  color: #192251;
+  border: 1px solid #cbd5e1;
+  padding: 12px 20px;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+.btn-secondary:hover {
+  background: #f8fafc;
+  border-color: #94a3b8;
+}
+.success-screen {
+  text-align: center;
+  padding: 40px 20px;
+}
+.success-icon {
+  width: 68px;
+  height: 68px;
+  background: #e6f7f2;
+  color: #206d69;
+  border-radius: 99px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36px;
+  margin: 0 auto 20px auto;
+  font-weight: 700;
+  box-shadow: 0 4px 10px rgba(32, 109, 105, 0.15);
+}
+.success-screen h2 {
+  font-size: 1.7rem;
+  font-weight: 850;
+  color: #192251;
+  font-family: var(--font-display), sans-serif;
+}
+.success-screen p {
+  color: rgba(25, 34, 81, 0.8);
+  margin-top: 12px;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+.summary-receipt {
+  border: 1px solid rgba(25, 34, 81, 0.1);
+  border-radius: 20px;
+  padding: 24px;
+  background: #f8fafc;
+  max-width: 460px;
+  margin: 30px auto 0 auto;
+  text-align: left;
+  box-shadow: 0 6px 20px rgba(25, 34, 81, 0.03);
+}
+.summary-receipt h3 {
+  font-weight: 850;
+  font-size: 1.1rem;
+  margin-bottom: 16px;
+  color: #192251;
+  font-family: var(--font-display), sans-serif;
+}
+.receipt-row {
+  font-size: 0.9rem;
+  color: rgba(25, 34, 81, 0.75);
+  margin-bottom: 10px;
+}
+.receipt-row strong {
+  color: #192251;
+}
+.receipt-row.highlight {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 800;
+  color: #192251;
+  font-size: 1rem;
+  margin-top: 12px;
+}
+.receipt-row.sub {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.82rem;
+  color: #206d69;
+  font-weight: 700;
+  margin-top: 2px;
+}
+.receipt-row.info-zero {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 850;
+  color: #166534;
+  font-size: 1.05rem;
+  background: #e6f4ea;
+  padding: 10px 14px;
+  border-radius: 8px;
+  margin-top: 14px;
+  margin-bottom: 0;
+}
+
+/* ─── Named Progress Stepper ─── */
+.wizard-stepper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  margin-bottom: 28px;
+  padding: 0 4px;
+}
+.stepper-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  min-width: 48px;
+}
+.stepper-circle {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 800;
+  border: 2px solid #cbd5e1;
+  color: #94a3b8;
+  background: #fff;
+  transition: all 0.3s ease;
+}
+.stepper-step.active .stepper-circle {
+  border-color: #206d69;
+  background: #206d69;
+  color: #fff;
+}
+.stepper-step.completed .stepper-circle {
+  border-color: #206d69;
+  background: #e6f4ea;
+  color: #206d69;
+}
+.stepper-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  transition: color 0.3s ease;
+}
+.stepper-step.active .stepper-label {
+  color: #206d69;
+}
+.stepper-step.completed .stepper-label {
+  color: #206d69;
+}
+.stepper-line {
+  flex: 1;
+  height: 2px;
+  background: #e2e8f0;
+  margin: 0 4px;
+  margin-bottom: 22px;
+  transition: background 0.3s ease;
+  min-width: 16px;
+}
+.stepper-line.completed {
+  background: #206d69;
+}
+
+@media (max-width: 480px) {
+  .stepper-step {
+    min-width: 36px;
+  }
+  .stepper-circle {
+    width: 28px;
+    height: 28px;
+    font-size: 0.7rem;
+  }
+  .stepper-label {
+    font-size: 0.6rem;
+  }
+}
+
+/* ─── Urgency Banner ─── */
+.wizard-urgency-banner {
+  background: #fafafa;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 14px 18px;
+  margin-bottom: 24px;
+  text-align: center;
+}
+.urgency-congrats {
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: #192251;
+  margin-bottom: 6px;
+}
+.urgency-details {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  font-size: 0.8rem;
+  color: rgba(25, 34, 81, 0.6);
+}
+.urgency-timer {
+  font-weight: 750;
+  color: #206d69;
+}
+.urgency-spots {
+  font-weight: 750;
+  color: #b91c1c;
+}
+
+/* ─── Persistent Bottom Summary Bar ─── */
+.wizard-sticky-summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f8fafc;
+  border: 1px solid rgba(25, 34, 81, 0.08);
+  border-radius: 12px;
+  padding: 14px 18px;
+  margin-top: 20px;
+}
+.sticky-summary-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.summary-label {
+  font-size: 0.82rem;
+  color: rgba(25, 34, 81, 0.5);
+}
+.sticky-summary-left strong {
+  font-size: 0.9rem;
+  color: #192251;
+}
+.summary-extras {
+  font-size: 0.78rem;
+  color: #206d69;
+  font-weight: 600;
+}
+.sticky-summary-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+.summary-old-price {
+  font-size: 0.85rem;
+  color: rgba(25, 34, 81, 0.4);
+  text-decoration: line-through;
+}
+.summary-new-price {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #192251;
+}
+.summary-discount-badge {
+  background: #dcfce7;
+  color: #166534;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 6px;
+  text-transform: uppercase;
+}
+
+@media (max-width: 480px) {
+  .wizard-sticky-summary {
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+  }
+  .urgency-details {
+    flex-direction: column;
+    gap: 6px;
+  }
+}
+
+/* ==========================================================================
+   Renbud Form Styling - Applied to Dealside Form Components
+   ========================================================================== */
+
+:root {
+  --l27-primary: #206d69; /* Rich teal brand color */
+  --l27-primary-light: #e1f2ef; /* Teal light tint */
+  --l27-primary-active-bg: #f0fdf4; /* Clean light green active state from Renbud */
+  --l27-border: #d1d5db; /* Cool gray border from Renbud */
+  --l27-border-light: #e5e7eb; /* Lighter border from Renbud */
+  --l27-bg-input: #ffffff; /* Input background from Renbud */
+  --l27-bg-input-hover: #ffffff; /* Input hover background from Renbud */
+  --l27-text-foreground: hsl(220, 20%, 12%);
+  --l27-text-muted: hsl(220, 10%, 46%);
+  --l27-radius-sm: 6px;
+  --l27-radius-md: 8px;
+  --l27-radius-lg: 12px;
+  --l27-shadow-focus: 0 0 0 1px #206d69;
+}
+
+/* 1. Form Labels & Spacing */
+.l27-field-group label,
+.input-group label,
+#l27-times-label,
+label.l27-field-group {
+  font-family: var(--font-sans), sans-serif !important;
+  font-size: 0.875rem !important;
+  font-weight: 500 !important;
+  color: var(--l27-text-foreground) !important;
+  margin-bottom: 6px !important;
+  display: block !important;
+}
+
+/* 2. Text / Number / Tel / Email Inputs */
+#l27-booking-form input[type="text"],
+#l27-booking-form input[type="email"],
+#l27-booking-form input[type="number"],
+#l27-booking-form input[type="date"],
+#l27-booking-form input[type="tel"],
+.input-group input,
+#stripe-card-element {
+  font-family: var(--font-sans), sans-serif !important;
+  font-size: 0.9375rem !important; /* 15px */
+  line-height: 1.5 !important;
+  color: var(--l27-text-foreground) !important;
+  background-color: var(--l27-bg-input) !important;
+  border: 1px solid var(--l27-border) !important;
+  border-radius: var(--l27-radius-md) !important; /* 8px */
+  padding: 10px 14px !important;
+  width: 100% !important;
+  height: 48px !important;
+  transition: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Inputs Hover State */
+#l27-booking-form input[type="text"]:hover,
+#l27-booking-form input[type="email"]:hover,
+#l27-booking-form input[type="number"]:hover,
+#l27-booking-form input[type="date"]:hover,
+#l27-booking-form input[type="tel"]:hover,
+.input-group input:hover,
+#stripe-card-element:hover {
+  border-color: #9ca3af !important;
+  background-color: var(--l27-bg-input-hover) !important;
+}
+
+/* Inputs Focus State */
+#l27-booking-form input[type="text"]:focus,
+#l27-booking-form input[type="email"]:focus,
+#l27-booking-form input[type="number"]:focus,
+#l27-booking-form input[type="date"]:focus,
+#l27-booking-form input[type="tel"]:focus,
+.input-group input:focus,
+#stripe-card-element:focus-within {
+  border-color: var(--l27-primary) !important;
+  box-shadow: var(--l27-shadow-focus) !important;
+  background-color: #ffffff !important;
+  outline: none !important;
+}
+
+/* Inputs Disabled State */
+#l27-booking-form input:disabled,
+.input-group input:disabled {
+  background-color: var(--l27-bg-input-hover) !important;
+  color: var(--l27-text-muted) !important;
+  cursor: not-allowed !important;
+  opacity: 0.5 !important;
+  border-color: var(--l27-border-light) !important;
+}
+
+/* Inputs Placeholder Color */
+#l27-booking-form input::placeholder,
+.input-group input::placeholder {
+  color: var(--l27-text-muted) !important;
+  opacity: 0.7 !important;
+}
+
+/* 3. Frequency & Choice Cards (Hvor ofte?) */
+.l27-frequency-type-card {
+  position: relative !important;
+  padding: 24px !important;
+  background: #ffffff !important;
+  border: 1px solid var(--l27-border-light) !important;
+  border-radius: var(--l27-radius-lg) !important; /* 12px */
+  transition: all 0.2s ease !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.06) !important;
+  cursor: pointer !important;
+}
+
+/* Card Hover State */
+.l27-frequency-type-card:hover {
+  background-color: #f9fafb !important;
+  border-color: var(--l27-border) !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05) !important;
+}
+
+/* Card Selected State */
+.l27-recurring-card.active,
+.l27-oneoff-card.active {
+  background-color: #ffffff !important;
+  border: 1.5px solid var(--l27-primary) !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05) !important;
+}
+
+/* Best Badge */
+.l27-best-badge {
+  position: absolute !important;
+  top: -12px !important;
+  right: 24px !important;
+  padding: 6px 16px !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  background: #00fffc !important;
+  color: var(--l27-primary) !important;
+  border-radius: 20px !important;
+  text-transform: capitalize !important;
+}
+
+/* 4. Inside Card Choice Options (Frequency buttons e.g. "Hver uge", "Hver 2. uge") */
+.l27-freq-option {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 12px 16px !important;
+  border: 1px solid var(--l27-border) !important;
+  border-radius: var(--l27-radius-md) !important; /* 8px */
+  background: #ffffff !important;
+  cursor: pointer !important;
+  text-align: center !important;
+  gap: 4px !important;
+  transition: all 0.2s ease !important;
+}
+
+/* Frequency options Hover - #e1f2ef */
+.l27-freq-option:hover {
+  background-color: var(--l27-primary-light) !important; /* #e1f2ef */
+  border-color: var(--l27-primary) !important;
+  color: var(--l27-primary) !important;
+}
+
+/* Frequency options Selected */
+.l27-freq-option.selected,
+.l27-freq-option:has(input:checked) {
+  background-color: var(--l27-primary) !important;
+  border-color: var(--l27-primary) !important;
+  color: #ffffff !important;
+}
+
+.l27-freq-option.selected .l27-freq-option-text,
+.l27-freq-option:has(input:checked) .l27-freq-option-text {
+  color: #ffffff !important;
+}
+
+.l27-freq-option.selected .l27-freq-discount,
+.l27-freq-option:has(input:checked) .l27-freq-discount {
+  color: rgba(255, 255, 255, 0.85) !important;
+}
+
+.l27-freq-option:hover .l27-freq-option-text {
+  color: var(--l27-primary) !important;
+}
+
+/* 5. Extras Cards (Tilvalg) */
+.l27-extra-card {
+  border: 1px solid var(--l27-border-light) !important;
+  border-radius: var(--l27-radius-lg) !important; /* 12px */
+  padding: 16px !important;
+  background: #ffffff !important;
+  transition: all 0.2s ease !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.06) !important;
+}
+
+.l27-extra-card:hover {
+  background-color: #f9fafb !important;
+  border-color: var(--l27-border) !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05) !important;
+}
+
+/* Checked/Highlighted State for Extra Card */
+.l27-extra-card-highlight {
+  background-color: var(--l27-primary-active-bg) !important; /* #f0fdf4 */
+  border-color: var(--l27-primary) !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05) !important;
+}
+
+/* Quantity Adjusters inside Extras */
+.l27-qty-btn {
+  width: 34px !important;
+  height: 34px !important;
+  border: 1px solid var(--l27-border) !important;
+  border-radius: var(--l27-radius-md) !important; /* 8px */
+  background: #f9fafb !important;
+  cursor: pointer !important;
+  font-size: 18px !important;
+  line-height: 1 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transition: all 0.15s ease !important;
+}
+.l27-qty-btn:hover {
+  background-color: #e5e7eb !important;
+  border-color: #9ca3af !important;
+}
+.l27-qty-input {
+  width: 72px !important;
+  height: 34px !important;
+  border: 1px solid var(--l27-border) !important;
+  border-radius: var(--l27-radius-md) !important; /* 8px */
+  padding: 0 10px !important;
+  text-align: center !important;
+}
+
+/* 6. Date Selection Tiles */
+.l27-date-tile,
+.dateCard,
+.customDateCard {
+  background: #ffffff !important;
+  border: 1.5px solid var(--l27-border) !important;
+  border-radius: var(--l27-radius-lg) !important; /* 12px */
+  padding: 10px 6px !important;
+  min-height: 84px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 4px !important;
+  cursor: pointer !important;
+  user-select: none !important;
+  min-width: 68px !important;
+  transition: all 0.2s ease !important;
+}
+
+.l27-date-tile:hover:not(:disabled),
+.dateCard:hover:not(.dateCardActive),
+.customDateCard:hover:not(.dateCardActive) {
+  border-color: var(--l27-primary) !important;
+  background-color: var(--l27-primary-light) !important; /* #e1f2ef */
+}
+
+/* Date tile selected */
+.l27-date-tile.selected,
+.dateCardActive {
+  border: 1.5px solid var(--l27-primary) !important;
+  background-color: var(--l27-primary-light) !important; /* #e1f2ef */
+  box-shadow: 0 4px 10px rgba(32, 109, 105, 0.06) !important;
+}
+
+.l27-date-tile.selected .day-name,
+.dateCardActive .dateCardDayName {
+  color: var(--l27-primary) !important;
+  font-weight: 700 !important;
+}
+
+.l27-date-tile.selected .day-num,
+.dateCardActive .dateCardNumber,
+.dateCardActive .dateCardNumberCustom {
+  color: var(--l27-primary) !important;
+}
+
+.l27-date-tile.selected .day-month,
+.dateCardActive .dateCardMonth {
+  color: var(--l27-primary) !important;
+  opacity: 0.9 !important;
+}
+
+/* 7. Time Slots */
+.l27-time-slot {
+  padding: 10px 12px !important;
+  text-align: center !important;
+  font-size: 0.9rem !important;
+  font-weight: 700 !important;
+  border: 1.5px solid var(--l27-border) !important;
+  border-radius: var(--l27-radius-md) !important; /* 8px or 10px */
+  cursor: pointer !important;
+  background: #ffffff !important;
+  color: var(--l27-text-foreground) !important;
+  transition: all 0.2s ease !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.l27-time-slot:hover {
+  border-color: var(--l27-primary) !important;
+  background-color: var(--l27-primary-light) !important; /* #e1f2ef */
+  color: var(--l27-primary) !important;
+}
+
+.l27-time-slot.selected {
+  border-color: var(--l27-primary) !important;
+  background-color: var(--l27-primary-light) !important; /* #e1f2ef */
+  color: var(--l27-primary) !important;
+}
+
+.l27-time-slot.selected .l27-time-slot-title {
+  color: var(--l27-primary) !important;
+}
+
+/* Wide time slots */
+.l27-time-slot--wide {
+  justify-content: space-between !important;
+  padding: 12px 16px !important;
+  text-align: left !important;
+}
+
+/* 8. Terms Checkbox (Renbud Style Custom Checkbox) */
+.custom-checkbox-container {
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 12px !important;
+  margin-top: 18px !important;
+  text-align: left !important;
+}
+.custom-checkbox-input {
+  position: absolute !important;
+  opacity: 0 !important;
+  width: 0 !important;
+  height: 0 !important;
+  pointer-events: none !important;
+}
+.custom-checkbox-label {
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 12px !important;
+  cursor: pointer !important;
+  user-select: none !important;
+}
+.custom-checkbox-box {
+  width: 24px !important; /* 24px from Renbud CustomCheckbox */
+  height: 24px !important; /* 24px from Renbud CustomCheckbox */
+  border: 2px solid var(--l27-border) !important; /* 2px solid from Renbud */
+  border-radius: 6px !important; /* 6px from Renbud */
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: #ffffff !important;
+  flex-shrink: 0 !important;
+  margin-top: 1px !important;
+  transition: all 0.2s ease !important;
+  color: #ffffff !important;
+}
+.custom-check-icon {
+  width: 14px !important; /* 14px checkmark icon */
+  height: 14px !important;
+  color: #ffffff !important;
+  stroke-dasharray: 22 !important;
+  stroke-dashoffset: 22 !important;
+}
+.custom-checkbox-input:checked + .custom-checkbox-label .custom-checkbox-box {
+  background-color: var(--l27-primary) !important;
+  border-color: var(--l27-primary) !important;
+}
+.custom-checkbox-input:checked + .custom-checkbox-label .custom-check-icon {
+  stroke-dashoffset: 0 !important;
+}
+.checkbox-text-label {
+  font-size: 0.9375rem !important; /* 15px from Renbud */
+  color: var(--l27-text-foreground) !important;
+  line-height: 1.4 !important;
+  font-weight: 600 !important;
+}
+
+/* 9. Packages Cards & Cleaners Cards (Used on page layout if any) */
+.package-card,
+.cleaner-card {
+  border: 1px solid var(--l27-border-light) !important;
+  border-radius: var(--l27-radius-lg) !important; /* 12px */
+  padding: 18px !important;
+  background: #ffffff !important;
+  transition: all 0.2s ease !important;
+  cursor: pointer !important;
+}
+.package-card:hover,
+.cleaner-card:hover {
+  background-color: #f9fafb !important;
+  border-color: var(--l27-border) !important;
+}
+.package-card.active,
+.cleaner-card.active {
+  background-color: var(--l27-primary-active-bg) !important; /* #f0fdf4 */
+  border-color: var(--l27-primary) !important;
+}
+
+/* Editorial Renzen treatment for the deal funnel */
+.deal-editorial-wizard {
+  --l27-primary: #173c2c;
+  --l27-primary-light: #dfe9dc;
+  --l27-primary-active-bg: #edf2ea;
+  --l27-border: #bcc5bc;
+  --l27-border-light: #d8ddd5;
+  --l27-text-foreground: #203129;
+  --l27-text-muted: #69746c;
+  --l27-radius-sm: 2px;
+  --l27-radius-md: 3px;
+  --l27-radius-lg: 4px;
+  --l27-shadow-focus: 0 0 0 1px #173c2c;
+}
+
+.deal-editorial-wizard #l27-booking-wizard-wrapper,
+.deal-editorial-wizard #l27-booking-form-container {
+  color: #203129 !important;
+  font-family: var(--font-sans), sans-serif !important;
+}
+
+.deal-editorial-wizard .l27-main-content,
+.deal-editorial-wizard .l27-summary-card,
+.deal-editorial-wizard .l27-mobile-summary-content,
+.deal-editorial-wizard .summary-receipt {
+  border: 1px solid #d1d7cf !important;
+  border-radius: 4px !important;
+  background: #fbfaf5 !important;
+  box-shadow: none !important;
+}
+
+.deal-editorial-wizard .l27-summary-card {
+  background: #e7e4da !important;
+}
+
+.deal-editorial-wizard h2,
+.deal-editorial-wizard h3,
+.deal-editorial-wizard h4,
+.deal-editorial-wizard .l27-summary-card h3,
+.deal-editorial-wizard .l27-section-title,
+.deal-editorial-wizard .step-title {
+  color: #173c2c !important;
+}
+
+.deal-editorial-wizard .btn-primary,
+.deal-editorial-wizard .l27-next-btn,
+.deal-editorial-wizard .l27-submit-btn {
+  border-radius: 3px !important;
+  background: #173c2c !important;
+  box-shadow: none !important;
+}
+
+.deal-editorial-wizard .btn-primary:hover:not(:disabled),
+.deal-editorial-wizard .l27-next-btn:hover,
+.deal-editorial-wizard .l27-submit-btn:hover {
+  background: #0f2d20 !important;
+}
+
+.deal-editorial-wizard .btn-secondary,
+.deal-editorial-wizard .l27-back-btn {
+  border-radius: 3px !important;
+  border-color: #aeb9af !important;
+  background: transparent !important;
+  color: #173c2c !important;
+  box-shadow: none !important;
+}
+
+.deal-editorial-wizard .l27-frequency-type-card,
+.deal-editorial-wizard .l27-extra-card,
+.deal-editorial-wizard .l27-freq-option,
+.deal-editorial-wizard .l27-date-tile,
+.deal-editorial-wizard .dateCard,
+.deal-editorial-wizard .customDateCard,
+.deal-editorial-wizard .l27-time-slot,
+.deal-editorial-wizard .wizard-sticky-summary,
+.deal-editorial-wizard .wizard-urgency-banner {
+  border-radius: 3px !important;
+  box-shadow: none !important;
+}
+
+.deal-editorial-wizard .wizard-urgency-banner {
+  border-color: #d1d7cf !important;
+  background: #e7e4da !important;
+}
+
+.deal-editorial-wizard .l27-best-badge,
+.deal-editorial-wizard .summary-discount-badge {
+  border-radius: 2px !important;
+  background: #cfdccf !important;
+  color: #173c2c !important;
+}
+
+.deal-editorial-wizard .stepper-circle {
+  border-color: #aeb9af !important;
+  border-radius: 2px !important;
+}
+
+.deal-editorial-wizard .stepper-step.active .stepper-circle {
+  border-color: #173c2c !important;
+  background: #173c2c !important;
+}
+
+.deal-editorial-wizard .stepper-step.completed .stepper-circle {
+  border-color: #173c2c !important;
+  background: #dfe9dc !important;
+  color: #173c2c !important;
+}
+
+.deal-editorial-wizard .stepper-step.active .stepper-label,
+.deal-editorial-wizard .stepper-step.completed .stepper-label,
+.deal-editorial-wizard .summary-extras,
+.deal-editorial-wizard .urgency-timer {
+  color: #173c2c !important;
+}
+
+.deal-editorial-wizard .stepper-line.completed {
+  background: #173c2c !important;
+}
+
+.deal-editorial-wizard .custom-checkbox-box,
+.deal-editorial-wizard #l27-booking-form input,
+.deal-editorial-wizard #stripe-card-element {
+  border-radius: 3px !important;
+}
+

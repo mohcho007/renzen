@@ -1,0 +1,340 @@
+.bcPreviewBanner {
+  background: #173c2c;
+  color: #fbfaf5;
+  text-align: center;
+  padding: 0.625rem 1rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.bcPage {
+  background: #fbfaf5;
+  color: #173c2c;
+}
+
+.bcMain {
+  padding: 3rem 1.25rem 5rem;
+}
+
+.bcInner {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.bcHero {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.bcCheck {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50%;
+  background: #173c2c;
+  color: #fbfaf5;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1.25rem;
+}
+
+.bcTitle {
+  font-family: var(--font-display, Georgia, serif);
+  font-size: clamp(1.75rem, 4vw, 2.25rem);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  margin: 0 0 0.75rem;
+}
+
+.bcLead {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #536159;
+  max-width: 36rem;
+  margin-inline: auto;
+}
+
+.bcRef {
+  display: inline-block;
+  margin-top: 1.25rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid #dfe2da;
+  border-radius: 4px;
+  background: #fff;
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.bcRef strong {
+  font-weight: 700;
+  color: #173c2c;
+}
+
+.bcCard {
+  border: 1px solid #dfe2da;
+  border-radius: 6px;
+  background: #fff;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.bcCardTitle {
+  margin: 0 0 1.25rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: #536159;
+}
+
+.bcSummaryGrid {
+  display: grid;
+  gap: 1rem;
+}
+
+@media (min-width: 480px) {
+  .bcSummaryGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.bcSummaryItem {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.bcSummaryLabel {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #7a857e;
+}
+
+.bcSummaryValue {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: #173c2c;
+  line-height: 1.4;
+}
+
+.bcDivider {
+  height: 1px;
+  background: #eceae3;
+  margin: 1.25rem 0;
+}
+
+.bcLineItems {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.bcLineItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  font-size: 0.9375rem;
+}
+
+.bcLineItemLabel {
+  color: #536159;
+  line-height: 1.4;
+}
+
+.bcLineItemSub {
+  display: block;
+  font-size: 0.8125rem;
+  color: #7a857e;
+  margin-top: 0.15rem;
+}
+
+.bcLineItemValue {
+  font-weight: 700;
+  color: #173c2c;
+  white-space: nowrap;
+}
+
+.bcTotal {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding-top: 1rem;
+  margin-top: 0.5rem;
+  border-top: 1px solid #eceae3;
+  font-size: 1rem;
+}
+
+.bcTotal span {
+  font-weight: 600;
+  color: #173c2c;
+}
+
+.bcTotal strong {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #173c2c;
+}
+
+.bcRecurring {
+  margin-top: 0.75rem;
+  font-size: 0.875rem;
+  color: #536159;
+}
+
+.bcRecurring strong {
+  color: #173c2c;
+}
+
+.bcSteps {
+  margin-bottom: 2rem;
+}
+
+.bcStepsTitle {
+  margin: 0 0 1.25rem;
+  font-family: var(--font-display, Georgia, serif);
+  font-size: 1.375rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+.bcStepList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.bcStep {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.bcStepNum {
+  flex-shrink: 0;
+  width: 1.75rem;
+  height: 1.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #173c2c;
+  color: #fbfaf5;
+  font-size: 0.8125rem;
+  font-weight: 700;
+}
+
+.bcStepBody {
+  padding-top: 0.1rem;
+}
+
+.bcStepBody strong {
+  display: block;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: #173c2c;
+  margin-bottom: 0.2rem;
+}
+
+.bcStepBody p {
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.55;
+  color: #536159;
+}
+
+.bcSupport {
+  border: 1px solid #dfe2da;
+  border-radius: 6px;
+  background: #f4f2eb;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.bcSupport p {
+  margin: 0 0 0.75rem;
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  color: #536159;
+}
+
+.bcSupportLinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.bcSupportLinks a {
+  color: #173c2c;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.bcCtas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.bcCtaPrimary,
+.bcCtaSecondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.75rem;
+  padding: 0 1.25rem;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background-color 0.15s ease;
+}
+
+.bcCtaPrimary {
+  background: #173c2c;
+  color: #fbfaf5;
+}
+
+.bcCtaPrimary:hover {
+  background: #0f2d20;
+}
+
+.bcCtaSecondary {
+  background: transparent;
+  color: #173c2c;
+  border: 1px solid #dfe2da;
+}
+
+.bcCtaSecondary:hover {
+  background: #f4f2eb;
+}
+
+.bcFallback {
+  text-align: center;
+  padding: 2rem 0 1rem;
+}
+
+.bcFallback .bcTitle {
+  margin-bottom: 1rem;
+}
+
+.bcFallback .bcLead {
+  margin-bottom: 2rem;
+}
+
+.bcFallback .bcCtas {
+  justify-content: center;
+}

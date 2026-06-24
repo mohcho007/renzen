@@ -21,7 +21,8 @@
 /build
 
 # misc
-.DS_Store
+scratch/*.log
+scratch/*.txt
 *.pem
 
 # debug
@@ -32,6 +33,10 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+!.env.example
+
+# cursor
+.cursor/
 
 # vercel
 .vercel

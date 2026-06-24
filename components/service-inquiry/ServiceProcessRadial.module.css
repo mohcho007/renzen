@@ -1,0 +1,264 @@
+.section {
+  border-top: 1px solid #dfe2da;
+  background: #fbfaf5;
+  padding: 6rem 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .section {
+    padding: 8rem 2rem;
+  }
+}
+
+.inner {
+  margin: 0 auto;
+  max-width: 1180px;
+}
+
+.grid {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+@media (min-width: 900px) {
+  .grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+    gap: 3.5rem 4rem;
+    align-items: center;
+  }
+}
+
+.copy {
+  max-width: 36rem;
+}
+
+.eyebrow {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #55705f;
+}
+
+.title {
+  margin-top: 1rem;
+  font-family: var(--font-display), serif;
+  font-size: clamp(2.25rem, 4vw, 3rem);
+  font-weight: 600;
+  line-height: 1.04;
+  letter-spacing: -0.04em;
+  color: #173c2c;
+}
+
+.body {
+  margin-top: 1.25rem;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.7;
+  color: #4f5c54;
+}
+
+.body + .body {
+  margin-top: 1rem;
+}
+
+.diagramCol {
+  min-width: 0;
+}
+
+.radialWrap {
+  display: none;
+}
+
+@media (min-width: 900px) {
+  .radialWrap {
+    display: block;
+  }
+}
+
+.radial {
+  position: relative;
+  margin: 0 auto;
+  width: 520px;
+  height: 520px;
+  max-width: 100%;
+}
+
+.ringSvg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.spoke {
+  stroke: #b8c4b8;
+  stroke-width: 1.25;
+}
+
+.hub {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 104px;
+  height: 104px;
+  padding: 0.75rem;
+  border: 1.5px solid #173c2c;
+  border-radius: 50%;
+  background: #f6f2e8;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.hubLogo {
+  width: auto;
+  height: 1.625rem;
+  object-fit: contain;
+}
+
+.hubSubtitle {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #55705f;
+}
+
+.step {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.nodeIcon {
+  position: absolute;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border: 1px solid #ccd2ca;
+  border-radius: 50%;
+  background: #fff;
+  color: #41614f;
+  box-shadow: 0 1px 0 rgba(23, 60, 44, 0.04);
+  transform: translate(-50%, -50%);
+}
+
+.nodeLabel {
+  position: absolute;
+  z-index: 1;
+  max-width: 7.25rem;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: 0.01em;
+  color: #173c2c;
+  text-wrap: balance;
+}
+
+.mobileFlow {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 900px) {
+  .mobileFlow {
+    display: none;
+  }
+}
+
+.mobileHub {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.375rem;
+  align-self: center;
+  width: 5.5rem;
+  height: 5.5rem;
+  margin-bottom: 1.5rem;
+  padding: 0.5rem;
+  border: 1.5px solid #173c2c;
+  border-radius: 50%;
+  background: #f6f2e8;
+  text-align: center;
+}
+
+.mobileHubLogo {
+  width: auto;
+  height: 1.25rem;
+  object-fit: contain;
+}
+
+.mobileHubSubtitle {
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #55705f;
+}
+
+.mobileStep {
+  position: relative;
+  display: grid;
+  grid-template-columns: 3.25rem 1fr;
+  gap: 1rem;
+  align-items: center;
+  padding: 1rem 0 1rem 0.25rem;
+}
+
+.mobileStep:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 3.75rem;
+  left: 1.625rem;
+  width: 1px;
+  height: calc(100% - 1.5rem);
+  background: #ccd2ca;
+}
+
+.mobileStepIcon {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.25rem;
+  height: 3.25rem;
+  border: 1px solid #ccd2ca;
+  border-radius: 50%;
+  background: #fff;
+  color: #41614f;
+}
+
+.mobileStepLabel {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: #173c2c;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

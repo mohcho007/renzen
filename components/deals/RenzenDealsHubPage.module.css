@@ -1,0 +1,98 @@
+.economicsToggle {
+  font-family: var(--font-ibm-plex-mono), ui-monospace, monospace;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #657169;
+  transition: color 160ms ease;
+}
+
+.economicsToggle:hover {
+  color: #173c2c;
+}
+
+.economicsPanel {
+  border-top: 1px solid #e2e6df;
+  background: #f6f4ed;
+  animation: economicsIn 180ms ease-out both;
+}
+
+@keyframes economicsIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.economicsGrid {
+  display: grid;
+  gap: 12px;
+}
+
+@media (min-width: 640px) {
+  .economicsGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.economicsCell {
+  border-radius: 10px;
+  border: 1px solid #dfe2da;
+  background: #fffdf9;
+  padding: 12px 14px;
+}
+
+.economicsLabel {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #7b8781;
+}
+
+.economicsValue {
+  margin-top: 4px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #173c2c;
+}
+
+.economicsNotes {
+  margin-top: 12px;
+  font-size: 12px;
+  line-height: 1.55;
+  color: #657169;
+}
+
+.modelTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.modelTable th,
+.modelTable td {
+  border-bottom: 1px solid #dfe2da;
+  padding: 10px 12px;
+  text-align: left;
+}
+
+.modelTable th {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #7b8781;
+  background: #f6f4ed;
+}
+
+.modelTable td {
+  font-weight: 600;
+  color: #203129;
+}

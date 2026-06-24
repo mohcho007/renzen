@@ -1,0 +1,421 @@
+.heroImageRightTop {
+  object-fit: cover;
+  object-position: right top;
+}
+
+.serviceHeroCornerMenu {
+  pointer-events: none;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  z-index: 0;
+  display: none;
+  width: auto;
+  height: auto;
+  max-width: 306px;
+  max-height: 127px;
+  object-fit: contain;
+  object-position: right bottom;
+  opacity: 0.6;
+  mix-blend-mode: screen;
+}
+
+@media (min-width: 640px) {
+  .serviceHeroCornerMenu {
+    display: block;
+  }
+}
+
+.portraitImage {
+  border-radius: 0 34% 8% 0 / 0 18% 8% 0;
+}
+
+.includedSection {
+  position: relative;
+  overflow: hidden;
+}
+
+.includedSection::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(
+    to right,
+    #e7e4da 0%,
+    #e7e4da 28%,
+    rgb(231 228 218 / 92%) 42%,
+    rgb(231 228 218 / 62%) 54%,
+    rgb(231 228 218 / 28%) 66%,
+    transparent 78%
+  );
+}
+
+.serviceLead {
+  min-height: 620px;
+}
+
+.serviceTall {
+  min-height: 400px;
+}
+
+.serviceWide {
+  min-height: 300px;
+}
+
+.offsetPanel {
+  transform: translateY(54px);
+}
+
+.dealImage {
+  border-radius: 0 0 0 38% / 0 0 0 24%;
+}
+
+.clubImage {
+  clip-path: polygon(0 0, 100% 7%, 92% 100%, 0 92%);
+}
+
+.megaMenu {
+  position: fixed;
+  inset: 74px 0 auto;
+  z-index: 60;
+  overflow: hidden;
+  border-top: 1px solid #dfe2da;
+  border-bottom: 1px solid #d7dbd4;
+  background: #fbfaf5;
+  box-shadow: 0 24px 48px rgb(25 45 35 / 12%);
+  animation: editorialMenuIn 220ms ease-out both;
+  isolation: isolate;
+}
+
+.megaMenuIntro {
+  min-height: 292px;
+  padding: 42px 48px 44px;
+  border-right: 1px solid #bdccbd;
+  background: #cfdccf;
+}
+
+.megaMenuCleaning .megaMenuIntro,
+.megaMenuAbout .megaMenuIntro {
+  position: relative;
+  overflow: visible;
+}
+
+.megaMenuCleaning .megaMenuIntro::after,
+.megaMenuAbout .megaMenuIntro::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 4px;
+  z-index: 0;
+  width: 102px;
+  height: 86px;
+  pointer-events: none;
+  background-image: url("/icons/house-bg%20(1).png");
+  background-repeat: no-repeat;
+  background-position: right bottom;
+  background-size: contain;
+  mix-blend-mode: screen;
+  opacity: 0.28;
+}
+
+.megaMenuCleaning .megaMenuIntro > *,
+.megaMenuAbout .megaMenuIntro > * {
+  position: relative;
+  z-index: 1;
+}
+
+.megaMenuGarden .megaMenuIntro {
+  position: relative;
+  overflow: visible;
+}
+
+.megaMenuGarden .megaMenuIntro::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  z-index: 0;
+  width: 235px;
+  height: 98px;
+  pointer-events: none;
+  background-image: url("/icons/have-bg.png");
+  background-repeat: no-repeat;
+  background-position: right bottom;
+  background-size: contain;
+  mix-blend-mode: screen;
+  opacity: 0.28;
+}
+
+.megaMenuGarden .megaMenuIntro > * {
+  position: relative;
+  z-index: 1;
+}
+
+.megaMenuBoligservice .megaMenuIntro,
+.megaMenuBusiness .megaMenuIntro {
+  position: relative;
+  overflow: visible;
+}
+
+.megaMenuBoligservice .megaMenuIntro::after,
+.megaMenuBusiness .megaMenuIntro::after {
+  content: "";
+  position: absolute;
+  right: 10px;
+  bottom: 40px;
+  z-index: 0;
+  width: 140px;
+  height: 118px;
+  pointer-events: none;
+  background-repeat: no-repeat;
+  background-position: right bottom;
+  background-size: auto 101px;
+  mix-blend-mode: screen;
+  opacity: 0.28;
+}
+
+.megaMenuBoligservice .megaMenuIntro::after {
+  background-image: url("/icons/bolig-bg.png");
+  right: 0;
+  bottom: 26px;
+  transform: translateX(6px);
+}
+
+.megaMenuBusiness .megaMenuIntro::after {
+  background-image: url("/icons/erhverv-bg.png");
+  right: 3px;
+  bottom: 48px;
+  width: 145px;
+  height: 121px;
+  background-size: auto 105px;
+}
+
+.megaMenuBoligservice .megaMenuIntro > *,
+.megaMenuBusiness .megaMenuIntro > * {
+  position: relative;
+  z-index: 1;
+}
+
+.megaMenuCleaning,
+.megaMenuBoligservice,
+.megaMenuGarden,
+.megaMenuBusiness,
+.megaMenuAbout {
+  /* Match Erhverv: 2 link rows × 132px + py-8 (4rem) + 4px */
+  --mega-menu-panel-min-height: calc(2 * 132px + 4rem + 4px); /* 332px */
+  min-height: var(--mega-menu-panel-min-height);
+  height: var(--mega-menu-panel-min-height);
+}
+
+.megaMenuCleaning > div,
+.megaMenuBoligservice > div,
+.megaMenuGarden > div,
+.megaMenuBusiness > div,
+.megaMenuAbout > div {
+  min-height: var(--mega-menu-panel-min-height);
+  height: 100%;
+  align-items: stretch;
+}
+
+.megaMenuCleaning::after,
+.megaMenuBoligservice::after,
+.megaMenuGarden::after,
+.megaMenuBusiness::after,
+.megaMenuAbout::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  top: auto;
+  z-index: 0;
+  pointer-events: none;
+  background-repeat: no-repeat;
+  background-position: right bottom;
+  --mega-menu-decor-height: 300px;
+  --mega-menu-decor-width: calc(var(--mega-menu-decor-height) * 480 / 695);
+  width: var(--mega-menu-decor-width);
+  height: var(--mega-menu-decor-height);
+  background-size: var(--mega-menu-decor-width) auto;
+}
+
+.megaMenuCleaning::after {
+  background-image: url("/privat-menu.png");
+}
+
+.megaMenuBoligservice::after {
+  background-image: url("/bolig-menu.png");
+}
+
+.megaMenuGarden .megaMenuIntro,
+.megaMenuBoligservice .megaMenuIntro,
+.megaMenuBusiness .megaMenuIntro,
+.megaMenuAbout .megaMenuIntro {
+  align-self: stretch;
+  min-height: 100%;
+}
+
+.megaMenuGarden::after {
+  background-image: url("/havearbejde-menu.png");
+}
+
+.megaMenuBusiness::after {
+  background-image: url("/erhverv-menu.png");
+}
+
+.megaMenuAbout::after {
+  background-image: url("/om-menu.png");
+}
+
+.megaMenuLink {
+  min-height: 132px;
+  padding: 18px 22px 22px;
+  border-bottom: 1px solid #e0e3dc;
+  transition:
+    background-color 180ms ease,
+    transform 180ms ease;
+}
+
+.megaMenuLink:hover {
+  background: #f2f3ec;
+  transform: translateY(-2px);
+}
+
+.mobileMenuOverlay {
+  transition: transform 100ms ease-out;
+}
+
+.mobileMenuOverlayClosed {
+  transform: translateX(100%);
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.mobileMenuOverlayOpen {
+  transform: translateX(0);
+  visibility: visible;
+}
+
+@keyframes editorialMenuIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 1023px) {
+  .portraitImage,
+  .dealImage {
+    border-radius: 0;
+  }
+
+  .includedSection::after {
+    background: linear-gradient(
+      to bottom,
+      #e7e4da 0%,
+      #e7e4da 52%,
+      rgb(231 228 218 / 82%) 68%,
+      rgb(231 228 218 / 38%) 82%,
+      transparent 100%
+    );
+  }
+
+  .offsetPanel {
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .megaMenu,
+  .megaMenuLink,
+  .mobileMenuOverlay {
+    transition: none;
+    animation: none;
+  }
+
+  .mobileMenuOverlayClosed {
+    transform: translateX(100%);
+    visibility: hidden;
+    opacity: 0;
+  }
+
+  .mobileMenuOverlayOpen {
+    transform: translateX(0);
+    visibility: visible;
+    opacity: 1;
+  }
+}
+
+@media (max-width: 639px) {
+  .serviceLead,
+  .serviceTall,
+  .serviceWide {
+    min-height: 360px;
+  }
+}
+
+.klubFaqSection {
+  position: relative;
+  overflow: hidden;
+  padding: 5.5rem 0;
+}
+
+.klubFaqSection::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: linear-gradient(
+    128deg,
+    #fbfaf5 0%,
+    #fbfaf5 46%,
+    #dfe9dc 54%,
+    #dfe9dc 100%
+  );
+}
+
+.klubFaqSectionSolid {
+  background: #fbfaf5;
+}
+
+.klubFaqSectionSolid::before {
+  content: none;
+}
+
+.klubFaqInner {
+  position: relative;
+  z-index: 1;
+}
+
+.klubFaqGrid {
+  display: grid;
+  gap: 2.5rem 3rem;
+}
+
+@media (min-width: 768px) {
+  .klubFaqGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 3rem 4rem;
+  }
+}
+
+.klubFaqQuestion {
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.5;
+  color: #173c2c;
+}
+
+.klubFaqAnswer {
+  margin-top: 0.625rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.65;
+  color: #758078;
+}

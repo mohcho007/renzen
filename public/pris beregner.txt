@@ -1,0 +1,966 @@
+<div class="elementor-widget-container">
+					
+<style>
+:root {
+  --slider-main: #206d69;
+  --slider-track: #e1e5e8;
+  --slider-thumb-size: 36px;
+  --star-gold: #ffe600;
+}
+
+.my-calc-wrapper .calc-widget {
+  font-family: 'Maven Pro', Arial, sans-serif;
+  max-width: 670px;
+  margin-left: 0;
+  background: #fff;
+  border-radius: 12px;
+  padding: 22px;
+  box-sizing: border-box;
+  align-content: center;
+}
+
+/* Desktop Kvadratmeter section */
+.my-calc-wrapper .calc-slider-row-desktop {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+   justify-content: space-between; /* Added for desktop m² alignment */
+
+ 
+}
+.my-calc-wrapper .calc-slider-label-desktop {
+  width: 140px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #153048;
+  flex-shrink: 0;
+}
+
+.my-calc-wrapper .slider-holder-desktop {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+
+.my-calc-wrapper .calc-slider-desktop {
+  width: 100%;
+  margin-right: 18px;
+  background: transparent;
+  appearance: none;
+  height: 36px;
+  cursor: pointer;
+  position: relative;
+  margin-bottom: 0;
+  z-index: 1;
+}
+
+.my-calc-wrapper .calc-slider-desktop:focus {
+  outline: none;
+}
+
+/* Chrome, Edge, Safari */
+.my-calc-wrapper .calc-slider-desktop::-webkit-slider-runnable-track {
+  height: 12px;
+  background: var(--slider-track);
+  border-radius: 7px;
+  border: 1px solid #fff;
+}
+
+.my-calc-wrapper .calc-slider-desktop::-webkit-slider-thumb {
+  appearance: none;
+  width: var(--slider-thumb-size);
+  height: var(--slider-thumb-size);
+  background: var(--slider-main);
+  border-radius: 6px;
+  border: none;
+  cursor: grab;
+  margin-top: -12px;
+  position: relative;
+  box-shadow: 0 1px 4px rgba(40,80,120,0.13);
+  box-sizing: border-box;
+}
+
+.my-calc-wrapper .calc-slider-desktop:active::-webkit-slider-thumb {
+  cursor: grabbing;
+}
+
+.my-calc-wrapper .calc-slider-desktop::-webkit-slider-thumb:before {
+  content: '';
+  display: block;
+  width: 20px;
+  height: 24px;
+  background: transparent;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+  box-shadow: -4px 0 0 0 #fff, 4px 0 0 0 #fff;
+}
+
+/* Firefox */
+.my-calc-wrapper .calc-slider-desktop::-moz-range-track {
+  height: 12px;
+  background: var(--slider-track);
+  border-radius: 7px;
+  border: 1px solid #fff;
+}
+
+.my-calc-wrapper .calc-slider-desktop::-moz-range-thumb {
+  width: var(--slider-thumb-size);
+  height: var(--slider-thumb-size);
+  background: var(--slider-main);
+  border-radius: 6px;
+  border: none;
+  cursor: grab;
+  position: relative;
+  box-shadow: 0 1px 4px rgba(40,80,120,0.13);
+  box-sizing: border-box;
+}
+
+.my-calc-wrapper .calc-slider-desktop:active::-moz-range-thumb {
+  cursor: grabbing;
+}
+
+.my-calc-wrapper .calc-slider-desktop::-moz-focus-outer {
+  border: 0;
+}
+
+/* IE/Edge */
+.my-calc-wrapper .calc-slider-desktop::-ms-fill-lower,
+.my-calc-wrapper .calc-slider-desktop::-ms-fill-upper {
+  background: var(--slider-track);
+  border-radius: 7px;
+  border: 1px solid #fff;
+}
+
+.my-calc-wrapper .calc-slider-desktop::-ms-thumb {
+  width: var(--slider-thumb-size);
+  height: var(--slider-thumb-size);
+  background: var(--slider-main);
+  border-radius: 6px;
+  border: none;
+  cursor: grab;
+  position: relative;
+  box-shadow: 0 1px 4px rgba(40,80,120,0.13);
+}
+
+.my-calc-wrapper .calc-slider-desktop:active::-ms-thumb {
+  cursor: grabbing;
+}
+
+.my-calc-wrapper .calc-slider-value-desktop {
+  font-size: 19px;
+  color: #153048;
+  background: #e6f1fa;
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-weight: 700;
+  min-width: 105px;
+  text-align: center;
+  margin-left: 5px;
+  font-family: 'Maven Pro', Arial, sans-serif;
+  flex-shrink: 0;
+}
+
+/* Mobile Kvadratmeter section */
+.my-calc-wrapper .calc-slider-row-mobile {
+  display: none; /* Hidden by default, shown on mobile */
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.my-calc-wrapper .calc-slider-label-value-wrapper-mobile {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.my-calc-wrapper .calc-slider-label-mobile {
+  font-size: 16px;
+  font-weight: 700;
+  color: #153048;
+  text-align: left;
+}
+
+.my-calc-wrapper .calc-slider-value-mobile {
+  font-size: 17px;
+  color: #153048;
+  background: #e6f1fa;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-weight: 700;
+  min-width: 80px;
+  text-align: center;
+  font-family: 'Maven Pro', Arial, sans-serif;
+}
+
+.my-calc-wrapper .slider-holder-mobile {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+
+.my-calc-wrapper .calc-slider-mobile {
+  width: 100%;
+  background: transparent;
+  appearance: none;
+  height: 44px; /* Larger touch target */
+  cursor: pointer;
+  position: relative;
+  margin-bottom: 0;
+  z-index: 1;
+}
+
+.my-calc-wrapper .calc-slider-mobile:focus {
+  outline: none;
+}
+
+/* Chrome, Edge, Safari */
+.my-calc-wrapper .calc-slider-mobile::-webkit-slider-runnable-track {
+  height: 12px;
+  background: var(--slider-track);
+  border-radius: 7px;
+  border: 1px solid #fff;
+}
+
+.my-calc-wrapper .calc-slider-mobile::-webkit-slider-thumb {
+  appearance: none;
+  width: 44px;
+  height: 44px;
+  background: var(--slider-main);
+  border-radius: 6px;
+  border: none;
+  cursor: grab;
+  margin-top: -16px;
+  position: relative;
+  box-shadow: 0 1px 4px rgba(40,80,120,0.13);
+  box-sizing: border-box;
+}
+
+.my-calc-wrapper .calc-slider-mobile:active::-webkit-slider-thumb {
+  cursor: grabbing;
+}
+
+.my-calc-wrapper .calc-slider-mobile::-webkit-slider-thumb:before {
+  content: '';
+  display: block;
+  width: 20px;
+  height: 24px;
+  background: transparent;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+  box-shadow: -4px 0 0 0 #fff, 4px 0 0 0 #fff;
+}
+
+/* Firefox */
+.my-calc-wrapper .calc-slider-mobile::-moz-range-track {
+  height: 12px;
+  background: var(--slider-track);
+  border-radius: 7px;
+  border: 1px solid #fff;
+}
+
+.my-calc-wrapper .calc-slider-mobile::-moz-range-thumb {
+  width: 44px;
+  height: 44px;
+  background: var(--slider-main);
+  border-radius: 6px;
+  border: none;
+  cursor: grab;
+  position: relative;
+  box-shadow: 0 1px 4px rgba(40,80,120,0.13);
+  box-sizing: border-box;
+}
+
+.my-calc-wrapper .calc-slider-mobile:active::-moz-range-thumb {
+  cursor: grabbing;
+}
+
+.my-calc-wrapper .calc-slider-mobile::-moz-focus-outer {
+  border: 0;
+}
+
+/* IE/Edge */
+.my-calc-wrapper .calc-slider-mobile::-ms-fill-lower,
+.my-calc-wrapper .calc-slider-mobile::-ms-fill-upper {
+  background: var(--slider-track);
+  border-radius: 7px;
+  border: 1px solid #fff;
+}
+
+.my-calc-wrapper .calc-slider-mobile::-ms-thumb {
+  width: 44px;
+  height: 44px;
+  background: var(--slider-main);
+  border-radius: 6px;
+  border: none;
+  cursor: grab;
+  position: relative;
+  box-shadow: 0 1px 4px rgba(40,80,120,0.13);
+}
+
+.my-calc-wrapper .calc-slider-mobile:active::-ms-thumb {
+  cursor: grabbing;
+}
+
+/* Desktop frequency section */
+.my-calc-wrapper .calc-freq-section {
+  margin-bottom: 18px;
+}
+
+.my-calc-wrapper .calc-freq-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 2px;
+  justify-content: stretch;
+  align-items: stretch; /* Ensure items stretch to fill height */
+}
+
+.my-calc-wrapper .calc-freq-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.my-calc-wrapper .calc-freq-btn {
+  background: #e1e5e8;
+  color: #142848;
+  border: 2px solid #e1e5e8;
+  border-radius: 7px;
+  padding: 12px 8px 8px 8px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border 0.15s;
+  line-height: 1.25;
+  font-family: 'Maven Pro', Arial, sans-serif;
+  position: relative;
+  text-align: center;
+  width: 100%;
+  box-sizing: border-box;
+  flex-grow: 1; /* Allow buttons to grow and fill available space */
+}
+
+.my-calc-wrapper .calc-freq-btn.active,
+.my-calc-wrapper .calc-freq-btn:hover {
+  background: var(--slider-main);
+  color: #fff;
+  border: 2px solid var(--slider-main);
+}
+
+.my-calc-wrapper .calc-freq-btn .most-popular {
+  font-size: 13px;
+  color: #ffe600;
+  display: block;
+  font-weight: 700;
+  line-height: 1;
+  margin-top: 2px;
+}
+
+.my-calc-wrapper .calc-discount-label {
+  text-align: center;
+  color: #142848;
+  font-size: 15px;
+  font-weight: 600;
+  margin-top: 2px;
+  padding: 3px 0 2px 0;
+  letter-spacing: 0.1px;
+}
+
+.my-calc-wrapper .calc-discount-label.active {
+  color: var(--slider-main);
+  font-weight: 700;
+}
+
+.my-calc-wrapper .calc-book-btn {
+  width: 100%;
+  background: var(--slider-main);
+  color: #fff;
+  font-size: 22px;
+  font-weight: 700;
+  padding: 22px 0;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 6px;
+  transition: background 0.13s;
+  letter-spacing: 0.2px;
+  font-family: 'Maven Pro', Arial, sans-serif;
+  text-align: center;
+}
+
+.my-calc-wrapper .calc-book-btn:hover {
+  background: #144844;
+}
+
+.my-calc-wrapper .price-in-button {
+  margin-left: 18px;
+  font-size: 19px;
+  font-weight: 500;
+  background: #fff;
+  color: var(--slider-main);
+  padding: 2px 10px 2px 8px;
+  border-radius: 7px;
+  display: inline-block;
+  font-family: 'Maven Pro', Arial, sans-serif;
+}
+
+/* Star rating styles */
+.my-calc-wrapper .star-rating-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 11px;
+  margin-top: 22px;
+}
+
+.my-calc-wrapper .review-faces {
+  width: 90px;
+  height: 30px;
+  border-radius: 22px;
+  object-fit: cover;
+  display: block;
+  background: #fff;
+  box-shadow: 0 1px 4px rgba(40,80,120,0.13);
+  flex-shrink: 0;
+}
+
+.my-calc-wrapper .stars {
+  color: #ffe600;
+  font-size: 27px;
+  letter-spacing: 2px;
+  margin-right: 7px;
+  vertical-align: middle;
+  text-shadow: 0 1px 2px rgba(100,90,30,0.08);
+  flex-shrink: 0;
+}
+
+.my-calc-wrapper .reviewtext {
+  font-size: 14px;
+  color: #fff;
+  font-weight: 600;
+  background: #206d69;
+  padding: 7px 16px 7px 9px;
+  border-radius: 8px;
+  margin-left: 10px;
+  display: inline-block;
+  vertical-align: middle;
+}
+/* ... your entire CSS as-is ... */
+.calc-sqm-value-input {
+  width: 60px;
+  font-size: 18px;
+  font-family: inherit;
+  background: #e6f1fa;
+  color: #153048;
+  padding: 4px 8px;
+  border-radius: 8px;
+  border: 1px solid #b7d4eb;
+  text-align: center;
+  font-weight: 700;
+}
+.calc-sqm-edit-input {
+  width: 60px;
+  font-size: 18px;
+  font-family: inherit;
+  background: #e6f1fa;
+  color: #153048;
+  padding: 2px 8px;
+  border-radius: 8px;
+  border: 1px solid #b7d4eb;
+  text-align: center;
+  font-weight: 700;
+}
+/* Media Queries */
+@media (min-width: 769px) {
+  .my-calc-wrapper .calc-slider-row-mobile {
+    display: none; /* Hide mobile version on desktop */
+  }
+  .my-calc-wrapper .calc-slider-row-desktop {
+    display: flex; /* Show desktop version on desktop */
+  }
+}
+
+@media (max-width: 768px) {
+  .my-calc-wrapper .calc-slider-row-desktop {
+    display: none; /* Hide desktop version on mobile */
+  }
+  .my-calc-wrapper .calc-slider-row-mobile {
+    display: flex; /* Show mobile version on mobile */
+  }
+
+  .my-calc-wrapper .calc-widget {
+    padding: 16px;
+    border-radius: 10px;
+    max-width: 100%;
+    margin: 0 auto;
+  }
+  
+  /* Mobile frequency section - 2x2 grid with discount under each button */
+  .my-calc-wrapper .calc-freq-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px 8px;
+    margin-top: 20px; /* Added margin-top for gap */
+    margin-bottom: 18px;
+  }
+  
+  .my-calc-wrapper .calc-freq-row {
+    display: contents; /* This makes the flex container's children participate in the grid */
+  }
+  
+  .my-calc-wrapper .calc-freq-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  
+  .my-calc-wrapper .calc-freq-btn {
+    min-width: 0;
+    font-size: 14px;
+    padding: 12px 4px 6px 4px;
+    border-radius: 7px;
+    margin: 0;
+    min-height: 44px;
+  }
+  
+  .my-calc-wrapper .calc-freq-btn .most-popular {
+    font-size: 11px;
+    margin-top: 2px;
+  }
+  
+  .my-calc-wrapper .calc-discount-label {
+    font-size: 12px;
+    padding: 4px 0;
+    margin-top: 0;
+    text-align: center;
+    color: #206d69;
+    min-width: 0;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+  }
+  
+  .my-calc-wrapper .calc-book-btn {
+    font-size: 18px;
+    padding: 16px 0;
+    margin-top: 12px;
+    border-radius: 8px;
+    min-height: 48px;
+  }
+  
+  .my-calc-wrapper .price-in-button {
+    font-size: 14px;
+    padding: 3px 8px;
+    border-radius: 6px;
+    margin-left: 8px;
+  }
+  
+  .my-calc-wrapper .star-rating-row {
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    margin-top: 16px;
+    text-align: center;
+  }
+  
+  .my-calc-wrapper .review-faces {
+    width: 120px;
+    height: 42px;
+  }
+  
+  .my-calc-wrapper .stars {
+    font-size: 20px;
+    margin-right: 0;
+  }
+  
+  .my-calc-wrapper .reviewtext {
+    font-size: 12px;
+    padding: 6px 12px;
+    margin-left: 0;
+    text-align: center;
+  }
+}
+
+/* Small mobile optimizations (up to 480px) */
+@media (max-width: 480px) {
+  .my-calc-wrapper .calc-widget {
+    padding: 12px;
+    border-radius: 8px;
+  }
+  
+  .my-calc-wrapper .calc-slider-label-mobile {
+    font-size: 15px;
+  }
+  
+  .my-calc-wrapper .calc-slider-value-mobile {
+    font-size: 16px;
+    padding: 6px 10px;
+  }
+  
+  .my-calc-wrapper .calc-freq-btn {
+    font-size: 13px;
+    padding: 10px 2px 4px 2px;
+  }
+  
+  .my-calc-wrapper .calc-freq-btn .most-popular {
+    font-size: 10px;
+  }
+  
+  .my-calc-wrapper .calc-discount-label {
+    font-size: 11px;
+  }
+  
+  .my-calc-wrapper .calc-book-btn {
+    font-size: 16px;
+    padding: 24px 0;
+  }
+  
+  .my-calc-wrapper .price-in-button {
+    font-size: 12px;
+    padding: 2px 6px;
+    margin-left: 6px;
+  }
+  
+  .my-calc-wrapper .stars {
+    font-size: 18px;
+  }
+  
+  .my-calc-wrapper .reviewtext {
+    font-size: 11px;
+    padding: 5px 10px;
+  }
+}
+
+/* Touch-friendly improvements for mobile */
+@media (max-width: 768px) {
+  .my-calc-wrapper .calc-slider-mobile {
+    height: 44px; /* Larger touch target */
+  }
+  
+  .my-calc-wrapper .calc-slider-mobile::-webkit-slider-thumb {
+    width: 44px;
+    height: 44px;
+    margin-top: -16px;
+  }
+  
+  .my-calc-wrapper .calc-slider-mobile::-moz-range-thumb {
+    width: 44px;
+    height: 44px;
+  }
+}
+
+/* Landscape mobile optimizations */
+@media (max-width: 768px) and (orientation: landscape) {
+  .my-calc-wrapper .calc-widget {
+    padding: 12px 16px;
+  }
+  
+  .my-calc-wrapper .calc-slider-row-mobile {
+    margin-bottom: 16px;
+  }
+  
+  .my-calc-wrapper .star-rating-row {
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 12px;
+  }
+  
+  .my-calc-wrapper .reviewtext {
+    font-size: 10px;
+    padding: 4px 8px;
+    margin-left: 5px;
+  }
+}
+
+</style>
+
+<div class="my-calc-wrapper">
+  <div class="calc-widget">
+    <!-- Desktop Kvadratmeter Section -->
+    <div class="calc-slider-row-desktop">
+      <div class="calc-slider-label-desktop">Kvadratmeter:</div>
+      <div class="slider-holder-desktop">
+        <input type="range" min="0" max="299" step="1" value="70" id="calc-sqm-desktop" class="calc-slider-desktop">
+      </div>
+      <div class="calc-slider-value-desktop">
+  <span id="calc-sqm-value-desktop" tabindex="0" style="cursor:pointer;">119</span> m²
+</div>
+    </div>
+
+    <!-- Mobile Kvadratmeter Section -->
+    <div class="calc-slider-row-mobile">
+      <div class="calc-slider-label-value-wrapper-mobile">
+        <div class="calc-slider-label-mobile">Kvadratmeter:</div>
+        <div class="calc-slider-value-mobile">
+  <span id="calc-sqm-value-mobile" tabindex="0" style="cursor:pointer;">119</span> m²
+</div>
+      </div>
+      <div class="slider-holder-mobile">
+        <input type="range" min="0" max="299" step="1" value="70" id="calc-sqm-mobile" class="calc-slider-mobile">
+      </div>
+    </div>
+    <div class="calc-freq-section">
+      <div class="calc-freq-row">
+        <div class="calc-freq-item">
+          <button type="button" class="calc-freq-btn" data-mult="1" data-label="1-gang">Engangsydelse</button>
+          <div class="calc-discount-label" id="discount-once">0% rabat</div>
+        </div>
+        <div class="calc-freq-item">
+          <button type="button" class="calc-freq-btn active" data-mult="0.8" data-label="hver-uge">Hver uge</button>
+          <div class="calc-discount-label active" id="discount-week">20% rabat</div>
+        </div>
+        <div class="calc-freq-item">
+          <button type="button" class="calc-freq-btn" data-mult="0.85" data-label="hver-2-uge">Hver 2. uge<br><span class="most-popular">(Mest populær)</span></button>
+          <div class="calc-discount-label" id="discount-2weeks">15% rabat</div>
+        </div>
+        <div class="calc-freq-item">
+          <button type="button" class="calc-freq-btn" data-mult="0.95" data-label="hver-4-uge">Hver 4. uge</button>
+          <div class="calc-discount-label" id="discount-4weeks">5% rabat</div>
+        </div>
+      </div>
+    </div>
+    <button id="calc-book-btn" class="calc-book-btn" data-service-id="83" data-sqm="119">
+      Se tider og book til <span id="calc-price">958</span> kr.
+    </button>
+    <div class="calc-servicefradrag" style="margin-top:18px;">
+  <div style="font-size:17px;color:#206d69;">
+    Pris efter servicefradrag (26%): 
+    <strong id="calc-price-after-tax" style="font-size:21px;">709 kr.</strong>
+  </div>
+  <div style="font-size:13px;color:#333333;">
+    Du kan trække 26% af prisen fra i skat via servicefradraget.<br>
+    <a href="https://skat.dk/borger/fradrag/servicefradrag/servicefradrag" target="_blank" style="color:#333333;text-decoration:underline;" rel="nofollow noopener">
+      Læs mere hos Skattestyrelsen
+    </a>
+  </div>
+</div>
+
+
+    <div class="star-rating-row">
+      <img decoding="async" data-opt-id="2146429080" data-opt-src="https://renzen.dk/wp-content/uploads/2026/04/kunde-ansigter.png" src="https://renzen.dk/wp-content/uploads/2026/04/kunde-ansigter.png" class="review-faces" alt="Tilfredse kunder" data-opt-lazy-loaded="false" data-opt-optimized-width="100" data-opt-optimized-height="30">
+      <style>
+.stars {
+  display: flex;
+  gap: 0;
+  align-items: center;
+}
+
+.stars svg {
+  display: block;
+  margin: 0;
+  padding: 0;
+}
+</style><div class="stars">
+  <svg xmlns="http://www.w3.org/2000/svg" width="22" height="16" viewBox="0 0 32 31"><g fill-rule="nonzero" fill="none"><path d="m11 9.76-8.82 1.27-.15.03a1.38 1.38 0 0 0-.61 2.33l6.38 6.22-1.5 8.77-.02.16a1.38 1.38 0 0 0 2.02 1.3l7.88-4.14 7.87 4.14.14.06a1.38 1.38 0 0 0 1.86-1.52l-1.5-8.77 6.39-6.22.1-.12a1.38 1.38 0 0 0-.87-2.24l-8.81-1.27-3.94-7.99a1.38 1.38 0 0 0-2.48 0L11 9.76Z" stroke="#000" fill="#E8F5D3"></path><path d="m21.2 10.35 1.23 6.52A.22.22 0 1 1 22 17l-1.23-6.5a.2.2 0 0 1 .17-.27c.1-.02.2.03.25.12ZM15.88 23.79l-3.58.45a.2.2 0 0 1-.24-.2.22.22 0 0 1 .2-.24l3.55-.46c.13-.01.24.07.26.2a.22.22 0 0 1-.2.25Z" fill="#000"></path></g></svg>
+
+  <svg xmlns="http://www.w3.org/2000/svg" width="22" height="16" viewBox="0 0 32 31"><g fill-rule="nonzero" fill="none"><path d="m11 9.76-8.82 1.27-.15.03a1.38 1.38 0 0 0-.61 2.33l6.38 6.22-1.5 8.77-.02.16a1.38 1.38 0 0 0 2.02 1.3l7.88-4.14 7.87 4.14.14.06a1.38 1.38 0 0 0 1.86-1.52l-1.5-8.77 6.39-6.22.1-.12a1.38 1.38 0 0 0-.87-2.24l-8.81-1.27-3.94-7.99a1.38 1.38 0 0 0-2.48 0L11 9.76Z" stroke="#000" fill="#E8F5D3"></path><path d="m21.2 10.35 1.23 6.52A.22.22 0 1 1 22 17l-1.23-6.5a.2.2 0 0 1 .17-.27c.1-.02.2.03.25.12ZM15.88 23.79l-3.58.45a.2.2 0 0 1-.24-.2.22.22 0 0 1 .2-.24l3.55-.46c.13-.01.24.07.26.2a.22.22 0 0 1-.2.25Z" fill="#000"></path></g></svg>
+
+  <svg xmlns="http://www.w3.org/2000/svg" width="22" height="16" viewBox="0 0 32 31"><g fill-rule="nonzero" fill="none"><path d="m11 9.76-8.82 1.27-.15.03a1.38 1.38 0 0 0-.61 2.33l6.38 6.22-1.5 8.77-.02.16a1.38 1.38 0 0 0 2.02 1.3l7.88-4.14 7.87 4.14.14.06a1.38 1.38 0 0 0 1.86-1.52l-1.5-8.77 6.39-6.22.1-.12a1.38 1.38 0 0 0-.87-2.24l-8.81-1.27-3.94-7.99a1.38 1.38 0 0 0-2.48 0L11 9.76Z" stroke="#000" fill="#E8F5D3"></path><path d="m21.2 10.35 1.23 6.52A.22.22 0 1 1 22 17l-1.23-6.5a.2.2 0 0 1 .17-.27c.1-.02.2.03.25.12ZM15.88 23.79l-3.58.45a.2.2 0 0 1-.24-.2.22.22 0 0 1 .2-.24l3.55-.46c.13-.01.24.07.26.2a.22.22 0 0 1-.2.25Z" fill="#000"></path></g></svg>
+
+  <svg xmlns="http://www.w3.org/2000/svg" width="22" height="16" viewBox="0 0 32 31"><g fill-rule="nonzero" fill="none"><path d="m11 9.76-8.82 1.27-.15.03a1.38 1.38 0 0 0-.61 2.33l6.38 6.22-1.5 8.77-.02.16a1.38 1.38 0 0 0 2.02 1.3l7.88-4.14 7.87 4.14.14.06a1.38 1.38 0 0 0 1.86-1.52l-1.5-8.77 6.39-6.22.1-.12a1.38 1.38 0 0 0-.87-2.24l-8.81-1.27-3.94-7.99a1.38 1.38 0 0 0-2.48 0L11 9.76Z" stroke="#000" fill="#E8F5D3"></path><path d="m21.2 10.35 1.23 6.52A.22.22 0 1 1 22 17l-1.23-6.5a.2.2 0 0 1 .17-.27c.1-.02.2.03.25.12ZM15.88 23.79l-3.58.45a.2.2 0 0 1-.24-.2.22.22 0 0 1 .2-.24l3.55-.46c.13-.01.24.07.26.2a.22.22 0 0 1-.2.25Z" fill="#000"></path></g></svg>
+
+  <svg xmlns="http://www.w3.org/2000/svg" width="22" height="16" viewBox="0 0 32 31"><g fill-rule="nonzero" fill="none"><path d="m11 9.76-8.82 1.27-.15.03a1.38 1.38 0 0 0-.61 2.33l6.38 6.22-1.5 8.77-.02.16a1.38 1.38 0 0 0 2.02 1.3l7.88-4.14 7.87 4.14.14.06a1.38 1.38 0 0 0 1.86-1.52l-1.5-8.77 6.39-6.22.1-.12a1.38 1.38 0 0 0-.87-2.24l-8.81-1.27-3.94-7.99a1.38 1.38 0 0 0-2.48 0L11 9.76Z" stroke="#000" fill="#E8F5D3"></path><path d="m21.2 10.35 1.23 6.52A.22.22 0 1 1 22 17l-1.23-6.5a.2.2 0 0 1 .17-.27c.1-.02.2.03.25.12ZM15.88 23.79l-3.58.45a.2.2 0 0 1-.24-.2.22.22 0 0 1 .2-.24l3.55-.46c.13-.01.24.07.26.2a.22.22 0 0 1-.2.25Z" fill="#000"></path></g></svg>
+</div>
+      <span class="reviewtext">
+        Vurderet til 4.8 ud af 5
+      </span>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  // ✅ RENZEN base pricing model (your current base prices)
+  const BASE_FEE = 245;     // fast base
+  const PRICE_PER_M2 = 8;   // kr pr m²
+
+  // service mapping (unchanged structure; used for dataset only)
+  const sqmTiers = [
+    { max: 70,  serviceId: 81 },
+    { max: 100, serviceId: 82 },
+    { max: 130, serviceId: 83 },
+    { max: 160, serviceId: 84 },
+    { max: 200, serviceId: 85 },
+    { max: 230, serviceId: 86 },
+    { max: 260, serviceId: 87 },
+    { max: 299, serviceId: 88 }
+  ];
+
+  const frequencyMap = [
+    { id: 1,  mult: 1,    label: '1-gang',     discount: 0 },
+    { id: 17, mult: 0.8,  label: 'hver-uge',   discount: 20 },
+    { id: 22, mult: 0.85, label: 'hver-2-uge', discount: 15 },
+    { id: 19, mult: 0.95, label: 'hver-4-uge', discount: 5 }
+  ];
+
+  // Default: Hver 2 uge
+  let selectedFreqIdx = 2;
+  let selectedMult = frequencyMap[selectedFreqIdx].mult;
+  let selectedFreqId = frequencyMap[selectedFreqIdx].id;
+  let selectedLabel = frequencyMap[selectedFreqIdx].label;
+
+  const sqmSliderDesktop = document.getElementById('calc-sqm-desktop');
+  const sqmSliderMobile  = document.getElementById('calc-sqm-mobile');
+  const sqmValueDesktop  = document.getElementById('calc-sqm-value-desktop');
+  const sqmValueMobile   = document.getElementById('calc-sqm-value-mobile');
+  const priceSpan        = document.getElementById('calc-price');
+  const freqBtns         = document.querySelectorAll('.calc-freq-btn');
+  const bookBtn          = document.getElementById('calc-book-btn');
+
+  function getCurrentSlider() {
+    return (window.innerWidth <= 768) ? sqmSliderMobile : sqmSliderDesktop;
+  }
+
+  function setEditable(span, slider) {
+    span.addEventListener('click', function () {
+      if (span.querySelector('input')) return;
+
+      const currentVal = span.textContent.trim();
+      const input = document.createElement('input');
+      input.type = 'number';
+      input.value = currentVal;
+      input.min = 0;
+      input.max = 299;
+      input.className = 'calc-sqm-edit-input';
+      input.style.width = '80px';
+
+      span.textContent = '';
+      span.appendChild(input);
+      input.focus();
+
+      function finishEdit() {
+        let val = Math.max(0, Math.min(299, parseInt(input.value, 10) || 0));
+        slider.value = val;
+        span.textContent = val;
+        syncAll(val);
+      }
+
+      input.addEventListener('blur', finishEdit);
+      input.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') input.blur();
+        if (e.key === 'Escape') span.textContent = slider.value;
+      });
+    });
+  }
+
+  setEditable(document.getElementById('calc-sqm-value-desktop'), document.getElementById('calc-sqm-desktop'));
+  setEditable(document.getElementById('calc-sqm-value-mobile'),  document.getElementById('calc-sqm-mobile'));
+
+  function getTier(sqm) {
+    for (let i = 0; i < sqmTiers.length; i++) {
+      if (sqm <= sqmTiers[i].max) return sqmTiers[i];
+    }
+    return sqmTiers[sqmTiers.length - 1];
+  }
+
+  // ✅ NEW: base pricing calculator
+  function calcBasePrice(sqm) {
+    return Math.round(BASE_FEE + (PRICE_PER_M2 * sqm));
+  }
+
+  function updatePrice(val) {
+    const slider = getCurrentSlider();
+    const sqm = val !== undefined ? parseInt(val, 10) : parseInt(slider.value, 10);
+
+    // Set both value fields
+    sqmValueDesktop.textContent = sqm;
+    sqmValueMobile.textContent = sqm;
+
+    const tier = getTier(sqm);
+
+    // ✅ NEW: price from base model (instead of tier.price)
+    const basePrice = calcBasePrice(sqm);
+
+    const totalPrice = Math.round(basePrice * selectedMult);
+    priceSpan.textContent = totalPrice;
+
+    // After servicefradrag (26%)
+    const afterFradrag = Math.round(totalPrice * 0.74);
+    document.getElementById('calc-price-after-tax').textContent =
+      afterFradrag.toLocaleString('da-DK') + ' kr.';
+
+    // Store for booking event (unchanged)
+    bookBtn.dataset.serviceId = tier.serviceId;
+    bookBtn.dataset.sqm = sqm;
+  }
+
+  function updateDiscountHighlight(idx) {
+    ['discount-once','discount-week','discount-2weeks','discount-4weeks']
+      .forEach((id, i) => {
+        const el = document.getElementById(id);
+        if (el) el.classList.toggle('active', i === idx);
+      });
+  }
+
+  function syncAll(val) {
+    updateDiscountHighlight(selectedFreqIdx);
+    updatePrice(val);
+  }
+
+  ['input','change'].forEach(evt => {
+    sqmSliderDesktop.addEventListener(evt, function() {
+      sqmSliderMobile.value = this.value;
+      syncAll(this.value);
+    });
+    sqmSliderMobile.addEventListener(evt, function() {
+      sqmSliderDesktop.value = this.value;
+      syncAll(this.value);
+    });
+  });
+
+  freqBtns.forEach((btn, idx) => {
+    btn.addEventListener('click', function() {
+      freqBtns.forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+
+      selectedMult = parseFloat(this.getAttribute('data-mult'));
+      selectedFreqId = frequencyMap[idx].id;
+      selectedLabel = this.getAttribute('data-label');
+      selectedFreqIdx = idx;
+
+      updateDiscountHighlight(idx);
+      updatePrice();
+    });
+  });
+
+  bookBtn.addEventListener('click', function(e){
+  e.preventDefault();
+
+  const sqm = parseInt(getCurrentSlider().value, 10);
+
+  const url =
+    'https://renzen.dk/book-rengoering/' +
+    '?category_id=3' +
+    '&service_id=213' +
+    '&pricing_param_quantity=' + sqm +
+    '&frequency_id=' + selectedFreqId;
+
+  window.location.href = url;
+});
+
+
+  window.addEventListener('resize', function() {
+    const val = getCurrentSlider().value;
+    sqmSliderDesktop.value = val;
+    sqmSliderMobile.value = val;
+    syncAll(val);
+  });
+
+  const initialVal = sqmSliderDesktop.value;
+  sqmSliderMobile.value = initialVal;
+  syncAll(initialVal);
+})();
+</script>
+
+
+
+
+
+				</div>
