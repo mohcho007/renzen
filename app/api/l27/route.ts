@@ -1,9 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import {
-  L27_BOOK_PRICING_PARAM_ID,
-  L27_BOOK_SERVICE_ID,
-  resolveL27BookingId,
-} from "@/lib/bookCleaningL27";
+import { resolveL27BookingId } from "@/lib/bookCleaningL27";
 
 export const dynamic = "force-dynamic";
 
@@ -153,14 +149,8 @@ export async function POST(req: NextRequest) {
         apiPayload.discount_code = payload.discount_code;
       }
     } else if (action === "booking") {
-      const serviceId = parseRequiredServiceId(
-        payload.service_id,
-        L27_BOOK_SERVICE_ID,
-      );
-      const pricingParamId = parseRequiredPricingParamId(
-        payload.pricing_param_id,
-        L27_BOOK_PRICING_PARAM_ID,
-      );
+      const serviceId = parseRequiredServiceId(payload.service_id);
+      const pricingParamId = parseRequiredPricingParamId(payload.pricing_param_id);
       if (!serviceId || !pricingParamId) {
         return NextResponse.json(
           {

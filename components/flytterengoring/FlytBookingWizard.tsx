@@ -906,16 +906,14 @@ function FlytBookingWizardForm() {
 
         const stripeToken = await createStripeCardToken(stripe, elements);
         const dateStr = `${selectedDate}T${String(selectedSlot!.startHour).padStart(2, "0")}:${String(selectedSlot!.startMinute).padStart(2, "0")}:00`;
-        const customFields = buildFlytCustomFieldsPayload(
+        const customFieldsResult = buildFlytCustomFieldsPayload(
           flytCustomFields,
           stand.level,
           entryMethod as FlytEntryOptionId,
           entryOtherDetails,
         );
-        if (!customFields) {
-          setError(
-            "Boligens stand kunne ikke sendes til bookingsystemet. Gå tilbage til boligtrinnet og prøv igen.",
-          );
+        if (!customFieldsResult.ok) {
+          setError(customFieldsResult.error);
           return;
         }
         const response = await fetch(L27_API_PATH, {
@@ -938,7 +936,7 @@ function FlytBookingWizardForm() {
             service_id: String(stand.serviceId),
             pricing_param_id: String(stand.pricingParamId),
             pricing_param_quantity: sqm,
-            custom_fields: customFields,
+            custom_fields: customFieldsResult.payload,
           }),
         });
         const resData = await response.json();

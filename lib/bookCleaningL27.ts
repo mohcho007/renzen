@@ -27,6 +27,30 @@ export const BOOK_ENTRY_OPTIONS: BookEntryOption[] = [
 export const L27_BOOK_SERVICE_ID = 246;
 export const L27_BOOK_PRICING_PARAM_ID = 119;
 
+/** L27 custom field: "Hvordan får vi adgang til dit hjem?" (not service 246). */
+export const L27_BOOK_ENTRY_CUSTOM_FIELD_ID = 201;
+
+/**
+ * L27 custom field: "Hvornår blev der sidst gjort rent?" (required globally).
+ * Numeric ID matches book-rengoering service id by coincidence — different namespace.
+ */
+export const L27_LAST_CLEANED_CUSTOM_FIELD_ID = 246;
+
+const L27_LAST_CLEANED_OPTION_IDS: Record<string, number> = {
+  "Inden for 1 uge": 49,
+  "1–2 uger siden": 50,
+  "2–4 uger siden": 51,
+  "Over 1 måned siden": 52,
+  "Ved ikke": 53,
+};
+
+const L27_ENTRY_OPTION_IDS: Record<BookEntryOptionId, number> = {
+  home: 7,
+  mat: 8,
+  neighbor: 9,
+  other: 15,
+};
+
 /** Launch27 extras on the book-rengoering service (rengøringsstand tillæg). */
 export const L27_EXTRA_MEGET_BESKIDT_ID = 250;
 export const L27_EXTRA_EKSTRA_TID_ID = 251;
@@ -177,6 +201,12 @@ function mapL27ValidationMessage(message: string): string {
     if (fieldId === "114") {
       return "Boligens stand mangler i bookingen. Gå tilbage og bekræft standen, og prøv igen.";
     }
+    if (fieldId === String(L27_BOOK_ENTRY_CUSTOM_FIELD_ID)) {
+      return "Adgang til boligen mangler i bookingen. Gå tilbage til adgangstrinnet og prøv igen.";
+    }
+    if (fieldId === String(L27_LAST_CLEANED_CUSTOM_FIELD_ID)) {
+      return "Sidst rengjort mangler i bookingen. Gå tilbage til boligtrinnet og prøv igen.";
+    }
     return "Et påkrævet felt mangler i bookingen. Tjek boligens stand og adgang, og prøv igen.";
   }
 
@@ -245,9 +275,20 @@ function findFieldByLabel(
   });
 }
 
+function normalizeCustomFieldId(id: unknown): number | null {
+  const parsed = typeof id === "number" ? id : parseInt(String(id), 10);
+  return Number.isFinite(parsed) && parsed > 0 ? parsed : null;
+}
+
 export function findBookEntryCustomField(
   fields: L27CustomField[],
 ): L27CustomField | undefined {
+  const byId = fields.find(
+    (field) =>
+      normalizeCustomFieldId(field.id) === L27_BOOK_ENTRY_CUSTOM_FIELD_ID,
+  );
+  if (byId) return byId;
+
   const withOptions = fields.filter(
     (field) => getCustomFieldOptions(field).length > 0,
   );
@@ -280,6 +321,12 @@ export function findBookCleanlinessCustomField(
 export function findBookLastCleanedCustomField(
   fields: L27CustomField[],
 ): L27CustomField | undefined {
+  const byId = fields.find(
+    (field) =>
+      normalizeCustomFieldId(field.id) === L27_LAST_CLEANED_CUSTOM_FIELD_ID,
+  );
+  if (byId) return byId;
+
   return findFieldByLabel(
     fields,
     /sidst gjort rent|senest rengjort|last cleaned/,
@@ -323,11 +370,27 @@ export function buildBookEntryCustomFieldPayload(
   const entryOption = BOOK_ENTRY_OPTIONS.find((option) => option.id === entryId);
   if (!entryOption) return undefined;
 
-  return buildCustomFieldValue(
+  const built = buildCustomFieldValue(
     field,
     entryOption.label,
     entryId === "other" ? otherDetails : undefined,
   );
+  if (built) return built;
+
+  const optionId = L27_ENTRY_OPTION_IDS[entryId];
+  if (!optionId) return undefined;
+
+  const value: { id: number; other?: string } = { id: optionId };
+  if (entryId === "other") {
+    const other = otherDetails.trim();
+    if (!other) return undefined;
+    value.other = other;
+  }
+
+  return {
+    id: normalizeCustomFieldId(field?.id) ?? L27_BOOK_ENTRY_CUSTOM_FIELD_ID,
+    values: [value],
+  };
 }
 
 export function buildBookCleanlinessCustomFieldPayload(
@@ -346,7 +409,16 @@ export function buildBookLastCleanedCustomFieldPayload(
   field: L27CustomField | undefined,
   lastCleaned: string,
 ) {
-  return buildCustomFieldValue(field, lastCleaned);
+  const built = buildCustomFieldValue(field, lastCleaned);
+  if (built) return built;
+
+  const optionId = L27_LAST_CLEANED_OPTION_IDS[lastCleaned];
+  if (!optionId) return undefined;
+
+  return {
+    id: normalizeCustomFieldId(field?.id) ?? L27_LAST_CLEANED_CUSTOM_FIELD_ID,
+    values: [{ id: optionId }],
+  };
 }
 
 export function buildBookCleaningCustomFieldsPayload(

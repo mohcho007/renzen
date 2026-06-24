@@ -1,6 +1,8 @@
 import {
   buildBookEntryCustomFieldPayload,
+  buildBookLastCleanedCustomFieldPayload,
   findBookEntryCustomField,
+  findBookLastCleanedCustomField,
   type BookEntryOptionId,
 } from "@/lib/bookCleaningL27";
 import {
@@ -710,26 +712,83 @@ export function buildFlytStandCustomFieldPayload(
   return { id: fieldId, value: String(standLevel) };
 }
 
-/** Flytterengøring booking custom fields — stand (114) required; adgang optional if configured in L27. */
+/** Map flyt stand to L27 "sidst rengjort" — stand already captures condition. */
+export function getFlytLastCleanedLabelForStand(
+  standLevel: FlytStandLevel,
+): string {
+  switch (standLevel) {
+    case 1:
+      return "Inden for 1 uge";
+    case 2:
+      return "1–2 uger siden";
+    case 3:
+      return "2–4 uger siden";
+    case 4:
+    case 5:
+      return "Over 1 måned siden";
+    default:
+      return "Ved ikke";
+  }
+}
+
+export type FlytCustomFieldsBuildResult =
+  | { ok: true; payload: FlytL27CustomFieldPayload[] }
+  | { ok: false; error: string };
+
+/** Flytterengøring booking custom fields — stand (114), sidst rengjort (246), adgang (201). */
 export function buildFlytCustomFieldsPayload(
   fields: L27CustomField[],
   standLevel: FlytStandLevel,
   entryId?: FlytEntryOptionId | "",
   entryOtherDetails?: string,
-): FlytL27CustomFieldPayload[] | undefined {
+): FlytCustomFieldsBuildResult {
   const standPayload = buildFlytStandCustomFieldPayload(fields, standLevel);
-  if (!standPayload) return undefined;
-
-  const payload: FlytL27CustomFieldPayload[] = [standPayload];
-
-  if (entryId) {
-    const entryPayload = buildBookEntryCustomFieldPayload(
-      findBookEntryCustomField(fields),
-      entryId as BookEntryOptionId,
-      entryOtherDetails ?? "",
-    );
-    if (entryPayload) payload.push(entryPayload);
+  if (!standPayload) {
+    return {
+      ok: false,
+      error:
+        "Boligens stand kunne ikke sendes til bookingsystemet. Gå tilbage til boligtrinnet og prøv igen.",
+    };
   }
 
-  return payload;
+  const lastCleanedPayload = buildBookLastCleanedCustomFieldPayload(
+    findBookLastCleanedCustomField(fields),
+    getFlytLastCleanedLabelForStand(standLevel),
+  );
+  if (!lastCleanedPayload) {
+    return {
+      ok: false,
+      error:
+        "Sidst rengjort kunne ikke sendes til bookingsystemet. Gå tilbage til boligtrinnet og prøv igen.",
+    };
+  }
+
+  const payload: FlytL27CustomFieldPayload[] = [
+    standPayload,
+    lastCleanedPayload,
+  ];
+
+  if (!entryId) {
+    return {
+      ok: false,
+      error:
+        "Adgang til boligen mangler. Gå tilbage til adgangstrinnet og vælg en adgangsmetode.",
+    };
+  }
+
+  const entryPayload = buildBookEntryCustomFieldPayload(
+    findBookEntryCustomField(fields),
+    entryId as BookEntryOptionId,
+    entryOtherDetails ?? "",
+  );
+  if (!entryPayload) {
+    return {
+      ok: false,
+      error:
+        "Adgang til boligen kunne ikke sendes til bookingsystemet. Gå tilbage til adgangstrinnet og prøv igen.",
+    };
+  }
+  payload.push(entryPayload);
+
+  return { ok: true, payload };
 }
