@@ -56,6 +56,7 @@ import {
   type WeekdayDayId,
 } from "@/lib/serviceInquiry";
 import { sanitizeOptionalNote } from "@/lib/optionalNote";
+import { getPostcodeDisplayLabel } from "@/lib/postcodeLabels";
 import wizardStyles from "./ServiceInquiryWizard.module.css";
 
 type DawaAdresse = {
@@ -735,7 +736,7 @@ export function ServiceInquiryWizard({
     const { adresse } = suggestion;
     setAddress(formatStreetAddress(adresse));
     setZip(adresse.postnr);
-    setCity(adresse.postnrnavn);
+    setCity(getPostcodeDisplayLabel(adresse.postnr, adresse.postnrnavn));
     setAddressSuggestions([]);
     setShowAddressSuggestions(false);
   };

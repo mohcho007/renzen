@@ -2,6 +2,11 @@
 
 import { useEffect, useRef } from "react";
 import styles from "@/components/dealside/DealTypeformWizard.module.css";
+import {
+  buildAliasPostcodeSuggestion,
+  formatPostcodeSuggestionText,
+  getPostcodeDisplayLabel,
+} from "@/lib/postcodeLabels";
 
 export type DawaAdresse = {
   vejnavn: string;
@@ -28,7 +33,20 @@ type DawaPostnummerApiItem = {
   nr?: string;
   navn?: string;
   data?: { nr: string; navn: string };
+  postnummer?: { nr: string; navn: string };
 };
+
+function toPostcodeSuggestion(
+  postnr: string,
+  fallbackNavn: string,
+): DawaPostnummerSuggestion {
+  const navn = getPostcodeDisplayLabel(postnr, fallbackNavn);
+  return {
+    nr: postnr,
+    navn,
+    tekst: formatPostcodeSuggestionText(postnr, fallbackNavn),
+  };
+}
 
 export function formatStreetAddress(adresse: DawaAdresse) {
   let line = `${adresse.vejnavn} ${adresse.husnr}`;
@@ -42,15 +60,17 @@ function parsePostnummerSuggestion(
 ): DawaPostnummerSuggestion | null {
   const nr =
     item.nr ??
+    item.postnummer?.nr ??
     item.data?.nr ??
     item.tekst.match(/^(\d{4})\b/)?.[1] ??
     "";
-  const navn =
+  const fallbackNavn =
     item.navn ??
+    item.postnummer?.navn ??
     item.data?.navn ??
     item.tekst.replace(/^\d{4}\s*/, "").trim();
   if (!/^\d{4}$/.test(nr)) return null;
-  return { tekst: item.tekst, nr, navn };
+  return toPostcodeSuggestion(nr, fallbackNavn);
 }
 
 type DawaAddressFieldProps = {
@@ -228,8 +248,17 @@ export function useDawaPostcode(
           .map(parsePostnummerSuggestion)
           .filter((item): item is DawaPostnummerSuggestion => item !== null)
           .filter((item) => !filterPostnr || filterPostnr(item.nr));
-        setSuggestions(parsed);
-        setShow(parsed.length > 0);
+
+        const aliasSuggestion = buildAliasPostcodeSuggestion(trimmed);
+        const merged =
+          aliasSuggestion &&
+          (!filterPostnr || filterPostnr(aliasSuggestion.nr)) &&
+          !parsed.some((item) => item.nr === aliasSuggestion.nr)
+            ? [aliasSuggestion, ...parsed]
+            : parsed;
+
+        setSuggestions(merged);
+        setShow(merged.length > 0);
       } catch {
         setSuggestions([]);
         setShow(false);
@@ -248,11 +277,7 @@ export function useDawaPostcode(
       if (!res.ok) return null;
       const data = await res.json();
       if (!data?.nr) return null;
-      return {
-        nr: data.nr,
-        navn: data.navn,
-        tekst: `${data.nr} ${data.navn}`,
-      };
+      return toPostcodeSuggestion(data.nr, data.navn ?? "");
     } catch {
       return null;
     }

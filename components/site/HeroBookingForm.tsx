@@ -163,7 +163,7 @@ export function HeroBookingForm({
             <input
               value={postcodeQuery}
               onChange={(event) => handlePostcodeChange(event.target.value)}
-              placeholder="F.eks. 2100 eller Nørrebro"
+              placeholder="F.eks. 2100 eller Østerbro"
               autoComplete="off"
               aria-label="Postnummer"
               className="mt-1 w-full bg-transparent text-sm font-semibold outline-none placeholder:text-[#9ca59f]"

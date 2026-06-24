@@ -15,6 +15,7 @@ import {
   ZEN_CREDIT_MONTHLY_KR,
 } from "@/data/pricing";
 import { DEAL_PACKAGES } from "@/components/dealside/dealPackages";
+import { POSTCODE_DISPLAY_LABELS } from "@/lib/postcodeLabels";
 
 const zenCreditAnnualMonths = ZEN_CREDIT_ANNUAL_KR / ZEN_CREDIT_MONTHLY_KR;
 
@@ -35,12 +36,8 @@ const EXTRAS: ExtraService[] = [
 ];
 
 const CITY_MAP: { [key: string]: string } = {
-  "2100": "København Ø",
-  "2200": "København N",
-  "2300": "København S",
-  "2400": "København NV",
+  ...POSTCODE_DISPLAY_LABELS,
   "2000": "Frederiksberg",
-  "2500": "Valby",
   "2650": "Hvidovre",
   "8000": "Aarhus C",
   "5000": "Odense C",

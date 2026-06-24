@@ -2484,7 +2484,7 @@ function DealTypeformWizardForm({
                       onChange={(e) =>
                         handlePostcodeInputChange(e.target.value)
                       }
-                      placeholder="F.eks. 2100 eller Nørrebro"
+                      placeholder="F.eks. 2100 eller Østerbro"
                       autoFocus
                       autoComplete="off"
                     />

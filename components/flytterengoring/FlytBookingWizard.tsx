@@ -66,6 +66,7 @@ import {
 } from "@/lib/bookingConfirmation";
 import { serviceDeduction } from "@/lib/serviceDeduction";
 import { L27_API_PATH } from "@/lib/urls";
+import { getPostcodeDisplayLabel } from "@/lib/postcodeLabels";
 
 type DawaAdresse = {
   vejnavn: string;
@@ -837,7 +838,7 @@ function FlytBookingWizardForm() {
     const { adresse } = suggestion;
     setAddress(formatStreetAddress(adresse));
     setZip(adresse.postnr);
-    setCity(adresse.postnrnavn);
+    setCity(getPostcodeDisplayLabel(adresse.postnr, adresse.postnrnavn));
     setAddressSuggestions([]);
     setShowAddressSuggestions(false);
   };

@@ -31,6 +31,7 @@ import {
   type ServiceInquiryPayload,
 } from "@/lib/serviceInquiry";
 import { sanitizeOptionalNote } from "@/lib/optionalNote";
+import { getPostcodeDisplayLabel } from "@/lib/postcodeLabels";
 import wizardStyles from "./ServiceInquiryWizard.module.css";
 import { BoligserviceDateStep } from "./boligservice/BoligserviceDateStep";
 import {
@@ -197,7 +198,7 @@ export function BoligserviceInquiryWizard({
     const { adresse } = suggestion;
     setAddress(formatStreetAddress(adresse));
     setZip(adresse.postnr);
-    setCity(adresse.postnrnavn);
+    setCity(getPostcodeDisplayLabel(adresse.postnr, adresse.postnrnavn));
     setFromSuggestions([]);
     setShowFromSuggestions(false);
   };
@@ -220,7 +221,7 @@ export function BoligserviceInquiryWizard({
       ...flyt,
       toAddress: formatStreetAddress(adresse),
       toZip: adresse.postnr,
-      toCity: adresse.postnrnavn,
+      toCity: getPostcodeDisplayLabel(adresse.postnr, adresse.postnrnavn),
     });
     setToSuggestions([]);
     setShowToSuggestions(false);
