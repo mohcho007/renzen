@@ -1222,6 +1222,7 @@ function DealTypeformWizardForm({
           pricing_param_quantity: effectiveM2,
           frequency_id: billingFrequencyId,
           service_date: serviceDate,
+          arrival_window: selectedSlot.arrivalWindow,
           extras: bookingExtrasPayload,
           ...(clubSelected && chosenFrequency.type !== "oneoff"
             ? { welcome_deal: true }
@@ -2180,7 +2181,7 @@ function DealTypeformWizardForm({
             frequency_id: billingFrequencyId,
             welcome_deal: clubSelected && !isOneTime,
             service_date: dateStr,
-            arrival_window: selectedSlot?.arrivalWindow ?? 120,
+            arrival_window: selectedSlot.arrivalWindow,
             stripe_token: stripeToken,
             extras: bookingExtrasPayload,
             service_id: "213",

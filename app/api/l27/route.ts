@@ -105,10 +105,7 @@ export async function POST(req: NextRequest) {
           },
         ],
       };
-      const arrivalWindow = parseInt(payload.arrival_window || "0", 10);
-      if (arrivalWindow > 0) {
-        apiPayload.arrival_window = arrivalWindow;
-      }
+      apiPayload.arrival_window = parseInt(payload.arrival_window ?? "0", 10);
       if (payload.welcome_deal === true) {
         apiPayload.welcome_deal = true;
       }

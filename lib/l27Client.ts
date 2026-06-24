@@ -12,6 +12,8 @@ export type L27ClientResponse<T = unknown> = {
   };
 };
 
+const MAX_SPOTS_DAYS_PER_REQUEST = 7;
+
 export async function postL27<T = unknown>(
   action: string,
   payload: Record<string, unknown> = {},
@@ -42,18 +44,46 @@ export async function postL27<T = unknown>(
 
 export type L27SpotsDay = { date?: string; spots?: unknown[] };
 
+function nextDateYmd(dateYmd: string) {
+  const next = new Date(`${dateYmd}T12:00:00`);
+  next.setDate(next.getDate() + 1);
+  return next.toISOString().slice(0, 10);
+}
+
 export async function fetchL27SpotsRange(date: string, days: number) {
-  const result = await postL27<L27SpotsDay[]>("spots", { date, days });
-  if (!result.ok || !Array.isArray(result.data.data)) {
-    return { ok: false as const, cache: {} as Record<string, L27Spot[]> };
+  const cache: Record<string, L27Spot[]> = {};
+  let cursor = date;
+  let remaining = days;
+
+  while (remaining > 0) {
+    const chunkDays = Math.min(remaining, MAX_SPOTS_DAYS_PER_REQUEST);
+    const result = await postL27<L27SpotsDay[]>("spots", {
+      date: cursor,
+      days: chunkDays,
+    });
+
+    if (!result.ok || !Array.isArray(result.data.data)) {
+      if (Object.keys(cache).length === 0) {
+        return { ok: false as const, cache: {} as Record<string, L27Spot[]> };
+      }
+      break;
+    }
+
+    result.data.data.forEach((day) => {
+      if (day?.date && Array.isArray(day.spots)) {
+        cache[day.date] = day.spots as L27Spot[];
+      }
+    });
+
+    const lastDay = result.data.data[result.data.data.length - 1];
+    if (!lastDay?.date) break;
+
+    cursor = nextDateYmd(lastDay.date);
+    remaining -= chunkDays;
   }
 
-  const cache: Record<string, L27Spot[]> = {};
-  result.data.data.forEach((day) => {
-    if (day?.date && Array.isArray(day.spots)) {
-      cache[day.date] = day.spots as L27Spot[];
-    }
-  });
-
-  return { ok: Object.keys(cache).length > 0, cache };
+  return {
+    ok: Object.keys(cache).length > 0,
+    cache,
+  };
 }
