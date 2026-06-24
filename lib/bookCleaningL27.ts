@@ -81,7 +81,55 @@ type BookExtra = {
   id: string;
   name: string;
   price: number;
+  mandatory?: boolean;
+  recurring?: boolean;
 };
+
+export type BookServiceExtra = BookExtra;
+
+type L27ExtraPayloadItem = {
+  id: number;
+  quantity: number;
+  recurring: boolean;
+};
+
+function pushUniqueExtra(
+  payload: L27ExtraPayloadItem[],
+  id: number,
+  quantity: number,
+  recurring: boolean,
+) {
+  if (payload.some((item) => item.id === id)) return;
+  payload.push({ id, quantity, recurring });
+}
+
+export function isHiddenMandatoryBookExtra(extra: BookServiceExtra): boolean {
+  const name = extra.name.toLowerCase();
+  if (
+    /renzen\s*klub|klub medlemskab|rengøringsstand|boligstand|how clean/.test(
+      name,
+    )
+  ) {
+    return false;
+  }
+  if (/administrationsgebyr|administration\s*gebyr/.test(name)) return true;
+  return !!extra.mandatory;
+}
+
+export function parseL27BookingError(details: unknown, fallback: string): string {
+  if (!details || typeof details !== "object") return fallback;
+
+  const services = (details as { services?: Array<{ message?: string }> })
+    .services;
+  const message = services?.[0]?.message;
+  if (!message) return fallback;
+
+  if (/cannot be booked this time/i.test(message)) {
+    return "Det valgte tidspunkt er ikke ledigt i Launch27. Vælg en anden dato eller et andet tidspunkt.";
+  }
+
+  return message;
+}
 
 function normalizeLabel(value: string) {
   return value.trim().toLowerCase();
@@ -294,38 +342,49 @@ export function buildBookCleaningExtrasPayload(
   selectedExtras: Record<string, number>,
   recurring: boolean,
   cleanlinessLevel: BookCleanlinessLevelId | "",
-  serviceExtras: BookExtra[],
+  serviceExtras: BookServiceExtra[],
   includeKlub = false,
 ) {
-  const payload = Object.entries(selectedExtras)
-    .filter(([, qty]) => qty > 0)
-    .map(([id, qty]) => ({
-      id: parseInt(id, 10),
-      quantity: qty,
-      recurring,
-    }));
+  const payload: L27ExtraPayloadItem[] = [];
+
+  Object.entries(selectedExtras).forEach(([id, qty]) => {
+    if (qty <= 0) return;
+    pushUniqueExtra(payload, parseInt(id, 10), qty, recurring);
+  });
+
+  serviceExtras
+    .filter(isHiddenMandatoryBookExtra)
+    .forEach((extra) => {
+      pushUniqueExtra(
+        payload,
+        parseInt(extra.id, 10),
+        1,
+        recurring && !!extra.recurring,
+      );
+    });
 
   const cleanlinessExtra = findBookCleanlinessExtra(
     serviceExtras,
     cleanlinessLevel,
   );
   if (cleanlinessExtra) {
-    payload.push({
-      id: parseInt(cleanlinessExtra.id, 10),
-      quantity: 1,
+    pushUniqueExtra(
+      payload,
+      parseInt(cleanlinessExtra.id, 10),
+      1,
       recurring,
-    });
+    );
   }
 
   if (includeKlub) {
     const klubExtra = findKlubExtra(serviceExtras);
-    payload.push({
-      id: klubExtra
-        ? parseInt(klubExtra.id, 10)
-        : L27_EXTRA_KLUB_ID,
-      quantity: 1,
-      recurring,
-    });
+    const klubRecurring = recurring && (klubExtra?.recurring ?? true);
+    pushUniqueExtra(
+      payload,
+      klubExtra ? parseInt(klubExtra.id, 10) : L27_EXTRA_KLUB_ID,
+      1,
+      klubRecurring,
+    );
   }
 
   return payload;

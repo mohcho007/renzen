@@ -64,23 +64,6 @@ type TimeSlot = {
   arrivalWindow: number;
 };
 
-const MOCK_ALL_DAY_SLOT: TimeSlot = {
-  startHour: 8,
-  startMinute: 0,
-  label: "08:00 – 16:00",
-  arrivalWindow: 480,
-};
-
-const MOCK_MORNING_SLOTS: TimeSlot[] = [
-  { startHour: 8, startMinute: 0, label: "08:00 – 10:00", arrivalWindow: 120 },
-  { startHour: 10, startMinute: 0, label: "10:00 – 12:00", arrivalWindow: 120 },
-];
-
-const MOCK_AFTERNOON_SLOTS: TimeSlot[] = [
-  { startHour: 12, startMinute: 0, label: "12:00 – 14:00", arrivalWindow: 120 },
-  { startHour: 14, startMinute: 0, label: "14:00 – 16:00", arrivalWindow: 120 },
-];
-
 type L27Spot = {
   free: boolean;
   past: boolean;
@@ -99,6 +82,7 @@ import {
   BOOK_LAST_CLEANED_OPTIONS,
   buildBookCleaningCustomFieldsPayload,
   buildBookCleaningExtrasPayload,
+  parseL27BookingError,
   type BookEntryOptionId,
   type BookCleanlinessLevelId,
 } from "@/lib/bookCleaningL27";
@@ -245,6 +229,15 @@ function getSpotLabel(spot: L27Spot) {
   const endMinute = endMin % 60;
   const pad = (n: number) => String(n).padStart(2, "0");
   return `${pad(hour)}:${pad(minute)} – ${pad(endHour)}:${pad(endMinute)}`;
+}
+
+function spotMatchesSlot(spot: L27Spot, slot: TimeSlot) {
+  const { hour, minute } = getSpotTime(spot);
+  return (
+    hour === slot.startHour &&
+    minute === slot.startMinute &&
+    (spot.arrival_window || 60) === slot.arrivalWindow
+  );
 }
 
 function nextWeekdays(weekOffset: number) {
@@ -551,6 +544,9 @@ function DealTypeformWizardForm({
   const [isValidatingPromo, setIsValidatingPromo] = useState(false);
 
   const [spotsCache, setSpotsCache] = useState<Record<string, L27Spot[]>>({});
+  const [spotsFetchState, setSpotsFetchState] = useState<
+    "loading" | "ready" | "error"
+  >("loading");
   const [loadingSpots, setLoadingSpots] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [bookingId, setBookingId] = useState("");
@@ -583,7 +579,7 @@ function DealTypeformWizardForm({
     BOOK_EXTRAS_FALLBACK,
   );
   const [serviceExtras, setServiceExtras] = useState<
-    { id: string; name: string; price: number }[]
+    { id: string; name: string; price: number; mandatory?: boolean; recurring?: boolean }[]
   >([]);
   const [bookCustomFields, setBookCustomFields] = useState<L27CustomField[]>(
     [],
@@ -650,6 +646,7 @@ function DealTypeformWizardForm({
               price: number | string;
               quantity_based?: boolean;
               mandatory?: boolean;
+              recurring?: boolean;
             };
             return {
               id: String(item.id),
@@ -657,6 +654,7 @@ function DealTypeformWizardForm({
               price: Number(item.price) || 0,
               quantityBased: !!item.quantity_based,
               mandatory: !!item.mandatory,
+              recurring: !!item.recurring,
             };
           });
           const extras = allExtras
@@ -673,7 +671,13 @@ function DealTypeformWizardForm({
               quantityBased,
             }));
           setServiceExtras(
-            allExtras.map(({ id, name, price }) => ({ id, name, price })),
+            allExtras.map(({ id, name, price, mandatory, recurring }) => ({
+              id,
+              name,
+              price,
+              mandatory,
+              recurring,
+            })),
           );
           if (extras.length > 0) {
             setAvailableExtras(extras);
@@ -797,7 +801,7 @@ function DealTypeformWizardForm({
     return `${capitalized} · om ${weekOffset} uger`;
   }, [weekdayDates, weekOffset]);
 
-  const spotsLoaded = Object.keys(spotsCache).length > 0;
+  const spotsLoaded = spotsFetchState === "ready";
   const isZipServed = isServedPostcode(zip);
   const postnummerFilled =
     zip.length === 4 && city.trim().length > 0 && isZipServed;
@@ -905,6 +909,7 @@ function DealTypeformWizardForm({
   useEffect(() => {
     const fetchSpots = async () => {
       setLoadingSpots(true);
+      setSpotsFetchState("loading");
       try {
         const response = await fetch(L27_API_PATH, {
           method: "POST",
@@ -917,6 +922,7 @@ function DealTypeformWizardForm({
         });
         if (!response.ok) {
           console.error("L27 spots fetch failed:", response.status, response.statusText);
+          setSpotsFetchState("error");
           return;
         }
         const resData = await response.json();
@@ -928,9 +934,14 @@ function DealTypeformWizardForm({
             }
           });
           setSpotsCache(cache);
+          setSpotsFetchState(
+            Object.keys(cache).length > 0 ? "ready" : "error",
+          );
+        } else {
+          setSpotsFetchState("error");
         }
       } catch {
-        /* local fallback — all future dates selectable */
+        setSpotsFetchState("error");
       } finally {
         setLoadingSpots(false);
       }
@@ -950,12 +961,24 @@ function DealTypeformWizardForm({
     (date: Date) => {
       if (!isWeekday(date) || isDateInPast(date)) return false;
       if (date > maxBookableDate) return false;
+      if (!spotsLoaded) return false;
       const dateStr = toLocalYmd(date);
-      if (!spotsLoaded) return true;
       return freeSpotsForDate(dateStr).length > 0;
     },
     [maxBookableDate, spotsLoaded, freeSpotsForDate],
   );
+
+  const isSelectedSlotBookable = useMemo(() => {
+    if (!selectedDate || !selectedSlot || !spotsLoaded) return false;
+    return freeSpotsForDate(selectedDate).some((spot) =>
+      spotMatchesSlot(spot, selectedSlot),
+    );
+  }, [selectedDate, selectedSlot, spotsLoaded, freeSpotsForDate]);
+
+  useEffect(() => {
+    if (!selectedSlot || isSelectedSlotBookable) return;
+    setSelectedSlot(null);
+  }, [selectedSlot, isSelectedSlotBookable]);
 
   const handleCalendarDateSelect = useCallback((dateStr: string) => {
     setSelectedDate(dateStr);
@@ -981,13 +1004,6 @@ function DealTypeformWizardForm({
 
     const spots = freeSpotsForDate(selectedDate);
     if (spots.length === 0) {
-      if (!spotsLoaded) {
-        return {
-          morningSlots: MOCK_MORNING_SLOTS,
-          afternoonSlots: MOCK_AFTERNOON_SLOTS,
-          allDaySlot: MOCK_ALL_DAY_SLOT,
-        };
-      }
       return empty;
     }
 
@@ -1039,7 +1055,7 @@ function DealTypeformWizardForm({
     afternoonSlots.sort(sortSlots);
 
     return { morningSlots, afternoonSlots, allDaySlot };
-  }, [selectedDate, freeSpotsForDate, spotsLoaded]);
+  }, [selectedDate, freeSpotsForDate]);
 
   const activeFrequency = useMemo(
     () => getFrequencyOption(billingFrequencyId),
@@ -1248,7 +1264,7 @@ function DealTypeformWizardForm({
     () =>
       buildBookCleaningExtrasPayload(
         selectedExtras,
-        chosenFrequency.type === "recurring" && clubSelected,
+        chosenFrequency.type === "recurring",
         cleanlinessLevel,
         serviceExtras,
         clubSelected && chosenFrequency.type !== "oneoff",
@@ -1262,9 +1278,53 @@ function DealTypeformWizardForm({
     ],
   );
 
+  const refreshSpots = useCallback(async () => {
+    setLoadingSpots(true);
+    setSpotsFetchState("loading");
+    try {
+      const response = await fetch(L27_API_PATH, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          action: "spots",
+          date: toLocalYmd(new Date()),
+          days: 42,
+        }),
+      });
+      if (!response.ok) {
+        setSpotsFetchState("error");
+        return;
+      }
+      const resData = await response.json();
+      if (resData.success && Array.isArray(resData.data)) {
+        const cache: Record<string, L27Spot[]> = {};
+        resData.data.forEach((day: { date?: string; spots?: L27Spot[] }) => {
+          if (day?.date && Array.isArray(day.spots)) {
+            cache[day.date] = day.spots;
+          }
+        });
+        setSpotsCache(cache);
+        setSpotsFetchState(Object.keys(cache).length > 0 ? "ready" : "error");
+      } else {
+        setSpotsFetchState("error");
+      }
+    } catch {
+      setSpotsFetchState("error");
+    } finally {
+      setLoadingSpots(false);
+    }
+  }, []);
+
   const fetchL27Estimate = useCallback(
     async (discountCode?: string) => {
-      if (!selectedDate || !selectedSlot || effectiveM2 === null) return null;
+      if (
+        !selectedDate ||
+        !selectedSlot ||
+        effectiveM2 === null ||
+        !isSelectedSlotBookable
+      ) {
+        return null;
+      }
 
       const serviceDate = `${selectedDate}T${String(selectedSlot.startHour).padStart(2, "0")}:${String(selectedSlot.startMinute).padStart(2, "0")}:00`;
       const response = await fetch(L27_API_PATH, {
@@ -1277,7 +1337,11 @@ function DealTypeformWizardForm({
           pricing_param_quantity: effectiveM2,
           frequency_id: billingFrequencyId,
           service_date: serviceDate,
+          arrival_window: selectedSlot.arrivalWindow,
           extras: bookingExtrasPayload,
+          ...(clubSelected && chosenFrequency.type !== "oneoff"
+            ? { welcome_deal: true }
+            : {}),
           ...(discountCode ? { discount_code: discountCode } : {}),
         }),
       });
@@ -1293,6 +1357,9 @@ function DealTypeformWizardForm({
       effectiveM2,
       billingFrequencyId,
       bookingExtrasPayload,
+      isSelectedSlotBookable,
+      clubSelected,
+      chosenFrequency.type,
     ],
   );
 
@@ -1328,6 +1395,13 @@ function DealTypeformWizardForm({
       setPromoMsg("Vælg dato og tid først.");
       return;
     }
+    if (!isSelectedSlotBookable) {
+      setPromoIsError(true);
+      setPromoMsg(
+        "Det valgte tidspunkt er ikke længere ledigt. Vælg en anden dato eller tid.",
+      );
+      return;
+    }
 
     setIsValidatingPromo(true);
     try {
@@ -1355,7 +1429,7 @@ function DealTypeformWizardForm({
     } finally {
       setIsValidatingPromo(false);
     }
-  }, [fetchL27Estimate, promoInput, selectedDate, selectedSlot]);
+  }, [fetchL27Estimate, promoInput, selectedDate, selectedSlot, isSelectedSlotBookable]);
 
   const handlePromoRemove = useCallback(() => {
     setPromoCode("");
@@ -2110,7 +2184,12 @@ function DealTypeformWizardForm({
           postnummerFilled && (!isBook2 || isActualM2Valid)
         );
       case "dato":
-        return !!selectedDate && !!selectedSlot;
+        return (
+          spotsLoaded &&
+          !!selectedDate &&
+          !!selectedSlot &&
+          isSelectedSlotBookable
+        );
       case "frekvens":
         return true;
       case "boligstand":
@@ -2143,6 +2222,8 @@ function DealTypeformWizardForm({
     city,
     selectedDate,
     selectedSlot,
+    isSelectedSlotBookable,
+    spotsLoaded,
     billingFrequencyId,
     entryMethod,
     entryOtherDetails,
@@ -2166,6 +2247,12 @@ function DealTypeformWizardForm({
     if (step === "betaling") {
       setIsSubmitting(true);
       try {
+        if (!isSelectedSlotBookable) {
+          setError(
+            "Det valgte tidspunkt er ikke længere ledigt. Vælg en anden dato eller tid.",
+          );
+          return;
+        }
         const stripeToken = await createStripeCardToken(stripe, elements);
         const dateStr = `${selectedDate}T${String(selectedSlot!.startHour).padStart(2, "0")}:${String(selectedSlot!.startMinute).padStart(2, "0")}:00`;
         const customFields = buildBookCleaningCustomFieldsPayload(
@@ -2203,7 +2290,11 @@ function DealTypeformWizardForm({
         const resData = await response.json();
         if (!resData.success || !resData.data?.booking_id) {
           setError(
-            resData.message || "Der opstod en fejl under oprettelsen af din booking.",
+            parseL27BookingError(
+              resData.details,
+              resData.message ||
+                "Der opstod en fejl under oprettelsen af din booking.",
+            ),
           );
           return;
         }
@@ -2281,6 +2372,7 @@ function DealTypeformWizardForm({
     step,
     selectedDate,
     selectedSlot,
+    isSelectedSlotBookable,
     email,
     firstName,
     lastName,
@@ -2556,6 +2648,20 @@ function DealTypeformWizardForm({
               </p>
               {loadingSpots ? (
                 <p className={styles.loading}>Henter ledige datoer…</p>
+              ) : spotsFetchState === "error" ? (
+                <div className={styles.loading}>
+                  <p>
+                    Kunne ikke hente ledige tider fra bookingsystemet. Prøv igen
+                    om et øjeblik.
+                  </p>
+                  <button
+                    type="button"
+                    className={styles.dateWeekBtn}
+                    onClick={() => void refreshSpots()}
+                  >
+                    Prøv igen
+                  </button>
+                </div>
               ) : (
                 <>
                   <div className={styles.dateStepMobile}>
@@ -2651,10 +2757,7 @@ function DealTypeformWizardForm({
                         {mobileVisibleDates.map((date) => {
                           const dateStr = toLocalYmd(date);
                           const freeSpots = freeSpotsForDate(dateStr);
-                          const hasSpots =
-                            spotsLoaded
-                              ? freeSpots.length > 0
-                              : !isDateInPast(date) && date <= maxBookableDate;
+                          const hasSpots = freeSpots.length > 0;
                           const isSelected = selectedDate === dateStr;
                           const weekday = date
                             .toLocaleDateString("da-DK", { weekday: "short" })
@@ -2751,8 +2854,7 @@ function DealTypeformWizardForm({
                         const past = isDateInPast(date);
                         const beyondRange = date > maxBookableDate;
                         const freeSpots = freeSpotsForDate(dateStr);
-                        const hasSpots =
-                          spotsLoaded ? freeSpots.length > 0 : !past && !beyondRange;
+                        const hasSpots = freeSpots.length > 0;
                         const isSelected =
                           selectedDate === dateStr && !selectedDateOutsideWeek;
                         const weekday = date

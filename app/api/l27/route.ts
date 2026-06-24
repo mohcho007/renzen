@@ -105,6 +105,13 @@ export async function POST(req: NextRequest) {
           },
         ],
       };
+      const arrivalWindow = parseInt(payload.arrival_window || "0", 10);
+      if (arrivalWindow > 0) {
+        apiPayload.arrival_window = arrivalWindow;
+      }
+      if (payload.welcome_deal === true) {
+        apiPayload.welcome_deal = true;
+      }
       if (payload.discount_code) {
         apiPayload.discount_code = payload.discount_code;
       }
