@@ -76,9 +76,11 @@ import {
   BOOK_LAST_CLEANED_OPTIONS,
   buildBookCleaningCustomFieldsPayload,
   buildBookCleaningExtrasPayload,
+  isSelectableL27Extra,
   L27_BOOK_PRICING_PARAM_ID,
   L27_BOOK_SERVICE_ID,
   parseL27BookingError,
+  resolveL27BookingId,
   type BookEntryOptionId,
   type BookCleanlinessLevelId,
 } from "@/lib/bookCleaningL27";
@@ -101,26 +103,6 @@ const BOOK_EXTRAS_FALLBACK: BookExtra[] = [
   { id: "56", name: "Fodpaneler", price: 79, quantityBased: false },
   { id: "58", name: "Ekstra kæledyrshår", price: 75, quantityBased: false },
 ];
-
-function isSelectableL27Extra(extra: {
-  name?: string;
-  mandatory?: boolean;
-}): boolean {
-  const name = (extra.name ?? "").toLowerCase();
-  if (extra.mandatory) return false;
-  if (name.includes("administration")) return false;
-  if (name.includes("renzen klub") || name.includes("klub medlemskab")) {
-    return false;
-  }
-  if (
-    name.includes("rengøringsstand") ||
-    name.includes("boligstand") ||
-    name.includes("how clean")
-  ) {
-    return false;
-  }
-  return true;
-}
 
 function cleanlinessReceiptSubline(levelId: string): string {
   if (levelId === "extra") return "Boligen trænger til ekstra tid";
@@ -663,6 +645,7 @@ function DealTypeformWizardForm({
           const extras = allExtras
             .filter((extra) =>
               isSelectableL27Extra({
+                id: extra.id,
                 name: extra.name,
                 mandatory: extra.mandatory,
               }),
@@ -1265,15 +1248,7 @@ function DealTypeformWizardForm({
     setPromoMsg("");
     setPromoIsError(false);
     setShowPromoInput(false);
-  }, [
-    billingFrequencyId,
-    effectiveM2,
-    selectedDate,
-    selectedSlot,
-    clubSelected,
-    cleanlinessLevel,
-    selectedExtras,
-  ]);
+  }, [billingFrequencyId, effectiveM2, clubSelected, cleanlinessLevel]);
 
   const handlePromoApply = useCallback(async () => {
     setPromoIsError(false);
@@ -2222,7 +2197,8 @@ function DealTypeformWizardForm({
           }),
         });
         const resData = await response.json();
-        if (!resData.success || !resData.data?.booking_id) {
+        const resolvedBookingId = resolveL27BookingId(resData.data);
+        if (!resData.success || !resolvedBookingId) {
           setError(
             parseL27BookingError(
               resData.details,
@@ -2232,8 +2208,6 @@ function DealTypeformWizardForm({
           );
           return;
         }
-
-        const resolvedBookingId = String(resData.data.booking_id);
 
         if (isBook2) {
           const confirmationExtras = Object.entries(selectedExtras)

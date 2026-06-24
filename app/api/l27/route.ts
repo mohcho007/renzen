@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import {
   L27_BOOK_PRICING_PARAM_ID,
   L27_BOOK_SERVICE_ID,
+  resolveL27BookingId,
 } from "@/lib/bookCleaningL27";
 
 export const dynamic = "force-dynamic";
@@ -195,6 +196,16 @@ export async function POST(req: NextRequest) {
         { success: false, message: data.message || "Error from Launch27 API.", details: data },
         { status: response.status }
       );
+    }
+
+    if (action === "booking" && data && typeof data === "object" && !Array.isArray(data)) {
+      const bookingId = resolveL27BookingId(data);
+      if (bookingId) {
+        return NextResponse.json({
+          success: true,
+          data: { ...(data as Record<string, unknown>), booking_id: bookingId },
+        });
+      }
     }
 
     return NextResponse.json({ success: true, data });

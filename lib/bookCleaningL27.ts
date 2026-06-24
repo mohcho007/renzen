@@ -107,17 +107,60 @@ function pushUniqueExtra(
   payload.push({ id, quantity, recurring });
 }
 
-export function isHiddenMandatoryBookExtra(extra: BookServiceExtra): boolean {
-  const name = extra.name.toLowerCase();
+export function isCleanlinessBookExtra(extra: {
+  id?: string | number;
+  name?: string;
+}): boolean {
+  const id = parseInt(String(extra.id ?? ""), 10);
   if (
-    /renzen\s*klub|klub medlemskab|rengøringsstand|boligstand|how clean/.test(
-      name,
-    )
+    id === L27_EXTRA_MEGET_BESKIDT_ID ||
+    id === L27_EXTRA_EKSTRA_TID_ID
   ) {
-    return false;
+    return true;
   }
+  const name = (extra.name ?? "").toLowerCase();
+  return (
+    /rengøringsstand|boligstand|how clean/.test(name) ||
+    /meget beskidt|ekstra tid|trænger til ekstra/.test(name)
+  );
+}
+
+export function isSelectableL27Extra(extra: {
+  id?: string | number;
+  name?: string;
+  mandatory?: boolean;
+}): boolean {
+  const id = parseInt(String(extra.id ?? ""), 10);
+  if (id === L27_EXTRA_KLUB_ID) return false;
+  if (isCleanlinessBookExtra(extra)) return false;
+
+  const name = (extra.name ?? "").toLowerCase();
+  if (extra.mandatory) return false;
+  if (/administration/.test(name)) return false;
+  if (/renzen\s*klub|klub medlemskab/.test(name)) return false;
+  if (/sofagruppe/.test(name)) return false;
+  return true;
+}
+
+export function isHiddenMandatoryBookExtra(extra: BookServiceExtra): boolean {
+  if (isCleanlinessBookExtra(extra)) return false;
+
+  const name = extra.name.toLowerCase();
+  if (/renzen\s*klub|klub medlemskab/.test(name)) return false;
   if (/administrationsgebyr|administration\s*gebyr/.test(name)) return true;
   return !!extra.mandatory;
+}
+
+export function resolveL27BookingId(data: unknown): string | null {
+  if (!data || typeof data !== "object") return null;
+  const record = data as { id?: unknown; booking_id?: unknown };
+  if (record.booking_id != null && record.booking_id !== "") {
+    return String(record.booking_id);
+  }
+  if (record.id != null && record.id !== "") {
+    return String(record.id);
+  }
+  return null;
 }
 
 export function parseL27BookingError(details: unknown, fallback: string): string {
