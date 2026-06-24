@@ -297,12 +297,12 @@ export function ServiceInquiryLandingPage({
               {config.whyRenzen.sections.map((block, index) => (
                 <div
                   key={block.title}
-                  className={`grid gap-10 border-[#dfe2da] py-16 sm:py-20 lg:grid-cols-2 lg:items-center lg:gap-16 ${
+                  className={`grid gap-8 border-[#dfe2da] py-14 sm:gap-10 sm:py-16 lg:grid-cols-2 lg:items-start lg:gap-12 xl:gap-16 ${
                     index > 0 ? "border-t" : ""
                   }`}
                 >
                   <div
-                    className={`relative order-1 aspect-[4/3] w-full overflow-hidden bg-[#e7e4da] ${
+                    className={`order-1 w-full ${styles.whyRenzenImageFrame} ${
                       block.imagePosition === "right" ? "lg:order-2" : "lg:order-1"
                     }`}
                   >
@@ -310,19 +310,19 @@ export function ServiceInquiryLandingPage({
                       src={block.image}
                       alt={block.imageAlt}
                       fill
-                      sizes="(max-width: 1024px) 100vw, 50vw"
-                      className="object-cover object-center"
+                      sizes="(max-width: 1024px) 100vw, 520px"
+                      className={styles.whyRenzenImage}
                     />
                   </div>
                   <div
-                    className={`order-2 ${
+                    className={`order-2 lg:py-2 ${
                       block.imagePosition === "right" ? "lg:order-1" : "lg:order-2"
                     }`}
                   >
                     <h3 className="font-display text-3xl font-semibold tracking-[-0.04em] text-[#173c2c] sm:text-4xl">
                       {block.title}
                     </h3>
-                    <div className="mt-6 space-y-5 text-base font-medium leading-7 text-[#667168]">
+                    <div className="mt-5 space-y-4 text-[0.9375rem] font-medium leading-[1.65] text-[#667168] sm:text-base sm:leading-7">
                       {block.paragraphs.map((paragraph) => (
                         <p key={paragraph}>{paragraph}</p>
                       ))}

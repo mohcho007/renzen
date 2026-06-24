@@ -437,3 +437,31 @@
   line-height: 1.65;
   color: #758078;
 }
+
+.whyRenzenImageFrame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  min-height: 300px;
+  overflow: hidden;
+  background: #e7e4da;
+}
+
+@media (min-width: 640px) {
+  .whyRenzenImageFrame {
+    min-height: 380px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .whyRenzenImageFrame {
+    min-height: 440px;
+    max-width: 520px;
+    justify-self: center;
+  }
+}
+
+.whyRenzenImage {
+  object-fit: cover;
+  object-position: center top;
+}
