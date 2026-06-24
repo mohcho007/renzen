@@ -26,6 +26,7 @@ export const BOOK_ENTRY_OPTIONS: BookEntryOption[] = [
 /** Launch27 extras on service 213 (rengøringsstand tillæg). */
 export const L27_EXTRA_MEGET_BESKIDT_ID = 250;
 export const L27_EXTRA_EKSTRA_TID_ID = 251;
+export const L27_EXTRA_KLUB_ID = 184;
 
 export const BOOK_CLEANLINESS_LEVELS = [
   {
@@ -278,11 +279,23 @@ export function findBookCleanlinessExtra(
   return undefined;
 }
 
+export function findKlubExtra(extras: BookExtra[]): BookExtra | undefined {
+  const fromApi = extras.find(
+    (extra) => parseInt(extra.id, 10) === L27_EXTRA_KLUB_ID,
+  );
+  if (fromApi) return fromApi;
+
+  return extras.find((extra) =>
+    /renzen\s*klub|klub medlemskab/i.test(extra.name),
+  );
+}
+
 export function buildBookCleaningExtrasPayload(
   selectedExtras: Record<string, number>,
   recurring: boolean,
   cleanlinessLevel: BookCleanlinessLevelId | "",
   serviceExtras: BookExtra[],
+  includeKlub = false,
 ) {
   const payload = Object.entries(selectedExtras)
     .filter(([, qty]) => qty > 0)
@@ -299,6 +312,17 @@ export function buildBookCleaningExtrasPayload(
   if (cleanlinessExtra) {
     payload.push({
       id: parseInt(cleanlinessExtra.id, 10),
+      quantity: 1,
+      recurring,
+    });
+  }
+
+  if (includeKlub) {
+    const klubExtra = findKlubExtra(serviceExtras);
+    payload.push({
+      id: klubExtra
+        ? parseInt(klubExtra.id, 10)
+        : L27_EXTRA_KLUB_ID,
       quantity: 1,
       recurring,
     });

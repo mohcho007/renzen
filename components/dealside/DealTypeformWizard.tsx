@@ -1251,6 +1251,7 @@ function DealTypeformWizardForm({
         chosenFrequency.type === "recurring" && clubSelected,
         cleanlinessLevel,
         serviceExtras,
+        clubSelected && chosenFrequency.type !== "oneoff",
       ),
     [
       selectedExtras,
