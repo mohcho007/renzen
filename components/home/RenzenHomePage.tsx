@@ -32,7 +32,7 @@ export function RenzenHomePage() {
               />
               <p className={homeStyles.eyebrow}>
                 <span className={homeStyles.eyebrowRule} aria-hidden="true" />
-                Professionel rengøring · Hele Danmark
+                Skræddersyet rengøring
               </p>
               <h1 className={homeStyles.heroTitle}>
                 Et renere hjem giver plads til mere.

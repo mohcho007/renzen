@@ -150,7 +150,7 @@ export default function DealsideLandingPage() {
                     .querySelector("#pakker")
                     ?.scrollIntoView({ behavior: "smooth" })
                 }
-                className="mt-9 inline-flex min-h-12 w-fit items-center gap-2 rounded-[3px] bg-[#173c2c] px-6 text-sm font-bold text-white transition-colors hover:bg-[#0f2d20]"
+                className="mt-9 inline-flex min-h-12 w-fit cursor-pointer items-center gap-2 rounded-[3px] bg-[#173c2c] px-6 text-sm font-bold text-white transition-colors hover:bg-[#0f2d20]"
               >
                 Find din boligstørrelse
                 <ArrowRight size={16} />
@@ -260,7 +260,7 @@ export default function DealsideLandingPage() {
                 <button
                   type="button"
                   onClick={() => selectPackage(featured.m2)}
-                  className="mt-10 flex min-h-13 w-full items-center justify-between rounded-[3px] bg-[#173c2c] px-6 text-sm font-bold text-white"
+                  className="mt-10 flex min-h-13 w-full cursor-pointer items-center justify-between rounded-[3px] bg-[#173c2c] px-6 text-sm font-bold text-white"
                 >
                   Vælg mellem bolig
                   <ArrowRight size={17} />
@@ -273,7 +273,7 @@ export default function DealsideLandingPage() {
                     key={pkg.m2}
                     type="button"
                     onClick={() => selectPackage(pkg.m2)}
-                    className="group grid w-full grid-cols-[1fr_auto] gap-6 border-b border-[#ccd2ca] py-7 text-left"
+                    className="group grid w-full cursor-pointer grid-cols-[1fr_auto] gap-6 border-b border-[#ccd2ca] py-7 text-left"
                   >
                     <span>
                       <span className="block font-display text-2xl font-semibold text-[#173c2c]">
@@ -493,7 +493,7 @@ export default function DealsideLandingPage() {
             <button
               type="button"
               onClick={() => selectPackage(featured.m2)}
-              className="inline-flex min-h-12 items-center gap-2 rounded-[3px] bg-[#173c2c] px-6 text-sm font-bold text-white"
+              className="inline-flex min-h-12 cursor-pointer items-center gap-2 rounded-[3px] bg-[#173c2c] px-6 text-sm font-bold text-white"
             >
               Vælg din bolig
               <ArrowRight size={16} />

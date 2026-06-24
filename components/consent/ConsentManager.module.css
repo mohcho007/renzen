@@ -182,6 +182,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
   min-height: 2.625rem;
   padding: 0.625rem 1.25rem;
   border-radius: 2px;
