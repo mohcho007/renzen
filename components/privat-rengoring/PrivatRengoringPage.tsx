@@ -164,7 +164,7 @@ export function PrivatRengoringPage() {
             <div className={`${renzenKlubMaskStyles.heroKlubVisual} order-1 lg:order-2 ${styles.heroImage}`}>
               <div className={`${renzenKlubMaskStyles.heroKlubImageSlot} relative lg:min-h-full`}>
                 <Image
-                  src="/familyoutside2.jpg"
+                  src="/flytterengoring-hero.jpg"
                   alt="Familie nyder et rent hjem med privat rengøring fra Renzen"
                   fill
                   priority
