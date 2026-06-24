@@ -117,7 +117,7 @@ export function PrivatRengoringPage() {
       <RenzenEditorialHeader />
 
       <main>
-        <section className="relative overflow-hidden bg-[#dfe9dc]">
+        <section className="relative z-30 overflow-visible bg-[#dfe9dc]">
           <div className="grid min-h-[690px] w-full lg:grid-cols-[0.9fr_1.1fr]">
             <div className="relative z-10 order-2 flex flex-col justify-center px-6 py-16 sm:px-10 lg:order-1 lg:pl-[114px] lg:pr-16 lg:py-20">
               <Image
@@ -177,7 +177,7 @@ export function PrivatRengoringPage() {
           </div>
         </section>
 
-        <section className="border-b border-[#dfe2da] bg-[#fbfaf5]">
+        <section className="relative z-10 border-b border-[#dfe2da] bg-[#fbfaf5]">
           <div className="mx-auto flex max-w-[1260px] flex-wrap justify-between gap-x-10 gap-y-6 px-6 py-8 sm:px-8">
             {[
               ["4,8 ud af 5", "Kundevurdering"],

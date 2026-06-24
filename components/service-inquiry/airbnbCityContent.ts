@@ -272,7 +272,7 @@ const AIRBNB_CITY_COPY: Record<string, AirbnbCityCopy> = {
         ],
       },
       {
-        title: "Gentagelse og forudsigelighed",
+        title: "Universitetsby med skiftende gæstetyper",
         paragraphs: [
           "Universitetsbyen betyder også perioder med forældre og studerende på besøg — og boliger der skal holde standard, selv når der har været flere gæster i huset. Vi sørger for, at køkken, bad og soveværelser fremstår som nye, uanset om det er en weekendbooking eller et ugeophold.",
           "Risskov og Trøjborg har mange familieboliger med have og terrasse — områder, gæster vælger for ro og nærhed til naturen. Vi inkluderer entré og eventuelle udearealer i aftalen, når du beskriver boligen i forespørgslen."
@@ -382,7 +382,7 @@ const AIRBNB_CITY_COPY: Record<string, AirbnbCityCopy> = {
         ],
       },
       {
-        title: "Klar når byen får besøg",
+        title: "Limfjorden og Nørresundby",
         paragraphs: [
           "Nørresundby på den anden side af Limfjorden har sit eget udlejningsmarked med gæster, der vil bo tæt på centrum men med mere ro. Vi dækker begge sider af fjorden og planlægger ruten, så klargøringen sker til aftalt tid.",
           "Aalborg er også universitets- og erhvervsby — med mange korte ophold til møder og konferencer. Gæsterne har sjældent tid til at vente på rengøring; de forventer, at boligen er klar ved ankomst. Det kræver en partner, der overholder tidsplanen."
@@ -423,21 +423,21 @@ const AIRBNB_CITY_COPY: Record<string, AirbnbCityCopy> = {
       "Airbnb rengøring i Roskilde. Professionel klargøring mellem gæster i centrum og omegn — festivalperioder, pendlerophold og hele året.",
     editorialSections: [
       {
-        title: "Mere end en soveby til København",
+        title: "Domkirke, festival og pendlergæster",
         paragraphs: [
-          "Roskilde er mere end en soveby til København. Domkirken, Vikingeskibsmuseet og ikke mindst Roskilde Festival gør byen til en destination i sig selv — med gæster, der booker både for kultur, musik og som base mellem Sjælland og hovedstaden. For Airbnb-værter betyder det perioder med ekstra høj belægning, hvor turn-around-tiden bliver afgørende.",
+          "Roskilde er en selvstændig udlejningsby med sin egen puls. Domkirken, Vikingeskibsmuseet og ikke mindst Roskilde Festival gør byen til en destination i sig selv — med gæster, der booker både for kultur, musik og som base mellem Sjælland og hovedstaden. For Airbnb-værter betyder det perioder med ekstra høj belægning, hvor turn-around-tiden bliver afgørende.",
           "Boligtyperne i Roskilde spænder fra lejligheder i centrum og ved stationen til villaer og rækkehuse i Trekroner, Svogerslev og omegn. Mange værter udlejer til festivalgæster, familier på weekendture og pendlere, der arbejder i København. Gæster forventer en ren bolig efter en lang dag — og anmeldelser afspejler hurtigt, om standarden holder."
         ],
       },
       {
-        title: "Turn-around når det gælder",
+        title: "Klargøring i festival- og hverdagssæson",
         paragraphs: [
           "Roskilde-værter har ofte en blanding af korte og længere ophold. En professionel partner giver forudsigelighed året rundt — ikke kun i højsæsonen. Du kan bestille enkeltbesøg ved gæsteskifte eller lægge en fast ramme, der matcher din portefølje. Vi tager højde for praktiske forhold som parkering ved centrum og adgang i ældre ejendomme.",
           "Har du brug for ekstra ydelser efter en travl periode — for eksempel hovedrengøring, ovnrengøring eller vinduespudsning — kan vi tilføje det som tilvalg. Zen-kreditter fra Renzen Klub kan bruges på Airbnb-rengøring og andre boligopgaver, så du holder driften samlet og overskuelig."
         ],
       },
       {
-        title: "Partner du kan stole på",
+        title: "Universitetsby med varierende gæsteskifte",
         paragraphs: [
           "Roskilde som universitetsby og festivalby giver en unik blanding af gæstetyper. Uanset om det er studerende, turister eller festivalgæster, skal boligen fremstå professionelt — og det er præcis det, vores Airbnb-tjekliste sikrer.",
           "Lejligheder ved Roskilde Station og i centrum har ofte gæster med tidlig ankomst fra København. Vi planlægger klargøring, så boligen er klar — også når check-out sker sent om aftenen efter en koncert eller middag i byen."

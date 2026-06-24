@@ -79,6 +79,7 @@ const rawCities = [
   { name: 'Lynge', municipality: 'Allerød Kommune', region: 'Region Hovedstaden', typicalHomeSize: 130, housingType: 'parcelhuse og rækkehuse', nearbyAreas: ['Allerød', 'Farum', 'Slangerup', 'Stenløse'] },
   { name: 'Melby', municipality: 'Halsnæs Kommune', region: 'Region Hovedstaden', typicalHomeSize: 105, housingType: 'sommerhuse og landhuse', nearbyAreas: ['Liseleje', 'Frederiksværk', 'Hundested'] },
   { name: 'Måløv', municipality: 'Ballerup Kommune', region: 'Region Hovedstaden', typicalHomeSize: 125, housingType: 'rækkehuse og parcelhuse', nearbyAreas: ['Ballerup', 'Smørum', 'Stenløse', 'Veksø'] },
+  { name: 'Nordhavn', municipality: 'Københavns Kommune', region: 'Region Hovedstaden', typicalHomeSize: 90, housingType: 'nye lejligheder og byhuse', nearbyAreas: ['København Ø', 'Hellerup', 'København N'], parkingNote: 'Parkeringszoner gælder i Nordhavn.' },
   { name: 'Nivå', municipality: 'Fredensborg Kommune', region: 'Region Hovedstaden', typicalHomeSize: 120, housingType: 'rækkehuse og parcelhuse', nearbyAreas: ['Kokkedal', 'Humlebæk', 'Fredensborg'] },
   { name: 'Nærum', municipality: 'Rudersdal Kommune', region: 'Region Hovedstaden', typicalHomeSize: 125, housingType: 'villaer og rækkehuse', nearbyAreas: ['Holte', 'Virum', 'Lyngby', 'Skodsborg'] },
   { name: 'Rungsted', municipality: 'Hørsholm Kommune', region: 'Region Hovedstaden', typicalHomeSize: 155, housingType: 'villaer og kystejendomme', nearbyAreas: ['Hørsholm', 'Kokkedal', 'Vedbæk'] },
