@@ -444,7 +444,6 @@
   aspect-ratio: 1 / 1;
   min-height: 300px;
   overflow: hidden;
-  background: #e7e4da;
 }
 
 @media (min-width: 640px) {

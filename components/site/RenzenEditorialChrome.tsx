@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useId, useRef, useState } from "react";
-import { ArrowRight, Menu, Phone, X } from "lucide-react";
+import { ArrowRight, Menu, X } from "lucide-react";
 import { CookieSettingsButton } from "@/components/consent/CookieSettingsButton";
 import {
   EditorialDesktopNavigation,
@@ -94,13 +94,12 @@ export function RenzenEditorialHeader() {
           </nav>
 
           <div className="flex items-center gap-5">
-            <a
-              href={`tel:+45${siteConfig.phone.replace(/\s/g, "")}`}
-              className="flex items-center gap-2 text-[13px] font-semibold text-[#536159]"
+            <Link
+              href="/klub/"
+              className="inline-flex min-h-10 items-center rounded-[4px] border border-[#173c2c] px-4 text-[13px] font-bold text-[#173c2c] transition-colors hover:bg-[#173c2c] hover:text-white"
             >
-              <Phone size={15} />
-              {siteConfig.phone}
-            </a>
+              Renzen Klub
+            </Link>
             <Link
               href="/book-rengoering"
               className="inline-flex min-h-11 items-center gap-2 rounded-[4px] bg-[#173c2c] px-5 text-[13px] font-bold text-white transition-colors hover:bg-[#0f2d20]"
@@ -173,7 +172,7 @@ export function RenzenEditorialHeader() {
 
 export function RenzenEditorialFooter() {
   return (
-    <footer className="bg-[#262626] text-[#f4f1e8]">
+    <footer className="bg-[#202020] text-[#f0ede4]">
       <div className="mx-auto max-w-[1280px] px-6 py-16 sm:px-8 sm:py-20">
         <div className="grid gap-12 border-b border-white/15 pb-14 md:grid-cols-[1.3fr_0.7fr_0.7fr]">
           <div>
@@ -218,7 +217,6 @@ export function RenzenEditorialFooter() {
               <Link href="/faq">FAQ</Link>
               <Link href="/bliv-zenmester">Bliv Zenmester</Link>
               <Link href="/priser">Priser</Link>
-              <Link href="/deals">Alle tilbud</Link>
               <Link href="/klub/">Renzen Klub</Link>
             </div>
           </div>

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import RenzenDealsHubPage from "@/components/deals/RenzenDealsHubPage";
 import { INTRO_CLEANING_FROM_KR } from "@/data/pricing";
 import { constructMetadata } from "@/lib/seo";
@@ -16,7 +17,7 @@ export const metadata: Metadata = constructMetadata({
     cta: "Sammenlign fordele og book det, der passer dig.",
   }),
   path: "/deals/",
-  indexable: true,
+  indexable: false,
 });
 
 function DealsHubStructuredData() {
@@ -45,6 +46,10 @@ function DealsHubStructuredData() {
 }
 
 export default function DealsPage() {
+  if (process.env.NODE_ENV === "production") {
+    notFound();
+  }
+
   return (
     <>
       <DealsHubStructuredData />

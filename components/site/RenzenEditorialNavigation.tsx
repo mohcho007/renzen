@@ -2,13 +2,14 @@
 
 import Link from "next/link";
 import { useState, type FocusEvent } from "react";
-import { ArrowRight, ChevronDown } from "lucide-react";
+import { ArrowRight, ChevronDown, Phone } from "lucide-react";
 import {
   boligserviceHubIntro,
   boligserviceMegaMenuItems,
 } from "@/components/boligservice/boligserviceContent";
 import { INTRO_CLEANING_FROM_KR, ZEN_CREDIT_ANNUAL_KR } from "@/data/pricing";
 import styles from "./RenzenEditorial.module.css";
+import { siteConfig } from "@/lib/siteConfig";
 
 export type MenuId = "cleaning" | "garden" | "boligservice" | "business" | "about";
 
@@ -232,12 +233,13 @@ export function EditorialDesktopNavigation({
         );
       })}
 
-      <Link
-        href="/klub/"
-        className="inline-flex min-h-10 items-center rounded-[4px] border border-[#173c2c] px-4 text-[13px] font-bold text-[#173c2c] transition-colors hover:bg-[#173c2c] hover:text-white"
+      <a
+        href={`tel:+45${siteConfig.phone.replace(/\s/g, "")}`}
+        className="inline-flex min-h-10 items-center gap-2 text-[13px] font-semibold text-[#536159] transition-colors hover:text-[#173c2c]"
       >
-        Renzen Klub
-      </Link>
+        <Phone size={15} />
+        {siteConfig.phone}
+      </a>
 
       {showMegaMenuPanel && activeSection && (
         <div
@@ -370,7 +372,7 @@ export function EditorialMobileNavigation({
         >
           Renzen Klub
         </Link>
-        <div className="mb-5 rounded-[10px] border border-[#c5d3c4] bg-[#dfe9dc] p-4">
+        <div className="mt-5 rounded-[10px] border border-[#c5d3c4] bg-[#dfe9dc] p-4">
           <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-[#52665b]">
             Renzen Klub
           </p>
@@ -380,11 +382,11 @@ export function EditorialMobileNavigation({
             <li>Intropris fra {INTRO_CLEANING_FROM_KR} kr.</li>
           </ul>
           <Link
-            href="/deals"
+            href="/klub/"
             onClick={onNavigate}
             className="mt-4 inline-flex items-center gap-1.5 text-[13px] font-bold text-[#173c2c]"
           >
-            Se alle tilbud
+            Se alle fordele
             <ArrowRight size={14} />
           </Link>
           <Link
