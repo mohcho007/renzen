@@ -19,6 +19,7 @@ import type { EditorialServiceLandingConfig } from "@/components/service-inquiry
 import { ZEN_CREDIT_SERVICES_SECTION_INTRO } from "@/lib/zenCreditServices";
 import { ZenCreditServicesGrid } from "@/components/site/ZenCreditServicesGrid";
 import { ServiceProcessRadial } from "@/components/service-inquiry/ServiceProcessRadial";
+import ReviewSnippet from "@/components/ReviewSnippet";
 
 type ServiceInquiryLandingPageProps = {
   config: EditorialServiceLandingConfig;
@@ -142,35 +143,77 @@ export function ServiceInquiryLandingPage({
         </section>
 
         <section className="mx-auto max-w-[1200px] px-6 py-24 sm:px-8 sm:py-32">
-          <div className="grid gap-14 lg:grid-cols-[0.72fr_1.28fr]">
-            <div>
-              <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#55705f]">
-                {config.includedEyebrow}
-              </p>
-              <h2 className="mt-4 font-display text-4xl font-semibold tracking-[-0.04em] text-[#173c2c] sm:text-5xl">
-                {config.includedTitle}
-              </h2>
-              <p className="mt-6 max-w-md text-base font-medium leading-7 text-[#667168]">
-                {config.includedDescription}
-              </p>
+          {config.includedRooms ? (
+            <>
+              <div className="mx-auto mb-16 max-w-3xl text-center">
+                <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#55705f]">
+                  {config.includedEyebrow}
+                </p>
+                <h2 className="mt-4 font-display text-4xl font-semibold tracking-[-0.04em] text-[#173c2c] sm:text-5xl">
+                  {config.includedTitle}
+                </h2>
+                <p className="mt-6 text-base font-medium leading-7 text-[#667168]">
+                  {config.includedDescription}
+                </p>
+              </div>
+              <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-4">
+                {config.includedRooms.map((room) => (
+                  <div
+                    key={room.title}
+                    className="flex flex-col border border-[#ccd2ca] bg-white p-6"
+                  >
+                    <h3 className="border-b border-[#ccd2ca] pb-3 font-display text-lg font-semibold text-[#173c2c]">
+                      {room.title}
+                    </h3>
+                    <ul className="mt-4 space-y-2.5">
+                      {room.items.map((item) => (
+                        <li
+                          key={item}
+                          className="flex items-start gap-2.5 text-sm font-medium leading-6 text-[#5f6d65]"
+                        >
+                          <Check
+                            size={15}
+                            className="mt-0.5 shrink-0 text-[#41614f]"
+                          />
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            </>
+          ) : (
+            <div className="grid gap-14 lg:grid-cols-[0.72fr_1.28fr]">
+              <div>
+                <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#55705f]">
+                  {config.includedEyebrow}
+                </p>
+                <h2 className="mt-4 font-display text-4xl font-semibold tracking-[-0.04em] text-[#173c2c] sm:text-5xl">
+                  {config.includedTitle}
+                </h2>
+                <p className="mt-6 max-w-md text-base font-medium leading-7 text-[#667168]">
+                  {config.includedDescription}
+                </p>
+              </div>
+              <ul className="border-t border-[#ccd2ca]">
+                {config.includedItems.map((item) => (
+                  <li
+                    key={item}
+                    className="flex items-start gap-4 border-b border-[#ccd2ca] py-6"
+                  >
+                    <Check
+                      size={18}
+                      className="mt-0.5 shrink-0 text-[#41614f]"
+                    />
+                    <span className="text-sm font-semibold leading-6 text-[#3f4d45]">
+                      {item}
+                    </span>
+                  </li>
+                ))}
+              </ul>
             </div>
-            <ul className="border-t border-[#ccd2ca]">
-              {config.includedItems.map((item) => (
-                <li
-                  key={item}
-                  className="flex items-start gap-4 border-b border-[#ccd2ca] py-6"
-                >
-                  <Check
-                    size={18}
-                    className="mt-0.5 shrink-0 text-[#41614f]"
-                  />
-                  <span className="text-sm font-semibold leading-6 text-[#3f4d45]">
-                    {item}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </div>
+          )}
         </section>
 
         <section
@@ -235,6 +278,165 @@ export function ServiceInquiryLandingPage({
 
         {config.processSection ? (
           <ServiceProcessRadial config={config.processSection} />
+        ) : null}
+
+        {config.whyRenzen ? (
+          <section className="border-y border-[#dfe2da] bg-white py-24 sm:py-32">
+            <div className="mx-auto max-w-3xl px-6 text-center sm:px-8">
+              <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#55705f]">
+                {config.whyRenzen.eyebrow}
+              </p>
+              <h2 className="mt-4 font-display text-4xl font-semibold tracking-[-0.04em] text-[#173c2c] sm:text-5xl">
+                {config.whyRenzen.title}
+              </h2>
+              <div className="mt-8 space-y-5 text-base font-medium leading-7 text-[#667168]">
+                {config.whyRenzen.paragraphs.map((paragraph) => (
+                  <p key={paragraph}>{paragraph}</p>
+                ))}
+              </div>
+            </div>
+          </section>
+        ) : null}
+
+        {config.showReviews ? (
+          <section className="bg-[#fbfaf5] py-24 sm:py-32">
+            <div className="mx-auto max-w-[1200px] px-6 sm:px-8">
+              <div className="mx-auto mb-16 max-w-3xl text-center">
+                <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#55705f]">
+                  Kundeudtalelser
+                </p>
+                <h2 className="mt-4 font-display text-4xl font-semibold tracking-[-0.04em] text-[#173c2c] sm:text-5xl">
+                  Det siger kunderne om Renzen
+                </h2>
+              </div>
+              <ReviewSnippet />
+            </div>
+          </section>
+        ) : null}
+
+        {config.hostBenefits ? (
+          <section className="mx-auto max-w-[1200px] px-6 py-24 sm:px-8 sm:py-32">
+            <div className="grid items-center gap-14 lg:grid-cols-[0.9fr_1.1fr]">
+              {config.hostBenefits.image ? (
+                <div className="relative mx-auto aspect-square w-full max-w-[320px] overflow-hidden rounded-full border-8 border-[#f0ede4] bg-[#e7e4da] shadow-sm lg:mx-0">
+                  <Image
+                    src={config.hostBenefits.image}
+                    alt={config.hostBenefits.imageAlt ?? ""}
+                    fill
+                    sizes="320px"
+                    className="object-cover"
+                  />
+                </div>
+              ) : null}
+              <div>
+                <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#55705f]">
+                  {config.hostBenefits.eyebrow}
+                </p>
+                <h2 className="mt-4 font-display text-4xl font-semibold tracking-[-0.04em] text-[#173c2c] sm:text-5xl">
+                  {config.hostBenefits.title}
+                </h2>
+                <ul className="mt-8 space-y-4 border-t border-[#ccd2ca] pt-8">
+                  {config.hostBenefits.items.map((item) => (
+                    <li
+                      key={item}
+                      className="flex items-start gap-3 text-sm font-semibold leading-6 text-[#3f4d45]"
+                    >
+                      <Check
+                        size={16}
+                        className="mt-0.5 shrink-0 text-[#41614f]"
+                      />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+                <Link
+                  href={forespoergselPath}
+                  className="mt-10 inline-flex min-h-12 items-center gap-2 rounded-[3px] bg-[#173c2c] px-6 text-sm font-bold text-[#f6f2e8] transition-colors hover:bg-[#41614f]"
+                >
+                  Send forespørgsel
+                  <ArrowRight size={16} />
+                </Link>
+              </div>
+            </div>
+          </section>
+        ) : null}
+
+        {config.tilvalg ? (
+          <section className="bg-[#173c2c] px-6 py-24 text-[#f6f2e8] sm:px-8 sm:py-32">
+            <div className="mx-auto grid max-w-[1200px] items-center gap-14 lg:grid-cols-[1.1fr_0.9fr]">
+              <div>
+                <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#a8c4b0]">
+                  {config.tilvalg.eyebrow}
+                </p>
+                <h2 className="mt-4 font-display text-4xl font-semibold tracking-[-0.04em] sm:text-5xl">
+                  {config.tilvalg.title}
+                </h2>
+                {config.tilvalg.description ? (
+                  <p className="mt-6 max-w-xl text-base font-medium leading-7 text-[#c8d4cb]">
+                    {config.tilvalg.description}
+                  </p>
+                ) : null}
+                <ol className="mt-8 space-y-3 border-t border-white/15 pt-8">
+                  {config.tilvalg.items.map((item, index) => (
+                    <li
+                      key={item}
+                      className="flex items-start gap-3 text-sm font-semibold leading-6 text-[#e8efe9]"
+                    >
+                      <span className="font-mono text-xs font-bold text-[#a8c4b0]">
+                        {index + 1}.
+                      </span>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ol>
+                <Link
+                  href={forespoergselPath}
+                  className="mt-10 inline-flex min-h-12 items-center gap-2 rounded-[3px] border border-white/30 px-6 text-sm font-bold text-white transition-colors hover:border-transparent hover:bg-[#f1e9d8] hover:text-[#173c2c]"
+                >
+                  Få et uforpligtende tilbud
+                  <ArrowRight size={16} />
+                </Link>
+              </div>
+              {config.tilvalg.image ? (
+                <div className="relative mx-auto aspect-[9/16] w-full max-w-[260px] lg:mx-0 lg:justify-self-end">
+                  <Image
+                    src={config.tilvalg.image}
+                    alt={config.tilvalg.imageAlt ?? ""}
+                    fill
+                    sizes="260px"
+                    className="object-contain"
+                  />
+                </div>
+              ) : null}
+            </div>
+          </section>
+        ) : null}
+
+        {config.cityLinks ? (
+          <section className="border-t border-[#dfe2da] bg-[#fbfaf5] py-24 sm:py-32">
+            <div className="mx-auto max-w-[1200px] px-6 sm:px-8">
+              <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#55705f]">
+                {config.cityLinks.eyebrow}
+              </p>
+              <h2 className="mt-4 max-w-3xl font-display text-4xl font-semibold tracking-[-0.04em] text-[#173c2c] sm:text-5xl">
+                {config.cityLinks.title}
+              </h2>
+              <p className="mt-6 max-w-3xl text-base font-medium leading-7 text-[#667168]">
+                {config.cityLinks.description}
+              </p>
+              <div className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+                {config.cityLinks.cities.map((city) => (
+                  <Link
+                    key={city.slug}
+                    href={`/${config.slug}/${city.slug}/`}
+                    className="flex min-h-12 items-center justify-center rounded-[3px] border border-[#ccd2ca] bg-white px-4 text-center text-sm font-bold text-[#173c2c] transition-colors hover:border-[#41614f] hover:text-[#41614f]"
+                  >
+                    {city.name}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </section>
         ) : null}
 
         {config.showKlubSections && (

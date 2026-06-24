@@ -1,5 +1,6 @@
 import type { BoligserviceSlug, ServiceInquirySlug } from "@/lib/serviceInquiry";
 import { INTRO_CLEANING_FROM_KR, ZEN_CREDIT_MONTHLY_KR } from "@/data/pricing";
+import { serviceFAQs } from "@/data/faqs";
 
 const introCleaningFromKrLabel = `${INTRO_CLEANING_FROM_KR} kr.`;
 import {
@@ -48,6 +49,98 @@ export type ProcessRadialConfig = {
   steps: ProcessRadialStep[];
 };
 
+export type IncludedRoom = {
+  title: string;
+  items: string[];
+};
+
+export type EditorialProseSection = {
+  eyebrow: string;
+  title: string;
+  paragraphs: string[];
+};
+
+export type EditorialListSection = {
+  eyebrow: string;
+  title: string;
+  description?: string;
+  items: string[];
+  image?: string;
+  imageAlt?: string;
+};
+
+export type EditorialCityLink = {
+  name: string;
+  slug: string;
+};
+
+export type EditorialCityLinksSection = {
+  eyebrow: string;
+  title: string;
+  description: string;
+  cities: EditorialCityLink[];
+};
+
+export const AIRBNB_INCLUDED_ROOMS: IncludedRoom[] = [
+  {
+    title: "Stuer & opholdsrum",
+    items: [
+      "Støvsugning og moppe alle gulve",
+      "Tør alle overflader af",
+      "Spejle og glas pudses",
+      "Fjern spindelvæv",
+      "Rengør lyskontakter",
+      "Rengør dørhåndtag",
+      "Rengør vindueskarme",
+      "Rengør gange og trapper",
+    ],
+  },
+  {
+    title: "Køkken",
+    items: [
+      "Rengøring af vask og overflader",
+      "Tør hvidevarer af udvendigt",
+      "Tømning af opvaskemaskine",
+      "Aftørring af skabslåger udvendigt",
+      "Tømning af skraldespande",
+      "Spejle og glas pudses",
+      "Fjern spindelvæv",
+      "Rengør lyskontakter",
+      "Rengør dørhåndtag",
+      "Rengør vindueskarme",
+    ],
+  },
+  {
+    title: "Soveværelser",
+    items: [
+      "Vask og strygning af tøj",
+      "Skift af sengetøj",
+      "Aftørring af overflader",
+      "Rengør vindueskarme",
+      "Rengør gange og trapper",
+      "Skift af håndklæder",
+    ],
+  },
+  {
+    title: "Badeværelse",
+    items: [
+      "Støvsugning og moppe gulvet",
+      "Rengør og skrubbe toilettet",
+      "Rengør håndvasken",
+      "Rengør ydersiden af skab",
+      "Rengør ydersiden af skuffer",
+      "Tør alle overflader af",
+      "Spejle og glas pudses",
+      "Fjern spindelvæv",
+      "Rengør lyskontakter",
+      "Rengør dørhåndtag",
+      "Rengør vindueskarme",
+      "Tømme skraldespande",
+      "Skift af håndklæder",
+    ],
+  },
+];
+
 export type ServiceInquiryPageConfig = {
   slug: CoreServiceInquirySlug;
   klubMaskVariant: KlubMaskVariant;
@@ -73,6 +166,12 @@ export type ServiceInquiryPageConfig = {
   includedTitle: string;
   includedDescription: string;
   includedItems: string[];
+  includedRooms?: IncludedRoom[];
+  whyRenzen?: EditorialProseSection;
+  showReviews?: boolean;
+  hostBenefits?: EditorialListSection;
+  tilvalg?: EditorialListSection;
+  cityLinks?: EditorialCityLinksSection;
   howItWorksEyebrow: string;
   howItWorksTitle: string;
   howItWorksBackgroundImage?: string;
@@ -208,7 +307,7 @@ export const serviceInquiryPages: Record<
     slug: "airbnb-rengoring",
     klubMaskVariant: "zenCredit",
     klubMaskServiceLine: "til din Airbnb-rengøring",
-    showKlubSections: true,
+    showKlubSections: false,
     serviceName: "Airbnb rengøring",
     heroEyebrow: "Superhost · Hurtig turn-around",
     heroTitle: "Driftssikker klargøring mellem gæster.",
@@ -228,17 +327,64 @@ export const serviceInquiryPages: Record<
       ["Superhost", "5-stjernede anmeldelser"],
       ["Forsikret", "Alle Zenmestre"],
     ],
-    includedEyebrow: "Hvad er inkluderet",
-    includedTitle: "Komplet nulstilling mellem gæster.",
+    includedEyebrow: "Det får du med Renzen",
+    includedTitle: "Hvad er inkluderet i en Airbnb klargøring?",
     includedDescription:
-      "Vi nulstiller boligen, så den står knivskarpt til næste check-in — fra køkken og bad til kontaktpunkter og linned.",
-    includedItems: [
-      "Komplet rengøring af køkken, bad, stue og soveværelser",
-      "Aftørring og desinficering af kontaktpunkter (håndtag, kontakter, fjernbetjeninger)",
-      "Tømning af opvaskemaskine og klargøring af service",
-      "Tømning af skraldespande og isætning af nye poser",
-      "Linnedskift og opsætning af håndklæder (linned haves klar i boligen)",
-    ],
+      "Her er det, der typisk bliver gjort, så boligen fremstår ren, præsentabel og klar til næste gæst.",
+    includedItems: [],
+    includedRooms: AIRBNB_INCLUDED_ROOMS,
+    whyRenzen: {
+      eyebrow: "Hvorfor vælge Renzen",
+      title: "Airbnb rengøring",
+      paragraphs: [
+        "Vi hjælper Airbnb-værter med professionel klargøring mellem gæster. Uanset om du udlejer en lejlighed, gør vi det nemt at holde boligen ren, præsentabel og klar til næste check-in.",
+      ],
+    },
+    showReviews: true,
+    hostBenefits: {
+      eyebrow: "Det får du som Airbnb vært",
+      title: "Det får du som Airbnb vært",
+      items: [
+        "Klargøring mellem check-out og check-in",
+        "Skift af sengetøj og håndklæder",
+        "Pænt reset af boligen",
+        "Stabil kvalitet mellem gæster",
+        "Nem administration online",
+      ],
+      image: "/zenmester-gor-rent-rundt.jpg",
+      imageAlt: "Airbnb vært med Renzen klargøring",
+    },
+    tilvalg: {
+      eyebrow: "Ekstra services",
+      title: "Tilvalg, der gør din drift lettere",
+      description:
+        "Tilføj ekstra ydelser som linnedservice, ovn, køleskab, hovedrengøring og vinduer efter behov. Du vælger selv tilvalgene, når du booker eller sender en forespørgsel.",
+      items: [
+        "Linned og vask",
+        "Ovn",
+        "Køleskab",
+        "Hovedrengøring",
+        "Vinduer efter behov",
+      ],
+      image: "/woman-app.png",
+      imageAlt: "Renzen app til Airbnb-værter",
+    },
+    cityLinks: {
+      eyebrow: "Lokal dækning",
+      title: "Airbnb rengøring i København og resten af landet",
+      description:
+        "Vi hjælper værter i hele Storkøbenhavn — fra Østerbro, Nørrebro og Amager til Valby og Frederiksberg — og i øvrige større byer med Airbnb-klargøring mellem gæster.",
+      cities: [
+        { name: "København", slug: "koebenhavn" },
+        { name: "Frederiksberg", slug: "frederiksberg" },
+        { name: "Gentofte", slug: "gentofte" },
+        { name: "Aarhus", slug: "aarhus" },
+        { name: "Odense", slug: "odense" },
+        { name: "Aalborg", slug: "aalborg" },
+        { name: "Roskilde", slug: "roskilde" },
+        { name: "Helsingør", slug: "helsingoer" },
+      ],
+    },
     howItWorksEyebrow: "Sådan fungerer det",
     howItWorksTitle: "Fra forespørgsel til check-in-klar bolig.",
     howItWorksBackgroundImage: "/nyd-friheden.jpg",
@@ -256,28 +402,7 @@ export const serviceInquiryPages: Record<
         "Zenmesteren rengør i tidsrummet mellem check-out og check-in.",
       ],
     ],
-    faqs: [
-      {
-        question: "Hvad koster Airbnb rengøring?",
-        answer:
-          "Prisen afhænger af boligens størrelse, antal værelser og badeværelser samt frekvens. Beskriv boligen i formularen, så sender vi et skræddersyet tilbud.",
-      },
-      {
-        question: "Hvad tilbyder I i jeres Airbnb rengøringspakke?",
-        answer:
-          "Standardpakken inkluderer rengøring af alle værelser, badeværelser, køkken og fællesarealer — støvsugning, gulvvask og detaljer som kontaktpunkter. Ekstra ydelser som ovnrengøring og vinduespudsning kan tilkøbes.",
-      },
-      {
-        question: "Hvordan koordineres rengøringen med gæsternes ankomst?",
-        answer:
-          "Vi rengør i tidsrummet mellem check-out (typisk kl. 10/11) og check-in (typisk kl. 15/16). Du kan dele din bookingkalender med os, så vi automatisk planlægger rengøringen efter dine bookinger.",
-      },
-      {
-        question: "Står I også for linned og håndklæder?",
-        answer:
-          "Vi skifter gerne sengetøj og håndklæder og lægger det pænt frem til gæsterne, såfremt du har rent linned liggende klar i boligen. Vask af linned er ikke en standarddel af rengøringen, men kan aftales særskilt.",
-      },
-    ],
+    faqs: serviceFAQs["airbnb-rengoring"],
     ctaTitle: "Klar til driftssikker Airbnb rengøring?",
     formTitle: "Få et uforpligtende tilbud",
     formDescription:
