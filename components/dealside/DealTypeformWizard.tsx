@@ -322,6 +322,22 @@ function isActualM2InputValid(value: string) {
   return !Number.isNaN(parsed) && parsed >= M2_MIN && parsed <= M2_MAX;
 }
 
+function getInitialStepIndex(
+  initialPostcode: string | undefined,
+  initialActualM2: number | undefined,
+): number {
+  const postcode = initialPostcode?.replace(/\D/g, "").slice(0, 4);
+  const hasPostcode = postcode?.length === 4;
+  const hasM2 =
+    initialActualM2 != null &&
+    initialActualM2 >= M2_MIN &&
+    initialActualM2 <= M2_MAX;
+  if (hasPostcode && hasM2) {
+    return STEPS.indexOf("frekvens");
+  }
+  return 0;
+}
+
 function computeDealPricing(
   actualM2: number,
   introPkg: DealPackage,
@@ -455,7 +471,9 @@ function DealTypeformWizardForm({
   const elements = useElements();
   const router = useRouter();
   const isBook2 = variant === "book2";
-  const [stepIndex, setStepIndex] = useState(0);
+  const [stepIndex, setStepIndex] = useState(() =>
+    getInitialStepIndex(initialPostcode, initialActualM2),
+  );
   const step = STEPS[stepIndex];
   const progress = ((stepIndex + 1) / STEPS.length) * 100;
 
