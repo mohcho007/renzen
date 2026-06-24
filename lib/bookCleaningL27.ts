@@ -172,8 +172,12 @@ function mapL27ValidationMessage(message: string): string {
     return "Den indtastede e-mail er knyttet til en medarbejderkonto i vores bookingsystem. Brug venligst en anden e-mailadresse til bookingen.";
   }
 
-  if (/value required:\s*id\s+\d+/i.test(message)) {
-    return "Et påkrævet felt mangler i bookingen. Tjek adgang til boligen og prøv igen.";
+  if (/value required:\s*id\s+(\d+)/i.test(message)) {
+    const fieldId = message.match(/id\s+(\d+)/i)?.[1];
+    if (fieldId === "114") {
+      return "Boligens stand mangler i bookingen. Gå tilbage og bekræft standen, og prøv igen.";
+    }
+    return "Et påkrævet felt mangler i bookingen. Tjek boligens stand og adgang, og prøv igen.";
   }
 
   return message;

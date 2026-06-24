@@ -22,7 +22,7 @@ import {
 } from "@/components/forms/TermsConfirmCard";
 import DealSummaryTrustPanel from "@/components/dealside/DealSummaryTrustPanel";
 import {
-  buildFlytEntryCustomFieldsPayload,
+  buildFlytCustomFieldsPayload,
   buildFlytEstimateFingerprint,
   buildFlytExtrasPayload,
   buildFlytReceiptBreakdown,
@@ -906,14 +906,15 @@ function FlytBookingWizardForm() {
 
         const stripeToken = await createStripeCardToken(stripe, elements);
         const dateStr = `${selectedDate}T${String(selectedSlot!.startHour).padStart(2, "0")}:${String(selectedSlot!.startMinute).padStart(2, "0")}:00`;
-        const customFields = buildFlytEntryCustomFieldsPayload(
+        const customFields = buildFlytCustomFieldsPayload(
           flytCustomFields,
+          stand.level,
           entryMethod as FlytEntryOptionId,
           entryOtherDetails,
         );
         if (!customFields) {
           setError(
-            "Adgang til boligen kunne ikke sendes til bookingsystemet. Gå tilbage til adgangstrinnet og prøv igen.",
+            "Boligens stand kunne ikke sendes til bookingsystemet. Gå tilbage til boligtrinnet og prøv igen.",
           );
           return;
         }

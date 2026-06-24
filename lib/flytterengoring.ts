@@ -173,21 +173,21 @@ export const FLYT_EXTRAS: FlytExtraDefinition[] = [
   },
   {
     id: 91,
-    label: "Bekræft venligst at boligen er i værst mulige stand",
-    price: 0,
-    type: "checkbox",
-    stands: [5],
-    category: "stand_confirmation",
-    required: true,
-  },
-  {
-    id: 92,
     label:
       "Jeg accepterer, at Renzen ikke kan garantere, at boligen vil bestå et flyttesyn.",
     price: 0,
     type: "checkbox",
     stands: [4, 5],
     category: "flyttesyn",
+    required: true,
+  },
+  {
+    id: 92,
+    label: "Bekræft venligst at boligen er i værst mulige stand",
+    price: 0,
+    type: "checkbox",
+    stands: [5],
+    category: "stand_confirmation",
     required: true,
   },
 ];
@@ -500,7 +500,7 @@ export function getFlytFlyttesynExtra(
   stand: FlytStandLevel,
 ): FlytExtraDefinition | undefined {
   if (stand < 4) return undefined;
-  return FLYT_EXTRAS.find((extra) => extra.id === 92);
+  return FLYT_EXTRAS.find((extra) => extra.id === 91);
 }
 
 export function getFlytBathroomExtra(): FlytExtraDefinition {
@@ -619,22 +619,117 @@ export function isFlytL27ServiceId(serviceId: number): boolean {
   return FLYT_L27_SERVICE_IDS.includes(serviceId);
 }
 
-/** Same L27 adgangsfelt as book-rengoering — matched live from /booking/custom_fields. */
-export function findFlytEntryCustomField(
-  fields: L27CustomField[],
-): L27CustomField | undefined {
-  return findBookEntryCustomField(fields);
+/** L27 custom field: "Vælg boligens nuværende stand (1 = meget ren, 5 = stærkt forsømt)". */
+export const FLYT_L27_STAND_CUSTOM_FIELD_ID = 114;
+
+export type FlytL27CustomFieldPayload = {
+  id: number;
+  value?: string;
+  values?: { id: string | number; other?: string }[];
+};
+
+function normalizeFlytLabel(value: string) {
+  return value.trim().toLowerCase();
 }
 
-export function buildFlytEntryCustomFieldsPayload(
+function getL27CustomFieldOptions(field: L27CustomField): L27CustomFieldOption[] {
+  for (const key of [
+    "values",
+    "options",
+    "choices",
+    "field_values",
+    "select_values",
+  ] as const) {
+    const options = field[key];
+    if (Array.isArray(options) && options.length > 0) return options;
+  }
+  return [];
+}
+
+function getL27CustomFieldOptionLabel(option: L27CustomFieldOption) {
+  return String(option.label ?? option.name ?? option.value ?? "");
+}
+
+export function findFlytStandCustomField(
   fields: L27CustomField[],
-  entryId: FlytEntryOptionId,
-  otherDetails: string,
-): { id: number; values: { id: string | number; other?: string }[] }[] | undefined {
-  const entryPayload = buildBookEntryCustomFieldPayload(
-    findBookEntryCustomField(fields),
-    entryId as BookEntryOptionId,
-    otherDetails,
-  );
-  return entryPayload ? [entryPayload] : undefined;
+): L27CustomField | undefined {
+  const byId = fields.find((field) => field.id === FLYT_L27_STAND_CUSTOM_FIELD_ID);
+  if (byId) return byId;
+
+  return fields.find((field) => {
+    const label = normalizeFlytLabel(field.label ?? field.name ?? "");
+    return /boligens nuværende stand|nuværende stand/.test(label);
+  });
+}
+
+function matchFlytStandCustomFieldOption(
+  options: L27CustomFieldOption[],
+  standLevel: FlytStandLevel,
+) {
+  const standToken = String(standLevel);
+  return options.find((option) => {
+    const label = normalizeFlytLabel(getL27CustomFieldOptionLabel(option));
+    const value = normalizeFlytLabel(String(option.value ?? ""));
+    return (
+      label === standToken ||
+      value === standToken ||
+      label.startsWith(`${standToken} `) ||
+      label.startsWith(`${standToken}.`) ||
+      label.startsWith(`${standToken}-`)
+    );
+  });
+}
+
+export function buildFlytStandCustomFieldPayload(
+  fields: L27CustomField[],
+  standLevel: FlytStandLevel,
+): FlytL27CustomFieldPayload | undefined {
+  if (!isFlytStandLevel(standLevel)) return undefined;
+
+  const field = findFlytStandCustomField(fields);
+  const fieldId = field?.id ?? FLYT_L27_STAND_CUSTOM_FIELD_ID;
+  const options = field ? getL27CustomFieldOptions(field) : [];
+
+  if (options.length > 0) {
+    const matchedOption = matchFlytStandCustomFieldOption(options, standLevel);
+    if (matchedOption) {
+      const optionId = matchedOption.id ?? matchedOption.value;
+      if (optionId !== undefined && optionId !== "") {
+        return {
+          id: fieldId,
+          values: [
+            {
+              id: typeof optionId === "number" ? optionId : String(optionId),
+            },
+          ],
+        };
+      }
+    }
+  }
+
+  return { id: fieldId, value: String(standLevel) };
+}
+
+/** Flytterengøring booking custom fields — stand (114) required; adgang optional if configured in L27. */
+export function buildFlytCustomFieldsPayload(
+  fields: L27CustomField[],
+  standLevel: FlytStandLevel,
+  entryId?: FlytEntryOptionId | "",
+  entryOtherDetails?: string,
+): FlytL27CustomFieldPayload[] | undefined {
+  const standPayload = buildFlytStandCustomFieldPayload(fields, standLevel);
+  if (!standPayload) return undefined;
+
+  const payload: FlytL27CustomFieldPayload[] = [standPayload];
+
+  if (entryId) {
+    const entryPayload = buildBookEntryCustomFieldPayload(
+      findBookEntryCustomField(fields),
+      entryId as BookEntryOptionId,
+      entryOtherDetails ?? "",
+    );
+    if (entryPayload) payload.push(entryPayload);
+  }
+
+  return payload;
 }
