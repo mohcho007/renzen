@@ -281,15 +281,68 @@ export function ServiceInquiryLandingPage({
           <ServiceProcessRadial config={config.processSection} />
         ) : null}
 
-        {config.whyRenzen ? (
+        {config.whyRenzen?.sections ? (
+          <section className="border-y border-[#dfe2da] bg-white">
+            <div className="mx-auto max-w-[1200px] px-6 sm:px-8">
+              <div className="py-16 text-center sm:py-20">
+                <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#55705f]">
+                  {config.whyRenzen.eyebrow}
+                </p>
+                {config.whyRenzen.title ? (
+                  <h2 className="mt-4 font-display text-4xl font-semibold tracking-[-0.04em] text-[#173c2c] sm:text-5xl">
+                    {config.whyRenzen.title}
+                  </h2>
+                ) : null}
+              </div>
+              {config.whyRenzen.sections.map((block, index) => (
+                <div
+                  key={block.title}
+                  className={`grid gap-10 border-[#dfe2da] py-16 sm:py-20 lg:grid-cols-2 lg:items-center lg:gap-16 ${
+                    index > 0 ? "border-t" : ""
+                  }`}
+                >
+                  <div
+                    className={`relative order-1 aspect-[4/3] w-full overflow-hidden bg-[#e7e4da] ${
+                      block.imagePosition === "right" ? "lg:order-2" : "lg:order-1"
+                    }`}
+                  >
+                    <Image
+                      src={block.image}
+                      alt={block.imageAlt}
+                      fill
+                      sizes="(max-width: 1024px) 100vw, 50vw"
+                      className="object-cover object-center"
+                    />
+                  </div>
+                  <div
+                    className={`order-2 ${
+                      block.imagePosition === "right" ? "lg:order-1" : "lg:order-2"
+                    }`}
+                  >
+                    <h3 className="font-display text-3xl font-semibold tracking-[-0.04em] text-[#173c2c] sm:text-4xl">
+                      {block.title}
+                    </h3>
+                    <div className="mt-6 space-y-5 text-base font-medium leading-7 text-[#667168]">
+                      {block.paragraphs.map((paragraph) => (
+                        <p key={paragraph}>{paragraph}</p>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+        ) : config.whyRenzen?.paragraphs ? (
           <section className="border-y border-[#dfe2da] bg-white py-24 sm:py-32">
             <div className="mx-auto max-w-3xl px-6 text-center sm:px-8">
               <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#55705f]">
                 {config.whyRenzen.eyebrow}
               </p>
-              <h2 className="mt-4 font-display text-4xl font-semibold tracking-[-0.04em] text-[#173c2c] sm:text-5xl">
-                {config.whyRenzen.title}
-              </h2>
+              {config.whyRenzen.title ? (
+                <h2 className="mt-4 font-display text-4xl font-semibold tracking-[-0.04em] text-[#173c2c] sm:text-5xl">
+                  {config.whyRenzen.title}
+                </h2>
+              ) : null}
               <div className="mt-8 space-y-5 text-base font-medium leading-7 text-[#667168]">
                 {config.whyRenzen.paragraphs.map((paragraph) => (
                   <p key={paragraph}>{paragraph}</p>

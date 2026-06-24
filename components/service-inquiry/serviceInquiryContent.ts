@@ -55,11 +55,42 @@ export type IncludedRoom = {
   items: string[];
 };
 
-export type EditorialProseSection = {
-  eyebrow: string;
+export type EditorialImageTextBlock = {
   title: string;
   paragraphs: string[];
+  image: string;
+  imageAlt: string;
+  imagePosition: "left" | "right";
 };
+
+export type EditorialProseSection = {
+  eyebrow: string;
+  title?: string;
+  sections?: EditorialImageTextBlock[];
+  /** @deprecated Use `sections` for alternating image+text layout. */
+  paragraphs?: string[];
+};
+
+export const AIRBNB_WHY_SECTION_IMAGES: Pick<
+  EditorialImageTextBlock,
+  "image" | "imageAlt" | "imagePosition"
+>[] = [
+  {
+    image: "/zenmester-arbejder.png",
+    imageAlt: "Zenmester under Airbnb-klargøring",
+    imagePosition: "left",
+  },
+  {
+    image: "/renzen-rengøring-erhverv.png",
+    imageAlt: "Erfaren Zenmester i professionel rengøring",
+    imagePosition: "right",
+  },
+  {
+    image: "/airbnb-rengoring.jpg",
+    imageAlt: "Airbnb-klargøring mellem gæster",
+    imagePosition: "left",
+  },
+];
 
 export type EditorialListSection = {
   eyebrow: string;
@@ -356,9 +387,34 @@ export const serviceInquiryPages: Record<
     includedRooms: AIRBNB_INCLUDED_ROOMS,
     whyRenzen: {
       eyebrow: "Hvorfor vælge Renzen",
-      title: "Airbnb rengøring",
-      paragraphs: [
-        "Vi hjælper Airbnb-værter med professionel klargøring mellem gæster. Uanset om du udlejer en lejlighed, gør vi det nemt at holde boligen ren, præsentabel og klar til næste check-in.",
+      sections: [
+        {
+          ...AIRBNB_WHY_SECTION_IMAGES[0],
+          title: "Professionel klargøring mellem gæster",
+          paragraphs: [
+            "Vi hjælper Airbnb-værter med driftssikker rengøring mellem check-out og check-in. Uanset om du udlejer en lejlighed i centrum, en villa i forstaden eller flere enheder, gør vi det nemt at holde boligen ren, præsentabel og klar til næste ankomst.",
+            "Gæster forventer hotelstandard — friske lagner, rene badeværelser og et køkken uden spor fra tidligere ophold. Én dårlig anmeldelse om støv i hjørner eller beskidt bad kan koste dig Superhost-status og synlighed i søgeresultaterne. Renzen hjælper dig med at holde en stabil, professionel standard uden at du selv skal stå med moppen mellem to bookinger.",
+            "Vi dækker værter i hele Storkøbenhavn (postnr. 1000–2990) og i øvrige større byer. Vores Zenmestre kender de typiske udfordringer: kompakte bylejligheder, trapper uden elevator, betalingsparkering og gæster der checker ud sent om morgenen. Vi planlægger klargøringen, så boligen er klar til næste ankomst.",
+          ],
+        },
+        {
+          ...AIRBNB_WHY_SECTION_IMAGES[1],
+          title: "Fast tjekliste og verificerede Zenmestre",
+          paragraphs: [
+            "Vores Airbnb-pakke følger en fast tjekliste: stuer, køkken, soveværelser og badeværelse gøres klart til næste gæst, inklusive skift af sengetøj og håndklæder, tømning af skrald og et visuelt reset af boligen. Har du brug for linnedservice, ovnrengøring, køleskab eller vinduer, vælger du tilvalg når du sender forespørgsel — så du slipper for at koordinere flere leverandører.",
+            "Mange værter udlejer hele lejligheden på Airbnb, mens de selv er ude at rejse, eller driver flere enheder fra samme ejendom. Du beskriver boligen i forespørgslen, og vi matcher dig med en erfaren Zenmester der er vant til turn-around i dit område. Uanset boligens størrelse tilpasser vi opgaven til dine gæsters forventninger.",
+            "Mange værter bruger nøgleboks eller smart lock, og vi koordinerer adgangen, så rengøringen sker uden at du skal være til stede. Du modtager besked, når opgaven er udført, og kan fokusere på næste booking. Har du brug for ekstra opmærksomhed på køkkenet efter en familie med børn eller vinduespudsning før en fotosession, tilføjer du det som tilvalg.",
+          ],
+        },
+        {
+          ...AIRBNB_WHY_SECTION_IMAGES[2],
+          title: "Én partner til hele din drift",
+          paragraphs: [
+            "Som Renzen Klub-medlem kan du bruge Zen-kreditter på Airbnb-klargøring og andre boligservices. Det giver fleksibilitet når du har ekstra travl sæson eller tættere gæsteskifte. Du får desuden adgang til introtilbud på fast rengøring, hvis du også vil have hjælp til din egen bolig.",
+            "Udlejningsmarkedet er præget af internationale gæster med høje forventninger til renlighed og præsentation. Vi tilpasser klargøringen til boligens type — fra kompakte studier til større familielejligheder med flere soveværelser — og sikrer, at hvert rum fremstår indbydende.",
+            "Vi ved, at kommunikation og forudsigelighed betyder lige så meget som selve rengøringen. Du får et uforpligtende tilbud inden for 24 timer, og vi koordinerer tidspunktet mellem check-out og check-in. Skulle Zenmesteren opdage skader eller mangler, underretter vi dig med det samme — så du kan handle, før næste gæst ankommer. Målet er enkel drift: du fokuserer på gæster og anmeldelser, vi klarer klargøringen.",
+          ],
+        },
       ],
     },
     showReviews: true,
