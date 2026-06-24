@@ -2690,6 +2690,7 @@ export function ServiceInquiryWizard({
                       value={cvr}
                       onChange={(event) => setCvr(event.target.value)}
                       placeholder="F.eks. 12345678"
+                      autoFocus
                     />
                   </div>
                 )}
@@ -2706,6 +2707,7 @@ export function ServiceInquiryWizard({
                       value={cvr}
                       onChange={(event) => setCvr(event.target.value)}
                       placeholder="F.eks. 12345678"
+                      autoFocus
                     />
                   </div>
                 )}
@@ -2722,6 +2724,7 @@ export function ServiceInquiryWizard({
                       value={cvr}
                       onChange={(event) => setCvr(event.target.value)}
                       placeholder="F.eks. 12345678"
+                      autoFocus
                     />
                   </div>
                 )}
@@ -2737,6 +2740,7 @@ export function ServiceInquiryWizard({
                       value={associationName}
                       onChange={(event) => setAssociationName(event.target.value)}
                       placeholder="F.eks. Andelsforeningen Solsiden"
+                      autoFocus
                     />
                   </div>
                 )}
@@ -2751,7 +2755,12 @@ export function ServiceInquiryWizard({
                       className={styles.input}
                       value={firstName}
                       onChange={(event) => setFirstName(event.target.value)}
-                      autoFocus
+                      autoFocus={
+                        serviceSlug !== "kontorrengoring" &&
+                        serviceSlug !== "flyttesyn" &&
+                        serviceSlug !== "personalegode" &&
+                        serviceSlug !== "boligforeninger"
+                      }
                     />
                   </div>
                   <div>

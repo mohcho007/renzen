@@ -3349,7 +3349,6 @@ function DealTypeformWizardForm({
                     className={styles.input}
                     value={firstName}
                     onChange={(e) => setFirstName(e.target.value)}
-                    autoFocus
                   />
                 </div>
                 <div>
