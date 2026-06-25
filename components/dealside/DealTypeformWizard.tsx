@@ -28,7 +28,6 @@ import {
   Sparkles,
   Tag,
   UserRound,
-  X,
 } from "lucide-react";
 import {
   type DealPackage,
@@ -67,6 +66,7 @@ import {
   captureWizardReturnUrl,
   exitWizardNavigation,
 } from "@/lib/wizardExit";
+import { WizardStepMeta } from "@/components/wizard/WizardExitButton";
 
 type TimeSlot = {
   startHour: number;
@@ -2366,7 +2366,10 @@ function DealTypeformWizardForm({
   };
 
   const exitWizard = useCallback(() => {
-    exitWizardNavigation({ router, variant, onBack });
+    exitWizardNavigation({
+      router,
+      fallback: { type: "deal", variant, onBack },
+    });
   }, [router, variant, onBack]);
 
   const handlePostcodeInputChange = (value: string) => {
@@ -2465,19 +2468,12 @@ function DealTypeformWizardForm({
             <button type="button" className={styles.backBtn} onClick={goBack}>
               ← {stepIndex === 0 ? "Tilbage" : "Forrige"}
             </button>
-            <div className={styles.stepMetaGroup}>
-              <span className={styles.stepMeta}>
-                {stepIndex + 1} / {STEPS.length}
-              </span>
-              <button
-                type="button"
-                className={styles.exitBtn}
-                onClick={exitWizard}
-                aria-label="Luk booking"
-              >
-                <X size={14} strokeWidth={2.5} aria-hidden="true" />
-              </button>
-            </div>
+            <WizardStepMeta
+              current={stepIndex + 1}
+              total={STEPS.length}
+              onExit={exitWizard}
+              exitAriaLabel="Luk booking"
+            />
           </div>
           <div className={styles.progressTrack}>
             <div

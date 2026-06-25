@@ -6,7 +6,21 @@ const FROM_PARAM_PATHS: Record<string, string> = {
   home: "/",
 };
 
-const WIZARD_PATH_PREFIXES = ["/book-rengoering", "/introdeal"];
+const WIZARD_PATH_PREFIXES = [
+  "/book-rengoering",
+  "/introdeal",
+  "/flytterengoring/book",
+];
+
+function isWizardPath(pathname: string): boolean {
+  if (WIZARD_PATH_PREFIXES.some((prefix) => pathname.startsWith(prefix))) {
+    return true;
+  }
+  if (pathname.includes("/forespoergsel")) {
+    return true;
+  }
+  return false;
+}
 
 function normalizeReturnPath(path: string): string | null {
   if (!path) return null;
@@ -16,7 +30,7 @@ function normalizeReturnPath(path: string): string | null {
     const pathname = url.pathname.endsWith("/")
       ? url.pathname
       : `${url.pathname}/`;
-    if (WIZARD_PATH_PREFIXES.some((prefix) => pathname.startsWith(prefix))) {
+    if (isWizardPath(pathname)) {
       return null;
     }
     return `${pathname}${url.search}${url.hash}`;
@@ -64,14 +78,17 @@ type WizardExitRouter = {
   push: (url: string) => void;
 };
 
+export type WizardExitFallback =
+  | { type: "deal"; variant: "dealpage2" | "book2"; onBack: () => void }
+  | { type: "path"; path: string }
+  | { type: "history-or-path"; path: string };
+
 export function exitWizardNavigation({
   router,
-  variant,
-  onBack,
+  fallback,
 }: {
   router: WizardExitRouter;
-  variant: "dealpage2" | "book2";
-  onBack: () => void;
+  fallback: WizardExitFallback;
 }): void {
   const stored = getStoredWizardReturnUrl();
   if (stored) {
@@ -80,15 +97,28 @@ export function exitWizardNavigation({
     return;
   }
 
-  if (variant === "dealpage2") {
-    onBack();
-    return;
+  switch (fallback.type) {
+    case "deal": {
+      if (fallback.variant === "dealpage2") {
+        fallback.onBack();
+        return;
+      }
+      if (typeof window !== "undefined" && window.history.length > 1) {
+        router.back();
+        return;
+      }
+      router.push("/privat-rengoring/");
+      return;
+    }
+    case "path":
+      router.push(fallback.path);
+      return;
+    case "history-or-path":
+      if (typeof window !== "undefined" && window.history.length > 1) {
+        router.back();
+        return;
+      }
+      router.push(fallback.path);
+      return;
   }
-
-  if (typeof window !== "undefined" && window.history.length > 1) {
-    router.back();
-    return;
-  }
-
-  router.push("/privat-rengoring/");
 }

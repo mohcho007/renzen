@@ -13,6 +13,11 @@ import {
 import { useRouter, useSearchParams } from "next/navigation";
 import styles from "@/components/dealside/DealTypeformWizard.module.css";
 import flytStyles from "@/components/flytterengoring/FlytBookingWizard.module.css";
+import {
+  captureWizardReturnUrl,
+  exitWizardNavigation,
+} from "@/lib/wizardExit";
+import { WizardStepMeta } from "@/components/wizard/WizardExitButton";
 import { TermsConfirmCard, TermsLink } from "@/components/forms/TermsConfirmCard";
 import {
   BOLIGFORENING_FREQUENCY_OPTIONS,
@@ -437,6 +442,10 @@ export function ServiceInquiryWizard({
   const initialSqm = parseInitialSqm(m2Param);
 
   const initialGardenSqm = parseInitialGardenSqm(m2Param);
+
+  useEffect(() => {
+    captureWizardReturnUrl(searchParams.get("from"));
+  }, [searchParams]);
 
   const [stepIndex, setStepIndex] = useState(0);
   const step = STEPS[stepIndex];
@@ -1159,6 +1168,13 @@ export function ServiceInquiryWizard({
     setStepIndex((current) => Math.max(current - 1, 0));
   }, [stepIndex, router, serviceSlug]);
 
+  const exitWizard = useCallback(() => {
+    exitWizardNavigation({
+      router,
+      fallback: { type: "path", path: `/${serviceSlug}/` },
+    });
+  }, [router, serviceSlug]);
+
   const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
     if (
       event.key === "Enter" &&
@@ -1526,9 +1542,12 @@ export function ServiceInquiryWizard({
             >
               ← {stepIndex === 0 ? "Tilbage" : "Forrige"}
             </button>
-            <span className={styles.stepMeta}>
-              {stepIndex + 1} / {STEPS.length}
-            </span>
+            <WizardStepMeta
+              current={stepIndex + 1}
+              total={STEPS.length}
+              onExit={exitWizard}
+              exitAriaLabel="Luk forespørgsel"
+            />
           </div>
           <div className={styles.progressTrack}>
             <div

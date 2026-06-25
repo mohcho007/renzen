@@ -13,6 +13,11 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useElements, useStripe } from "@stripe/react-stripe-js";
 import styles from "@/components/dealside/DealTypeformWizard.module.css";
 import flytStyles from "@/components/flytterengoring/FlytBookingWizard.module.css";
+import {
+  captureWizardReturnUrl,
+  exitWizardNavigation,
+} from "@/lib/wizardExit";
+import { WizardStepMeta } from "@/components/wizard/WizardExitButton";
 import { createStripeCardToken } from "@/components/payment/createStripeCardToken";
 import { StripeCardInput } from "@/components/payment/StripeCardInput";
 import { StripeElementsProvider } from "@/components/payment/StripeElementsProvider";
@@ -284,6 +289,10 @@ function FlytBookingWizardForm() {
     () => parseInitialState(searchParams),
     [searchParams],
   );
+
+  useEffect(() => {
+    captureWizardReturnUrl(searchParams.get("from"));
+  }, [searchParams]);
 
   const [stepIndex, setStepIndex] = useState(0);
   const step = STEPS[stepIndex];
@@ -1062,6 +1071,13 @@ function FlytBookingWizardForm() {
     setStepIndex((index) => Math.max(index - 1, 0));
   };
 
+  const exitWizard = useCallback(() => {
+    exitWizardNavigation({
+      router,
+      fallback: { type: "path", path: "/flytterengoring/#calculator" },
+    });
+  }, [router]);
+
   const handleKeyDown = (event: React.KeyboardEvent) => {
     if (
       event.key === "Enter" &&
@@ -1126,9 +1142,12 @@ function FlytBookingWizardForm() {
             <button type="button" className={styles.backBtn} onClick={goBack}>
               ← {stepIndex === 0 ? "Tilbage" : "Forrige"}
             </button>
-            <span className={styles.stepMeta}>
-              {stepIndex + 1} / {STEPS.length}
-            </span>
+            <WizardStepMeta
+              current={stepIndex + 1}
+              total={STEPS.length}
+              onExit={exitWizard}
+              exitAriaLabel="Luk booking"
+            />
           </div>
           <div className={styles.progressTrack}>
             <div

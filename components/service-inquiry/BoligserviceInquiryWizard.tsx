@@ -13,6 +13,11 @@ import {
 import { useRouter, useSearchParams } from "next/navigation";
 import styles from "@/components/dealside/DealTypeformWizard.module.css";
 import flytStyles from "@/components/flytterengoring/FlytBookingWizard.module.css";
+import {
+  captureWizardReturnUrl,
+  exitWizardNavigation,
+} from "@/lib/wizardExit";
+import { WizardStepMeta } from "@/components/wizard/WizardExitButton";
 import { TermsConfirmCard, TermsLink } from "@/components/forms/TermsConfirmCard";
 import {
   createDefaultBoligserviceDetails,
@@ -83,6 +88,10 @@ export function BoligserviceInquiryWizard({
   const searchParams = useSearchParams();
   const initialPostcode = parseInitialPostcode(searchParams.get("postcode"));
   const { fetchSuggestions } = useDawaAddress(initialPostcode);
+
+  useEffect(() => {
+    captureWizardReturnUrl(searchParams.get("from"));
+  }, [searchParams]);
 
   const [details, setDetails] = useState<BoligserviceDetails>(() =>
     createDefaultBoligserviceDetails(serviceSlug),
@@ -349,6 +358,13 @@ export function BoligserviceInquiryWizard({
     }
     setStepIndex((current) => Math.max(current - 1, 0));
   }, [stepIndex, router, serviceSlug]);
+
+  const exitWizard = useCallback(() => {
+    exitWizardNavigation({
+      router,
+      fallback: { type: "path", path: `/${serviceSlug}/` },
+    });
+  }, [router, serviceSlug]);
 
   const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
     const showingSuggestions =
@@ -686,9 +702,12 @@ export function BoligserviceInquiryWizard({
             <button type="button" className={styles.backBtn} onClick={goBack}>
               ← {stepIndex === 0 ? "Tilbage" : "Forrige"}
             </button>
-            <span className={styles.stepMeta}>
-              {stepIndex + 1} / {steps.length}
-            </span>
+            <WizardStepMeta
+              current={stepIndex + 1}
+              total={steps.length}
+              onExit={exitWizard}
+              exitAriaLabel="Luk forespørgsel"
+            />
           </div>
           <div className={styles.progressTrack}>
             <div
