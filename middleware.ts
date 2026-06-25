@@ -39,5 +39,6 @@ export const config = {
     "/byggerengoering",
     "/artikler/:path*",
     "/priser",
+    "/dealpage2",
   ],
 };

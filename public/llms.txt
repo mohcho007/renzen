@@ -7,7 +7,7 @@ Phone: +45 49 90 30 55 · Email: info@renzen.dk
 Address: Trædrejerporten 1, 2650 Hvidovre, Denmark
 Opening hours (customer service): Monday–Friday 08:00–17:00
 
-How to book: Use the online price calculator and booking flow at /book-rengoering/ — most customers complete booking in under 2 minutes. For membership intro pricing, see /klub/.
+How to book: Use the online price calculator and booking flow at /book-rengoering/ — most customers complete booking in under 2 minutes. For membership intro pricing, see /klub/ or book directly at /introdeal/.
 
 Service area: Private cleaning city pages cover Greater Copenhagen (37 priority cities). Airbnb cleaning city pages cover 8 cities (København, Frederiksberg, Gentofte, Aarhus, Odense, Aalborg, Roskilde, Helsingør). Other services are offered nationally; many use a forespørgsel (inquiry) form.
 
@@ -17,6 +17,7 @@ Language: Primary content is Danish (da-DK). This file is in English for LLM cra
 
 - [Book rengøring](https://renzen.dk/book-rengoering/): Online price calculator and booking — primary conversion path
 - [Renzen Klub](https://renzen.dk/klub/): Membership, intro offer from 199 kr., Zen credits and member savings
+- [Intro deal booking](https://renzen.dk/introdeal/): Choose home size and book intro-priced cleaning with Renzen Klub
 - [Kontakt](https://renzen.dk/kontakt/): Phone, email, address, contact form
 - [FAQ](https://renzen.dk/faq/): Pricing, booking, insurance, cancellation, servicefradrag
 

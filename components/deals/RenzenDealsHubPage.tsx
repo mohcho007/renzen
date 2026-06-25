@@ -1225,7 +1225,7 @@ export default function RenzenDealsHubPage() {
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link
-                href="/dealpage2"
+                href="/introdeal/"
                 className="inline-flex min-h-12 items-center gap-2 rounded-full bg-[#17251f] px-6 text-sm font-bold text-white transition-colors hover:bg-black"
               >
                 Book intro fra {INTRO_CLEANING_FROM_KR} kr.

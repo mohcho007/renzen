@@ -3,7 +3,7 @@ import Dealside2LandingPage from "@/components/dealside/Dealside2LandingPage";
 import { INTRO_CLEANING_FROM_KR } from "@/data/pricing";
 import { bookOnlineDescription, liveStyleTitle } from "@/lib/metadataCopy";
 import { createStaticPageMetadata } from "@/lib/siteMetadata";
-import "@/app/dealpage2/dealpage2.css";
+import "@/app/introdeal/dealpage2.css";
 
 export const metadata = createStaticPageMetadata({
   title: liveStyleTitle("Book rengøring", "Se pris med det samme"),

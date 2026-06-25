@@ -15,10 +15,10 @@ export const metadata = createStaticPageMetadata({
     proof: "Fast rengøring hver 2. uge, 0 kr. ved booking og tydelige priser med Renzen Klub.",
     cta: "Vælg bolig og book før du godkender.",
   }),
-  path: "/dealpage2/",
+  path: "/introdeal/",
 });
 
-export default function DealPage2() {
+export default function IntroDealPage() {
   return (
     <Suspense
       fallback={

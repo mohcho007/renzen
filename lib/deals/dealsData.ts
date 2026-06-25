@@ -87,7 +87,7 @@ export const DEALS: Deal[] = [
     discountLabel: `Fra ${INTRO_CLEANING_FROM_KR} kr.`,
     category: "rengoring",
     ctaLabel: "Book introtilbud",
-    ctaHref: "/dealpage2",
+    ctaHref: "/introdeal/",
     klubGated: true,
     featured: true,
     economics: {

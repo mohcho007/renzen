@@ -26,6 +26,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "kontakt",
     "bliv-zenmester",
     "klub",
+    "introdeal",
     "book-rengoering",
     "artikler",
   ].map((route) => {

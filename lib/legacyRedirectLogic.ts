@@ -44,6 +44,7 @@ export const STATIC_LEGACY_REDIRECTS: Record<string, string> = {
   "/privat-rengoering/kobenhavn/": "/privat-rengoring/koebenhavn/",
   "/privat-rengoering/københavn/": "/privat-rengoring/koebenhavn/",
   "/priser/": "/",
+  "/dealpage2/": "/introdeal/",
 };
 
 /** WordPress root URLs indexed in GSC → /artikler/{slug}/ */

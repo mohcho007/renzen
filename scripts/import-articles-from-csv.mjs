@@ -137,7 +137,7 @@ const VALID_INTERNAL = new Set([
   "/engangsrengoring/",
   "/kontorrengoring/",
   "/boligservice/",
-  "/dealpage2/",
+  "/introdeal/",
   ...TARGET_SLUGS.map((s) => `/artikler/${s}/`),
 ]);
 
