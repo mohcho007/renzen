@@ -1,4 +1,4 @@
-import { cities, getCityBySlug, type City } from "@/data/cities";
+import { cities, getCityBySlug, type City } from "../data/cities";
 
 /** Priority 1 editorial cities for /privat-rengoring/{slug}/ */
 export const PRIVAT_RENGORING_PRIORITY_1_CITY_NAMES = [
