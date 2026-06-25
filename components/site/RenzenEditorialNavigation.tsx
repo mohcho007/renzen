@@ -370,14 +370,7 @@ export function EditorialMobileNavigation({
       })}
 
       <div className="border-b border-[#e2e4de] py-4">
-        <Link
-          href="/klub/"
-          onClick={onNavigate}
-          className="inline-flex min-h-11 items-center rounded-[4px] border border-[#173c2c] px-5 text-[15px] font-bold text-[#173c2c] transition-colors hover:bg-[#173c2c] hover:text-white"
-        >
-          Renzen Klub
-        </Link>
-        <div className="mt-5 rounded-[10px] border border-[#c5d3c4] bg-[#dfe9dc] p-4">
+        <div className="rounded-[10px] border border-[#c5d3c4] bg-[#dfe9dc] p-4">
           <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-[#52665b]">
             Renzen Klub
           </p>
