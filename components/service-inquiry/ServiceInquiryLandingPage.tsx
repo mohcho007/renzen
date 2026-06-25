@@ -457,33 +457,6 @@ export function ServiceInquiryLandingPage({
           </section>
         ) : null}
 
-        {config.cityLinks ? (
-          <section className="border-t border-[#dfe2da] bg-[#fbfaf5] py-24 sm:py-32">
-            <div className="mx-auto max-w-[1200px] px-6 sm:px-8">
-              <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#55705f]">
-                {config.cityLinks.eyebrow}
-              </p>
-              <h2 className="mt-4 max-w-3xl font-display text-4xl font-semibold tracking-[-0.04em] text-[#173c2c] sm:text-5xl">
-                {config.cityLinks.title}
-              </h2>
-              <p className="mt-6 max-w-3xl text-base font-medium leading-7 text-[#667168]">
-                {config.cityLinks.description}
-              </p>
-              <div className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
-                {config.cityLinks.cities.map((city) => (
-                  <Link
-                    key={city.slug}
-                    href={getServiceCityUrl(config.slug, city.slug)}
-                    className="flex min-h-12 cursor-pointer items-center justify-center rounded-[3px] border border-[#ccd2ca] bg-white px-4 text-center text-sm font-bold text-[#173c2c] transition-colors hover:border-[#41614f] hover:text-[#41614f]"
-                  >
-                    {city.name}
-                  </Link>
-                ))}
-              </div>
-            </div>
-          </section>
-        ) : null}
-
         {config.showKlubSections && (
           <>
             <section className="mx-auto max-w-[1280px] px-6 py-24 sm:px-8 sm:py-32">
@@ -629,6 +602,33 @@ export function ServiceInquiryLandingPage({
             </div>
           </div>
         </section>
+
+        {config.cityLinks ? (
+          <section className="border-t border-[#dfe2da] bg-[#fbfaf5] py-24 sm:py-32">
+            <div className="mx-auto max-w-[1200px] px-6 sm:px-8">
+              <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#55705f]">
+                {config.cityLinks.eyebrow}
+              </p>
+              <h2 className="mt-4 max-w-3xl font-display text-4xl font-semibold tracking-[-0.04em] text-[#173c2c] sm:text-5xl">
+                {config.cityLinks.title}
+              </h2>
+              <p className="mt-6 max-w-3xl text-base font-medium leading-7 text-[#667168]">
+                {config.cityLinks.description}
+              </p>
+              <div className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+                {config.cityLinks.cities.map((city) => (
+                  <Link
+                    key={city.slug}
+                    href={getServiceCityUrl(config.slug, city.slug)}
+                    className="flex min-h-12 cursor-pointer items-center justify-center rounded-[3px] border border-[#ccd2ca] bg-white px-4 text-center text-sm font-bold text-[#173c2c] transition-colors hover:border-[#41614f] hover:text-[#41614f]"
+                  >
+                    {city.name}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </section>
+        ) : null}
       </main>
 
       <RenzenEditorialFooter />

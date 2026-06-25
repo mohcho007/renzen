@@ -20,6 +20,8 @@ import {
 } from "@/lib/zenCreditServices";
 import { listPriceKr, pricingConfig, INTRO_CLEANING_FROM_KR, KLUB_ANNUAL_KR, KLUB_ANNUAL_MONTHLY_EQUIVALENT_KR, KLUB_MONTHLY_KR, ZEN_CREDIT_MONTHLY_KR } from "@/data/pricing";
 import { ZenCreditServicesGrid } from "@/components/site/ZenCreditServicesGrid";
+import { getServiceCityUrl } from "@/lib/urls";
+import { PRIVAT_RENGORING_PRIORITY_1_CITIES } from "@/lib/privatRengoringCities";
 
 const introFromLabel = `${INTRO_CLEANING_FROM_KR} kr.`;
 
@@ -456,6 +458,32 @@ export function PrivatRengoringPage() {
                 Se introtilbud
                 <ArrowRight size={15} />
               </Link>
+            </div>
+          </div>
+        </section>
+
+        <section className="border-t border-[#dfe2da] bg-[#fbfaf5] py-24 sm:py-32">
+          <div className="mx-auto max-w-[1200px] px-6 sm:px-8">
+            <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#55705f]">
+              Lokal dækning
+            </p>
+            <h2 className="mt-4 max-w-3xl font-display text-4xl font-semibold tracking-[-0.04em] text-[#173c2c] sm:text-5xl">
+              Privat rengøring i hele Storkøbenhavn
+            </h2>
+            <p className="mt-6 max-w-3xl text-base font-medium leading-7 text-[#667168]">
+              Vi tilbyder privat rengøring i alle vores aktive byområder i
+              Storkøbenhavn, så du nemt kan finde den lokale side for dit område.
+            </p>
+            <div className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+              {PRIVAT_RENGORING_PRIORITY_1_CITIES.map((city) => (
+                <Link
+                  key={city.slug}
+                  href={getServiceCityUrl("privat-rengoring", city.slug)}
+                  className="flex min-h-12 cursor-pointer items-center justify-center rounded-[3px] border border-[#ccd2ca] bg-white px-4 text-center text-sm font-bold text-[#173c2c] transition-colors hover:border-[#41614f] hover:text-[#41614f]"
+                >
+                  {city.name}
+                </Link>
+              ))}
             </div>
           </div>
         </section>
