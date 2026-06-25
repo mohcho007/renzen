@@ -450,7 +450,7 @@ export function buildPrivatRengoringCityPageConfig(
     heroEyebrow: "Renzen Klub · Fast Zenmester",
     heroTitle: copy.heroTitle,
     heroDescription: copy.heroDescription,
-    heroImage: "/flytterengoring-hero.jpg",
+    heroImage: "/rengoering-hero.jpg",
     heroImageAlt: \`Privat rengøring i \${city.name} med Renzen\`,
     trustBadges: [
       "Forsikrede Zenmestre",

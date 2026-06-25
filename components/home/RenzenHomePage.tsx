@@ -67,8 +67,8 @@ export function RenzenHomePage() {
             <div className={`${homeStyles.heroVisual} ${renzenKlubMaskStyles.heroKlubVisual}`}>
               <div className={homeStyles.heroImageWrap}>
                 <Image
-                  src="/flytterengoring-hero.jpg"
-                  alt="Professionel rengøring i et nordisk hjem"
+                  src="/rengoering-hero.jpg"
+                  alt="Professionel rengøring i et nordisk hjem med Renzen"
                   fill
                   priority
                   sizes="(max-width: 1024px) 100vw, 50vw"

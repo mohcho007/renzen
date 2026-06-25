@@ -99,12 +99,12 @@ export function BlivZenmesterPage() {
               className={`relative order-1 min-h-[290px] lg:order-2 lg:min-h-full ${styles.heroImage}`}
             >
               <Image
-                src="/zenmester-gor-rent-rundt.jpg"
-                alt="Zenmester i arbejde"
+                src="/rengoering-hero.jpg"
+                alt="Bliv Zenmester hos Renzen og arbejd med professionel rengøring"
                 fill
                 priority
                 sizes="(max-width: 1024px) 100vw, 52vw"
-                className="object-cover object-center"
+                className="object-cover object-right"
               />
             </div>
           </div>

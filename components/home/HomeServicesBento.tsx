@@ -9,6 +9,7 @@ type BentoCell = {
   description?: string;
   href: string;
   image?: string;
+  imageAlt?: string;
   price?: string;
   eyebrow?: string;
   ctaLabel?: string;
@@ -25,7 +26,8 @@ const bentoServices: BentoCell[] = [
     description:
       "En fast Zenmester lærer dit hjem og dine rutiner at kende. Vælg hver uge, hver anden uge eller hver fjerde uge.",
     href: "/privat-rengoring",
-    image: "/flytterengoring-hero.jpg",
+    image: "/rengoering-hero.jpg",
+    imageAlt: "Fast privat rengøring med en Zenmester fra Renzen",
     eyebrow: "Mest valgt",
     inlineArrow: true,
     variant: "lead",
@@ -136,7 +138,7 @@ export function HomeServicesBento() {
             {cell.image ? (
               <Image
                 src={cell.image}
-                alt={cell.title}
+                alt={cell.imageAlt ?? cell.title}
                 fill
                 sizes={
                   cell.layout === "lead"

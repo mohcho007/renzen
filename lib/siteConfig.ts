@@ -14,11 +14,11 @@ export const siteConfig = {
     country: "DK",
   },
   logo: "/renzen-logo-ny.png",
-  /** Hero from privat-rengoring — used for default OG/Twitter share image. */
-  ogImage: "/flytterengoring-hero.jpg",
+  /** Hero from homepage — used for default OG/Twitter share image. */
+  ogImage: "/rengoering-hero.jpg",
   ogImageWidth: 1536,
   ogImageHeight: 1024,
-  ogImageAlt: "Privat rengøring med Renzen",
+  ogImageAlt: "Professionel rengøring med Renzen i et nordisk hjem",
   social: {
     facebook: "https://facebook.com/renzen",
     instagram: null,

@@ -1083,7 +1083,7 @@ export const serviceInquiryPages: Record<
     heroTitle: "Din professionelle synspartner.",
     heroDescription:
       "Vi er specialister i ind- og fraflytningssyn, men vores vigtigste opgave er at give lejere en god oplevelse. Beskriv boligen — vi vender tilbage med et uforpligtende tilbud inden for 24 timer.",
-    heroImage: "/flytterengoring-hero.jpg",
+    heroImage: "/rengoering-hero.jpg",
     heroImageAlt: "Professionelt flyttesyn ved ind- og fraflytning",
     trustBadges: [
       "Landsdækkende synsteam",
