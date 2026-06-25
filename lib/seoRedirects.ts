@@ -16,7 +16,6 @@ const LEGACY_CLEANING_SERVICE_SLUGS = [
   "rengoring",
   "hovedrengoring",
   "engangsrengoring",
-  "erhvervsrengoring",
 ] as const;
 
 /** Old WordPress spellings (oe) mapped to canonical slug or privat-rengoring target. */
@@ -27,7 +26,7 @@ const LEGACY_SPELLING_NATIONAL: Record<string, string> = {
   hjemmerengoring: "/privat-rengoring/",
   "hovedrengoering": "/privat-rengoring/",
   "engangsrengoering": "/privat-rengoring/",
-  "erhvervsrengoering": "/privat-rengoring/",
+  "erhvervsrengoering": "/erhvervsrengoring/",
   "airbnb-rengoering": "/airbnb-rengoring/",
   "kontorrengoering": "/kontorrengoring/",
   "klinikrengoering": "/kontorrengoring/",
@@ -117,10 +116,13 @@ export function buildSeoRedirects(): SeoRedirect[] {
   }
 
   for (const city of cities) {
-    const destination = `/privat-rengoring/${city.slug}/`;
+    const isPriority1 = isPrivatRengoringPriority1Slug(city.slug);
+    const destination = isPriority1
+      ? `/privat-rengoring/${city.slug}/`
+      : "/privat-rengoring/";
+
     for (const variant of getCitySlugVariants(city.name, city.slug)) {
-      if (variant === city.slug) continue;
-      if (!isPrivatRengoringPriority1Slug(city.slug)) continue;
+      if (isPriority1 && variant === city.slug) continue;
       addRedirect(map, `/privat-rengoring/${variant}/`, destination);
       addRedirect(map, `/privat-rengoering/${variant}/`, destination);
     }
@@ -128,6 +130,13 @@ export function buildSeoRedirects(): SeoRedirect[] {
 
   for (const slug of PRIVAT_RENGORING_PRIORITY_1_SLUGS) {
     addRedirect(map, `/rengoring/${slug}/`, `/privat-rengoring/${slug}/`);
+  }
+
+  for (const city of cities) {
+    const destination = privatRengoringDestination(city.slug);
+    for (const variant of getCitySlugVariants(city.name, city.slug)) {
+      addRedirect(map, `/erhvervsrengoring/${variant}/`, destination);
+    }
   }
 
   for (const item of legacyRedirects) {
