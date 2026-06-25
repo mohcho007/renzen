@@ -1,7 +1,6 @@
 import {
   KLUB_ANNUAL_KR,
   KLUB_ANNUAL_MONTHLY_EQUIVALENT_KR,
-  KLUB_MONTHLY_KR,
   ZEN_CREDIT_ANNUAL_KR,
   ZEN_CREDIT_MONTHLY_KR,
 } from "@/data/pricing";
@@ -77,9 +76,9 @@ const klubAnnualMonthlyLabel = KLUB_ANNUAL_MONTHLY_EQUIVALENT_KR.toLocaleString(
   { minimumFractionDigits: 2, maximumFractionDigits: 2 },
 );
 
-export const ZEN_CREDIT_MEMBERSHIP_FAQ_ANSWER_DU = `Som medlem af Renzen Klub får du ${zenCreditMonthlyLabel} i Zen-kreditter hver måned (${zenCreditAnnualLabel} pr. medlemsår), som du kan bruge på udvalgte boligservices — ${ZEN_CREDIT_SERVICES_PROSE}. Medlemskabet koster ${KLUB_MONTHLY_KR} kr./md. (min. 6 mdr.) eller ${KLUB_ANNUAL_KR.toLocaleString("da-DK")} kr. for et helt år (= ${klubAnnualMonthlyLabel} kr./md.).`;
+export const ZEN_CREDIT_MEMBERSHIP_FAQ_ANSWER_DU = `Som medlem af Renzen Klub får du ${zenCreditMonthlyLabel} i Zen-kreditter hver måned (${zenCreditAnnualLabel} pr. medlemsår), som du kan bruge på udvalgte boligservices — ${ZEN_CREDIT_SERVICES_PROSE}. Medlemskabet koster ${KLUB_ANNUAL_KR.toLocaleString("da-DK")} kr. for et helt år (= ${klubAnnualMonthlyLabel} kr./md.).`;
 
-export const ZEN_CREDIT_MEMBERSHIP_FAQ_ANSWER_MAN = `Som medlem af Renzen Klub får man ${zenCreditMonthlyLabel} i Zen-kreditter hver måned (${zenCreditAnnualLabel} pr. medlemsår), som kan bruges på udvalgte boligservices — ${ZEN_CREDIT_SERVICES_PROSE}. Medlemskabet koster ${KLUB_MONTHLY_KR} kr./md. (min. 6 mdr.) eller ${KLUB_ANNUAL_KR.toLocaleString("da-DK")} kr. for et helt år (= ${klubAnnualMonthlyLabel} kr./md.).`;
+export const ZEN_CREDIT_MEMBERSHIP_FAQ_ANSWER_MAN = `Som medlem af Renzen Klub får man ${zenCreditMonthlyLabel} i Zen-kreditter hver måned (${zenCreditAnnualLabel} pr. medlemsår), som kan bruges på udvalgte boligservices — ${ZEN_CREDIT_SERVICES_PROSE}. Medlemskabet koster ${KLUB_ANNUAL_KR.toLocaleString("da-DK")} kr. for et helt år (= ${klubAnnualMonthlyLabel} kr./md.).`;
 
 export const ZEN_CREDIT_FAQ_SHORT = `Som medlem får du ${zenCreditMonthlyLabel} i Zen-kreditter hver måned (${zenCreditAnnualLabel} pr. medlemsår), som du kan bruge på udvalgte boligservices — ${ZEN_CREDIT_SERVICES_PROSE}.`;
 

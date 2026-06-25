@@ -20,8 +20,6 @@ import {
 import {
   KLUB_ANNUAL_KR,
   KLUB_ANNUAL_MONTHLY_EQUIVALENT_KR,
-  KLUB_ANNUAL_SAVINGS_VS_MONTHLY_KR,
-  KLUB_MONTHLY_KR,
   ZEN_CREDIT_ANNUAL_KR,
   ZEN_CREDIT_MONTHLY_KR,
 } from "@/data/pricing";
@@ -271,7 +269,7 @@ export default function Dealside2LandingPage({
 
               <p className="mt-4 text-xs font-medium leading-5 text-[#7b857f]">
                 Priser er for 1. rengøring efter {formatKr(ZEN_CREDIT_MONTHLY_KR)} kr. velkomstkredit ved fast
-                aftale hver 2. uge og Renzen Klub ({formatKr(KLUB_ANNUAL_KR)} kr./år, min. 6 mdr.).
+                aftale hver 2. uge og Renzen Klub ({formatKr(KLUB_ANNUAL_KR)} kr./år).
                 Normalpris er uden tilbud. Servicefradrag vises i bookingflowet.
               </p>
             </div>
@@ -332,7 +330,7 @@ export default function Dealside2LandingPage({
                   ],
                   [
                     "Renzen Klub",
-                    `${KLUB_MONTHLY_KR} kr./md. (min. 6 mdr.) eller ${formatKr(KLUB_ANNUAL_KR)} kr. for 12 mdr. (= ${klubMonthlyLabel} kr./md.). Årsplanen sparer ${formatKr(KLUB_ANNUAL_SAVINGS_VS_MONTHLY_KR)} kr. og låser intropris.`,
+                    `${formatKr(KLUB_ANNUAL_KR)} kr. for 12 mdr. (= ${klubMonthlyLabel} kr./md.). Medlemskabet låser intropris og medlemsfordele.`,
                     "Vælges i bookingflowet",
                   ],
                 ].map(([title, text, note]) => (
@@ -385,24 +383,13 @@ export default function Dealside2LandingPage({
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
               <div className="bg-[#cfdccf] p-6 text-[#173c2c] sm:p-8">
                 <p className="text-xs font-bold uppercase tracking-[0.16em] text-[#5f7165]">
-                  Årsplan · bedste værdi
+                  Årsmedlemskab
                 </p>
                 <p className="mt-3 font-display text-5xl font-semibold tracking-[-0.05em]">
                   {formatKr(KLUB_ANNUAL_KR)} kr.
                 </p>
                 <p className="mt-2 text-sm font-semibold">
                   12 måneder · svarer til {klubMonthlyLabel} kr./md.
-                </p>
-              </div>
-              <div className="border border-white/20 p-6 sm:p-8">
-                <p className="text-xs font-bold uppercase tracking-[0.16em] text-white/50">
-                  Månedsplan
-                </p>
-                <p className="mt-3 font-display text-3xl font-semibold">
-                  {KLUB_MONTHLY_KR} kr. <span className="text-base">pr. måned</span>
-                </p>
-                <p className="mt-2 text-sm font-medium text-white/65">
-                  Minimum seks betalte måneder
                 </p>
               </div>
             </div>

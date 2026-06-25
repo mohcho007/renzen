@@ -18,7 +18,7 @@ import {
   ZEN_CREDIT_MEMBERSHIP_FAQ_ANSWER_DU,
   ZEN_CREDIT_SERVICES_SECTION_INTRO,
 } from "@/lib/zenCreditServices";
-import { listPriceKr, pricingConfig, INTRO_CLEANING_FROM_KR, KLUB_ANNUAL_KR, KLUB_ANNUAL_MONTHLY_EQUIVALENT_KR, KLUB_MONTHLY_KR, ZEN_CREDIT_MONTHLY_KR } from "@/data/pricing";
+import { listPriceKr, pricingConfig, INTRO_CLEANING_FROM_KR, KLUB_ANNUAL_KR, KLUB_ANNUAL_MONTHLY_EQUIVALENT_KR, ZEN_CREDIT_MONTHLY_KR } from "@/data/pricing";
 import { ZenCreditServicesGrid } from "@/components/site/ZenCreditServicesGrid";
 import { getServiceCityUrl } from "@/lib/urls";
 import { PRIVAT_RENGORING_PRIORITY_1_CITIES } from "@/lib/privatRengoringCities";
@@ -41,8 +41,8 @@ const klubMonthlyLabel = KLUB_ANNUAL_MONTHLY_EQUIVALENT_KR.toLocaleString(
 
 const membershipSteps = [
   {
-    title: "Du betaler et lille beløb hver måned",
-    text: `Renzen Klub koster ${KLUB_MONTHLY_KR} kr. om måneden — eller ${KLUB_ANNUAL_KR.toLocaleString("da-DK")} kr. for et helt år (= ${klubMonthlyLabel} kr./md.), hvis du vil spare mest.`,
+    title: "Du betaler én gang om året",
+    text: `Renzen Klub koster ${KLUB_ANNUAL_KR.toLocaleString("da-DK")} kr. for 12 måneder (= ${klubMonthlyLabel} kr./md.).`,
   },
   {
     title: "Du får billigere rengøring hver gang",
@@ -54,7 +54,7 @@ const membershipSteps = [
   },
   {
     title: "Du kan stoppe, når du vil",
-    text: "Efter de første 6 måneder kan du sige op når som helst. Ingen skjulte fælder — du bestemmer selv.",
+    text: "Medlemskabet gælder i 12 måneder. Du kan opsige inden fornyelse, så fremtidige fornyelser stopper.",
   },
 ];
 
@@ -81,7 +81,7 @@ const klubFaqs = [
   {
     question: "Kan jeg styre mit medlemskab online?",
     answer:
-      `Ja. Du vælger og aktiverer medlemskabet online, når du booker rengøring. Du kan skifte mellem månedsplan (${KLUB_MONTHLY_KR} kr.) og årsplan (${KLUB_ANNUAL_KR.toLocaleString("da-DK")} kr.) i bookingflowet, og efter de første 6 måneder kan du opsige når som helst.`,
+      `Ja. Du vælger og aktiverer medlemskabet online, når du booker rengøring. Medlemskabet koster ${KLUB_ANNUAL_KR.toLocaleString("da-DK")} kr. for 12 måneder, og du kan opsige inden fornyelse.`,
   },
   {
     question: "Hvad er fordelene ved Renzen Klub?",
@@ -94,7 +94,7 @@ const faqs = [
   {
     question: "Hvad er Renzen Klub?",
     answer:
-      `Renzen Klub er vores medlemskab til dig, der vil have fast rengøring. Du betaler ${KLUB_MONTHLY_KR} kr. om måneden (eller ${KLUB_ANNUAL_KR.toLocaleString("da-DK")} kr. for et år) og får lavere priser på rengøring plus Zen-kreditter til andre opgaver i hjemmet.`,
+      `Renzen Klub er vores medlemskab til dig, der vil have fast rengøring. Du betaler ${KLUB_ANNUAL_KR.toLocaleString("da-DK")} kr. for et helt år og får lavere priser på rengøring plus Zen-kreditter til andre opgaver i hjemmet.`,
   },
   {
     question: "Får jeg altid den samme Zenmester?",

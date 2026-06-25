@@ -230,7 +230,7 @@ import {
   PRIVAT_RENGORING_PRIORITY_1_CITIES,
   getPrivatRengoringPriority1City,
 } from "@/lib/privatRengoringCities";
-import { INTRO_CLEANING_FROM_KR, KLUB_ANNUAL_KR, KLUB_MONTHLY_KR, ZEN_CREDIT_MONTHLY_KR } from "@/data/pricing";
+import { INTRO_CLEANING_FROM_KR, KLUB_ANNUAL_KR, ZEN_CREDIT_MONTHLY_KR } from "@/data/pricing";
 import {
   ZEN_CREDIT_MEMBERSHIP_FAQ_ANSWER_DU,
   ZEN_CREDIT_SERVICES_SECTION_INTRO,
@@ -332,7 +332,7 @@ import {
 import {
   PRIVAT_RENGORING_PRIORITY_1_CITIES,
 } from "@/lib/privatRengoringCities";
-import { INTRO_CLEANING_FROM_KR, KLUB_ANNUAL_KR, KLUB_MONTHLY_KR, ZEN_CREDIT_MONTHLY_KR } from "@/data/pricing";
+import { INTRO_CLEANING_FROM_KR, KLUB_ANNUAL_KR, ZEN_CREDIT_MONTHLY_KR } from "@/data/pricing";
 import {
   ZEN_CREDIT_MEMBERSHIP_FAQ_ANSWER_DU,
 } from "@/lib/zenCreditServices";
@@ -507,7 +507,7 @@ export function buildPrivatRengoringCityPageConfig(
       },
       {
         question: "Kan jeg styre mit medlemskab online?",
-        answer: \`Ja. Du vælger medlemskab online ved booking. Månedsplan koster \${KLUB_MONTHLY_KR} kr., årsplan \${KLUB_ANNUAL_KR.toLocaleString("da-DK")} kr.\`,
+        answer: \`Ja. Du vælger medlemskab online ved booking. Årsmedlemskab koster \${KLUB_ANNUAL_KR.toLocaleString("da-DK")} kr. for 12 måneder.\`,
       },
       {
         question: "Hvad er fordelene ved Renzen Klub?",

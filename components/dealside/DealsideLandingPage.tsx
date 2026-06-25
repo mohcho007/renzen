@@ -17,8 +17,6 @@ import {
   INTRO_CLEANING_FROM_KR,
   KLUB_ANNUAL_KR,
   KLUB_ANNUAL_MONTHLY_EQUIVALENT_KR,
-  KLUB_ANNUAL_SAVINGS_VS_MONTHLY_KR,
-  KLUB_MONTHLY_KR,
   ZEN_CREDIT_ANNUAL_KR,
   ZEN_CREDIT_ANNUAL_REMAINING_AFTER_FIRST_KR,
   ZEN_CREDIT_MONTHLY_KR,
@@ -58,7 +56,7 @@ const faqs = [
   {
     question: "Hvordan fungerer medlemskabet?",
     answer:
-      `Du kan vælge ${KLUB_MONTHLY_KR} kr. pr. måned med minimum seks betalte måneder eller ${KLUB_ANNUAL_KR.toLocaleString("da-DK")} kr. for 12 måneder. Årsplanen svarer til ${klubMonthlyLabel} kr. pr. måned — og sparer ${KLUB_ANNUAL_SAVINGS_VS_MONTHLY_KR.toLocaleString("da-DK")} kr. om året.`,
+      `Medlemskabet koster ${KLUB_ANNUAL_KR.toLocaleString("da-DK")} kr. for 12 måneder — svarer til ${klubMonthlyLabel} kr. pr. måned.`,
   },
   {
     question: "Hvordan fungerer Zen-kreditter?",
@@ -308,7 +306,7 @@ export default function DealsideLandingPage() {
             <p className="mt-7 max-w-3xl text-xs font-medium leading-5 text-[#7b857f]">
               Priser er for 1. rengøring efter {formatKr(ZEN_CREDIT_MONTHLY_KR)} kr.
               velkomstkredit ved fast aftale hver 2. uge og Renzen Klub (
-              {formatKr(KLUB_ANNUAL_KR)} kr./år, min. 6 mdr.). Normalpris er uden
+              {formatKr(KLUB_ANNUAL_KR)} kr./år). Normalpris er uden
               tilbud. Servicefradrag vises i bookingflowet.
             </p>
           </div>
@@ -383,18 +381,6 @@ export default function DealsideLandingPage() {
                 </p>
               </div>
 
-              <div className="py-8">
-                <p className="text-xs font-bold uppercase tracking-[0.16em] text-[#5f7165]">
-                  Månedsplan
-                </p>
-                <p className="mt-3 font-display text-4xl font-semibold">
-                  139 kr. <span className="text-base">pr. måned</span>
-                </p>
-                <p className="mt-3 text-sm font-semibold">
-                  Minimum seks betalte måneder
-                </p>
-              </div>
-
               <p className="border-t border-[#9dad9f] pt-5 text-xs font-medium leading-5 text-[#5f6c63]">
                 Velkomstkredit ({formatKr(ZEN_CREDIT_MONTHLY_KR)} kr.) bruges på
                 introrengøringen. Zen-kreditter har anvendelsesvilkår, udløber
@@ -417,7 +403,7 @@ export default function DealsideLandingPage() {
             <ol className="border-t border-[#ccd2ca]">
               {[
                 ["Vælg bolig", "Start med den pakke, der passer til boligens størrelse."],
-                ["Vælg dato og plan", "Se ledige tider, normalpris og vælg måneds- eller årsplan."],
+                ["Vælg dato", "Se ledige tider, normalpris og årligt medlemskab."],
                 ["Få gjort rent", "Din Zenmester udfører arbejdet. Vi fakturerer efter besøget."],
               ].map(([title, text], index) => (
                 <li

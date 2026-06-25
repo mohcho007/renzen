@@ -18,12 +18,8 @@ export function listPriceKr(sqm: number): number {
 }
 
 /** Renzen Klub membership fees (customer-facing). */
-export const KLUB_MONTHLY_KR = 139;
-export const KLUB_MONTHLY_MIN_MONTHS = 6;
 export const KLUB_ANNUAL_KR = 790;
 export const KLUB_ANNUAL_MONTHLY_EQUIVALENT_KR = KLUB_ANNUAL_KR / 12;
-export const KLUB_ANNUAL_SAVINGS_VS_MONTHLY_KR =
-  KLUB_MONTHLY_KR * 12 - KLUB_ANNUAL_KR;
 export const ZEN_CREDIT_MONTHLY_KR = 200;
 export const ZEN_CREDIT_ANNUAL_KR = 2400;
 /** Annual Zen pool minus first month's credit used on intro cleaning. */

@@ -13,9 +13,6 @@ import { getPackageTierForM2 } from "@/components/dealside/dealPackages";
 import {
   KLUB_ANNUAL_KR,
   KLUB_ANNUAL_MONTHLY_EQUIVALENT_KR,
-  KLUB_ANNUAL_SAVINGS_VS_MONTHLY_KR,
-  KLUB_MONTHLY_KR,
-  KLUB_MONTHLY_MIN_MONTHS,
   listPriceKr,
   ZEN_CREDIT_ANNUAL_REMAINING_AFTER_FIRST_KR,
   ZEN_CREDIT_ANNUAL_KR,
@@ -203,7 +200,7 @@ const STEP_COPY: Record<
     3: {
       title: "Renzen Klub",
       description:
-        "Vælg års- eller månedsplan. Medlemskabet låser introprisen og giver løbende fordele.",
+        "Aktivér dit årlige medlemskab. Det låser introprisen og giver løbende fordele.",
     },
     4: {
       title: "Bekræft booking",
@@ -436,7 +433,6 @@ function BookingWizardForm({
   const [selectedExtras, setSelectedExtras] = useState<{ [id: string]: number }>({});
   const [clubSelected, setClubSelected] = useState(false);
   const [termsAccepted, setTermsAccepted] = useState(false);
-  const [planType, setPlanType] = useState<'annual' | 'monthly'>('annual');
 
   // Date and Time selection
   const [selectedDateStr, setSelectedDateStr] = useState(""); // YYYY-MM-DD
@@ -626,11 +622,7 @@ function BookingWizardForm({
     : Math.round(localBaseCleaningPrice * (discountPercent / 100));
 
   const adminFee = 5;
-  const clubFee = clubSelected
-    ? (currentStep < 3
-        ? KLUB_MONTHLY_KR
-        : (planType === 'annual' ? KLUB_ANNUAL_KR : KLUB_MONTHLY_KR))
-    : 0;
+  const clubFee = clubSelected ? KLUB_ANNUAL_KR : 0;
 
   let localPromoDiscountAmount = 0;
   if (promoCode) {
@@ -706,7 +698,7 @@ function BookingWizardForm({
     ? Math.max(0, (localBaseCleaningPrice - welcomePrice) + promoDiscountAmount)
     : promoDiscountAmount;
 
-  const showFuturePayments = isRecurring || (clubSelected && planType === 'monthly');
+  const showFuturePayments = isRecurring;
 
   // Local date formatter to YYYY-MM-DD
   const toLocalYmd = (date: Date) => {
@@ -1411,7 +1403,7 @@ function BookingWizardForm({
                       </div>
                       {clubSelected && (
                         <div style={{ display: "flex", justifyContent: "space-between" }}>
-                          <span>{currentStep < 3 ? "Renzen Klub (1. md):" : (planType === 'annual' ? "Renzen Klub (12 mdr.):" : "Renzen Klub (1. md):")}</span>
+                          <span>{currentStep < 3 ? "Renzen Klub (12 mdr.):" : "Renzen Klub (12 mdr.):"}</span>
                           <span>+{formatPriceDK(clubFee)}</span>
                         </div>
                       )}
@@ -1489,22 +1481,6 @@ function BookingWizardForm({
                   </div>
 
                   <div style={{ display: "flex", flexDirection: "column", gap: "10px", fontSize: "0.8rem", color: "#475569" }}>
-                    {clubSelected && planType !== 'annual' && (
-                      <div style={{ background: "#ececec", borderRadius: "8px", padding: "10px" }}>
-                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
-                          <span style={{ fontWeight: 700, color: "#475569" }}>Klubmedlemskab:</span>
-                          <strong style={{ color: "#475569" }}>{KLUB_MONTHLY_KR} kr./md.</strong>
-                        </div>
-                        <span style={{ fontSize: "0.7rem", color: "#64748b", display: "block", marginTop: "2px" }}>
-                          Inkl. {activeFreq.discount}% rabat & digital wallet:
-                        </span>
-                        <div style={{ display: "flex", alignItems: "center", gap: "6px", marginTop: "4px", fontSize: "0.7rem", fontWeight: 700, color: "#475569" }}>
-                          <span>💰</span>
-                          <span>Zen kredit optjent denne måned (udløber månedligt)</span>
-                        </div>
-                      </div>
-                    )}
-
                     {isRecurring && (
                       <div>
                         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
@@ -1794,9 +1770,7 @@ function BookingWizardForm({
                       <div className="l27-benefit-item">
                         <span className="l27-benefit-title">Renzen Klub medlemskab</span>
                         <span className="l27-benefit-desc">
-                          {planType === 'annual'
-                            ? `${KLUB_ANNUAL_KR} kr. for 12 mdr. (= ${KLUB_ANNUAL_MONTHLY_EQUIVALENT_KR.toLocaleString("da-DK", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} kr./md.)`
-                            : `${KLUB_MONTHLY_KR} kr./md. · min. ${KLUB_MONTHLY_MIN_MONTHS} betalte mdr.`}{' '}
+                          {`${KLUB_ANNUAL_KR} kr. for 12 mdr. (= ${KLUB_ANNUAL_MONTHLY_EQUIVALENT_KR.toLocaleString("da-DK", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} kr./md.)`}{' '}
                           Optjen {zenCreditAnnualMonths} × {ZEN_CREDIT_MONTHLY_KR} kr. i Zen-kreditter pr. medlemsår. Se opsigelsesvilkår.
                         </span>
                       </div>
@@ -1924,20 +1898,13 @@ function BookingWizardForm({
                         </span>
                       </div>
                       <span className="l27-frequency-type-price" style={{ color: "#206d69" }}>
-                        {planType === 'annual' ? `${KLUB_ANNUAL_KR} kr./år` : `${KLUB_MONTHLY_KR} kr./md.`}
+                        {`${KLUB_ANNUAL_KR} kr./år`}
                       </span>
                     </div>
 
-                    {planType === 'annual' && clubSelected && (
-                      <div style={{ fontSize: "0.78rem", color: "#206d69", fontWeight: 600, marginTop: "4px", textAlign: "left" }}>
-                        = {KLUB_ANNUAL_MONTHLY_EQUIVALENT_KR.toLocaleString("da-DK", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} kr./md. · Spar {KLUB_ANNUAL_SAVINGS_VS_MONTHLY_KR.toLocaleString("da-DK")} kr.
-                      </div>
-                    )}
-
                     {clubSelected && (
-                      <div style={{ display: "flex", gap: "6px", marginTop: "12px", marginBottom: "4px" }}>
-                        <button type="button" onClick={(e) => { e.stopPropagation(); setPlanType('annual'); }} style={{ padding: "5px 12px", borderRadius: "20px", border: "none", fontSize: "0.78rem", fontWeight: 600, cursor: "pointer", background: planType === 'annual' ? '#206d69' : '#f1f5f9', color: planType === 'annual' ? '#fff' : '#475569', transition: "all 0.2s ease" }}>Årlig (anbefalet)</button>
-                        <button type="button" onClick={(e) => { e.stopPropagation(); setPlanType('monthly'); }} style={{ padding: "5px 12px", borderRadius: "20px", border: "none", fontSize: "0.78rem", fontWeight: 600, cursor: "pointer", background: planType === 'monthly' ? '#206d69' : '#f1f5f9', color: planType === 'monthly' ? '#fff' : '#475569', transition: "all 0.2s ease" }}>Månedlig</button>
+                      <div style={{ fontSize: "0.78rem", color: "#206d69", fontWeight: 600, marginTop: "4px", textAlign: "left" }}>
+                        = {KLUB_ANNUAL_MONTHLY_EQUIVALENT_KR.toLocaleString("da-DK", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} kr./md. · betales for 12 mdr.
                       </div>
                     )}
 
@@ -1951,8 +1918,8 @@ function BookingWizardForm({
                         <span className="l27-benefit-desc">Optjen én kredit i medlemsmåned 1-10 — fra md. 4 også til udvalgte tilvalg. (Brug el. tab).</span>
                       </div>
                       <div className="l27-benefit-item">
-                        <span className="l27-benefit-title">Ingen binding efter 6 mdr.</span>
-                        <span className="l27-benefit-desc">Opsig når som helst. 14 dages fortrydelsesret.</span>
+                        <span className="l27-benefit-title">12 måneders medlemskab</span>
+                        <span className="l27-benefit-desc">Opsig inden fornyelse. 14 dages fortrydelsesret.</span>
                       </div>
                     </div>
 
@@ -2431,64 +2398,17 @@ function BookingWizardForm({
               <div className="l27-form-section">
                 {isRecurring ? (
                   <>
-                    <h2>Vælg din medlemsplan</h2>
+                    <h2>Dit medlemskab</h2>
                     <p className="l27-section-subtitle" style={{ marginBottom: "20px" }}>
-                      Årsplanen er mest valgt — samme fordele til {KLUB_ANNUAL_MONTHLY_EQUIVALENT_KR.toLocaleString("da-DK", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} kr./md. og du sparer {KLUB_ANNUAL_SAVINGS_VS_MONTHLY_KR.toLocaleString("da-DK")} kr. om året.
+                      Renzen Klub koster {KLUB_ANNUAL_KR} kr. for 12 måneder (= {KLUB_ANNUAL_MONTHLY_EQUIVALENT_KR.toLocaleString("da-DK", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} kr./md.).
                     </p>
 
-                    {/* Annual / Monthly toggle cards */}
-                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px", marginBottom: "20px" }}>
-                      {/* Annual card */}
-                      <div
-                        onClick={() => setPlanType('annual')}
-                        style={{
-                          position: "relative",
-                          border: planType === 'annual' ? "2.5px solid #206d69" : "1.5px solid #d1d5db",
-                          borderRadius: "16px",
-                          padding: "18px 14px",
-                          cursor: "pointer",
-                          background: planType === 'annual' ? "#fff" : "#fafafa",
-                          boxShadow: planType === 'annual' ? "0 4px 20px rgba(32,109,105,0.15)" : "0 1px 3px rgba(0,0,0,0.04)",
-                          transition: "all 0.2s ease",
-                          textAlign: "left"
-                        }}
-                      >
-                        <div style={{ position: "absolute", top: "-10px", right: "10px", background: "#206d69", color: "#fff", fontSize: "0.65rem", fontWeight: 800, padding: "3px 8px", borderRadius: "8px", letterSpacing: "0.04em" }}>MEST VALGT · SPAR {KLUB_ANNUAL_SAVINGS_VS_MONTHLY_KR.toLocaleString("da-DK")} KR.</div>
-                        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "8px", marginTop: "4px" }}>
-                          <span style={{ fontWeight: 800, fontSize: "0.9rem", color: "#111827" }}>Årligt (Prepaid)</span>
-                          <div style={{ width: "18px", height: "18px", borderRadius: "50%", border: `2.5px solid ${planType === 'annual' ? '#206d69' : '#94a3b8'}`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                            {planType === 'annual' && <div style={{ width: "9px", height: "9px", borderRadius: "50%", background: "#206d69" }} />}
-                          </div>
-                        </div>
-                        <div style={{ fontSize: "1.2rem", fontWeight: 950, color: "#206d69", marginBottom: "2px" }}>{KLUB_ANNUAL_KR} kr./år</div>
-                        <div style={{ fontSize: "0.8rem", color: "#475569", marginBottom: "6px" }}>= kun {KLUB_ANNUAL_MONTHLY_EQUIVALENT_KR.toLocaleString("da-DK", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} kr./md. · betales for 12 mdr.</div>
-                        <div style={{ display: "inline-block", background: "#dcfce7", color: "#166534", fontSize: "0.7rem", fontWeight: 700, padding: "3px 8px", borderRadius: "6px" }}>Spar {KLUB_ANNUAL_SAVINGS_VS_MONTHLY_KR.toLocaleString("da-DK")} kr. om året</div>
+                    <div style={{ marginBottom: "20px", border: "2.5px solid #206d69", borderRadius: "16px", padding: "18px 14px", background: "#fff", boxShadow: "0 4px 20px rgba(32,109,105,0.15)", textAlign: "left" }}>
+                      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "8px" }}>
+                        <span style={{ fontWeight: 800, fontSize: "0.9rem", color: "#111827" }}>Årligt medlemskab</span>
                       </div>
-
-                      {/* Monthly card */}
-                      <div
-                        onClick={() => setPlanType('monthly')}
-                        style={{
-                          border: planType === 'monthly' ? "2.5px solid #206d69" : "1.5px solid #d1d5db",
-                          borderRadius: "16px",
-                          padding: "18px 14px",
-                          cursor: "pointer",
-                          background: planType === 'monthly' ? "#fff" : "#fafafa",
-                          boxShadow: planType === 'monthly' ? "0 4px 20px rgba(32,109,105,0.15)" : "0 1px 3px rgba(0,0,0,0.04)",
-                          transition: "all 0.2s ease",
-                          textAlign: "left"
-                        }}
-                      >
-                        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "8px", marginTop: "4px" }}>
-                          <span style={{ fontWeight: 800, fontSize: "0.9rem", color: "#111827" }}>Månedlig</span>
-                          <div style={{ width: "18px", height: "18px", borderRadius: "50%", border: `2.5px solid ${planType === 'monthly' ? '#206d69' : '#94a3b8'}`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                            {planType === 'monthly' && <div style={{ width: "9px", height: "9px", borderRadius: "50%", background: "#206d69" }} />}
-                          </div>
-                        </div>
-                        <div style={{ fontSize: "1.2rem", fontWeight: 950, color: "#206d69", marginBottom: "2px" }}>{KLUB_MONTHLY_KR} kr./md.</div>
-                        <div style={{ fontSize: "0.8rem", color: "#475569", marginBottom: "6px" }}>Minimum {KLUB_MONTHLY_MIN_MONTHS} betalte måneder</div>
-                        <div style={{ fontSize: "0.7rem", color: "#64748b" }}>(I alt {(KLUB_MONTHLY_KR * 12).toLocaleString("da-DK")} kr. om året)</div>
-                      </div>
+                      <div style={{ fontSize: "1.2rem", fontWeight: 950, color: "#206d69", marginBottom: "2px" }}>{KLUB_ANNUAL_KR} kr./år</div>
+                      <div style={{ fontSize: "0.8rem", color: "#475569" }}>= {KLUB_ANNUAL_MONTHLY_EQUIVALENT_KR.toLocaleString("da-DK", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} kr./md. · betales for 12 mdr.</div>
                     </div>
 
                     {/* Compact benefits */}
@@ -2547,9 +2467,7 @@ function BookingWizardForm({
                     </div>
 
                     <div style={{ marginTop: "10px", fontSize: "0.73rem", color: "#6b7280", lineHeight: 1.5 }}>
-                      💡 {planType === 'annual'
-                        ? 'Årsplanen betales for 12 måneder. Kreditter optjenes i medlemsmåned 1-10.'
-                        : 'Månedsplanen har minimum 6 betalte måneder. Kreditter optjenes i medlemsmåned 1-10.'}{' '}
+                      💡 Medlemskabet betales for 12 måneder. Kreditter optjenes i medlemsmåned 1-10.{' '}
                       Ved tidlig opsigelse kan introrengøringen blive efterfaktureret til normalpris.
                     </div>
                   </>
@@ -2580,17 +2498,9 @@ function BookingWizardForm({
                       >
                         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "4px" }}>
                           <span style={{ fontSize: "1.1rem", fontWeight: 800, color: "#111827" }}>Tilmeld mig Renzen Klub</span>
-                          <span style={{ fontSize: "1.2rem", fontWeight: 900, color: "#206d69" }}>{planType === 'annual' ? `${KLUB_ANNUAL_KR} kr./år` : `${KLUB_MONTHLY_KR} kr./md.`}</span>
+                          <span style={{ fontSize: "1.2rem", fontWeight: 900, color: "#206d69" }}>{`${KLUB_ANNUAL_KR} kr./år`}</span>
                         </div>
-                        {planType === 'annual' ? (
-                          <div style={{ fontSize: "0.78rem", color: "#206d69", fontWeight: 600, marginBottom: "8px" }}>= {KLUB_ANNUAL_MONTHLY_EQUIVALENT_KR.toLocaleString("da-DK", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} kr./md. · Spar {KLUB_ANNUAL_SAVINGS_VS_MONTHLY_KR.toLocaleString("da-DK")} kr.</div>
-                        ) : (
-                          <div style={{ fontSize: "0.78rem", color: "#475569", fontWeight: 600, marginBottom: "8px" }}>6 mdr. minimum binding</div>
-                        )}
-                        <div style={{ display: "flex", gap: "6px", marginBottom: "12px" }}>
-                          <button type="button" onClick={(e) => { e.stopPropagation(); setPlanType('annual'); }} style={{ padding: "5px 12px", borderRadius: "20px", border: "none", fontSize: "0.78rem", fontWeight: 600, cursor: "pointer", background: planType === 'annual' ? '#206d69' : '#f1f5f9', color: planType === 'annual' ? '#fff' : '#475569', transition: "all 0.2s ease" }}>Årlig (anbefalet)</button>
-                          <button type="button" onClick={(e) => { e.stopPropagation(); setPlanType('monthly'); }} style={{ padding: "5px 12px", borderRadius: "20px", border: "none", fontSize: "0.78rem", fontWeight: 600, cursor: "pointer", background: planType === 'monthly' ? '#206d69' : '#f1f5f9', color: planType === 'monthly' ? '#fff' : '#475569', transition: "all 0.2s ease" }}>Månedlig</button>
-                        </div>
+                        <div style={{ fontSize: "0.78rem", color: "#206d69", fontWeight: 600, marginBottom: "8px" }}>= {KLUB_ANNUAL_MONTHLY_EQUIVALENT_KR.toLocaleString("da-DK", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} kr./md. · 12 mdr.</div>
                         <p style={{ fontSize: "0.85rem", color: "#475569", margin: "0 0 12px 0" }}>
                           Aktiverer velkomstpris på denne rengøring og giver løbende fordele.
                         </p>
@@ -2747,12 +2657,6 @@ function BookingWizardForm({
                         </span>
                       )}
                     </div>
-                    {clubSelected && planType !== 'annual' && (
-                      <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.85rem", color: "#475569", marginBottom: "6px" }}>
-                        <span>Månedligt klubmedlemskab:</span>
-                        <strong style={{ color: "#0f172a" }}>{formatPriceDK(KLUB_MONTHLY_KR)} / md</strong>
-                      </div>
-                    )}
                     {isRecurring && (
                       <>
                         <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.85rem", color: "#475569", marginBottom: "6px" }}>
@@ -2790,9 +2694,7 @@ function BookingWizardForm({
                     ariaLabel="Accepter vilkår for Renzen Klub"
                     description={
                       <>
-                        {planType === "annual"
-                          ? `${KLUB_ANNUAL_KR} kr. for 12 måneder (= ${KLUB_ANNUAL_MONTHLY_EQUIVALENT_KR.toLocaleString("da-DK", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} kr./md.).`
-                          : `${KLUB_MONTHLY_KR} kr./md. med minimum ${KLUB_MONTHLY_MIN_MONTHS} betalte måneder.`}{" "}
+                        {`${KLUB_ANNUAL_KR} kr. for 12 måneder (= ${KLUB_ANNUAL_MONTHLY_EQUIVALENT_KR.toLocaleString("da-DK", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} kr./md.).`}{" "}
                         Du optjener {zenCreditAnnualMonths} × {ZEN_CREDIT_MONTHLY_KR} kr. i Zen-kreditter i medlemsmåned
                         1-10 pr. medlemsår. Kreditter udløber månedligt og
                         overføres ikke. Tilvalg-kreditter aktiveres efter 3
@@ -2961,7 +2863,7 @@ function BookingWizardForm({
                       </div>
                       {clubSelected && (
                         <div style={{ display: "flex", justifyContent: "space-between" }}>
-                          <span>{currentStep < 3 ? "Renzen Klub (1. md):" : (planType === 'annual' ? "Renzen Klub (12 mdr.):" : "Renzen Klub (1. md):")}</span>
+                          <span>{currentStep < 3 ? "Renzen Klub (12 mdr.):" : "Renzen Klub (12 mdr.):"}</span>
                           <span>+{formatPriceDK(clubFee)}</span>
                         </div>
                       )}
@@ -3039,22 +2941,6 @@ function BookingWizardForm({
                   </div>
 
                   <div style={{ display: "flex", flexDirection: "column", gap: "10px", fontSize: "0.8rem", color: "#475569" }}>
-                    {clubSelected && planType !== 'annual' && (
-                      <div style={{ background: "#ececec", borderRadius: "8px", padding: "10px" }}>
-                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
-                          <span style={{ fontWeight: 700, color: "#475569" }}>Klubmedlemskab:</span>
-                          <strong style={{ color: "#475569" }}>{KLUB_MONTHLY_KR} kr./md.</strong>
-                        </div>
-                        <span style={{ fontSize: "0.7rem", color: "#64748b", display: "block", marginTop: "2px" }}>
-                          Inkl. {activeFreq.discount}% rabat & digital wallet:
-                        </span>
-                        <div style={{ display: "flex", alignItems: "center", gap: "6px", marginTop: "4px", fontSize: "0.7rem", fontWeight: 700, color: "#475569" }}>
-                          <span>💰</span>
-                          <span>Zen kredit optjent denne måned (udløber månedligt)</span>
-                        </div>
-                      </div>
-                    )}
-
                     {isRecurring && (
                       <div>
                         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>

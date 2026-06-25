@@ -84,7 +84,7 @@ const klubFaqs = [
   {
     question: "Kan jeg stoppe medlemskabet efter flytterengøringen?",
     answer:
-      "Ja. Renzen Klub har en minimumsperiode på 6 måneder, og derefter kan du opsige når som helst. Mange bruger perioden til både flytterengøring og efterfølgende hjælp i den nye bolig.",
+      "Ja. Renzen Klub koster 790 kr. for 12 måneders medlemskab. Du kan opsige inden fornyelse. Mange bruger perioden til både flytterengøring og efterfølgende hjælp i den nye bolig.",
   },
 ];
 

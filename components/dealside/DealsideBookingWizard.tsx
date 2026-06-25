@@ -7,9 +7,6 @@ import { ZEN_CREDIT_SERVICES_COMPACT } from "@/lib/zenCreditServices";
 import {
   KLUB_ANNUAL_KR,
   KLUB_ANNUAL_MONTHLY_EQUIVALENT_KR,
-  KLUB_ANNUAL_SAVINGS_VS_MONTHLY_KR,
-  KLUB_MONTHLY_KR,
-  KLUB_MONTHLY_MIN_MONTHS,
   listPriceKr,
   ZEN_CREDIT_ANNUAL_KR,
   ZEN_CREDIT_MONTHLY_KR,
@@ -69,7 +66,6 @@ interface L27Spot {
 
 export default function DealsideBookingWizard({ initialZip = "" }: { initialZip?: string }) {
   const [step, setStep] = useState(1);
-  const [planType, setPlanType] = useState<'annual' | 'monthly'>('annual'); // default to annual
 
   // Form fields
   const [zip, setZip] = useState(initialZip);
@@ -915,61 +911,15 @@ export default function DealsideBookingWizard({ initialZip = "" }: { initialZip?
 
       {step === 5 && (
         <div className="wizard-step">
-          <h2>Vælg din medlemsplan</h2>
-          <p className="step-desc">De fleste vælger årsplanen — samme fordele til {KLUB_ANNUAL_MONTHLY_EQUIVALENT_KR.toLocaleString("da-DK", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} kr./md. Dit medlemskab låser intropris på {formatPriceDK(activePkg.introPrice)} og giver rabatter + kreditter.</p>
+          <h2>Dit medlemskab</h2>
+          <p className="step-desc">Renzen Klub koster {KLUB_ANNUAL_KR} kr. for 12 måneder (= {KLUB_ANNUAL_MONTHLY_EQUIVALENT_KR.toLocaleString("da-DK", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} kr./md.). Dit medlemskab låser intropris på {formatPriceDK(activePkg.introPrice)} og giver rabatter + kreditter.</p>
 
-          {/* Annual / Monthly toggle — PRIMARY element */}
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px", marginBottom: "24px" }}>
-            {/* Annual card */}
-            <div
-              onClick={() => setPlanType('annual')}
-              style={{
-                position: "relative",
-                border: planType === 'annual' ? "2.5px solid #206d69" : "1.5px solid #d1d5db",
-                borderRadius: "16px",
-                padding: "20px 16px",
-                cursor: "pointer",
-                background: planType === 'annual' ? "#fff" : "#fafafa",
-                boxShadow: planType === 'annual' ? "0 4px 20px rgba(32,109,105,0.15)" : "0 1px 3px rgba(0,0,0,0.04)",
-                transition: "all 0.2s ease",
-                textAlign: "left"
-              }}
-            >
-              <div style={{ position: "absolute", top: "-10px", right: "12px", background: "#206d69", color: "#fff", fontSize: "0.65rem", fontWeight: 800, padding: "3px 10px", borderRadius: "8px", letterSpacing: "0.04em" }}>BEDST PRIS</div>
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "10px" }}>
-                <span style={{ fontWeight: 800, fontSize: "1rem", color: "#111827" }}>Årligt</span>
-                <div style={{ width: "20px", height: "20px", borderRadius: "50%", border: `2.5px solid ${planType === 'annual' ? '#206d69' : '#94a3b8'}`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                  {planType === 'annual' && <div style={{ width: "10px", height: "10px", borderRadius: "50%", background: "#206d69" }} />}
-                </div>
-              </div>
-              <div style={{ fontSize: "1.4rem", fontWeight: 950, color: "#206d69", marginBottom: "2px" }}>{KLUB_ANNUAL_KR} kr./år</div>
-              <div style={{ fontSize: "0.85rem", color: "#475569", marginBottom: "8px" }}>= kun {KLUB_ANNUAL_MONTHLY_EQUIVALENT_KR.toLocaleString("da-DK", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} kr./md.</div>
-              <div style={{ display: "inline-block", background: "#dcfce7", color: "#166534", fontSize: "0.75rem", fontWeight: 700, padding: "4px 10px", borderRadius: "8px" }}>Spar {KLUB_ANNUAL_SAVINGS_VS_MONTHLY_KR.toLocaleString("da-DK")} kr. vs. månedsplan</div>
+          <div style={{ marginBottom: "24px", border: "2.5px solid #206d69", borderRadius: "16px", padding: "20px 16px", background: "#fff", boxShadow: "0 4px 20px rgba(32,109,105,0.15)", textAlign: "left" }}>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "10px" }}>
+              <span style={{ fontWeight: 800, fontSize: "1rem", color: "#111827" }}>Årligt medlemskab</span>
             </div>
-
-            {/* Monthly card */}
-            <div
-              onClick={() => setPlanType('monthly')}
-              style={{
-                border: planType === 'monthly' ? "2.5px solid #206d69" : "1.5px solid #d1d5db",
-                borderRadius: "16px",
-                padding: "20px 16px",
-                cursor: "pointer",
-                background: planType === 'monthly' ? "#fff" : "#fafafa",
-                boxShadow: planType === 'monthly' ? "0 4px 20px rgba(32,109,105,0.15)" : "0 1px 3px rgba(0,0,0,0.04)",
-                transition: "all 0.2s ease",
-                textAlign: "left"
-              }}
-            >
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "10px", marginTop: "4px" }}>
-                <span style={{ fontWeight: 800, fontSize: "1rem", color: "#111827" }}>Månedlig</span>
-                <div style={{ width: "20px", height: "20px", borderRadius: "50%", border: `2.5px solid ${planType === 'monthly' ? '#206d69' : '#94a3b8'}`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                  {planType === 'monthly' && <div style={{ width: "10px", height: "10px", borderRadius: "50%", background: "#206d69" }} />}
-                </div>
-              </div>
-              <div style={{ fontSize: "1.4rem", fontWeight: 950, color: "#206d69", marginBottom: "2px" }}>{KLUB_MONTHLY_KR} kr./md.</div>
-              <div style={{ fontSize: "0.85rem", color: "#475569" }}>Min. {KLUB_MONTHLY_MIN_MONTHS} mdr. binding</div>
-            </div>
+            <div style={{ fontSize: "1.4rem", fontWeight: 950, color: "#206d69", marginBottom: "2px" }}>{KLUB_ANNUAL_KR} kr./år</div>
+            <div style={{ fontSize: "0.85rem", color: "#475569" }}>= {KLUB_ANNUAL_MONTHLY_EQUIVALENT_KR.toLocaleString("da-DK", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} kr./md. · betales for 12 mdr.</div>
           </div>
 
           {/* What you get — compact benefits */}
@@ -1010,7 +960,7 @@ export default function DealsideBookingWizard({ initialZip = "" }: { initialZip?
 
           {/* Fine print */}
           <div style={{ marginTop: "12px", fontSize: "0.75rem", color: "#6b7280", lineHeight: 1.5 }}>
-            💡 {planType === 'annual' ? '12' : '6'} mdr. binding. Ved tidlig opsigelse efterfaktureres introrengøringen til normalpris.
+            💡 12 mdr. medlemskab. Ved tidlig opsigelse efterfaktureres introrengøringen til normalpris.
           </div>
 
           <div className="wizard-navigation-buttons" style={{ marginTop: "24px" }}>
@@ -1136,7 +1086,7 @@ export default function DealsideBookingWizard({ initialZip = "" }: { initialZip?
                 <span className="main-label">Renzen Klub medlemskab</span>
                 <span className="sub-label">Inkl. 15% rabat på rengøring + {ZEN_CREDIT_MONTHLY_KR} kr. Zen-kredit pr. md. til andre services</span>
               </div>
-              <span className="row-val">{KLUB_MONTHLY_KR} kr./md.</span>
+              <span className="row-val">{KLUB_ANNUAL_KR} kr./år</span>
             </div>
 
             <div className="summary-price-row ongoing border-top">
@@ -1182,16 +1132,14 @@ export default function DealsideBookingWizard({ initialZip = "" }: { initialZip?
             }
           >
             Jeg accepterer vilkårene for Renzen Klub (
-            {planType === "annual"
-              ? `${KLUB_ANNUAL_KR} kr./år · 12 mdr. binding`
-              : `${KLUB_MONTHLY_KR} kr./md. · min. ${KLUB_MONTHLY_MIN_MONTHS} mdr. binding`}
+            {`${KLUB_ANNUAL_KR} kr./år · 12 mdr. medlemskab`}
             ). Zen-kreditter ({ZEN_CREDIT_MONTHLY_KR} kr./md.) udløber ved månedens udgang og
             overføres ikke. Tilvalg-kreditter aktiveres efter 3 måneders aktivt
             medlemskab. Du har 14 dages fortrydelsesret fra tilmeldingsdatoen.
           </TermsConfirmCard>
 
           <p style={{ fontSize: "0.78rem", color: "rgba(25,34,81,0.5)", marginTop: "8px", lineHeight: 1.5 }}>
-            Ved opsigelse af medlemskabet inden 6 måneder opkræves normal engangspris for den udførte introrengøring. Opsigelse kan ske nemt via e-mail eller din profil.
+            Ved opsigelse af medlemskabet inden udløb af medlemsperioden opkræves normal engangspris for den udførte introrengøring. Opsigelse kan ske nemt via e-mail eller din profil.
           </p>
 
           <div style={{ background: "#fafafa", border: "1px solid #cbd5e1", borderRadius: "12px", padding: "16px", marginTop: "20px", fontSize: "0.8rem", color: "rgba(25, 34, 81, 0.75)", lineHeight: 1.5, textAlign: "left" }}>
@@ -1199,7 +1147,7 @@ export default function DealsideBookingWizard({ initialZip = "" }: { initialZip?
               Fordele, introtilbud & medlemskab af Renzen Klub:
             </strong>
             <ul style={{ paddingLeft: "16px", margin: 0, listStyleType: "disc", display: "flex", flexDirection: "column", gap: "6px" }}>
-              <li><strong>Medlemsbetingelser:</strong> {planType === 'annual' ? `Introtilbuddet forudsætter et 12-måneders medlemskab af Renzen Klub til ${KLUB_ANNUAL_KR} kr./år, som automatisk fornyes indtil du afmelder dig.` : `Introtilbuddet forudsætter et 6-måneders medlemskab af Renzen Klub til ${KLUB_MONTHLY_KR} kr./md., som automatisk fornyes indtil du afmelder dig.`}</li>
+              <li><strong>Medlemsbetingelser:</strong> Introtilbuddet forudsætter et 12-måneders medlemskab af Renzen Klub til {KLUB_ANNUAL_KR} kr./år, som automatisk fornyes indtil du afmelder dig.</li>
               <li><strong>Zen-kreditter:</strong> Hver måned modtager du {ZEN_CREDIT_MONTHLY_KR} kr. i Zen-kreditter, som du kan bruge på én udvalgt boligservice pr. måned (f.eks. flytterengøring, havearbejde, vinduespudsning eller malerarbejde). Kreditter udløber ved månedens udgang og overføres ikke til næste måned.</li>
               <li><strong>Tilvalg-kreditter:</strong> Fra dit 4. aktive medlemsmåned kan du også bruge Zen-kreditter som rabat på tilvalg (ovnrengøring, køleskab m.m.).</li>
               <li><strong>Faste rabatter:</strong> Du kan booke ubegrænsede løbende rengøringer til faste medlemspriser (spar 20% ved ugentlig / 15% ved biweekly rengøring).</li>

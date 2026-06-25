@@ -2,7 +2,6 @@ import { generalFAQs, serviceFAQs } from "@/data/faqs";
 import {
   INTRO_CLEANING_FROM_KR,
   KLUB_ANNUAL_KR,
-  KLUB_MONTHLY_KR,
   ZEN_CREDIT_MONTHLY_KR,
 } from "@/data/pricing";
 import { faqSlug } from "@/lib/faqSlug";
@@ -112,7 +111,7 @@ const klubFAQs = [
   {
     question: "Hvad er Renzen Klub?",
     answer:
-      `Renzen Klub er vores medlemskab til dig, der vil have fast rengøring. Du betaler ${KLUB_MONTHLY_KR} kr. om måneden (eller ${KLUB_ANNUAL_KR.toLocaleString("da-DK")} kr. for et år) og får lavere priser på rengøring plus Zen-kreditter til andre opgaver i hjemmet.`,
+      `Renzen Klub er vores medlemskab til dig, der vil have fast rengøring. Du betaler ${KLUB_ANNUAL_KR.toLocaleString("da-DK")} kr. for et helt år og får lavere priser på rengøring plus Zen-kreditter til andre opgaver i hjemmet.`,
   },
   {
     question: "Hvad er Zen-kreditter?",
@@ -131,7 +130,7 @@ const klubFAQs = [
   {
     question: "Er der binding på medlemskabet?",
     answer:
-      "Renzen Klub har en minimumsperiode på 6 måneder. Derefter kan du opsige når som helst uden yderligere binding.",
+      "Renzen Klub koster 790 kr. for 12 måneders medlemskab. Du kan opsige inden fornyelse, så fremtidige fornyelser stopper — den betalte periode refunderes ikke.",
   },
   {
     question: "Kan jeg kombinere klubfordele og servicefradrag?",
