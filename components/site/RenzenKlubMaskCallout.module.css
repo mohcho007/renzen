@@ -14,14 +14,14 @@
 
 .klubMask {
   position: absolute;
-  right: -3px;
-  bottom: -3px;
+  right: 0;
+  bottom: 0;
   z-index: 2;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: calc(min(210px, 58vw) + 4px);
+  width: min(210px, 58vw);
   aspect-ratio: 190 / 128;
   margin: 0;
   padding: 1.15rem 0.45rem 0.45rem 0.9rem;
