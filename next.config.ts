@@ -1,7 +1,11 @@
 import type { NextConfig } from "next";
+import { generateSeoRedirects } from "./lib/seoRedirects";
 
 const nextConfig: NextConfig = {
   trailingSlash: true,
+  async redirects() {
+    return generateSeoRedirects();
+  },
   webpack: (config, { dev }) => {
     // Avoid intermittent clientReferenceManifest errors from corrupted webpack
     // cache on Windows when .next is written by concurrent dev/HMR reloads.

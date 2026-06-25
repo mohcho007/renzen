@@ -1,5 +1,17 @@
 import { DOMAIN } from './urls';
 
+/** Matches on-site copy: 4,8 ud af 5 / +500 glade kunder (TrustMarkers). */
+export const RENZEN_AGGREGATE_RATING = {
+  '@type': 'AggregateRating',
+  ratingValue: '4.8',
+  bestRating: '5',
+  reviewCount: '500',
+} as const;
+
+export function renzenAggregateRating() {
+  return { ...RENZEN_AGGREGATE_RATING };
+}
+
 /**
  * Generates LocalBusiness Schema.
  */
@@ -11,6 +23,7 @@ export function generateLocalBusinessSchema() {
     'image': `${DOMAIN}/renzen-logo-ny.png`,
     '@id': `${DOMAIN}/#localbusiness`,
     'url': DOMAIN,
+    'aggregateRating': renzenAggregateRating(),
     'telephone': '+45 70 60 40 20', // placeholder or real number
     'address': {
       '@type': 'PostalAddress',
@@ -59,8 +72,10 @@ export function generateServiceSchema(
     'provider': {
       '@type': 'LocalBusiness',
       'name': 'Renzen',
-      'url': DOMAIN
+      'url': DOMAIN,
+      'aggregateRating': renzenAggregateRating(),
     },
+    'aggregateRating': renzenAggregateRating(),
     'description': description,
     'areaServed': cityName ? {
       '@type': 'AdministrativeArea',
@@ -124,7 +139,8 @@ export function generateWebPageSchema(title: string, description: string, url: s
       'logo': {
         '@type': 'ImageObject',
         'url': `${DOMAIN}/renzen-logo-ny.png`
-      }
+      },
+      'aggregateRating': renzenAggregateRating(),
     }
   };
 }

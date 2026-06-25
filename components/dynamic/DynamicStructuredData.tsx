@@ -5,6 +5,7 @@ import {
   getServiceNameInSentence,
   type Service,
 } from "@/lib/services";
+import { renzenAggregateRating } from "@/lib/schema";
 import { siteConfig } from "@/lib/siteConfig";
 
 interface Breadcrumb {
@@ -56,6 +57,7 @@ export function DynamicStructuredData({
         image: siteConfig.logo,
         url: siteConfig.origin,
         telephone: siteConfig.phone,
+        aggregateRating: renzenAggregateRating(),
         address: {
           "@type": "PostalAddress",
           streetAddress: siteConfig.address.street,
@@ -73,6 +75,7 @@ export function DynamicStructuredData({
             },
           }
         : {}),
+      aggregateRating: renzenAggregateRating(),
       hasOfferCatalog: {
         "@type": "OfferCatalog",
         name: `Priser for ${serviceName}`,

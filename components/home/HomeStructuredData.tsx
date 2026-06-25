@@ -1,3 +1,4 @@
+import { renzenAggregateRating } from "@/lib/schema";
 import { siteConfig } from "@/lib/siteConfig";
 
 export function HomeStructuredData() {
@@ -19,6 +20,7 @@ export function HomeStructuredData() {
     },
     vatID: `DK${siteConfig.cvr}`,
     sameAs: [siteConfig.social.facebook],
+    aggregateRating: renzenAggregateRating(),
   };
 
   return (

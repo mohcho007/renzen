@@ -5,6 +5,7 @@ import {
   introPriceHook,
   liveStyleTitle,
 } from "@/lib/metadataCopy";
+import { renzenAggregateRating } from "@/lib/schema";
 import { constructMetadata } from "@/lib/seo";
 import { siteConfig } from "@/lib/siteConfig";
 
@@ -24,7 +25,9 @@ function PrivatRengoringStructuredData() {
       "@type": "Organization",
       name: siteConfig.name,
       url: siteConfig.origin,
+      aggregateRating: renzenAggregateRating(),
     },
+    aggregateRating: renzenAggregateRating(),
     areaServed: "DK",
     description:
       "Fast privat rengøring med forsikrede Zenmestre og medlemsfordele i Renzen Klub.",
