@@ -9,7 +9,7 @@ import {
   useState,
   type TouchEvent,
 } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useElements, useStripe } from "@stripe/react-stripe-js";
 import { fetchL27SpotsRange } from "@/lib/l27Client";
 import {
@@ -28,6 +28,7 @@ import {
   Sparkles,
   Tag,
   UserRound,
+  X,
 } from "lucide-react";
 import {
   type DealPackage,
@@ -62,6 +63,10 @@ import {
   saveBookingConfirmation,
   type BookingConfirmationPayload,
 } from "@/lib/bookingConfirmation";
+import {
+  captureWizardReturnUrl,
+  exitWizardNavigation,
+} from "@/lib/wizardExit";
 
 type TimeSlot = {
   startHour: number;
@@ -472,7 +477,12 @@ function DealTypeformWizardForm({
   const stripe = useStripe();
   const elements = useElements();
   const router = useRouter();
+  const searchParams = useSearchParams();
   const isBook2 = variant === "book2";
+
+  useEffect(() => {
+    captureWizardReturnUrl(searchParams.get("from"));
+  }, [searchParams]);
   const [stepIndex, setStepIndex] = useState(() =>
     getInitialStepIndex(initialPostcode, initialActualM2),
   );
@@ -2355,6 +2365,10 @@ function DealTypeformWizardForm({
     setStepIndex((i) => getPrevStepIndex(i));
   };
 
+  const exitWizard = useCallback(() => {
+    exitWizardNavigation({ router, variant, onBack });
+  }, [router, variant, onBack]);
+
   const handlePostcodeInputChange = (value: string) => {
     setPostcodeQuery(value);
     setZip("");
@@ -2451,9 +2465,19 @@ function DealTypeformWizardForm({
             <button type="button" className={styles.backBtn} onClick={goBack}>
               ← {stepIndex === 0 ? "Tilbage" : "Forrige"}
             </button>
-            <span className={styles.stepMeta}>
-              {stepIndex + 1} / {STEPS.length}
-            </span>
+            <div className={styles.stepMetaGroup}>
+              <span className={styles.stepMeta}>
+                {stepIndex + 1} / {STEPS.length}
+              </span>
+              <button
+                type="button"
+                className={styles.exitBtn}
+                onClick={exitWizard}
+                aria-label="Luk booking"
+              >
+                <X size={14} strokeWidth={2.5} aria-hidden="true" />
+              </button>
+            </div>
           </div>
           <div className={styles.progressTrack}>
             <div
