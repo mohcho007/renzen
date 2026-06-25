@@ -5,6 +5,7 @@ import { GoogleAnalytics } from "@/components/analytics/GoogleAnalytics";
 import { WebVitals } from "@/components/analytics/WebVitals";
 import { INTRO_CLEANING_FROM_KR } from "@/data/pricing";
 import { bookOnlineDescription } from "@/lib/metadataCopy";
+import { SkipToContent } from "@/components/site/SkipToContent";
 import { siteConfig } from "@/lib/siteConfig";
 import "./globals.css";
 
@@ -45,10 +46,10 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: siteConfig.logo,
-        width: 1200,
-        height: 630,
-        alt: "Renzen Rengøring",
+        url: siteConfig.ogImage,
+        width: siteConfig.ogImageWidth,
+        height: siteConfig.ogImageHeight,
+        alt: siteConfig.ogImageAlt,
       }
     ]
   },
@@ -56,7 +57,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: `Rengøring ⇒ Book nemt og trygt hos Renzen`,
     description: bookOnlineDescription(),
-    images: [siteConfig.logo],
+    images: [siteConfig.ogImage],
   }
 };
 
@@ -71,6 +72,7 @@ export default function RootLayout({
       className={`${plusJakartaSans.variable} ${bricolageGrotesque.variable} ${ibmPlexMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col font-sans bg-white text-foreground">
+        <SkipToContent />
         <GoogleAnalytics />
         <WebVitals />
         {children}

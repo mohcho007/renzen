@@ -118,7 +118,7 @@ export function PrivatRengoringPage() {
     <div className="min-h-screen bg-[#fbfaf5] text-[#203129]">
       <RenzenEditorialHeader />
 
-      <main>
+      <main id="main">
         <section className="relative z-30 overflow-visible bg-[#dfe9dc]">
           <div className="grid min-h-[690px] w-full lg:grid-cols-[0.9fr_1.1fr]">
             <div className="relative z-10 order-2 flex flex-col justify-center px-6 py-16 sm:px-10 lg:order-1 lg:pl-[114px] lg:pr-16 lg:py-20">

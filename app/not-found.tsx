@@ -9,7 +9,7 @@ export default function NotFound() {
   return (
     <div className="min-h-screen bg-[#fbfaf5] text-[#203129]">
       <RenzenEditorialHeader />
-      <main className="flex min-h-[65vh] items-center justify-center px-6 py-20 sm:px-10 lg:px-14">
+      <main id="main" className="flex min-h-[65vh] items-center justify-center px-6 py-20 sm:px-10 lg:px-14">
         <div className="max-w-xl text-center">
           <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-[#dfe9dc] text-[#173c2c]">
             <SearchX size={30} aria-hidden="true" />

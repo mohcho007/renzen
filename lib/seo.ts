@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import { formatPageTitle } from './formatPageTitle';
+import { siteConfig } from './siteConfig';
 import { getAbsoluteUrl } from './urls';
 
 export interface SEOProps {
@@ -41,10 +42,10 @@ export function constructMetadata({
       type: 'website',
       images: [
         {
-          url: 'https://renzen.dk/images/og-share.jpg', // placeholder
-          width: 1200,
-          height: 630,
-          alt: pageTitle,
+          url: siteConfig.ogImage,
+          width: siteConfig.ogImageWidth,
+          height: siteConfig.ogImageHeight,
+          alt: siteConfig.ogImageAlt,
         }
       ]
     },
@@ -52,6 +53,7 @@ export function constructMetadata({
       card: 'summary_large_image',
       title: pageTitle,
       description: description,
+      images: [siteConfig.ogImage],
     }
   };
 }

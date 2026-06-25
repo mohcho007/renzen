@@ -12,7 +12,11 @@ import {
   introFromLabel,
   liveStyleCityTitle,
 } from "@/lib/metadataCopy";
-import { generateFAQSchema, generateServiceSchema } from "@/lib/schema";
+import {
+  generateBreadcrumbSchema,
+  generateFAQSchema,
+  generateServiceSchema,
+} from "@/lib/schema";
 import { getAbsoluteUrl, getServiceCityUrl } from "@/lib/urls";
 import {
   getPrivatRengoringPriority1City,
@@ -67,22 +71,35 @@ export default async function PrivatRengoringCityPage({ params }: PageProps) {
   const config = buildPrivatRengoringCityPageConfig(city);
   const pagePath = getServiceCityUrl("privat-rengoring", city.slug);
   const pageUrl = getAbsoluteUrl(pagePath);
+  const breadcrumbs = [
+    { label: "Hjem", href: "/" },
+    { label: "Privatrengøring", href: "/privat-rengoring/" },
+    { label: city.name, href: pagePath },
+  ];
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: "Hjem", url: getAbsoluteUrl("") },
+    { name: "Privatrengøring", url: getAbsoluteUrl("/privat-rengoring") },
+    { name: city.name, url: pageUrl },
+  ]);
 
   return (
     <>
       <SchemaMarkup
         schema={[
           generateServiceSchema(
-            `Privat rengøring i ${city.name}`,
+            "Privat rengøring",
             `Professionel privat rengøring i ${city.name} med forsikrede Zenmestre og Renzen Klub fordele.`,
             pageUrl,
+            city.name,
           ),
           generateFAQSchema(config.faqs),
+          breadcrumbSchema,
         ]}
       />
       <ServiceInquiryLandingPage
         config={config}
         inquiryPath="/book-rengoering"
+        breadcrumbs={breadcrumbs}
       />
     </>
   );

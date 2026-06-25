@@ -32,10 +32,10 @@ export function createStaticPageMetadata({
       type: "website",
       images: [
         {
-          url: siteConfig.logo,
-          width: 1200,
-          height: 630,
-          alt: pageTitle,
+          url: siteConfig.ogImage,
+          width: siteConfig.ogImageWidth,
+          height: siteConfig.ogImageHeight,
+          alt: siteConfig.ogImageAlt,
         },
       ],
     },
@@ -43,7 +43,7 @@ export function createStaticPageMetadata({
       card: "summary_large_image",
       title: pageTitle,
       description,
-      images: [siteConfig.logo],
+      images: [siteConfig.ogImage],
     },
   };
 }

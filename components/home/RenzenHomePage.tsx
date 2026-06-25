@@ -18,7 +18,7 @@ export function RenzenHomePage() {
     <div className="min-h-screen bg-[#fbfaf5] text-[#203129]">
       <RenzenEditorialHeader />
 
-      <main>
+      <main id="main">
         <section className={homeStyles.hero}>
           <div className={homeStyles.heroGrid}>
             <div className={homeStyles.heroContent}>

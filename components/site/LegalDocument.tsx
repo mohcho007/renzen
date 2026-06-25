@@ -14,7 +14,7 @@ export function LegalDocument({
   return (
     <div className="min-h-screen bg-[#fbfaf5] text-[#203129]">
       <RenzenEditorialHeader />
-      <main className="px-6 py-16 sm:px-10 sm:py-20 lg:px-14">
+      <main id="main" className="px-6 py-16 sm:px-10 sm:py-20 lg:px-14">
         <article className="mx-auto max-w-[900px] rounded-3xl border border-zinc-200 bg-white p-8 text-left shadow-sm sm:p-12">
           <h1 className="font-display text-3xl font-extrabold tracking-tight text-brand-blue sm:text-4xl">
             {title}

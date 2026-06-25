@@ -24,7 +24,7 @@ export default function HandelsbetingelserPage() {
     <div className="min-h-screen bg-[#fbfaf5] text-[#203129]">
       <RenzenEditorialHeader />
 
-      <main className="px-6 py-16 sm:px-10 sm:py-20 lg:px-14">
+      <main id="main" className="px-6 py-16 sm:px-10 sm:py-20 lg:px-14">
         <div className="mx-auto max-w-[900px]">
         <div className="bg-white rounded-3xl border border-zinc-200/60 p-8 sm:p-12 shadow-sm text-left">
           <h1 className="font-display font-extrabold text-3xl sm:text-4xl text-brand-blue tracking-tight mb-4">

@@ -1,3 +1,4 @@
+import { siteConfig } from './siteConfig';
 import { DOMAIN } from './urls';
 
 /** Matches on-site copy: 4,8 ud af 5 / +500 glade kunder (TrustMarkers). */
@@ -12,6 +13,44 @@ export function renzenAggregateRating() {
   return { ...RENZEN_AGGREGATE_RATING };
 }
 
+function formatSchemaTelephone(phone: string) {
+  return `+45 ${phone}`;
+}
+
+function renzenPostalAddress() {
+  return {
+    '@type': 'PostalAddress' as const,
+    streetAddress: siteConfig.address.street,
+    addressLocality: siteConfig.address.city,
+    postalCode: siteConfig.address.postalCode,
+    addressCountry: siteConfig.address.country,
+  };
+}
+
+/**
+ * Generates Organization Schema with canonical NAP from siteConfig.
+ */
+export function generateOrganizationSchema() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    '@id': `${DOMAIN}/#organization`,
+    name: siteConfig.name,
+    legalName: siteConfig.legalName,
+    image: `${DOMAIN}${siteConfig.logo}`,
+    url: siteConfig.origin,
+    telephone: formatSchemaTelephone(siteConfig.phone),
+    email: siteConfig.email,
+    address: renzenPostalAddress(),
+    vatID: `DK${siteConfig.cvr}`,
+    aggregateRating: renzenAggregateRating(),
+    sameAs: [
+      siteConfig.social.facebook,
+      ...(siteConfig.social.instagram ? [siteConfig.social.instagram] : []),
+    ].filter(Boolean),
+  };
+}
+
 /**
  * Generates LocalBusiness Schema.
  */
@@ -19,40 +58,31 @@ export function generateLocalBusinessSchema() {
   return {
     '@context': 'https://schema.org',
     '@type': 'LocalBusiness',
-    'name': 'Renzen',
-    'image': `${DOMAIN}/renzen-logo-ny.png`,
     '@id': `${DOMAIN}/#localbusiness`,
-    'url': DOMAIN,
-    'aggregateRating': renzenAggregateRating(),
-    'telephone': '+45 70 60 40 20', // placeholder or real number
-    'address': {
-      '@type': 'PostalAddress',
-      'streetAddress': 'Købmagergade 42', // placeholder address
-      'addressLocality': 'København K',
-      'postalCode': '1150',
-      'addressCountry': 'DK'
-    },
-    'geo': {
-      '@type': 'GeoCoordinates',
-      'latitude': 55.6811,
-      'longitude': 12.5784
-    },
-    'openingHoursSpecification': {
+    name: siteConfig.name,
+    image: `${DOMAIN}${siteConfig.logo}`,
+    url: siteConfig.origin,
+    telephone: formatSchemaTelephone(siteConfig.phone),
+    email: siteConfig.email,
+    address: renzenPostalAddress(),
+    vatID: `DK${siteConfig.cvr}`,
+    aggregateRating: renzenAggregateRating(),
+    openingHoursSpecification: {
       '@type': 'OpeningHoursSpecification',
-      'dayOfWeek': [
+      dayOfWeek: [
         'Monday',
         'Tuesday',
         'Wednesday',
         'Thursday',
-        'Friday'
+        'Friday',
       ],
-      'opens': '08:00',
-      'closes': '17:00'
+      opens: '08:00',
+      closes: '17:00',
     },
-    'sameAs': [
-      'https://www.facebook.com/renzen.dk',
-      'https://www.instagram.com/renzen.dk'
-    ]
+    sameAs: [
+      siteConfig.social.facebook,
+      ...(siteConfig.social.instagram ? [siteConfig.social.instagram] : []),
+    ].filter(Boolean),
   };
 }
 
@@ -70,9 +100,12 @@ export function generateServiceSchema(
     '@type': 'Service',
     'name': cityName ? `${name} i ${cityName}` : name,
     'provider': {
-      '@type': 'LocalBusiness',
-      'name': 'Renzen',
-      'url': DOMAIN,
+      '@type': 'Organization',
+      'name': siteConfig.name,
+      'url': siteConfig.origin,
+      'telephone': formatSchemaTelephone(siteConfig.phone),
+      'address': renzenPostalAddress(),
+      'vatID': `DK${siteConfig.cvr}`,
       'aggregateRating': renzenAggregateRating(),
     },
     'aggregateRating': renzenAggregateRating(),
@@ -143,15 +176,15 @@ export function generateArticleSchema(options: {
     dateModified: options.dateModified ?? options.datePublished,
     author: {
       "@type": "Organization",
-      name: "Renzen",
-      url: DOMAIN,
+      name: siteConfig.name,
+      url: siteConfig.origin,
     },
     publisher: {
       "@type": "Organization",
-      name: "Renzen",
+      name: siteConfig.name,
       logo: {
         "@type": "ImageObject",
-        url: `${DOMAIN}/renzen-logo-ny.png`,
+        url: `${DOMAIN}${siteConfig.logo}`,
       },
     },
     mainEntityOfPage: {
@@ -185,10 +218,14 @@ export function generateWebPageSchema(title: string, description: string, url: s
     'description': description,
     'publisher': {
       '@type': 'Organization',
-      'name': 'Renzen',
+      'name': siteConfig.name,
+      'url': siteConfig.origin,
+      'telephone': formatSchemaTelephone(siteConfig.phone),
+      'address': renzenPostalAddress(),
+      'vatID': `DK${siteConfig.cvr}`,
       'logo': {
         '@type': 'ImageObject',
-        'url': `${DOMAIN}/renzen-logo-ny.png`
+        'url': `${DOMAIN}${siteConfig.logo}`
       },
       'aggregateRating': renzenAggregateRating(),
     }

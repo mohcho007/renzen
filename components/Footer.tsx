@@ -2,6 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { cities } from '../data/cities';
+import { siteConfig } from '@/lib/siteConfig';
 
 export default function Footer() {
   // Sort cities alphabetically for clean output
@@ -133,7 +134,7 @@ export default function Footer() {
 
         {/* Footer Bottom copyright and legal */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between text-[#7c8282] text-[11px]">
-          <p>Copyright © 2025 Renzen - CVR: 27568811</p>
+          <p>Copyright © 2025 Renzen - CVR: {siteConfig.cvr}</p>
           <div className="mt-4 sm:mt-0 flex space-x-6">
             <Link href="/privatlivspolitik/" className="hover:text-white transition-colors">Privatlivspolitik</Link>
             <Link href="/betingelser/" className="hover:text-white transition-colors">Handelsbetingelser</Link>

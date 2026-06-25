@@ -7,6 +7,10 @@ import {
   RenzenEditorialFooter,
   RenzenEditorialHeader,
 } from "@/components/site/RenzenEditorialChrome";
+import {
+  RenzenEditorialBreadcrumbs,
+  type EditorialBreadcrumb,
+} from "@/components/site/RenzenEditorialBreadcrumbs";
 import { HeroBookingForm } from "@/components/site/HeroBookingForm";
 import { RenzenKlubPromoSection } from "@/components/site/RenzenKlubIntro";
 import { INTRO_CLEANING_FROM_KR } from "@/data/pricing";
@@ -25,11 +29,13 @@ import { getServiceCityUrl } from "@/lib/urls";
 type ServiceInquiryLandingPageProps = {
   config: EditorialServiceLandingConfig;
   inquiryPath?: string;
+  breadcrumbs?: EditorialBreadcrumb[];
 };
 
 export function ServiceInquiryLandingPage({
   config,
   inquiryPath,
+  breadcrumbs,
 }: ServiceInquiryLandingPageProps) {
   const forespoergselPath =
     inquiryPath ?? `/${config.slug}/forespoergsel/`;
@@ -38,7 +44,10 @@ export function ServiceInquiryLandingPage({
     <div className="min-h-screen bg-[#fbfaf5] text-[#203129]">
       <RenzenEditorialHeader />
 
-      <main>
+      <main id="main">
+        {breadcrumbs && breadcrumbs.length > 0 ? (
+          <RenzenEditorialBreadcrumbs breadcrumbs={breadcrumbs} />
+        ) : null}
         <section
           className={`relative z-30 overflow-visible bg-[#dfe9dc] ${config.heroCreamOnMobile ? "max-lg:bg-[#fbfaf5]" : ""}`}
         >
