@@ -15,9 +15,9 @@ const outPath = path.join(
 /** slug -> unique editorial copy */
 const CITY_COPY = {
   koebenhavn: {
-    heroTitle: "Privat rengøring i København med fast Zenmester.",
+    heroTitle: "Privat rengøring i København.",
     heroDescription:
-      "Få en forsikret Zenmester til dit hjem i København. Se prisen med det samme og book på under 2 min.",
+      "Privat rengøring i København, der gør hverdagen lettere. Du får mere ro i hjemmet, mere tid i kalenderen og en nem løsning, der bare fungerer. Se prisen med det samme og book på under to minutter.",
     metaDescription:
       "Privat rengøring i København. Fast Zenmester til lejligheder og byhuse i hele Københavns Kommune — forsikrede medarbejdere, servicefradrag og medlemsfordele.",
     sections: [
@@ -47,9 +47,9 @@ const CITY_COPY = {
       "Vi tilbyder privat rengøring i hele Storkøbenhavn — herunder Frederiksberg, Valby og København S.",
   },
   frederiksberg: {
-    heroTitle: "Privat rengøring på Frederiksberg med fast Zenmester.",
+    heroTitle: "Privat rengøring på Frederiksberg.",
     heroDescription:
-      "Få en forsikret Zenmester til dit hjem på Frederiksberg. Se prisen med det samme og book på under 2 min.",
+      "Privat rengøring på Frederiksberg, så hjemmet er i orden uden at stjæle din fritid. Mere ro, mere tid og en nem løsning fra start til slut. Se prisen med det samme og book på under to minutter.",
     metaDescription:
       "Privat rengøring på Frederiksberg. Fast Zenmester til klassiske lejligheder og byhuse — servicefradrag, forsikrede medarbejdere og introtilbud med Renzen Klub.",
     sections: [
@@ -137,30 +137,60 @@ const SECTION_TITLE_SETS = [
   ],
 ];
 
-const HERO_INTROS = [
-  (name) => `Få en forsikret Zenmester til dit hjem i ${name}.`,
-  (name) => `Privat rengøring i ${name} med en forsikret Zenmester.`,
-  (name) => `Vi matcher dig med en forsikret Zenmester i ${name}.`,
+const HERO_CTA = "Se prisen med det samme og book på under to minutter.";
+
+/** Frederiksberg uses "på", all others use "i". */
+function heroPrep(name) {
+  return name === "Frederiksberg" ? "på" : "i";
+}
+
+const HERO_LINE1_VARIANTS = [
+  (name) => `Privat rengøring ${heroPrep(name)} ${name}, der gør hverdagen lettere.`,
+  (name) => `Privat rengøring ${heroPrep(name)} ${name}, så hjemmet er i orden uden at stjæle din fritid.`,
+  (name) => `Privat rengøring ${heroPrep(name)} ${name}, der passer ind i en travl hverdag.`,
+  (name) => `Privat rengøring ${heroPrep(name)} ${name}, når du vil have styr på hjemmet uden besvær.`,
+  (name) => `Privat rengøring ${heroPrep(name)} ${name} — mere overskud og mindre husarbejde.`,
+  (name) => `Privat rengøring ${heroPrep(name)} ${name} til dig, der vil have hverdagen tilbage.`,
+  (name) => `Privat rengøring ${heroPrep(name)} ${name}, så rengøringen ikke fylder i kalenderen.`,
+  (name) => `Privat rengøring ${heroPrep(name)} ${name}, der giver dig ro omkring hjemmet.`,
 ];
 
-const HERO_CTA = "Se prisen med det samme og book på under 2 min.";
+const HERO_LINE2_VARIANTS = [
+  "Du får mere ro i hjemmet, mere tid i kalenderen og en nem løsning, der bare fungerer.",
+  "Mere ro, mere tid og en nem løsning fra start til slut.",
+  "Ro i hjemmet, tid til det vigtige og en nem aftale, der holder.",
+  "Få ro i boligen, tid til dig selv og en rengøring, der er nem at komme i gang med.",
+  "Mindre stress, mere fri tid og en løsning, der er let at holde fast i.",
+  "Mere ro omkring hjemmet, mere plads i ugen og en nem vej til fast hjælp.",
+  "Du får ro i hjemmet, tid til det, der betyder noget, og en nem løsning hele vejen.",
+  "Mere ro, mere tid i hverdagen og en rengøring, der er nem at booke og holde fast i.",
+];
+
+function slugHash(slug) {
+  return slug.split("").reduce((sum, ch) => sum + ch.charCodeAt(0), 0);
+}
 
 function pickHeroVariant(slug, variants) {
-  const hash = slug.split("").reduce((sum, ch) => sum + ch.charCodeAt(0), 0);
-  return variants[hash % variants.length];
+  return variants[slugHash(slug) % variants.length];
+}
+
+function buildHeroDescription(name, slug) {
+  const line1 = pickHeroVariant(slug, HERO_LINE1_VARIANTS)(name);
+  const line2 = pickHeroVariant(slug + "b", HERO_LINE2_VARIANTS);
+  return `${line1} ${line2} ${HERO_CTA}`;
+}
+
+function buildHeroTitle(name) {
+  return `Privat rengøring ${heroPrep(name)} ${name}.`;
 }
 
 let setIdx = 0;
 for (const [slug, name, housing, landmarks, localNote] of REMAINING) {
   const titles = SECTION_TITLE_SETS[setIdx % SECTION_TITLE_SETS.length];
   setIdx++;
-  const money = ["kastrup", "koebenhavn-s", "valby", "hvidovre", "roedovre", "glostrup", "broendby", "herlev"].includes(slug);
-  const heroIntro = pickHeroVariant(slug, HERO_INTROS)(name);
   CITY_COPY[slug] = {
-    heroTitle: money
-      ? `Privat rengøring i ${name} med fast Zenmester.`
-      : `Privat rengøring i ${name}.`,
-    heroDescription: `${heroIntro} ${HERO_CTA}`,
+    heroTitle: buildHeroTitle(name),
+    heroDescription: buildHeroDescription(name, slug),
     metaDescription: `Privat rengøring i ${name}. Fast Zenmester, forsikrede medarbejdere og op til 26% servicefradrag. Book rengøringshjælp med Renzen Klub fordele.`,
     sections: [
       {
