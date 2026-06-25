@@ -177,7 +177,7 @@ export const cities: City[] = rawCities.map((c) => {
   // On city pages, let's allow:
   // - "privat-rengoring" and "rengoring" to be indexable for København and Frederiksberg by default.
   // Let's configure this using indexableServices array.
-  const indexableServices = ['rengoring', 'privat-rengoring', 'airbnb-rengoring'];
+  const indexableServices = ['privat-rengoring', 'airbnb-rengoring'];
 
   const faq = [
     {

@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { cities } from '../data/cities';
+import { getServiceLocationUrl } from '../lib/urls';
 
 interface LocalAreasProps {
   currentCityName: string;
@@ -32,7 +33,7 @@ export default function LocalAreas({ currentCityName, nearbyAreas, serviceSlug }
         {areasWithSlugs.map((area) => (
           <Link
             key={area.slug}
-            href={`/${serviceSlug}/${area.slug}/`}
+            href={getServiceLocationUrl(serviceSlug, area.slug)}
             className="flex items-center space-x-1.5 rounded-lg bg-white px-3 py-2 text-xs font-semibold text-slate-700 shadow-sm border border-slate-100 hover:text-emerald-600 hover:border-emerald-200 transition-colors"
           >
             <svg className="h-3 w-3 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">

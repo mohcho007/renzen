@@ -6,6 +6,7 @@ import { BOLIGSERVICE_SLUGS } from "@/components/boligservice/boligserviceConten
 import { siteConfig } from "@/lib/siteConfig";
 import { getAirbnbServedCitySlugs } from "@/components/service-inquiry/airbnbCityContent";
 import { getPrivatRengoringPriority1Slugs } from "@/lib/privatRengoringCities";
+import { NATIONAL_ONLY_SERVICE_SLUGS } from "@/lib/urls";
 
 const AIRBNB_SERVED_CITY_SLUGS = new Set(getAirbnbServedCitySlugs());
 const PRIVAT_RENGORING_PRIORITY_1_SLUGS = new Set(getPrivatRengoringPriority1Slugs());
@@ -85,7 +86,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
         ) {
           return;
         }
-        if (service.slug === "flytterengoring") {
+        if (NATIONAL_ONLY_SERVICE_SLUGS.has(service.slug)) {
           return;
         }
         const isIndexable = service.indexable && (city.indexableServices?.includes(service.slug) ?? true);

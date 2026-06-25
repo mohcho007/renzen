@@ -1,5 +1,14 @@
 export const DOMAIN = 'https://renzen.dk';
 
+/** Services that only have a national landing page (no /{service}/{city}/ routes). */
+export const NATIONAL_ONLY_SERVICE_SLUGS = new Set([
+  'rengoring',
+  'hovedrengoring',
+  'engangsrengoring',
+  'erhvervsrengoring',
+  'flytterengoring',
+]);
+
 /** Launch27 proxy — trailing slash matches next.config trailingSlash: true */
 export const L27_API_PATH = '/api/l27/';
 
@@ -35,6 +44,15 @@ export function getServiceUrl(serviceSlug: string): string {
  */
 export function getServiceCityUrl(serviceSlug: string, citySlug: string): string {
   return `/${serviceSlug}/${citySlug}/`;
+}
+
+/**
+ * National page for services without city routes; otherwise the city URL.
+ */
+export function getServiceLocationUrl(serviceSlug: string, citySlug: string): string {
+  return NATIONAL_ONLY_SERVICE_SLUGS.has(serviceSlug)
+    ? getServiceUrl(serviceSlug)
+    : getServiceCityUrl(serviceSlug, citySlug);
 }
 
 /**

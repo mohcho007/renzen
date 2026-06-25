@@ -23,7 +23,7 @@ export const redirects: RedirectItem[] = [
   },
   {
     source: '/rengoring/københavn/',
-    destination: '/rengoring/koebenhavn/',
+    destination: '/rengoring/',
     permanent: true,
   },
   {
