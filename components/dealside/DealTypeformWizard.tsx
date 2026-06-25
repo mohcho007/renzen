@@ -1404,7 +1404,7 @@ function DealTypeformWizardForm({
     [isBook2, bookFrequencyId, recurringFrequencyId],
   );
 
-  const klubColumnIntroPrice = introPrice;
+  const klubColumnIntroPrice = introCleaningDueKr;
 
   const klubColumnSavings = introTierExceeded ? 0 : listPrice - introPrice;
 
@@ -3207,7 +3207,7 @@ function DealTypeformWizardForm({
                         {klubColumnFrequency.discount}%)
                       </p>
                       <p className={styles.pricingColumnCredit}>
-                        + optjen {ZEN_CREDIT_ANNUAL_KR.toLocaleString("da-DK")} kr. kreditter
+                        + optjen {ZEN_CREDIT_ANNUAL_REMAINING_AFTER_FIRST_KR.toLocaleString("da-DK")} kr. kreditter
                       </p>
                       <p className={styles.pricingColumnFine}>
                         Inkl. årsplan · {KLUB_ANNUAL_KR.toLocaleString("da-DK")} kr. (12 mdr.)
