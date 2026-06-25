@@ -4,23 +4,13 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import {
   CONSENT_EVENT,
+  CONSENT_SETTINGS_EVENT,
   CONSENT_STORAGE_KEY,
   createConsentState,
-  isValidConsent,
+  readConsentFromStorage,
 } from "@/lib/consent";
 import type { ConsentState } from "@/lib/consent";
 import styles from "./ConsentManager.module.css";
-
-function readConsent(): ConsentState | null {
-  try {
-    const stored = window.localStorage.getItem(CONSENT_STORAGE_KEY);
-    if (!stored) return null;
-    const parsed: unknown = JSON.parse(stored);
-    return isValidConsent(parsed) ? parsed : null;
-  } catch {
-    return null;
-  }
-}
 
 function persistConsent(state: ConsentState) {
   window.localStorage.setItem(CONSENT_STORAGE_KEY, JSON.stringify(state));
@@ -34,20 +24,19 @@ export function ConsentManager() {
   const [marketing, setMarketing] = useState(false);
 
   useEffect(() => {
-    setConsent(readConsent());
+    setConsent(readConsentFromStorage());
 
     const openSettings = () => {
-      const current = readConsent();
+      const current = readConsentFromStorage();
       setStatistics(current?.statistics ?? false);
       setMarketing(current?.marketing ?? false);
       setConsent(null);
       setCustomizing(true);
     };
 
-    const settingsEvent = `${CONSENT_EVENT}:settings`;
-    window.addEventListener(settingsEvent, openSettings);
+    window.addEventListener(CONSENT_SETTINGS_EVENT, openSettings);
     return () =>
-      window.removeEventListener(settingsEvent, openSettings);
+      window.removeEventListener(CONSENT_SETTINGS_EVENT, openSettings);
   }, []);
 
   if (consent === undefined || consent) return null;

@@ -1,6 +1,8 @@
 export const CONSENT_VERSION = 1;
-export const CONSENT_STORAGE_KEY = "renbud-consent";
-export const CONSENT_EVENT = "renbud:consent-change";
+export const CONSENT_STORAGE_KEY = "renzen-consent";
+export const LEGACY_CONSENT_STORAGE_KEY = "renbud-consent";
+export const CONSENT_EVENT = "renzen:consent-change";
+export const CONSENT_SETTINGS_EVENT = `${CONSENT_EVENT}:settings`;
 export const CONSENT_MAX_AGE_DAYS = 180;
 
 export type ConsentState = {
@@ -45,5 +47,42 @@ export function isValidConsent(value: unknown): value is ConsentState {
     typeof state.expiresAt === "string" &&
     new Date(state.expiresAt).getTime() > Date.now()
   );
+}
+
+export function migrateConsentStorage(): void {
+  if (typeof window === "undefined") return;
+
+  try {
+    if (window.localStorage.getItem(CONSENT_STORAGE_KEY)) return;
+
+    const legacy = window.localStorage.getItem(LEGACY_CONSENT_STORAGE_KEY);
+    if (!legacy) return;
+
+    const parsed: unknown = JSON.parse(legacy);
+    if (!isValidConsent(parsed)) {
+      window.localStorage.removeItem(LEGACY_CONSENT_STORAGE_KEY);
+      return;
+    }
+
+    window.localStorage.setItem(CONSENT_STORAGE_KEY, legacy);
+    window.localStorage.removeItem(LEGACY_CONSENT_STORAGE_KEY);
+  } catch {
+    // ignore invalid legacy storage
+  }
+}
+
+export function readConsentFromStorage(): ConsentState | null {
+  if (typeof window === "undefined") return null;
+
+  migrateConsentStorage();
+
+  try {
+    const stored = window.localStorage.getItem(CONSENT_STORAGE_KEY);
+    if (!stored) return null;
+    const parsed: unknown = JSON.parse(stored);
+    return isValidConsent(parsed) ? parsed : null;
+  } catch {
+    return null;
+  }
 }
 

@@ -5,6 +5,7 @@ import Script from "next/script";
 import {
   CONSENT_EVENT,
   CONSENT_STORAGE_KEY,
+  migrateConsentStorage,
   isValidConsent,
 } from "@/lib/consent";
 import type { ConsentState } from "@/lib/consent";
@@ -26,6 +27,7 @@ let cachedConsent: ConsentState | null = null;
 
 function getConsentSnapshot(): ConsentState | null {
   try {
+    migrateConsentStorage();
     const stored = window.localStorage.getItem(CONSENT_STORAGE_KEY);
     if (stored === cachedConsentValue) return cachedConsent;
 

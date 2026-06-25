@@ -1,6 +1,6 @@
 "use client";
 
-import { CONSENT_EVENT } from "@/lib/consent";
+import { CONSENT_SETTINGS_EVENT } from "@/lib/consent";
 
 export function CookieSettingsButton({
   className = "",
@@ -12,7 +12,7 @@ export function CookieSettingsButton({
       type="button"
       className={className}
       onClick={() =>
-        window.dispatchEvent(new Event(`${CONSENT_EVENT}:settings`))
+        window.dispatchEvent(new Event(CONSENT_SETTINGS_EVENT))
       }
     >
       Cookieindstillinger
