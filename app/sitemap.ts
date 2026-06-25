@@ -1,4 +1,5 @@
 import { MetadataRoute } from "next";
+import { articles } from "@/data/articles";
 import { services } from "@/data/services";
 import { cities } from "@/data/cities";
 import { SERVICE_INQUIRY_SLUGS } from "@/lib/serviceInquiry";
@@ -25,6 +26,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "kontakt",
     "bliv-zenmester",
     "priser",
+    "klub",
+    "book-rengoering",
+    "artikler",
   ].map((route) => {
     const suffix = route === "" ? "/" : `/${route}/`;
     return {
@@ -101,11 +105,21 @@ export default function sitemap(): MetadataRoute.Sitemap {
       });
     });
 
+  const articleRoutes = articles
+    .filter((article) => article.indexable)
+    .map((article) => ({
+      url: `${baseUrl}/artikler/${article.slug}/`,
+      lastModified: new Date(article.publishedAt),
+      changeFrequency: "monthly" as const,
+      priority: 0.6,
+    }));
+
   return [
     ...staticRoutes,
     ...serviceRoutes,
     ...serviceInquiryRoutes,
     ...boligserviceRoutes,
+    ...articleRoutes,
     ...dynamicRoutes,
   ];
 }

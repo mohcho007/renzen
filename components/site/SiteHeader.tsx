@@ -19,7 +19,7 @@ const services = [
     colorClass: "bg-[#e6fbf3] text-[#2d5e4d]",
     hoverBgClass: "hover:bg-[#e6fbf3]",
     hoverTextClass: "group-hover:text-[#2d5e4d]",
-    href: "/privat-rengoering",
+    href: "/privat-rengoring/",
   },
   {
     label: "Erhvervsrengøring",
@@ -27,7 +27,7 @@ const services = [
     colorClass: "bg-blue-50 text-blue-600",
     hoverBgClass: "hover:bg-blue-50",
     hoverTextClass: "group-hover:text-blue-700",
-    href: "/erhvervsrengoering",
+    href: "/erhvervsrengoring/",
   },
   {
     label: "Flytterengøring",
@@ -35,7 +35,7 @@ const services = [
     colorClass: "bg-purple-50 text-purple-600",
     hoverBgClass: "hover:bg-purple-50",
     hoverTextClass: "group-hover:text-purple-700",
-    href: "/flytterengoering",
+    href: "/flytterengoring/",
   },
   {
     label: "Hovedrengøring",
@@ -43,7 +43,7 @@ const services = [
     colorClass: "bg-amber-50 text-amber-600",
     hoverBgClass: "hover:bg-amber-50",
     hoverTextClass: "group-hover:text-amber-700",
-    href: "/hovedrengoering",
+    href: "/hovedrengoring/",
   },
   {
     label: "Airbnb rengøring",
@@ -51,7 +51,7 @@ const services = [
     colorClass: "bg-rose-50 text-rose-600",
     hoverBgClass: "hover:bg-rose-50",
     hoverTextClass: "group-hover:text-rose-700",
-    href: "/airbnb-rengoering",
+    href: "/airbnb-rengoring/",
   },
   {
     label: "Kontorrengøring",
@@ -59,7 +59,7 @@ const services = [
     colorClass: "bg-cyan-50 text-cyan-600",
     hoverBgClass: "hover:bg-cyan-50",
     hoverTextClass: "group-hover:text-cyan-700",
-    href: "/kontorrengoering",
+    href: "/kontorrengoring/",
   },
   {
     label: "Trapperengøring",
@@ -67,7 +67,7 @@ const services = [
     colorClass: "bg-indigo-50 text-indigo-600",
     hoverBgClass: "hover:bg-indigo-50",
     hoverTextClass: "group-hover:text-indigo-700",
-    href: "/trappevask",
+    href: "/boligforeninger/",
   },
   {
     label: "Vinduespudsning",
@@ -83,7 +83,7 @@ const services = [
     colorClass: "bg-emerald-50 text-emerald-600",
     hoverBgClass: "hover:bg-emerald-50",
     hoverTextClass: "group-hover:text-emerald-700",
-    href: "/fliserens-og-algebehandling",
+    href: "/fliserens/",
   },
   {
     label: "Byggerengøring",
@@ -91,7 +91,7 @@ const services = [
     colorClass: "bg-orange-50 text-orange-600",
     hoverBgClass: "hover:bg-orange-50",
     hoverTextClass: "group-hover:text-orange-700",
-    href: "/byggerengoering",
+    href: "/boligservice/",
   },
 ] as const;
 

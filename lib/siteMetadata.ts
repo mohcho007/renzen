@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { formatPageTitle } from "@/lib/formatPageTitle";
 import { siteConfig } from "@/lib/siteConfig";
+import { getAbsoluteUrl } from "@/lib/urls";
+
 export function createStaticPageMetadata({
   title,
   description,
@@ -10,8 +12,7 @@ export function createStaticPageMetadata({
   description: string;
   path: string;
 }): Metadata {
-  const normalizedPath = path === "/" ? "" : path;
-  const url = `${siteConfig.origin}${normalizedPath}`;
+  const url = getAbsoluteUrl(path === "/" ? "" : path);
   const pageTitle = formatPageTitle(title);
 
   return {

@@ -26,10 +26,10 @@ export default function NotFound() {
             Gå til forsiden
           </Link>
           <Link
-            href="/byer"
+            href="/privat-rengoring/"
             className="rounded-full border border-zinc-300 bg-white px-6 py-3 font-bold text-brand-blue hover:bg-zinc-50"
           >
-            Se alle byer
+            Find rengøring i din by
           </Link>
         </div>
       </div>

@@ -53,50 +53,20 @@ export default function ServicePageTemplate({ service, contentSection }: Service
             </div>
             
             <div className="relative z-10 mx-auto max-w-7xl">
-              <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:items-center">
-                <div id="calculator" className="lg:col-span-5 order-2 lg:order-1 scroll-mt-24">
-                  <div className="mb-4 hidden lg:block">
-                    <span className="inline-block px-3 py-1 rounded-full bg-emerald-500/20 text-xs font-bold text-emerald-300 mb-2">
-                      Fast Zenmester • 100% Tryghed
-                    </span>
-                    <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl leading-tight font-heading">
-                      #1 Privat rengøring
-                    </h1>
-                    <p className="mt-4 text-[#e0efed] text-sm leading-relaxed">
-                      Slip bekymringerne og lad Renzen tage sig af rengøringen, nem online booking og forsikrede & godkendte zenmestre. Få mere tid til det, der betyder noget, og nyd en stressfri hverdag.
-                    </p>
-                  </div>
-
-                  <PriceCalculator initialSqm={70} title="Fast Zenmester til din rengøring" showIntroText={false} serviceSlug="privat-rengoring" />
-                  
-                  {/* Under card badges */}
-                  <div className="mt-6 flex flex-wrap justify-between text-xs font-bold text-emerald-100/90 gap-2 px-2">
-                    <span className="flex items-center space-x-1">
-                      <span className="text-amber-400">✓</span> <span>Godkendte rengøringsassistenter</span>
-                    </span>
-                    <span className="flex items-center space-x-1">
-                      <span className="text-amber-400">✓</span> <span>Tilfredshedsgaranti</span>
-                    </span>
-                    <span className="flex items-center space-x-1">
-                      <span className="text-amber-400">✓</span> <span>Fleksibel booking</span>
-                    </span>
-                  </div>
+              <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:items-start">
+                <div className="order-1 lg:col-span-5 lg:row-start-1">
+                  <span className="inline-block px-3 py-1 rounded-full bg-emerald-500/20 text-xs font-bold text-emerald-300 mb-2">
+                    Fast Zenmester • 100% Tryghed
+                  </span>
+                  <h1 className="text-3.5xl font-extrabold tracking-tight sm:text-4xl lg:text-5xl leading-tight font-heading">
+                    #1 Privat rengøring
+                  </h1>
+                  <p className="mt-3 lg:mt-4 text-[#e0efed] text-sm leading-relaxed">
+                    Slip bekymringerne og lad Renzen tage sig af rengøringen, nem online booking og forsikrede & godkendte zenmestre. Få mere tid til det, der betyder noget, og nyd en stressfri hverdag.
+                  </p>
                 </div>
 
-                <div className="lg:col-span-7 order-1 lg:order-2 space-y-6">
-                  <div className="lg:hidden">
-                    <span className="inline-block px-3 py-1 rounded-full bg-emerald-500/20 text-xs font-bold text-emerald-300">
-                      Fast Zenmester • 100% Tryghed
-                    </span>
-                    <h1 className="text-3.5xl font-extrabold tracking-tight leading-tight font-heading">
-                      #1 Privat rengøring
-                    </h1>
-                    <p className="mt-3 text-[#e0efed] text-sm leading-relaxed">
-                      Slip bekymringerne og lad Renzen tage sig af rengøringen, nem online booking og forsikrede & godkendte zenmestre. Få mere tid til det, der betyder noget, og nyd en stressfri hverdag.
-                    </p>
-                  </div>
-
-                  {/* Right side large graphic */}
+                <div className="order-2 lg:col-span-7 lg:row-start-1 lg:row-span-2 self-center space-y-6">
                   <div className="relative rounded-2xl overflow-hidden shadow-2xl border-4 border-emerald-950/20 max-w-2xl bg-emerald-950/20 aspect-video">
                     <Image src="/zenmester-gor-rent-rundt.jpg" alt="Zenmester" fill className="object-cover" />
                     
@@ -111,6 +81,23 @@ export default function ServicePageTemplate({ service, contentSection }: Service
                       />
                       <span className="text-[11px] font-black tracking-tight text-slate-800">Valgt af 300+ kunder</span>
                     </div>
+                  </div>
+                </div>
+
+                <div id="calculator" className="order-3 lg:col-span-5 lg:row-start-2 scroll-mt-24">
+                  <PriceCalculator initialSqm={70} title="Fast Zenmester til din rengøring" showIntroText={false} serviceSlug="privat-rengoring" />
+                  
+                  {/* Under card badges */}
+                  <div className="mt-6 flex flex-wrap justify-between text-xs font-bold text-emerald-100/90 gap-2 px-2">
+                    <span className="flex items-center space-x-1">
+                      <span className="text-amber-400">✓</span> <span>Godkendte rengøringsassistenter</span>
+                    </span>
+                    <span className="flex items-center space-x-1">
+                      <span className="text-amber-400">✓</span> <span>Tilfredshedsgaranti</span>
+                    </span>
+                    <span className="flex items-center space-x-1">
+                      <span className="text-amber-400">✓</span> <span>Fleksibel booking</span>
+                    </span>
                   </div>
                 </div>
               </div>
@@ -614,20 +601,32 @@ export default function ServicePageTemplate({ service, contentSection }: Service
             </div>
             
             <div className="relative z-10 mx-auto max-w-7xl">
-              <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:items-center">
-                <div id="calculator" className="lg:col-span-5 order-2 lg:order-1 scroll-mt-24">
-                  <div className="mb-4 hidden lg:block">
-                    <span className="inline-block px-3 py-1 rounded-full bg-emerald-500/20 text-xs font-bold text-emerald-300 mb-2">
-                      Tilfredshedsgaranti • Depositumsretur
-                    </span>
-                    <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl leading-tight font-heading">
-                      Flytterengøring med garanti
-                    </h1>
-                    <p className="mt-4 text-[#e0efed] text-sm leading-relaxed">
-                      Professionel flytterengøring med fokus på aflevering og flyttesyn. Se din pris med det samme og book flytterengøring på under 60 sekunder.
-                    </p>
-                  </div>
+              <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:items-start">
+                <div className="order-1 lg:col-span-5 lg:row-start-1">
+                  <span className="inline-block px-3 py-1 rounded-full bg-emerald-500/20 text-xs font-bold text-emerald-300 mb-2">
+                    Tilfredshedsgaranti • Depositumsretur
+                  </span>
+                  <h1 className="text-3.5xl font-extrabold tracking-tight sm:text-4xl lg:text-5xl leading-tight font-heading">
+                    Flytterengøring med garanti
+                  </h1>
+                  <p className="mt-3 lg:mt-4 text-[#e0efed] text-sm leading-relaxed">
+                    Professionel flytterengøring med fokus på aflevering og flyttesyn. Se din pris med det samme og book flytterengøring på under 60 sekunder.
+                  </p>
+                </div>
 
+                <div className="order-2 lg:col-span-7 lg:row-start-1 lg:row-span-2 self-center space-y-6">
+                  <div className="relative rounded-2xl overflow-hidden shadow-2xl border-4 border-emerald-950/20 max-w-2xl bg-emerald-950/20 aspect-video">
+                    <Image src="/flytterengoring-par.png" alt="Flytterengøring" fill className="object-cover" />
+                    
+                    {/* Floating Trust Badge */}
+                    <div className="absolute bottom-4 right-4 bg-white/95 backdrop-blur px-3.5 py-2.5 rounded-xl shadow-lg flex items-center space-x-2 text-slate-800">
+                      <span className="text-amber-400 font-bold">★★★★★</span>
+                      <span className="text-[11px] font-black tracking-tight text-slate-800">800+ afleveringer godkendt</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div id="calculator" className="order-3 lg:col-span-5 lg:row-start-2 scroll-mt-24">
                   <PriceCalculator initialSqm={50} title="Se din pris og book" showIntroText={false} serviceSlug="flytterengoring" />
                   
                   {/* Under card badges */}
@@ -641,31 +640,6 @@ export default function ServicePageTemplate({ service, contentSection }: Service
                     <span className="flex items-center space-x-1">
                       <span className="text-amber-400">✓</span> <span>100% tilfredshedsgaranti</span>
                     </span>
-                  </div>
-                </div>
-
-                <div className="lg:col-span-7 order-1 lg:order-2 space-y-6">
-                  <div className="lg:hidden">
-                    <span className="inline-block px-3 py-1 rounded-full bg-emerald-500/20 text-xs font-bold text-emerald-300">
-                      Tilfredshedsgaranti • Depositumsretur
-                    </span>
-                    <h1 className="text-3.5xl font-extrabold tracking-tight leading-tight font-heading">
-                      Flytterengøring med garanti
-                    </h1>
-                    <p className="mt-3 text-[#e0efed] text-sm leading-relaxed">
-                      Professionel flytterengøring med fokus på aflevering og flyttesyn. Se din pris med det samme og book flytterengøring på under 60 sekunder.
-                    </p>
-                  </div>
-
-                  {/* Right side graphic */}
-                  <div className="relative rounded-2xl overflow-hidden shadow-2xl border-4 border-emerald-950/20 max-w-2xl bg-emerald-950/20 aspect-video">
-                    <Image src="/flytterengoring-par.png" alt="Flytterengøring" fill className="object-cover" />
-                    
-                    {/* Floating Trust Badge */}
-                    <div className="absolute bottom-4 right-4 bg-white/95 backdrop-blur px-3.5 py-2.5 rounded-xl shadow-lg flex items-center space-x-2 text-slate-800">
-                      <span className="text-amber-400 font-bold">★★★★★</span>
-                      <span className="text-[11px] font-black tracking-tight text-slate-800">800+ afleveringer godkendt</span>
-                    </div>
                   </div>
                 </div>
               </div>
@@ -1018,20 +992,32 @@ export default function ServicePageTemplate({ service, contentSection }: Service
             </div>
             
             <div className="relative z-10 mx-auto max-w-7xl">
-              <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:items-center">
-                <div id="calculator" className="lg:col-span-5 order-2 lg:order-1 scroll-mt-24">
-                  <div className="mb-4 hidden lg:block">
-                    <span className="inline-block px-3 py-1 rounded-full bg-emerald-500/20 text-xs font-bold text-emerald-300 mb-2">
-                      Superhost Status • Hurtig turn-around
-                    </span>
-                    <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl leading-tight font-heading">
-                      Airbnb rengøring
-                    </h1>
-                    <p className="mt-4 text-[#e0efed] text-sm leading-relaxed">
-                      Klargøring mellem gæster med verificerede Zenmestre. Få din bolig rengjort, nulstillet og klar til næste check-in.
-                    </p>
-                  </div>
+              <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:items-start">
+                <div className="order-1 lg:col-span-5 lg:row-start-1">
+                  <span className="inline-block px-3 py-1 rounded-full bg-emerald-500/20 text-xs font-bold text-emerald-300 mb-2">
+                    Superhost Status • Hurtig turn-around
+                  </span>
+                  <h1 className="text-3.5xl font-extrabold tracking-tight sm:text-4xl lg:text-5xl leading-tight font-heading">
+                    Airbnb rengøring
+                  </h1>
+                  <p className="mt-3 lg:mt-4 text-[#e0efed] text-sm leading-relaxed">
+                    Klargøring mellem gæster med verificerede Zenmestre. Få din bolig rengjort, nulstillet og klar til næste check-in.
+                  </p>
+                </div>
 
+                <div className="order-2 lg:col-span-7 lg:row-start-1 lg:row-span-2 self-center space-y-6">
+                  <div className="relative rounded-2xl overflow-hidden shadow-2xl border-4 border-emerald-950/20 max-w-2xl bg-emerald-950/20 aspect-video">
+                    <Image src="/zenmester-gor-rent-rundt.jpg" alt="Airbnb Rengøring" fill className="object-cover" />
+                    
+                    {/* Floating Trust Badge */}
+                    <div className="absolute bottom-4 right-4 bg-white/95 backdrop-blur px-3.5 py-2.5 rounded-xl shadow-lg flex items-center space-x-2 text-slate-800">
+                      <span className="text-amber-400 font-bold">★★★★★</span>
+                      <span className="text-[11px] font-black tracking-tight text-slate-800">For Superhosts & Værter</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div id="calculator" className="order-3 lg:col-span-5 lg:row-start-2 scroll-mt-24">
                   <PriceCalculator initialSqm={70} title="Klargøring mellem gæster" showIntroText={false} serviceSlug="airbnb-rengoring" />
                   
                   {/* Under card badges */}
@@ -1045,31 +1031,6 @@ export default function ServicePageTemplate({ service, contentSection }: Service
                     <span className="flex items-center space-x-1">
                       <span className="text-amber-400">✓</span> <span>Ingen binding</span>
                     </span>
-                  </div>
-                </div>
-
-                <div className="lg:col-span-7 order-1 lg:order-2 space-y-6">
-                  <div className="lg:hidden">
-                    <span className="inline-block px-3 py-1 rounded-full bg-emerald-500/20 text-xs font-bold text-emerald-300">
-                      Superhost Status • Hurtig turn-around
-                    </span>
-                    <h1 className="text-3.5xl font-extrabold tracking-tight leading-tight font-heading">
-                      Airbnb rengøring
-                    </h1>
-                    <p className="mt-3 text-[#e0efed] text-sm leading-relaxed">
-                      Klargøring mellem gæster med verificerede Zenmestre. Få din bolig rengjort, nulstillet og klar til næste check-in.
-                    </p>
-                  </div>
-
-                  {/* Right side graphic */}
-                  <div className="relative rounded-2xl overflow-hidden shadow-2xl border-4 border-emerald-950/20 max-w-2xl bg-emerald-950/20 aspect-video">
-                    <Image src="/zenmester-gor-rent-rundt.jpg" alt="Airbnb Rengøring" fill className="object-cover" />
-                    
-                    {/* Floating Trust Badge */}
-                    <div className="absolute bottom-4 right-4 bg-white/95 backdrop-blur px-3.5 py-2.5 rounded-xl shadow-lg flex items-center space-x-2 text-slate-800">
-                      <span className="text-amber-400 font-bold">★★★★★</span>
-                      <span className="text-[11px] font-black tracking-tight text-slate-800">For Superhosts & Værter</span>
-                    </div>
                   </div>
                 </div>
               </div>
