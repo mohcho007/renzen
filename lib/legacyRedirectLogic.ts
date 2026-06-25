@@ -10,10 +10,7 @@ export const LEGACY_CLEANING_SERVICE_SLUGS = [
 ] as const;
 
 /** National-only slugs that consolidate on privat-rengoring (not hovedrengoring/erhvervsrengoring). */
-export const NATIONAL_PRIVAT_CONSOLIDATION_SLUGS = [
-  "rengoring",
-  "engangsrengoring",
-] as const;
+export const NATIONAL_PRIVAT_CONSOLIDATION_SLUGS = ["engangsrengoring"] as const;
 
 /** Old WordPress spellings (oe) with city segments. */
 export const LEGACY_SPELLING_CITY_SERVICES = new Set([
@@ -28,7 +25,7 @@ export const LEGACY_SPELLING_CITY_SERVICES = new Set([
 
 /** National legacy spelling → destination (no city segment). */
 export const LEGACY_SPELLING_NATIONAL: Record<string, string> = {
-  rengoering: "/privat-rengoring/",
+  rengoering: "/rengoring/",
   "privat-rengoering": "/privat-rengoring/",
   hjemmerengoering: "/privat-rengoring/",
   hjemmerengoring: "/privat-rengoring/",
