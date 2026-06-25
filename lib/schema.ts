@@ -123,6 +123,56 @@ export function generateBreadcrumbSchema(items: { name: string; url: string }[])
 }
 
 /**
+ * Generates BlogPosting / Article schema for editorial pages.
+ */
+export function generateArticleSchema(options: {
+  title: string;
+  description: string;
+  url: string;
+  datePublished: string;
+  dateModified?: string;
+  image?: string;
+  imageAlt?: string;
+}) {
+  const schema: Record<string, unknown> = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: options.title,
+    description: options.description,
+    datePublished: options.datePublished,
+    dateModified: options.dateModified ?? options.datePublished,
+    author: {
+      "@type": "Organization",
+      name: "Renzen",
+      url: DOMAIN,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "Renzen",
+      logo: {
+        "@type": "ImageObject",
+        url: `${DOMAIN}/renzen-logo-ny.png`,
+      },
+    },
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": options.url,
+    },
+    inLanguage: "da-DK",
+  };
+
+  if (options.image) {
+    schema.image = {
+      "@type": "ImageObject",
+      url: options.image,
+      ...(options.imageAlt ? { caption: options.imageAlt } : {}),
+    };
+  }
+
+  return schema;
+}
+
+/**
  * Generates WebPage Schema.
  */
 export function generateWebPageSchema(title: string, description: string, url: string) {

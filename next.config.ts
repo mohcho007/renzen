@@ -1,4 +1,27 @@
 import type { NextConfig } from "next";
+import { LEGACY_WP_ARTICLE_SLUGS } from "./lib/legacyRedirectLogic";
+
+function wpArticleRedirects() {
+  return LEGACY_WP_ARTICLE_SLUGS.flatMap((slug) => {
+    const variants = new Set([
+      slug,
+      slug.replace(/rengoering/g, "rengoring"),
+      slug.replace(/rengoring/g, "rengoering"),
+    ]);
+    return [...variants].flatMap((variant) => [
+      {
+        source: `/${variant}`,
+        destination: `/artikler/${slug}/`,
+        permanent: true,
+      },
+      {
+        source: `/${variant}/`,
+        destination: `/artikler/${slug}/`,
+        permanent: true,
+      },
+    ]);
+  });
+}
 
 const nextConfig: NextConfig = {
   trailingSlash: true,
@@ -9,6 +32,9 @@ const nextConfig: NextConfig = {
       config.cache = false;
     }
     return config;
+  },
+  async redirects() {
+    return wpArticleRedirects();
   },
   async headers() {
     return [
@@ -29,6 +55,11 @@ const nextConfig: NextConfig = {
       {
         protocol: "https",
         hostname: "cdn.renbud.dk",
+      },
+      {
+        protocol: "https",
+        hostname: "renzen.dk",
+        pathname: "/wp-content/**",
       },
       {
         protocol: "https",

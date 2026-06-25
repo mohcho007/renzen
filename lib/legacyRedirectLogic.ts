@@ -55,8 +55,8 @@ export const STATIC_LEGACY_REDIRECTS: Record<string, string> = {
   "/artikler/book-rengoering-online/": "/book-rengoering/",
 };
 
-/** WordPress article slugs indexed in GSC but not migrated to data/articles.ts */
-const LEGACY_ARTICLE_SLUGS = [
+/** WordPress root URLs indexed in GSC → /artikler/{slug}/ */
+export const LEGACY_WP_ARTICLE_SLUGS = [
   "svanemaerket-rengoering",
   "budget-for-erhvervsrengoering",
   "minimalistisk-rengoering",
@@ -83,10 +83,12 @@ function articleSlugSpellingVariants(slug: string): string[] {
   return [...variants];
 }
 
-const LEGACY_ARTICLE_PATHS = new Set<string>();
-for (const slug of LEGACY_ARTICLE_SLUGS) {
+/** WP root paths: /{slug}/ → /artikler/{slug}/ */
+const LEGACY_WP_ARTICLE_ROOT_PATHS = new Map<string, string>();
+for (const slug of LEGACY_WP_ARTICLE_SLUGS) {
+  const dest = `/artikler/${slug}/`;
   for (const variant of articleSlugSpellingVariants(slug)) {
-    LEGACY_ARTICLE_PATHS.add(`/artikler/${variant}/`);
+    LEGACY_WP_ARTICLE_ROOT_PATHS.set(`/${variant}/`, dest);
   }
 }
 
@@ -150,7 +152,8 @@ export function getLegacyRedirectDestination(pathname: string): string | undefin
   const staticDest = STATIC_LEGACY_REDIRECTS[path];
   if (staticDest) return staticDest;
 
-  if (LEGACY_ARTICLE_PATHS.has(path)) return "/artikler/";
+  const wpArticleDest = LEGACY_WP_ARTICLE_ROOT_PATHS.get(path);
+  if (wpArticleDest) return wpArticleDest;
 
   const segments = path.split("/").filter(Boolean);
   if (segments.length === 0) return undefined;

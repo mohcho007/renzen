@@ -1,3 +1,5 @@
+import { importedArticles } from "./importedArticles";
+
 export interface Article {
   slug: string;
   title: string;
@@ -7,6 +9,9 @@ export interface Article {
   author: string;
   readTime: string;
   image?: string;
+  imageAlt?: string;
+  seoTitle?: string;
+  seoDescription?: string;
   indexable: boolean;
 }
 
@@ -79,9 +84,10 @@ export const articles: Article[] = [
     author: 'Rengøringseksperten',
     readTime: '5 min read',
     indexable: true,
-  }
+  },
+  ...importedArticles,
 ];
 
 export function getArticleBySlug(slug: string): Article | undefined {
-  return articles.find(a => a.slug === slug);
+  return articles.find((a) => a.slug === slug);
 }

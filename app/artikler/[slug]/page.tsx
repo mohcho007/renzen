@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
 import Link from 'next/link';
@@ -8,7 +9,11 @@ import Breadcrumbs from '../../../components/Breadcrumbs';
 import PriceCalculator from '../../../components/PriceCalculator';
 import CTA from '../../../components/CTA';
 import SchemaMarkup from '../../../components/SchemaMarkup';
-import { generateBreadcrumbSchema, generateWebPageSchema } from '../../../lib/schema';
+import {
+  generateArticleSchema,
+  generateBreadcrumbSchema,
+  generateWebPageSchema,
+} from '../../../lib/schema';
 import { getAbsoluteUrl, getArticleUrl } from '../../../lib/urls';
 
 interface PageProps {
@@ -35,12 +40,34 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     return {};
   }
 
-  return constructMetadata({
-    title: `${article.title}`,
-    description: article.excerpt,
+  const meta = constructMetadata({
+    title: article.seoTitle ?? article.title,
+    description: article.seoDescription ?? article.excerpt,
     path: getArticleUrl(article.slug),
-    indexable: article.indexable
+    indexable: article.indexable,
   });
+
+  if (article.image) {
+    return {
+      ...meta,
+      openGraph: {
+        ...meta.openGraph,
+        type: "article",
+        images: [
+          {
+            url: article.image,
+            alt: article.imageAlt ?? article.title,
+          },
+        ],
+      },
+      twitter: {
+        ...meta.twitter,
+        images: [article.image],
+      },
+    };
+  }
+
+  return meta;
 }
 
 export default async function ArticlePage({ params }: PageProps) {
@@ -60,34 +87,20 @@ export default async function ArticlePage({ params }: PageProps) {
   ];
   
   const webPageSchema = generateWebPageSchema(
-    `${article.title}`,
-    article.excerpt,
+    article.seoTitle ?? article.title,
+    article.seoDescription ?? article.excerpt,
     absoluteUrl
   );
   const breadcrumbSchema = generateBreadcrumbSchema(breadcrumbItems);
 
-  // Simple Article schema
-  const articleSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'NewsArticle',
-    'headline': article.title,
-    'description': article.excerpt,
-    'datePublished': article.publishedAt,
-    'author': {
-      '@type': 'Organization',
-      'name': 'Renzen',
-      'url': 'https://renzen.dk'
-    },
-    'publisher': {
-      '@type': 'Organization',
-      'name': 'Renzen',
-      'logo': {
-        '@type': 'ImageObject',
-        'url': 'https://renzen.dk/renzen-logo-ny.png'
-      }
-    },
-    'mainEntityOfPage': absoluteUrl
-  };
+  const articleSchema = generateArticleSchema({
+    title: article.title,
+    description: article.seoDescription ?? article.excerpt,
+    url: absoluteUrl,
+    datePublished: article.publishedAt,
+    image: article.image,
+    imageAlt: article.imageAlt,
+  });
 
   return (
     <>
@@ -121,6 +134,19 @@ export default async function ArticlePage({ params }: PageProps) {
                 {article.title}
               </h1>
 
+              {article.image ? (
+                <div className="relative mb-8 aspect-[16/9] overflow-hidden rounded-2xl border border-slate-100 bg-slate-50">
+                  <Image
+                    src={article.image}
+                    alt={article.imageAlt ?? article.title}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 1024px) 100vw, 66vw"
+                    priority
+                  />
+                </div>
+              ) : null}
+
               {/* Excerpt */}
               <p className="text-base text-slate-500 font-medium leading-relaxed italic mb-8 border-l-4 border-emerald-500 pl-4 bg-slate-50/50 py-3 pr-3 rounded-r-xl">
                 {article.excerpt}
@@ -128,7 +154,7 @@ export default async function ArticlePage({ params }: PageProps) {
 
               {/* Body Content */}
               <div 
-                className="prose prose-slate max-w-none text-slate-600 leading-relaxed text-sm sm:text-base space-y-6 [&>h2]:text-xl [&>h2]:font-bold [&>h2]:text-slate-800 [&>h2]:mt-10 [&>h2]:mb-4 [&>ul]:list-disc [&>ul]:pl-5 [&>ul]:space-y-2 [&>ol]:list-decimal [&>ol]:pl-5 [&>ol]:space-y-2 [&>blockquote]:border-l-4 [&>blockquote]:border-slate-300 [&>blockquote]:pl-4 [&>blockquote]:italic [&>p]:mt-2"
+                className="prose prose-slate max-w-none text-slate-600 leading-relaxed text-sm sm:text-base space-y-6 [&>h1]:text-2xl [&>h1]:font-bold [&>h1]:text-slate-900 [&>h1]:mt-8 [&>h1]:mb-4 [&>h2]:text-xl [&>h2]:font-bold [&>h2]:text-slate-800 [&>h2]:mt-10 [&>h2]:mb-4 [&>h3]:text-lg [&>h3]:font-semibold [&>h3]:text-slate-800 [&>h3]:mt-8 [&>h3]:mb-3 [&>ul]:list-disc [&>ul]:pl-5 [&>ul]:space-y-2 [&>ol]:list-decimal [&>ol]:pl-5 [&>ol]:space-y-2 [&>blockquote]:border-l-4 [&>blockquote]:border-slate-300 [&>blockquote]:pl-4 [&>blockquote]:italic [&>p]:mt-2 [&_a]:text-emerald-600 [&_a]:font-medium [&_a]:underline-offset-2 [&_a:hover]:text-emerald-500 [&_table]:w-full [&_table]:text-sm [&_th]:bg-slate-50 [&_th]:px-3 [&_th]:py-2 [&_td]:border-t [&_td]:border-slate-100 [&_td]:px-3 [&_td]:py-2"
                 dangerouslySetInnerHTML={{ __html: article.content }}
               />
             </article>
