@@ -167,6 +167,11 @@ const menuSections: MenuSection[] = [
         href: "/faq",
         description: "Korte svar på det vigtigste før din booking.",
       },
+      {
+        label: "Artikler",
+        href: "/artikler",
+        description: "Guides og inspiration til rengøring og hverdagsliv.",
+      },
     ],
   },
 ];

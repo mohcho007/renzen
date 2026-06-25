@@ -58,8 +58,8 @@ export default function Header() {
             )}
           </div>
 
-          <Link href="/priser/" className="text-xs font-bold uppercase tracking-wider text-slate-700 transition-colors hover:text-[#206d69]">
-            Priser
+          <Link href="/book-rengoering" className="text-xs font-bold uppercase tracking-wider text-slate-700 transition-colors hover:text-[#206d69]">
+            Book rengøring
           </Link>
           <Link href="/faq/" className="text-xs font-bold uppercase tracking-wider text-slate-700 transition-colors hover:text-[#206d69]">
             FAQ
@@ -130,11 +130,11 @@ export default function Header() {
             </div>
 
             <Link
-              href="/priser/"
+              href="/book-rengoering/"
               onClick={() => setIsOpen(false)}
               className="text-sm font-bold uppercase tracking-wider text-slate-700 hover:text-[#206d69]"
             >
-              Priser
+              Book rengøring
             </Link>
             <Link
               href="/faq/"

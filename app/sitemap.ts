@@ -25,7 +25,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "faq",
     "kontakt",
     "bliv-zenmester",
-    "priser",
     "klub",
     "book-rengoering",
     "artikler",

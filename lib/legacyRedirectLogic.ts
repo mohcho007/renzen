@@ -9,6 +9,12 @@ export const LEGACY_CLEANING_SERVICE_SLUGS = [
   "erhvervsrengoring",
 ] as const;
 
+/** National-only slugs that consolidate on privat-rengoring (not hovedrengoring/erhvervsrengoring). */
+export const NATIONAL_PRIVAT_CONSOLIDATION_SLUGS = [
+  "rengoring",
+  "engangsrengoring",
+] as const;
+
 /** Old WordPress spellings (oe) with city segments. */
 export const LEGACY_SPELLING_CITY_SERVICES = new Set([
   "rengoering",
@@ -26,7 +32,7 @@ export const LEGACY_SPELLING_NATIONAL: Record<string, string> = {
   "privat-rengoering": "/privat-rengoring/",
   hjemmerengoering: "/privat-rengoring/",
   hjemmerengoring: "/privat-rengoring/",
-  hovedrengoering: "/privat-rengoring/",
+  hovedrengoering: "/hovedrengoring/",
   "engangsrengoering": "/privat-rengoring/",
   "erhvervsrengoering": "/erhvervsrengoring/",
   "airbnb-rengoering": "/airbnb-rengoring/",
@@ -53,6 +59,7 @@ export const STATIC_LEGACY_REDIRECTS: Record<string, string> = {
   "/privat-rengoering/kobenhavn/": "/privat-rengoring/koebenhavn/",
   "/privat-rengoering/københavn/": "/privat-rengoring/koebenhavn/",
   "/artikler/book-rengoering-online/": "/book-rengoering/",
+  "/priser/": "/",
 };
 
 /** WordPress root URLs indexed in GSC → /artikler/{slug}/ */
@@ -165,7 +172,9 @@ export function getLegacyRedirectDestination(pathname: string): string | undefin
     if (nationalDest) return nationalDest;
 
     if (
-      (LEGACY_CLEANING_SERVICE_SLUGS as readonly string[]).includes(service)
+      (NATIONAL_PRIVAT_CONSOLIDATION_SLUGS as readonly string[]).includes(
+        service,
+      )
     ) {
       return "/privat-rengoring/";
     }

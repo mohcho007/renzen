@@ -41,5 +41,6 @@ export const config = {
     "/institutionsrengoering",
     "/byggerengoering",
     "/artikler/:path*",
+    "/priser",
   ],
 };

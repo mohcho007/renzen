@@ -215,8 +215,8 @@ export function RenzenEditorialFooter() {
               <Link href="/om-os">Om os</Link>
               <Link href="/kontakt">Kontakt os</Link>
               <Link href="/faq">FAQ</Link>
+              <Link href="/artikler">Artikler</Link>
               <Link href="/bliv-zenmester">Bliv Zenmester</Link>
-              <Link href="/priser">Priser</Link>
               <Link href="/klub/">Renzen Klub</Link>
             </div>
           </div>
