@@ -542,6 +542,7 @@ function DealTypeformWizardForm({
     useState(false);
   const [klubOfferOpen, setKlubOfferOpen] = useState(false);
   const [pendingKlubSlot, setPendingKlubSlot] = useState<TimeSlot | null>(null);
+  const klubOfferAcknowledgedRef = useRef(false);
   const [actualM2Input, setActualM2Input] = useState(() =>
     isBook2
       ? initialActualM2 != null
@@ -1085,6 +1086,7 @@ function DealTypeformWizardForm({
 
   const confirmKlubOffer = useCallback(
     (withKlub: boolean) => {
+      klubOfferAcknowledgedRef.current = true;
       if (pendingKlubSlot) {
         selectTimeSlot(pendingKlubSlot, withKlub);
       }
@@ -1542,7 +1544,8 @@ function DealTypeformWizardForm({
     const showKlubOfferModal =
       isBook2 &&
       !introTierExceeded &&
-      chosenFrequency.type === "recurring";
+      chosenFrequency.type === "recurring" &&
+      (!clubSelected || !klubOfferAcknowledgedRef.current);
 
     return (
       <div className={styles.timePriceRow} key={slot.label}>
