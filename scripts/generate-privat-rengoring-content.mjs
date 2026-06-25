@@ -439,7 +439,7 @@ export function buildPrivatRengoringCityPageConfig(
 
   const otherCities = PRIVAT_RENGORING_PRIORITY_1_CITIES.filter(
     (entry) => entry.slug !== city.slug,
-  ).slice(0, 8);
+  );
 
   return {
     slug: "privat-rengoring",
