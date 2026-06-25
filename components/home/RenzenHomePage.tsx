@@ -141,30 +141,33 @@ export function RenzenHomePage() {
                 giver bedre rutiner, færre forklaringer og et mere ensartet
                 resultat fra gang til gang.
               </p>
-              <dl className="mt-10 border-t border-[#bcc3b9]">
+              <ul className="mt-10 list-none border-t border-[#bcc3b9] p-0">
                 {[
                   ["Fast aftale", "Den samme Zenmester prioriteres ved tilbagevendende rengøring."],
                   ["RenCover", "Din booking er forsikret for op til 10 mio. kr."],
                   ["Tilfredshedsgaranti", "Vi hjælper, hvis resultatet ikke er som aftalt."],
                 ].map(([title, text], index) => (
-                  <div
+                  <li
                     key={title}
                     className="grid grid-cols-[42px_1fr] gap-3 border-b border-[#bcc3b9] py-6"
                   >
-                    <span className="font-mono text-xs font-bold text-[#758078]">
+                    <span
+                      className="font-mono text-xs font-bold text-[#758078]"
+                      aria-hidden="true"
+                    >
                       0{index + 1}
                     </span>
                     <div>
-                      <dt className="font-display text-xl font-semibold text-[#173c2c]">
+                      <h3 className="font-display text-xl font-semibold text-[#173c2c]">
                         {title}
-                      </dt>
-                      <dd className="mt-2 text-sm font-medium leading-6 text-[#69746c]">
+                      </h3>
+                      <p className="mt-2 text-sm font-medium leading-6 text-[#69746c]">
                         {text}
-                      </dd>
+                      </p>
                     </div>
-                  </div>
+                  </li>
                 ))}
-              </dl>
+              </ul>
             </div>
           </div>
         </section>
