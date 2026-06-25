@@ -2,37 +2,46 @@
 
 import React from "react";
 import {
+  legalArticleClass,
+  legalContentClass,
+  legalPageShellClass,
+  legalSectionTitleClass,
+  legalTitleClass,
+  legalUpdatedClass,
+} from "@/components/site/LegalDocument";
+import {
   RenzenEditorialFooter,
   RenzenEditorialHeader,
 } from "@/components/site/RenzenEditorialChrome";
 
 export default function CookiepolitikPage() {
   return (
-    <div className="min-h-screen bg-[#fbfaf5] text-[#203129]">
+    <div className={legalPageShellClass}>
       <RenzenEditorialHeader />
 
-      <main className="px-6 py-16 sm:px-10 sm:py-20 lg:px-14">
-        <div className="mx-auto max-w-[900px]">
-        <div className="bg-white rounded-3xl border border-zinc-200/60 p-8 sm:p-12 shadow-sm text-left">
-          
-          <h1 className="font-display font-extrabold text-3xl sm:text-4xl text-brand-blue tracking-tight mb-4">
-            Cookiepolitik
-          </h1>
-          <p className="text-zinc-500 font-semibold text-sm mb-8">
-            Senest opdateret: {new Date().toLocaleDateString("da-DK", { year: "numeric", month: "long", day: "numeric" })}
+      <main id="main">
+        <article className={legalArticleClass}>
+          <h1 className={legalTitleClass}>Cookiepolitik</h1>
+          <p className={legalUpdatedClass}>
+            Senest opdateret:{" "}
+            {new Date().toLocaleDateString("da-DK", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            })}
           </p>
 
-          <div className="prose prose-zinc max-w-none text-zinc-655 font-medium leading-relaxed text-[15px] flex flex-col gap-6">
+          <div className={legalContentClass}>
             
             <section className="flex flex-col gap-2">
-              <h2 className="font-display font-extrabold text-xl text-brand-blue mt-4">1. Hvad er cookies?</h2>
+              <h2 className={legalSectionTitleClass}>1. Hvad er cookies?</h2>
               <p>
                 Cookies er små tekstfiler, som gemmes på din computer, mobiltelefon eller tablet, når du besøger et website. Cookies anvendes til at få websitet til at fungere effektivt, tilpasse din brugeroplevelse og indsamle statistik om trafikken. Cookies kan ikke indeholde skadelig kode som f.eks. virus.
               </p>
             </section>
 
             <section className="flex flex-col gap-2">
-              <h2 className="font-display font-extrabold text-xl text-brand-blue mt-4">2. Hvorfor bruger vi cookies?</h2>
+              <h2 className={legalSectionTitleClass}>2. Hvorfor bruger vi cookies?</h2>
               <p>
                 Vi bruger cookies på Renzen.dk for at give dig en velfungerende og brugervenlig tjeneste. Overordnet set bruger vi cookies til tre formål:
               </p>
@@ -44,7 +53,7 @@ export default function CookiepolitikPage() {
             </section>
 
             <section className="flex flex-col gap-2">
-              <h2 className="font-display font-extrabold text-xl text-brand-blue mt-4">3. Tredjeparts-cookies</h2>
+              <h2 className={legalSectionTitleClass}>3. Tredjeparts-cookies</h2>
               <p>
                 Følgende eksterne tjeneste kan sætte cookies via Renzen.dk efter dit samtykke:
               </p>
@@ -54,35 +63,34 @@ export default function CookiepolitikPage() {
             </section>
 
             <section className="flex flex-col gap-2">
-              <h2 className="font-display font-extrabold text-xl text-brand-blue mt-4">4. Hvor længe gemmes cookies?</h2>
+              <h2 className={legalSectionTitleClass}>4. Hvor længe gemmes cookies?</h2>
               <p>
                 Nogle cookies (såkaldte session cookies) slettes automatisk, så snart du lukker din browser. Andre cookies (persistent cookies) gemmes på din enhed i en foruddefineret periode (f.eks. 12-24 måneder) for at kunne genkende din enhed ved fremtidige besøg. Hver gang du genbesøger websitet, fornyes perioden.
               </p>
             </section>
 
             <section className="flex flex-col gap-2">
-              <h2 className="font-display font-extrabold text-xl text-brand-blue mt-4">5. Hvordan sletter eller undgår du cookies?</h2>
+              <h2 className={legalSectionTitleClass}>5. Hvordan sletter eller undgår du cookies?</h2>
               <p>
                 Du kan til enhver tid ændre dit cookie-samtykke direkte på vores website via vores cookie-indstillinger. Derudover har du mulighed for at afvise cookies på din enhed ved at ændre indstillingerne i din internetbrowser.
               </p>
               <p>
                 Hvis du ønsker at slette eksisterende cookies på din computer, afhænger metoden af, hvilken browser du benytter. Du kan finde udførlige vejledninger til sletning af cookies i de mest populære browsere på de respektive udbyderes support-sider.
               </p>
-              <p className="text-stone-500 font-semibold text-xs mt-1">
+              <p className="mt-1 text-xs font-semibold text-[#7a8a80]">
                 Bemærk: Hvis du blokerer eller sletter alle cookies, kan der være funktioner på websitet, som ophører med at fungere optimalt, og visse sider kan blive svære at navigere på.
               </p>
             </section>
 
             <section className="flex flex-col gap-2">
-              <h2 className="font-display font-extrabold text-xl text-brand-blue mt-4">6. Kontakt os</h2>
+              <h2 className={legalSectionTitleClass}>6. Kontakt os</h2>
               <p>
                 Hvis du har spørgsmål til vores brug af cookies på Renzen.dk, er du velkommen til at kontakte os på info@renzen.dk.
               </p>
             </section>
 
           </div>
-        </div>
-        </div>
+        </article>
       </main>
 
       <RenzenEditorialFooter />

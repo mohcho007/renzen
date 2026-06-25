@@ -1,6 +1,16 @@
 import React from "react";
 import Link from "next/link";
 import {
+  legalArticleClass,
+  legalContentClass,
+  legalInfoBoxClass,
+  legalLinkClass,
+  legalPageShellClass,
+  legalSectionTitleClass,
+  legalTitleClass,
+  legalUpdatedClass,
+} from "@/components/site/LegalDocument";
+import {
   RenzenEditorialFooter,
   RenzenEditorialHeader,
 } from "@/components/site/RenzenEditorialChrome";
@@ -10,10 +20,7 @@ const listClass = "list-disc pl-5 flex flex-col gap-1.5 mt-1";
 
 function Mailto() {
   return (
-    <a
-      href={`mailto:${siteConfig.email}`}
-      className="text-brand-blue hover:underline"
-    >
+    <a href={`mailto:${siteConfig.email}`} className={legalLinkClass}>
       {siteConfig.email}
     </a>
   );
@@ -21,25 +28,22 @@ function Mailto() {
 
 export default function HandelsbetingelserPage() {
   return (
-    <div className="min-h-screen bg-[#fbfaf5] text-[#203129]">
+    <div className={legalPageShellClass}>
       <RenzenEditorialHeader />
 
-      <main id="main" className="px-6 py-16 sm:px-10 sm:py-20 lg:px-14">
-        <div className="mx-auto max-w-[900px]">
-        <div className="bg-white rounded-3xl border border-zinc-200/60 p-8 sm:p-12 shadow-sm text-left">
-          <h1 className="font-display font-extrabold text-3xl sm:text-4xl text-brand-blue tracking-tight mb-4">
+      <main id="main">
+        <article className={legalArticleClass}>
+          <h1 className={legalTitleClass}>
             Handelsbetingelser for Renzen.dk
           </h1>
-          <p className="text-zinc-500 font-semibold text-sm mb-8">
-            Senest opdateret: 25. juni 2026
-          </p>
+          <p className={legalUpdatedClass}>Senest opdateret: 25. juni 2026</p>
 
-          <div className="prose prose-zinc max-w-none text-zinc-650 font-medium leading-relaxed text-[15px] flex flex-col gap-6">
+          <div className={legalContentClass}>
             <section className="flex flex-col gap-2">
-              <h2 className="font-display font-extrabold text-xl text-brand-blue mt-4">
+              <h2 className={legalSectionTitleClass}>
                 1. Virksomhed og anvendelse
               </h2>
-              <div className="bg-[#f8fafc] border border-zinc-200/50 rounded-xl p-4 text-xs font-mono font-semibold text-zinc-600 flex flex-col gap-1 w-fit mt-1">
+              <div className={legalInfoBoxClass}>
                 <span>Renzen</span>
                 <span>CVR nr.: 27569811</span>
                 <span>Trædrejerporten 1</span>
@@ -61,7 +65,7 @@ export default function HandelsbetingelserPage() {
             </section>
 
             <section className="flex flex-col gap-2">
-              <h2 className="font-display font-extrabold text-xl text-brand-blue mt-4">
+              <h2 className={legalSectionTitleClass}>
                 2. Bestilling og aftale
               </h2>
               <p>
@@ -86,7 +90,7 @@ export default function HandelsbetingelserPage() {
             </section>
 
             <section className="flex flex-col gap-2">
-              <h2 className="font-display font-extrabold text-xl text-brand-blue mt-4">
+              <h2 className={legalSectionTitleClass}>
                 3. Priser, betaling og servicefradrag
               </h2>
               <p>Alle priser er i danske kroner og inklusive moms.</p>
@@ -123,7 +127,7 @@ export default function HandelsbetingelserPage() {
             </section>
 
             <section className="flex flex-col gap-2">
-              <h2 className="font-display font-extrabold text-xl text-brand-blue mt-4">
+              <h2 className={legalSectionTitleClass}>
                 4. Renzen Klub
               </h2>
               <p>
@@ -160,7 +164,7 @@ export default function HandelsbetingelserPage() {
             </section>
 
             <section className="flex flex-col gap-2">
-              <h2 className="font-display font-extrabold text-xl text-brand-blue mt-4">
+              <h2 className={legalSectionTitleClass}>
                 5. Zenkreditter
               </h2>
               <p>
@@ -213,7 +217,7 @@ export default function HandelsbetingelserPage() {
             </section>
 
             <section className="flex flex-col gap-2">
-              <h2 className="font-display font-extrabold text-xl text-brand-blue mt-4">
+              <h2 className={legalSectionTitleClass}>
                 6. Intropris og betinget velkomstrabat
               </h2>
               <p>
@@ -250,7 +254,7 @@ export default function HandelsbetingelserPage() {
             </section>
 
             <section className="flex flex-col gap-2">
-              <h2 className="font-display font-extrabold text-xl text-brand-blue mt-4">
+              <h2 className={legalSectionTitleClass}>
                 7. Ændring, aflysning og forhindret adgang
               </h2>
               <p>
@@ -299,7 +303,7 @@ export default function HandelsbetingelserPage() {
             </section>
 
             <section className="flex flex-col gap-2">
-              <h2 className="font-display font-extrabold text-xl text-brand-blue mt-4">
+              <h2 className={legalSectionTitleClass}>
                 8. Kundens ansvar før rengøring
               </h2>
               <p>
@@ -349,7 +353,7 @@ export default function HandelsbetingelserPage() {
             </section>
 
             <section className="flex flex-col gap-2">
-              <h2 className="font-display font-extrabold text-xl text-brand-blue mt-4">
+              <h2 className={legalSectionTitleClass}>
                 9. Forsinkelse og aflysning fra Renzens side
               </h2>
               <p>
@@ -375,7 +379,7 @@ export default function HandelsbetingelserPage() {
             </section>
 
             <section className="flex flex-col gap-2">
-              <h2 className="font-display font-extrabold text-xl text-brand-blue mt-4">
+              <h2 className={legalSectionTitleClass}>
                 10. Nøgler, adgang og alarm
               </h2>
               <p>
@@ -420,7 +424,7 @@ export default function HandelsbetingelserPage() {
             </section>
 
             <section className="flex flex-col gap-2">
-              <h2 className="font-display font-extrabold text-xl text-brand-blue mt-4">
+              <h2 className={legalSectionTitleClass}>
                 11. Reklamation og mangler
               </h2>
               <p>
@@ -475,7 +479,7 @@ export default function HandelsbetingelserPage() {
             </section>
 
             <section className="flex flex-col gap-2">
-              <h2 className="font-display font-extrabold text-xl text-brand-blue mt-4">
+              <h2 className={legalSectionTitleClass}>
                 12. Skader, forsikring og dækning
               </h2>
               <p>
@@ -538,7 +542,7 @@ export default function HandelsbetingelserPage() {
             </section>
 
             <section className="flex flex-col gap-2">
-              <h2 className="font-display font-extrabold text-xl text-brand-blue mt-4">
+              <h2 className={legalSectionTitleClass}>
                 13. Særlige overflader og værdigenstande
               </h2>
               <p>
@@ -577,7 +581,7 @@ export default function HandelsbetingelserPage() {
             </section>
 
             <section className="flex flex-col gap-2">
-              <h2 className="font-display font-extrabold text-xl text-brand-blue mt-4">
+              <h2 className={legalSectionTitleClass}>
                 14. Billeddokumentation
               </h2>
               <p>
@@ -595,7 +599,7 @@ export default function HandelsbetingelserPage() {
                 den konkrete sag, og behandles i overensstemmelse med Renzens{" "}
                 <Link
                   href="/persondatapolitik"
-                  className="text-brand-blue hover:underline"
+                  className={legalLinkClass}
                 >
                   privatlivspolitik
                 </Link>{" "}
@@ -604,7 +608,7 @@ export default function HandelsbetingelserPage() {
             </section>
 
             <section className="flex flex-col gap-2">
-              <h2 className="font-display font-extrabold text-xl text-brand-blue mt-4">
+              <h2 className={legalSectionTitleClass}>
                 15. Fortrydelsesret
               </h2>
               <p>
@@ -638,7 +642,7 @@ export default function HandelsbetingelserPage() {
             </section>
 
             <section className="flex flex-col gap-2">
-              <h2 className="font-display font-extrabold text-xl text-brand-blue mt-4">
+              <h2 className={legalSectionTitleClass}>
                 16. Misbrug, omgåelse og adfærd
               </h2>
               <p>
@@ -685,7 +689,7 @@ export default function HandelsbetingelserPage() {
             </section>
 
             <section className="flex flex-col gap-2">
-              <h2 className="font-display font-extrabold text-xl text-brand-blue mt-4">
+              <h2 className={legalSectionTitleClass}>
                 17. Ændringer i priser, medlemskab og vilkår
               </h2>
               <p>
@@ -710,7 +714,7 @@ export default function HandelsbetingelserPage() {
             </section>
 
             <section className="flex flex-col gap-2">
-              <h2 className="font-display font-extrabold text-xl text-brand-blue mt-4">
+              <h2 className={legalSectionTitleClass}>
                 18. Privatliv og datahåndtering
               </h2>
               <p>
@@ -718,7 +722,7 @@ export default function HandelsbetingelserPage() {
                 gældende databeskyttelseslovgivning og Renzens{" "}
                 <Link
                   href="/persondatapolitik"
-                  className="text-brand-blue hover:underline"
+                  className={legalLinkClass}
                 >
                   privatlivspolitik
                 </Link>
@@ -736,7 +740,7 @@ export default function HandelsbetingelserPage() {
             </section>
 
             <section className="flex flex-col gap-2">
-              <h2 className="font-display font-extrabold text-xl text-brand-blue mt-4">
+              <h2 className={legalSectionTitleClass}>
                 19. Klager og lovvalg
               </h2>
               <p>
@@ -755,8 +759,7 @@ export default function HandelsbetingelserPage() {
               </p>
             </section>
           </div>
-        </div>
-        </div>
+        </article>
       </main>
 
       <RenzenEditorialFooter />

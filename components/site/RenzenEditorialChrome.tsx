@@ -18,7 +18,7 @@ const navigation = [
   { label: "Flytterengøring", href: "/flytterengoring" },
   { label: "Hovedrengøring", href: "/hovedrengoring" },
   { label: "Vinduespudsning", href: "/vinduespudsning" },
-  { label: "Erhverv", href: "/erhvervsrengoring" },
+  { label: "Erhvervsrengøring", href: "/erhvervsrengoring" },
 ];
 
 export function RenzenEditorialHeader() {
