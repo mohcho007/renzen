@@ -85,6 +85,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
         ) {
           return;
         }
+        if (service.slug === "flytterengoring") {
+          return;
+        }
         const isIndexable = service.indexable && (city.indexableServices?.includes(service.slug) ?? true);
         if (isIndexable) {
           dynamicRoutes.push({

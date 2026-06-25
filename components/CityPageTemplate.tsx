@@ -317,7 +317,7 @@ export default function CityPageTemplate({ service, city }: CityPageTemplateProp
                   { label: 'Flytterengøring', slug: 'flytterengoring', icon: '/flyterengoring-ikon.png' },
                   { label: 'Erhvervsrengøring', slug: 'erhvervsrengoring', icon: '/kontor-rengoring-ikon.png' }
                 ].map((item) => (
-                  <Link href={`/${item.slug}/${city.slug}/`} key={item.slug} className="bg-slate-50 p-6 rounded-2xl border border-slate-150 shadow-sm text-center flex flex-col items-center hover:scale-105 transition-transform duration-300">
+                  <Link href={item.slug === 'flytterengoring' ? getServiceUrl(item.slug) : `/${item.slug}/${city.slug}/`} key={item.slug} className="bg-slate-50 p-6 rounded-2xl border border-slate-150 shadow-sm text-center flex flex-col items-center hover:scale-105 transition-transform duration-300">
                     <div className="relative w-12 h-12 mb-3">
                       <Image src={item.icon} alt={item.label} fill className="object-contain" />
                     </div>
