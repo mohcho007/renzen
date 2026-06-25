@@ -1,0 +1,64 @@
+# Renzen
+
+> Renzen (renzen.dk) is Denmark's cleaning platform. Book insured Zenmestre for private home cleaning, move-out cleaning, Airbnb turnover, and related home services. Members save via Renzen Klub (intro offer and Zen credits).
+
+Renzen Rengøring · CVR 27569811
+Phone: +45 49 90 30 55 · Email: info@renzen.dk
+Address: Trædrejerporten 1, 2650 Hvidovre, Denmark
+Opening hours (customer service): Monday–Friday 08:00–17:00
+
+How to book: Use the online price calculator and booking flow at /book-rengoering/ — most customers complete booking in under 2 minutes. For membership intro pricing, see /klub/.
+
+Service area: Private cleaning city pages cover Greater Copenhagen (37 priority cities). Airbnb cleaning city pages cover 8 cities (København, Frederiksberg, Gentofte, Aarhus, Odense, Aalborg, Roskilde, Helsingør). Other services are offered nationally; many use a forespørgsel (inquiry) form.
+
+Language: Primary content is Danish (da-DK). This file is in English for LLM crawlers; on-site copy is Danish unless noted.
+
+## Book & membership
+
+- [Book rengøring](https://renzen.dk/book-rengoering/): Online price calculator and booking — primary conversion path
+- [Renzen Klub](https://renzen.dk/klub/): Membership, intro offer from 199 kr., Zen credits and member savings
+- [Kontakt](https://renzen.dk/kontakt/): Phone, email, address, contact form
+- [FAQ](https://renzen.dk/faq/): Pricing, booking, insurance, cancellation, servicefradrag
+
+## Core cleaning services
+
+- [Privat rengøring](https://renzen.dk/privat-rengoring/): Recurring or one-off home cleaning with fixed Zenmestre
+- [Flytterengøring](https://renzen.dk/flytterengoring/): Move-in/move-out cleaning with satisfaction guarantee
+- [Airbnb rengøring](https://renzen.dk/airbnb-rengoring/): Turnover cleaning between guests for short-term rentals
+- [Rengøring (hub)](https://renzen.dk/rengoring/): Overview of cleaning services
+- [Erhvervsrengøring](https://renzen.dk/erhvervsrengoring/): Office and commercial cleaning (inquiry-based)
+- [Hovedrengøring](https://renzen.dk/hovedrengoring/): Deep / spring cleaning
+
+## Boligservice & related
+
+- [Boligservice (hub)](https://renzen.dk/boligservice/): Practical home services beyond cleaning
+- [Fliserens](https://renzen.dk/fliserens/): Tile and patio cleaning
+- [Tagrenderens](https://renzen.dk/tagrenderens/): Gutter cleaning
+- [Havearbejde](https://renzen.dk/havearbejde/): Garden work
+- [Vinduespudsning](https://renzen.dk/vinduespudsning/): Window cleaning
+- [Flytning og flyttehjælp](https://renzen.dk/flytning-og-flyttehjaelp/): Moving assistance
+- [Malerarbejde](https://renzen.dk/malerarbejde/): Painting
+- [Kontorrengøring](https://renzen.dk/kontorrengoring/): Office cleaning inquiries
+
+## Editorial & company
+
+- [Artikler](https://renzen.dk/artikler/): ~30 guides on cleaning, servicefradrag, flytterengøring, and home care
+- [Om os](https://renzen.dk/om-os/): About Renzen, Zenmestre, and quality standards
+- [Bliv Zenmester](https://renzen.dk/bliv-zenmester/): Apply to become a Renzen cleaning partner
+
+## City landing pages (examples)
+
+- [Privat rengøring København](https://renzen.dk/privat-rengoring/koebenhavn/)
+- [Privat rengøring Frederiksberg](https://renzen.dk/privat-rengoring/frederiksberg/)
+- [Flytterengøring København](https://renzen.dk/flytterengoring/koebenhavn/)
+- [Airbnb rengøring København](https://renzen.dk/airbnb-rengoring/koebenhavn/)
+
+Full city URLs are listed in the sitemap. Privat rengøring: 37 Greater Copenhagen cities. Airbnb: 8 cities.
+
+## Optional
+
+- [Sitemap](https://renzen.dk/sitemap.xml): Complete index of public, indexable URLs
+- [Handelsbetingelser](https://renzen.dk/handelsbetingelser/): Terms and conditions
+- [Persondatapolitik](https://renzen.dk/persondatapolitik/): Privacy policy
+- [Cookiepolitik](https://renzen.dk/cookiepolitik/): Cookie policy
+- [Facebook](https://facebook.com/renzen): Official Facebook page
