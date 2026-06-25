@@ -114,7 +114,11 @@
   background: #cfdccf;
 }
 
-.megaMenuCleaning .megaMenuIntro,
+.megaMenuCleaning .megaMenuIntro {
+  position: relative;
+  overflow: visible;
+}
+
 .megaMenuAbout .megaMenuIntro {
   position: relative;
   overflow: visible;
@@ -126,10 +130,8 @@
   content: "";
   position: absolute;
   right: 0;
-  bottom: 16px;
   z-index: 0;
   width: 102px;
-  height: 98px;
   pointer-events: none;
   background-image: url("/icons/house-bg%20(1).png");
   background-repeat: no-repeat;
@@ -137,6 +139,16 @@
   background-size: contain;
   mix-blend-mode: screen;
   opacity: 0.28;
+}
+
+.megaMenuCleaning .megaMenuIntro::after {
+  bottom: 4px;
+  height: 86px;
+}
+
+.megaMenuAbout .megaMenuIntro::after {
+  bottom: 7px;
+  height: 98px;
 }
 
 .megaMenuCleaning .megaMenuIntro > *,
