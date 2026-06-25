@@ -173,10 +173,8 @@ export const cities: City[] = rawCities.map((c) => {
   // /priser/
   // /faq/
   // /artikler/[slug]/
-  // We want to make sure the main service pages are indexable (rengoring, privat-rengoring, flytterengoring, airbnb-rengoring).
-  // On city pages, let's allow:
-  // - "privat-rengoring" and "rengoring" to be indexable for København and Frederiksberg by default.
-  // Let's configure this using indexableServices array.
+  // Indexable national services: rengoring, privat-rengoring, flytterengoring, airbnb-rengoring.
+  // City routes exist only for privat-rengoring (priority-1) and airbnb-rengoring (served cities).
   const indexableServices = ['privat-rengoring', 'airbnb-rengoring'];
 
   const faq = [

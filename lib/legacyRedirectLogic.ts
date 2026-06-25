@@ -1,26 +1,14 @@
 import { cities } from "../data/cities";
 import { isPrivatRengoringPriority1Slug } from "./privatRengoringCities";
 
-/** Legacy service slugs whose city URLs consolidate on privat-rengoring. */
-export const LEGACY_CLEANING_SERVICE_SLUGS = [
-  "rengoring",
-  "hovedrengoring",
-  "engangsrengoring",
-  "erhvervsrengoring",
-] as const;
-
-/** National-only slugs that consolidate on privat-rengoring (not hovedrengoring/erhvervsrengoring). */
+/** National-only slugs that consolidate on privat-rengoring (no real page). */
 export const NATIONAL_PRIVAT_CONSOLIDATION_SLUGS = ["engangsrengoring"] as const;
 
-/** Old WordPress spellings (oe) with city segments. */
+/** WP spellings (oe) that had real /{service}/{city}/ URLs on the old site. */
 export const LEGACY_SPELLING_CITY_SERVICES = new Set([
-  "rengoering",
   "privat-rengoering",
   "hjemmerengoering",
   "hjemmerengoring",
-  "hovedrengoering",
-  "engangsrengoering",
-  "erhvervsrengoering",
 ]);
 
 /** National legacy spelling → destination (no city segment). */
@@ -203,11 +191,7 @@ export function getLegacyRedirectDestination(pathname: string): string | undefin
     return undefined;
   }
 
-  const legacyService =
-    (LEGACY_CLEANING_SERVICE_SLUGS as readonly string[]).includes(service) ||
-    LEGACY_SPELLING_CITY_SERVICES.has(service);
-
-  if (legacyService) {
+  if (LEGACY_SPELLING_CITY_SERVICES.has(service)) {
     return privatRengoringDestination(canonical);
   }
 

@@ -15,10 +15,7 @@ export function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    "/rengoring/:path*",
-    "/hovedrengoring/:path*",
     "/engangsrengoring/:path*",
-    "/erhvervsrengoring/:path*",
     "/rengoering/:path*",
     "/hovedrengoering/:path*",
     "/engangsrengoering/:path*",
