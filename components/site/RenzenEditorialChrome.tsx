@@ -223,8 +223,12 @@ export function RenzenEditorialFooter() {
         </div>
 
         <div className="flex flex-col justify-between gap-5 pt-7 text-xs font-medium text-white/55 sm:flex-row">
-          <p suppressHydrationWarning>
-            © {new Date().getFullYear()} {siteConfig.legalName}
+          <p suppressHydrationWarning className="flex flex-wrap items-center gap-x-2">
+            <span>© {new Date().getFullYear()} {siteConfig.name}</span>
+            <span aria-hidden="true" className="text-white/35">
+              ·
+            </span>
+            <span>CVR {siteConfig.cvr}</span>
           </p>
           <div className="flex flex-wrap gap-x-5 gap-y-2">
             <Link href="/handelsbetingelser">Handelsbetingelser</Link>
