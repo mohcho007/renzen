@@ -118,6 +118,7 @@
 .megaMenuAbout .megaMenuIntro {
   position: relative;
   overflow: visible;
+  padding-bottom: 56px;
 }
 
 .megaMenuCleaning .megaMenuIntro::after,
@@ -125,10 +126,10 @@
   content: "";
   position: absolute;
   right: 0;
-  bottom: 4px;
+  bottom: 16px;
   z-index: 0;
   width: 102px;
-  height: 86px;
+  height: 98px;
   pointer-events: none;
   background-image: url("/icons/house-bg%20(1).png");
   background-repeat: no-repeat;
