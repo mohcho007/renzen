@@ -7,13 +7,18 @@ export interface EditorialBreadcrumb {
 
 export function RenzenEditorialBreadcrumbs({
   breadcrumbs,
+  className,
 }: {
   breadcrumbs: EditorialBreadcrumb[];
+  className?: string;
 }) {
   return (
     <nav
       aria-label="Breadcrumb"
-      className="relative z-30 w-full px-6 pt-6 pb-2 text-[13px] text-zinc-500 sm:px-10 lg:px-14"
+      className={
+        className ??
+        "relative z-30 w-full px-6 pt-6 pb-2 text-[13px] text-zinc-500 sm:px-10 lg:px-14"
+      }
     >
       <ol className="m-0 flex list-none flex-wrap items-center gap-1.5 p-0">
         {breadcrumbs.map((breadcrumb, index) => {

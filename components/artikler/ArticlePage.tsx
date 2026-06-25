@@ -6,6 +6,7 @@ import {
   RenzenEditorialFooter,
   RenzenEditorialHeader,
 } from "@/components/site/RenzenEditorialChrome";
+import "./ArticleProse.css";
 
 const articleProseClass =
   "prose prose-zinc max-w-none text-[15px] font-medium leading-relaxed text-[#536159] sm:text-base " +
@@ -77,7 +78,7 @@ export function ArticlePage({ article }: { article: Article }) {
           </p>
 
           <div
-            className={`${articleProseClass} mt-10`}
+            className={`article-prose ${articleProseClass} mt-10 max-w-full overflow-x-clip`}
             dangerouslySetInnerHTML={{ __html: article.content }}
           />
         </article>

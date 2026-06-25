@@ -100,6 +100,7 @@ export default async function PrivatRengoringCityPage({ params }: PageProps) {
         config={config}
         inquiryPath="/book-rengoering"
         breadcrumbs={breadcrumbs}
+        breadcrumbPlacement="after-cities"
       />
     </>
   );

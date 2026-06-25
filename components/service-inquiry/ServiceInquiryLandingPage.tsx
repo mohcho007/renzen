@@ -30,12 +30,14 @@ type ServiceInquiryLandingPageProps = {
   config: EditorialServiceLandingConfig;
   inquiryPath?: string;
   breadcrumbs?: EditorialBreadcrumb[];
+  breadcrumbPlacement?: "top" | "after-cities";
 };
 
 export function ServiceInquiryLandingPage({
   config,
   inquiryPath,
   breadcrumbs,
+  breadcrumbPlacement = "top",
 }: ServiceInquiryLandingPageProps) {
   const forespoergselPath =
     inquiryPath ?? `/${config.slug}/forespoergsel/`;
@@ -45,7 +47,9 @@ export function ServiceInquiryLandingPage({
       <RenzenEditorialHeader />
 
       <main id="main">
-        {breadcrumbs && breadcrumbs.length > 0 ? (
+        {breadcrumbPlacement === "top" &&
+        breadcrumbs &&
+        breadcrumbs.length > 0 ? (
           <RenzenEditorialBreadcrumbs breadcrumbs={breadcrumbs} />
         ) : null}
         <section
@@ -635,6 +639,14 @@ export function ServiceInquiryLandingPage({
                   </Link>
                 ))}
               </div>
+              {breadcrumbPlacement === "after-cities" &&
+              breadcrumbs &&
+              breadcrumbs.length > 0 ? (
+                <RenzenEditorialBreadcrumbs
+                  breadcrumbs={breadcrumbs}
+                  className="mt-10 px-0 pt-0 pb-0 text-[13px] text-zinc-500"
+                />
+              ) : null}
             </div>
           </section>
         ) : null}

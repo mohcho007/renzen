@@ -1,0 +1,82 @@
+/* WordPress-imported responsive table/card blocks inside article prose */
+.article-prose .renzen-compare {
+  margin: 2rem 0;
+  clear: both;
+  max-width: 100%;
+}
+
+.article-prose .renzen-table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  max-width: 100%;
+}
+
+.article-prose .renzen-compare-table {
+  width: max-content;
+  min-width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+  line-height: 1.45;
+}
+
+.article-prose .renzen-compare-table th,
+.article-prose .renzen-compare-table td {
+  white-space: nowrap;
+  vertical-align: top;
+}
+
+.article-prose .renzen-compare-table th:first-child,
+.article-prose .renzen-compare-table td:first-child {
+  white-space: normal;
+  min-width: 7rem;
+}
+
+.article-prose .renzen-scroll-hint {
+  display: none;
+  margin: 0.5rem 0 0;
+  text-align: center;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: #7a8a80;
+}
+
+.article-prose .renzen-cards {
+  display: none;
+}
+
+.article-prose .renzen-card {
+  border: 1px solid #dfe2da;
+  background: #f6f4ed;
+  padding: 1rem 1.125rem;
+}
+
+.article-prose .renzen-card h4 {
+  margin: 0 0 0.5rem;
+  font-family: var(--font-display), ui-sans-serif, system-ui, sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #173c2c;
+}
+
+.article-prose .renzen-card p {
+  margin: 0.35rem 0 0;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+@media (max-width: 767px) {
+  .article-prose .renzen-scroll-hint {
+    display: block;
+  }
+
+  .article-prose .renzen-table-wrap {
+    display: none;
+  }
+
+  .article-prose .renzen-cards {
+    display: grid;
+    gap: 0.75rem;
+    margin-top: 0.25rem;
+  }
+}
