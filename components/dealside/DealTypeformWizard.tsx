@@ -1404,7 +1404,10 @@ function DealTypeformWizardForm({
     [isBook2, bookFrequencyId, recurringFrequencyId],
   );
 
-  const klubColumnIntroPrice = introCleaningDueKr;
+  const klubColumnIntroPrice =
+    introTierExceeded
+      ? listPrice
+      : Math.max(0, introPrice - ZEN_CREDIT_MONTHLY_KR);
 
   const klubColumnSavings = introTierExceeded ? 0 : listPrice - introPrice;
 
