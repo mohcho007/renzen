@@ -17,7 +17,7 @@ const CITY_COPY = {
   koebenhavn: {
     heroTitle: "Privat rengøring i København med fast Zenmester.",
     heroDescription:
-      "Få en forsikret Zenmester til din københavnske lejlighed eller byhus. Vi kender byens tempo, parkeringszoner og trapper, så du får mere ro i hverdagen. Se din pris på under to minutter med Renzen Klub fordele.",
+      "Få en forsikret Zenmester til dit hjem i København. Se prisen med det samme og book på under 2 min.",
     metaDescription:
       "Privat rengøring i København. Fast Zenmester til lejligheder og byhuse i hele Københavns Kommune — forsikrede medarbejdere, servicefradrag og medlemsfordele.",
     sections: [
@@ -49,7 +49,7 @@ const CITY_COPY = {
   frederiksberg: {
     heroTitle: "Privat rengøring på Frederiksberg med fast Zenmester.",
     heroDescription:
-      "Få en forsikret Zenmester til herskabslejlighed eller byhus på Frederiksberg. Vi gør det let at holde et roligt og præsentabelt hjem i en travl hverdag. Se din pris med det samme med Renzen Klub fordele.",
+      "Få en forsikret Zenmester til dit hjem på Frederiksberg. Se prisen med det samme og book på under 2 min.",
     metaDescription:
       "Privat rengøring på Frederiksberg. Fast Zenmester til klassiske lejligheder og byhuse — servicefradrag, forsikrede medarbejdere og introtilbud med Renzen Klub.",
     sections: [
@@ -139,27 +139,11 @@ const SECTION_TITLE_SETS = [
 
 const HERO_INTROS = [
   (name) => `Få en forsikret Zenmester til dit hjem i ${name}.`,
-  (name) => `I ${name} matcher vi dig med en forsikret Zenmester, der lærer dit hjem at kende.`,
-  (name) => `Privat rengøring i ${name} med en forsikret Zenmester giver en tryg hverdag fra første besøg.`,
-  (name) => `Lad en forsikret Zenmester tage rengøringen i ${name}, så du får en løsning du kan regne med.`,
-  (name) => `I ${name} får du en forsikret Zenmester tilpasset din bolig og din rytme.`,
+  (name) => `Privat rengøring i ${name} med en forsikret Zenmester.`,
+  (name) => `Vi matcher dig med en forsikret Zenmester i ${name}.`,
 ];
 
-const HERO_TIME_COMFORT = [
-  (name, landmarks) => `Vi hjælper i hele ${name}, fra ${landmarks}, så du sparer tid i en travl uge og kommer hjem til ro.`,
-  (name, landmarks) => `Fra ${landmarks} gør vi hverdagen lettere med fast kvalitet, mindre stress og mere overskud i hjemmet.`,
-  (name, landmarks) => `Vi dækker hele ${name}, også omkring ${landmarks}, så du får mere komfort og mindre praktisk bøvl.`,
-  (name, landmarks) => `I kvarterer som ${landmarks} holder vi dit hjem løbende rent, så du kan bruge tiden på det vigtige.`,
-  (name, landmarks) => `Uanset om du bor nær ${landmarks}, giver vi dig en nem rengøringsrutine med mere tid og ro.`,
-];
-
-const HERO_BOOKING_CLOSERS = [
-  () => "Se din pris på under to minutter med Renzen Klub fordele.",
-  () => "Tjek din pris med det samme, og kom nemt i gang med Renzen Klub fordele.",
-  () => "Book enkelt online, og se din pris hurtigt med Renzen Klub fordele.",
-  () => "Få fuldt prisoverblik med få klik, og start med Renzen Klub fordele.",
-  () => "Se prisen med det samme, og vælg en fast aftale med Renzen Klub fordele.",
-];
+const HERO_CTA = "Se prisen med det samme og book på under 2 min.";
 
 function pickHeroVariant(slug, variants) {
   const hash = slug.split("").reduce((sum, ch) => sum + ch.charCodeAt(0), 0);
@@ -172,13 +156,11 @@ for (const [slug, name, housing, landmarks, localNote] of REMAINING) {
   setIdx++;
   const money = ["kastrup", "koebenhavn-s", "valby", "hvidovre", "roedovre", "glostrup", "broendby", "herlev"].includes(slug);
   const heroIntro = pickHeroVariant(slug, HERO_INTROS)(name);
-  const heroComfort = pickHeroVariant(`${slug}-comfort`, HERO_TIME_COMFORT)(name, landmarks);
-  const heroBooking = pickHeroVariant(`${slug}-booking`, HERO_BOOKING_CLOSERS)();
   CITY_COPY[slug] = {
     heroTitle: money
       ? `Privat rengøring i ${name} med fast Zenmester.`
       : `Privat rengøring i ${name}.`,
-    heroDescription: `${heroIntro} ${heroComfort} ${heroBooking}`,
+    heroDescription: `${heroIntro} ${HERO_CTA}`,
     metaDescription: `Privat rengøring i ${name}. Fast Zenmester, forsikrede medarbejdere og op til 26% servicefradrag. Book rengøringshjælp med Renzen Klub fordele.`,
     sections: [
       {
