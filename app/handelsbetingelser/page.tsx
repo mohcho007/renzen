@@ -1,7 +1,9 @@
 import React from "react";
 import Link from "next/link";
-import { SiteHeader } from "@/components/site/SiteHeader";
-import { SiteFooter } from "@/components/site/SiteFooter";
+import {
+  RenzenEditorialFooter,
+  RenzenEditorialHeader,
+} from "@/components/site/RenzenEditorialChrome";
 import { siteConfig } from "@/lib/siteConfig";
 
 const listClass = "list-disc pl-5 flex flex-col gap-1.5 mt-1";
@@ -19,10 +21,11 @@ function Mailto() {
 
 export default function HandelsbetingelserPage() {
   return (
-    <div className="min-h-screen bg-[#fafafa] flex flex-col font-sans">
-      <SiteHeader />
+    <div className="min-h-screen bg-[#fbfaf5] text-[#203129]">
+      <RenzenEditorialHeader />
 
-      <main className="flex-grow max-w-[900px] mx-auto px-6 py-16 sm:py-20 w-full">
+      <main className="px-6 py-16 sm:px-10 sm:py-20 lg:px-14">
+        <div className="mx-auto max-w-[900px]">
         <div className="bg-white rounded-3xl border border-zinc-200/60 p-8 sm:p-12 shadow-sm text-left">
           <h1 className="font-display font-extrabold text-3xl sm:text-4xl text-brand-blue tracking-tight mb-4">
             Handelsbetingelser for Renzen.dk
@@ -753,9 +756,10 @@ export default function HandelsbetingelserPage() {
             </section>
           </div>
         </div>
+        </div>
       </main>
 
-      <SiteFooter />
+      <RenzenEditorialFooter />
     </div>
   );
 }

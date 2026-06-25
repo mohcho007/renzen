@@ -4,8 +4,10 @@ import Link from "next/link";
 import { ArrowRight, Building2, CheckCircle2, Scale } from "lucide-react";
 import { createStaticPageMetadata } from "@/lib/siteMetadata";
 import { siteConfig } from "@/lib/siteConfig";
-import { SiteHeader } from "@/components/site/SiteHeader";
-import { SiteFooter } from "@/components/site/SiteFooter";
+import {
+  RenzenEditorialFooter,
+  RenzenEditorialHeader,
+} from "@/components/site/RenzenEditorialChrome";
 
 export const metadata: Metadata = createStaticPageMetadata({
   title: "Om Renzen",
@@ -16,9 +18,9 @@ export const metadata: Metadata = createStaticPageMetadata({
 
 export default function AboutPage() {
   return (
-    <div className="flex min-h-screen flex-col bg-white">
-      <SiteHeader />
-      <main className="flex-1">
+    <div className="min-h-screen bg-[#fbfaf5] text-[#203129]">
+      <RenzenEditorialHeader />
+      <main>
         <section className="bg-brand-bg px-6 py-20 sm:py-28">
           <div className="mx-auto grid max-w-[1100px] items-center gap-12 lg:grid-cols-2">
             <div>
@@ -102,7 +104,7 @@ export default function AboutPage() {
           </div>
         </section>
       </main>
-      <SiteFooter />
+      <RenzenEditorialFooter />
     </div>
   );
 }
