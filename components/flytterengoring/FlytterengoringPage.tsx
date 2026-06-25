@@ -1,9 +1,9 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Check, ShieldCheck, Star } from "lucide-react";
-import FlytPriceCalculator from "@/components/flytterengoring/FlytPriceCalculator";
 import {
   RenzenEditorialFooter,
   RenzenEditorialHeader,
@@ -18,22 +18,35 @@ import { ZEN_CREDIT_SERVICES_SECTION_INTRO } from "@/lib/zenCreditServices";
 import { INTRO_CLEANING_FROM_KR, ZEN_CREDIT_MONTHLY_KR } from "@/data/pricing";
 import { ZenCreditServicesGrid } from "@/components/site/ZenCreditServicesGrid";
 
-const beforeAfterGifs = [
+const FlytPriceCalculator = dynamic(
+  () => import("@/components/flytterengoring/FlytPriceCalculator"),
+  {
+    ssr: false,
+    loading: () => (
+      <div
+        className="min-h-[320px] animate-pulse rounded border border-[#d8ddd5] bg-[#f6f4ee]"
+        aria-hidden="true"
+      />
+    ),
+  },
+);
+
+const beforeAfterImages = [
   {
     label: "Toilet og bad gjort klar til aflevering",
-    src: "/foer-efter-toilet-rens.gif",
+    src: "/foer-efter-toilet-rens.webp",
   },
   {
     label: "Ovn renset helt i bund",
-    src: "/foer-efter-ovn-rens.gif",
+    src: "/foer-efter-ovn-rens.webp",
   },
   {
     label: "Kalk og belægninger fjernet",
-    src: "/foer-efter-wc-rens-1.gif",
+    src: "/foer-efter-wc-rens-1.webp",
   },
   {
     label: "Vask og armatur rengjort",
-    src: "/foer-efter-amatur-rengoering.gif",
+    src: "/foer-efter-amatur-rengoering.webp",
   },
 ];
 
@@ -232,7 +245,7 @@ export function FlytterengoringPage() {
           </div>
 
           <div className="mt-8 grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-4">
-            {beforeAfterGifs.map((item) => (
+            {beforeAfterImages.map((item) => (
               <div
                 key={item.label}
                 className="border border-[#d8ddd5] bg-[#f6f4ee] p-2 sm:p-4"
@@ -242,7 +255,6 @@ export function FlytterengoringPage() {
                     src={item.src}
                     alt={item.label}
                     fill
-                    unoptimized
                     sizes="(max-width: 640px) 50vw, 25vw"
                     className="object-cover"
                   />

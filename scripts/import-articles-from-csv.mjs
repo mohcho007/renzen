@@ -11,7 +11,7 @@ const ROOT = path.join(__dirname, "..");
 const CSV_PATH = path.join(ROOT, "public", "p.csv");
 const OUT_PATH = path.join(ROOT, "data", "importedArticles.ts");
 
-/** GSC-indexed article slugs to import (excludes book-rengoering-online). */
+/** WordPress CSV article slugs to import into data/importedArticles.ts. */
 export const TARGET_SLUGS = [
   "svanemaerket-rengoering",
   "budget-for-erhvervsrengoering",
@@ -30,6 +30,17 @@ export const TARGET_SLUGS = [
   "erhvervsrengoering-koebenhavn",
   "hvor-ofte-professionel-rengoering",
   "engangs-rengoering-vs-fast-rengoering",
+  "saadan-arbejder-vores-zenmestre",
+  "kvalitetssikring-rengoering-2026",
+  "kontorrengoering-tjekliste-guide",
+  "forberedelse-foer-rengoering",
+  "vinduespudsning-teknikker-udstyr-sikkerhed",
+  "hvad-indgaar-ikke-i-professionel-rengoering",
+  "hvad-koster-rengoering-i-danmark",
+  "kvalitetskontrol-erhvervsrengoering",
+  "book-rengoering-online",
+  "billig-rengoering-vs-kvalitet",
+  "flytterengoering-guide-praktiske-tips-til-effektiv-rengoering",
 ];
 
 const HEADERS = [
@@ -114,7 +125,6 @@ const VALID_INTERNAL = new Set([
   "/faq/",
   "/kontakt/",
   "/bliv-zenmester/",
-  "/priser/",
   "/klub/",
   "/book-rengoering/",
   "/artikler/",
@@ -135,6 +145,7 @@ const PATH_REWRITES = {
   "/kontakt-os/": "/kontakt/",
   "/logind/": "/book-rengoering/",
   "/start/": "/book-rengoering/",
+  "/priser/": "/book-rengoering/",
   "/blog/": "/artikler/",
   "/privat-rengoering/": "/privat-rengoring/",
   "/hjemmerengoering/": "/privat-rengoring/",

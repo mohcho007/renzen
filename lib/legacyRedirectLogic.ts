@@ -55,7 +55,6 @@ export const STATIC_LEGACY_REDIRECTS: Record<string, string> = {
   "/privat-rengoring/københavn/": "/privat-rengoring/koebenhavn/",
   "/privat-rengoering/kobenhavn/": "/privat-rengoring/koebenhavn/",
   "/privat-rengoering/københavn/": "/privat-rengoring/koebenhavn/",
-  "/artikler/book-rengoering-online/": "/book-rengoering/",
   "/priser/": "/",
 };
 
@@ -78,6 +77,17 @@ export const LEGACY_WP_ARTICLE_SLUGS = [
   "erhvervsrengoering-koebenhavn",
   "hvor-ofte-professionel-rengoering",
   "engangs-rengoering-vs-fast-rengoering",
+  "saadan-arbejder-vores-zenmestre",
+  "kvalitetssikring-rengoering-2026",
+  "kontorrengoering-tjekliste-guide",
+  "forberedelse-foer-rengoering",
+  "vinduespudsning-teknikker-udstyr-sikkerhed",
+  "hvad-indgaar-ikke-i-professionel-rengoering",
+  "hvad-koster-rengoering-i-danmark",
+  "kvalitetskontrol-erhvervsrengoering",
+  "book-rengoering-online",
+  "billig-rengoering-vs-kvalitet",
+  "flytterengoering-guide-praktiske-tips-til-effektiv-rengoering",
 ] as const;
 
 function articleSlugSpellingVariants(slug: string): string[] {
