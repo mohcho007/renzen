@@ -4809,17 +4809,17 @@ label.l27-custom-btn.selected span{color:#ffffff !important;}
 }
 
 /* ==========================================================================
-   Renbud Form Styling - Applied to Dealside Form Components
+   Dealside form styling
    ========================================================================== */
 
 :root {
   --l27-primary: #206d69; /* Rich teal brand color */
   --l27-primary-light: #e1f2ef; /* Teal light tint */
-  --l27-primary-active-bg: #f0fdf4; /* Clean light green active state from Renbud */
-  --l27-border: #d1d5db; /* Cool gray border from Renbud */
-  --l27-border-light: #e5e7eb; /* Lighter border from Renbud */
-  --l27-bg-input: #ffffff; /* Input background from Renbud */
-  --l27-bg-input-hover: #ffffff; /* Input hover background from Renbud */
+  --l27-primary-active-bg: #f0fdf4;
+  --l27-border: #d1d5db;
+  --l27-border-light: #e5e7eb;
+  --l27-bg-input: #ffffff;
+  --l27-bg-input-hover: #ffffff;
   --l27-text-foreground: hsl(220, 20%, 12%);
   --l27-text-muted: hsl(220, 10%, 46%);
   --l27-radius-sm: 6px;
@@ -5174,7 +5174,7 @@ label.l27-field-group {
   z-index: 10 !important;
 }
 
-/* 8. Terms Checkbox (Renbud Style Custom Checkbox) */
+/* 8. Terms checkbox */
 .custom-checkbox-container {
   display: flex !important;
   align-items: flex-start !important;
@@ -5197,10 +5197,10 @@ label.l27-field-group {
   user-select: none !important;
 }
 .custom-checkbox-box {
-  width: 24px !important; /* 24px from Renbud CustomCheckbox */
-  height: 24px !important; /* 24px from Renbud CustomCheckbox */
-  border: 2px solid var(--l27-border) !important; /* 2px solid from Renbud */
-  border-radius: 6px !important; /* 6px from Renbud */
+  width: 24px !important;
+  height: 24px !important;
+  border: 2px solid var(--l27-border) !important;
+  border-radius: 6px !important;
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
@@ -5225,7 +5225,7 @@ label.l27-field-group {
   stroke-dashoffset: 0 !important;
 }
 .checkbox-text-label {
-  font-size: 0.9375rem !important; /* 15px from Renbud */
+  font-size: 0.9375rem !important;
   color: var(--l27-text-foreground) !important;
   line-height: 1.4 !important;
   font-weight: 600 !important;

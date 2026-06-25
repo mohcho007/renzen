@@ -54,10 +54,6 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "cdn.renbud.dk",
-      },
-      {
-        protocol: "https",
         hostname: "renzen.dk",
         pathname: "/wp-content/**",
       },

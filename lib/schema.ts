@@ -1,7 +1,7 @@
 import { siteConfig } from './siteConfig';
 import { DOMAIN } from './urls';
 
-/** Matches on-site copy: 4,8 ud af 5 / +500 glade kunder (TrustMarkers). */
+/** Matches on-site copy: 4,8 ud af 5 / +500 glade kunder. */
 export const RENZEN_AGGREGATE_RATING = {
   '@type': 'AggregateRating',
   ratingValue: '4.8',

@@ -130,7 +130,7 @@ export function GoogleAnalytics() {
 
   return (
     <>
-      <Script id="renbud-google-analytics-consent" strategy="afterInteractive">
+      <Script id="renzen-google-analytics-consent" strategy="afterInteractive">
         {`
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
@@ -146,7 +146,7 @@ export function GoogleAnalytics() {
         `}
       </Script>
       <Script
-        id="renbud-google-analytics"
+        id="renzen-google-analytics"
         src={`https://www.googletagmanager.com/gtag/js?id=${GOOGLE_MEASUREMENT_ID}`}
         strategy="afterInteractive"
       />
