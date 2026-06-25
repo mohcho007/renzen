@@ -123,19 +123,19 @@ export function SiteFooter() {
           </h2>
           <div className="flex flex-col gap-2.5 text-xs font-semibold text-zinc-600">
             <Link
-              href="/faq"
+              href="/faq/"
               className="transition-colors hover:text-[#3B7965]"
             >
               Ofte stillede spørgsmål
             </Link>
             <Link
-              href="/kontakt"
+              href="/kontakt/"
               className="transition-colors hover:text-[#3B7965]"
             >
               Kontakt os
             </Link>
             <Link
-              href="/bliv-zenmester"
+              href="/bliv-zenmester/"
               className="transition-colors hover:text-[#3B7965]"
             >
               Bliv Zenmester
@@ -147,7 +147,7 @@ export function SiteFooter() {
               Se dækningskort
             </Link>
             <Link
-              href="/om-os"
+              href="/om-os/"
               className="transition-colors hover:text-[#3B7965]"
             >
               Hvem er {siteConfig.name}?
@@ -168,26 +168,26 @@ export function SiteFooter() {
             Privat rengøring
           </h2>
           <div className="flex flex-col gap-2.5 text-xs font-semibold text-zinc-600">
-            <Link href="/privat-rengoering" className="hover:text-[#3B7965]">
+            <Link href="/privat-rengoring/" className="hover:text-[#3B7965]">
               Fast rengøringshjælp
             </Link>
-            <Link href="/flytterengoering" className="hover:text-[#3B7965]">
+            <Link href="/flytterengoring/" className="hover:text-[#3B7965]">
               Flytterengøring
             </Link>
-            <Link href="/hovedrengoering" className="hover:text-[#3B7965]">
+            <Link href="/hovedrengoring/" className="hover:text-[#3B7965]">
               Hovedrengøring
             </Link>
-            <Link href="/doedsborengoering" className="hover:text-[#3B7965]">
-              Dødsborengøring
+            <Link href="/airbnb-rengoring/" className="hover:text-[#3B7965]">
+              Airbnb rengøring
             </Link>
-            <Link href="/taepperens" className="hover:text-[#3B7965]">
-              Professionel tæpperens
+            <Link href="/engangsrengoring/" className="hover:text-[#3B7965]">
+              Engangsrengøring
             </Link>
-            <Link href="/havearbejde" className="hover:text-[#3B7965]">
+            <Link href="/vinduespudsning/" className="hover:text-[#3B7965]">
+              Vinduespudsning
+            </Link>
+            <Link href="/havearbejde/" className="hover:text-[#3B7965]">
               Havearbejde
-            </Link>
-            <Link href="/solcellerens" className="hover:text-[#3B7965]">
-              Solcellerens
             </Link>
           </div>
         </div>
@@ -197,46 +197,34 @@ export function SiteFooter() {
             Erhvervsrengøring
           </h2>
           <div className="flex flex-col gap-2.5 text-xs font-semibold text-zinc-600">
-            <Link href="/erhvervsrengoering" className="hover:text-[#3B7965]">
+            <Link href="/erhvervsrengoring/" className="hover:text-[#3B7965]">
               Erhvervsrengøring
             </Link>
-            <Link href="/kontorrengoering" className="hover:text-[#3B7965]">
+            <Link href="/kontorrengoring/" className="hover:text-[#3B7965]">
               Kontorrengøring
             </Link>
-            <Link href="/klinikrengoering" className="hover:text-[#3B7965]">
-              Klinikrengøring
-            </Link>
-            <Link href="/butiksrengoering" className="hover:text-[#3B7965]">
-              Butiksrengøring
-            </Link>
-            <Link
-              href="/institutionsrengoering"
-              className="hover:text-[#3B7965]"
-            >
-              Institutionsrengøring
+            <Link href="/boligforeninger/" className="hover:text-[#3B7965]">
+              Boligforeninger
             </Link>
           </div>
         </div>
 
         <div className="flex flex-col gap-4">
           <h2 className="text-xs font-bold uppercase tracking-wider text-zinc-900">
-            Specialrengøring
+            Boligservice
           </h2>
           <div className="flex flex-col gap-2.5 text-xs font-semibold text-zinc-600">
-            <Link href="/byggerengoering" className="hover:text-[#3B7965]">
-              Byggerengøring
+            <Link href="/boligservice/" className="hover:text-[#3B7965]">
+              Boligservice
             </Link>
-            <Link href="/trappevask" className="hover:text-[#3B7965]">
-              Trappevask (Opgang)
+            <Link href="/malerarbejde/" className="hover:text-[#3B7965]">
+              Malerarbejde
             </Link>
-            <Link
-              href="/elevatorrengoering"
-              className="hover:text-[#3B7965]"
-            >
-              Elevatorrengøring
+            <Link href="/montering-og-ophaengning/" className="hover:text-[#3B7965]">
+              Montering & ophængning
             </Link>
-            <Link href="/skadeservice" className="hover:text-[#3B7965]">
-              Akut skadeservice
+            <Link href="/flytning-og-flyttehjaelp/" className="hover:text-[#3B7965]">
+              Flytning & flyttehjælp
             </Link>
           </div>
         </div>
@@ -246,23 +234,17 @@ export function SiteFooter() {
             Udeareal & Have
           </h2>
           <div className="flex flex-col gap-2.5 text-xs font-semibold text-zinc-600">
-            <Link
-              href="/fliserens-og-algebehandling"
-              className="hover:text-[#3B7965]"
-            >
+            <Link href="/fliserens/" className="hover:text-[#3B7965]">
               Fliserens & algerens
             </Link>
-            <Link href="/tagrenderens" className="hover:text-[#3B7965]">
+            <Link href="/tagrenderens/" className="hover:text-[#3B7965]">
               Tagrenderens
             </Link>
-            <Link href="/tagrens" className="hover:text-[#3B7965]">
-              Tagrens & algebehandling
-            </Link>
-            <Link href="/havearbejde" className="hover:text-[#3B7965]">
+            <Link href="/havearbejde/" className="hover:text-[#3B7965]">
               Havearbejde
             </Link>
-            <Link href="/solcellerens" className="hover:text-[#3B7965]">
-              Solcellerens
+            <Link href="/ferieservice-til-haven/" className="hover:text-[#3B7965]">
+              Ferieservice til haven
             </Link>
           </div>
         </div>
@@ -310,19 +292,19 @@ export function SiteFooter() {
 
         <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 md:justify-end">
           <Link
-            href="/handelsbetingelser"
+            href="/handelsbetingelser/"
             className="transition-colors hover:text-zinc-650"
           >
             Handelsbetingelser
           </Link>
           <Link
-            href="/persondatapolitik"
+            href="/persondatapolitik/"
             className="transition-colors hover:text-zinc-650"
           >
             Persondatapolitik
           </Link>
           <Link
-            href="/cookiepolitik"
+            href="/cookiepolitik/"
             className="transition-colors hover:text-zinc-650"
           >
             Cookiepolitik
