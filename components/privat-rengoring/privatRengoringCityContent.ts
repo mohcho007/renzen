@@ -78,7 +78,7 @@ const PRIVAT_INCLUDED_ITEMS = [
 const PRIVAT_RENGORING_CITY_COPY: Record<string, PrivatRengoringCityCopy> = {
   "koebenhavn": {
     "heroTitle": "Privat rengøring i København med fast Zenmester.",
-    "heroDescription": "Få en forsikret Zenmester til din københavnske lejlighed eller byhus. Vi kender byens tempo, parkeringszoner og trapper — og du ser prisen på under to minutter med Renzen Klub-fordele.",
+    "heroDescription": "Få en forsikret Zenmester til din københavnske lejlighed eller byhus. Vi kender byens tempo, parkeringszoner og trapper, så du får mere ro i hverdagen. Se din pris på under to minutter med Renzen Klub fordele.",
     "metaDescription": "Privat rengøring i København. Fast Zenmester til lejligheder og byhuse i hele Københavns Kommune — forsikrede medarbejdere, servicefradrag og medlemsfordele.",
     "editorialSections": [
       {
@@ -136,8 +136,8 @@ const PRIVAT_RENGORING_CITY_COPY: Record<string, PrivatRengoringCityCopy> = {
   },
   "koebenhavn-oe": {
     "heroTitle": "Privat rengøring i København Ø.",
-    "heroDescription": "Få en forsikret Zenmester til dit hjem i København Ø. Vi kender lejligheder og byhuse i området omkring Østerbro — og du ser prisen på under to minutter med Renzen Klub-fordele.",
-    "metaDescription": "Privat rengøring i København Ø. Fast Zenmester, forsikrede medarbejdere og op til 26% servicefradrag. Book rengøringshjælp med Renzen Klub-fordele.",
+    "heroDescription": "Få en forsikret Zenmester til dit hjem i København Ø. Vi hjælper i hele København Ø, så du får mere ro, mere tid og en nemmere hverdag. Se din pris på under to minutter med Renzen Klub fordele.",
+    "metaDescription": "Privat rengøring i København Ø. Fast Zenmester, forsikrede medarbejdere og op til 26% servicefradrag. Book rengøringshjælp med Renzen Klub fordele.",
     "editorialSections": [
       {
         "title": "Hverdagsliv i København Ø",
@@ -165,8 +165,8 @@ const PRIVAT_RENGORING_CITY_COPY: Record<string, PrivatRengoringCityCopy> = {
   },
   "nordhavn": {
     "heroTitle": "Privat rengøring i Nordhavn.",
-    "heroDescription": "Få en forsikret Zenmester til dit hjem i Nordhavn. Vi kender nye lejligheder og byhuse i området omkring Orientkaj — og du ser prisen på under to minutter med Renzen Klub-fordele.",
-    "metaDescription": "Privat rengøring i Nordhavn. Fast Zenmester, forsikrede medarbejdere og op til 26% servicefradrag. Book rengøringshjælp med Renzen Klub-fordele.",
+    "heroDescription": "Få en forsikret Zenmester til dit hjem i Nordhavn. Vi hjælper i hele Nordhavn, så du får mere ro, mere tid og en nemmere hverdag. Se din pris på under to minutter med Renzen Klub fordele.",
+    "metaDescription": "Privat rengøring i Nordhavn. Fast Zenmester, forsikrede medarbejdere og op til 26% servicefradrag. Book rengøringshjælp med Renzen Klub fordele.",
     "editorialSections": [
       {
         "title": "Orientkaj, Århusgadekvarteret og Tuborg Havn — boliger vi kender",
@@ -194,8 +194,8 @@ const PRIVAT_RENGORING_CITY_COPY: Record<string, PrivatRengoringCityCopy> = {
   },
   "koebenhavn-n": {
     "heroTitle": "Privat rengøring i København N.",
-    "heroDescription": "Få en forsikret Zenmester til dit hjem i København N. Vi kender lejligheder i området omkring Nørrebro — og du ser prisen på under to minutter med Renzen Klub-fordele.",
-    "metaDescription": "Privat rengøring i København N. Fast Zenmester, forsikrede medarbejdere og op til 26% servicefradrag. Book rengøringshjælp med Renzen Klub-fordele.",
+    "heroDescription": "Få en forsikret Zenmester til dit hjem i København N. Vi hjælper i hele København N, så du får mere ro, mere tid og en nemmere hverdag. Se din pris på under to minutter med Renzen Klub fordele.",
+    "metaDescription": "Privat rengøring i København N. Fast Zenmester, forsikrede medarbejdere og op til 26% servicefradrag. Book rengøringshjælp med Renzen Klub fordele.",
     "editorialSections": [
       {
         "title": "Rengøring der passer til København N",
@@ -223,8 +223,8 @@ const PRIVAT_RENGORING_CITY_COPY: Record<string, PrivatRengoringCityCopy> = {
   },
   "koebenhavn-s": {
     "heroTitle": "Privat rengøring i København S med fast Zenmester.",
-    "heroDescription": "Få en forsikret Zenmester til dit hjem i København S. Vi kender lejligheder og rækkehuse i området omkring Amagerbro — og du ser prisen på under to minutter med Renzen Klub-fordele.",
-    "metaDescription": "Privat rengøring i København S. Fast Zenmester, forsikrede medarbejdere og op til 26% servicefradrag. Book rengøringshjælp med Renzen Klub-fordele.",
+    "heroDescription": "Få en forsikret Zenmester til dit hjem i København S. Vi hjælper i hele København S, så du får mere ro, mere tid og en nemmere hverdag. Se din pris på under to minutter med Renzen Klub fordele.",
+    "metaDescription": "Privat rengøring i København S. Fast Zenmester, forsikrede medarbejdere og op til 26% servicefradrag. Book rengøringshjælp med Renzen Klub fordele.",
     "editorialSections": [
       {
         "title": "Hverdagsliv i København S",
@@ -252,8 +252,8 @@ const PRIVAT_RENGORING_CITY_COPY: Record<string, PrivatRengoringCityCopy> = {
   },
   "koebenhavn-nv": {
     "heroTitle": "Privat rengøring i København NV.",
-    "heroDescription": "Få en forsikret Zenmester til dit hjem i København NV. Vi kender lejligheder og rækkehuse i området omkring Brønshøj — og du ser prisen på under to minutter med Renzen Klub-fordele.",
-    "metaDescription": "Privat rengøring i København NV. Fast Zenmester, forsikrede medarbejdere og op til 26% servicefradrag. Book rengøringshjælp med Renzen Klub-fordele.",
+    "heroDescription": "Få en forsikret Zenmester til dit hjem i København NV. Vi hjælper i hele København NV, så du får mere ro, mere tid og en nemmere hverdag. Se din pris på under to minutter med Renzen Klub fordele.",
+    "metaDescription": "Privat rengøring i København NV. Fast Zenmester, forsikrede medarbejdere og op til 26% servicefradrag. Book rengøringshjælp med Renzen Klub fordele.",
     "editorialSections": [
       {
         "title": "Brønshøj, Husum og Bellahøj — boliger vi kender",
@@ -281,8 +281,8 @@ const PRIVAT_RENGORING_CITY_COPY: Record<string, PrivatRengoringCityCopy> = {
   },
   "koebenhavn-sv": {
     "heroTitle": "Privat rengøring i København SV.",
-    "heroDescription": "Få en forsikret Zenmester til dit hjem i København SV. Vi kender lejligheder i området omkring Sydhavnen — og du ser prisen på under to minutter med Renzen Klub-fordele.",
-    "metaDescription": "Privat rengøring i København SV. Fast Zenmester, forsikrede medarbejdere og op til 26% servicefradrag. Book rengøringshjælp med Renzen Klub-fordele.",
+    "heroDescription": "Få en forsikret Zenmester til dit hjem i København SV. Vi hjælper i hele København SV, så du får mere ro, mere tid og en nemmere hverdag. Se din pris på under to minutter med Renzen Klub fordele.",
+    "metaDescription": "Privat rengøring i København SV. Fast Zenmester, forsikrede medarbejdere og op til 26% servicefradrag. Book rengøringshjælp med Renzen Klub fordele.",
     "editorialSections": [
       {
         "title": "Rengøring der passer til København SV",
@@ -310,13 +310,13 @@ const PRIVAT_RENGORING_CITY_COPY: Record<string, PrivatRengoringCityCopy> = {
   },
   "valby": {
     "heroTitle": "Privat rengøring i Valby med fast Zenmester.",
-    "heroDescription": "Få en forsikret Zenmester til dit hjem i Valby. Vi kender lejligheder og villaer i området omkring Valby Langgade — og du ser prisen på under to minutter med Renzen Klub-fordele.",
-    "metaDescription": "Privat rengøring i Valby. Fast Zenmester, forsikrede medarbejdere og op til 26% servicefradrag. Book rengøringshjælp med Renzen Klub-fordele.",
+    "heroDescription": "Få en forsikret Zenmester til dit hjem i Valby. Vi hjælper i hele Valby, så du får mere ro, mere tid og en nemmere hverdag. Se din pris på under to minutter med Renzen Klub fordele.",
+    "metaDescription": "Privat rengøring i Valby. Fast Zenmester, forsikrede medarbejdere og op til 26% servicefradrag. Book rengøringshjælp med Renzen Klub fordele.",
     "editorialSections": [
       {
         "title": "Hverdagsliv i Valby",
         "paragraphs": [
-          "I Valby møder vi lejligheder og villaer i kvarterer som Valby Langgade, Toftegårds Plads og Grønttorvet. Hverdagen er ofte fyldt med arbejde, børn og transport — og det er her en fast Zenmester gør en markant forskel. Hos Renzen matcher vi dig med en erfaren medarbejder, der lærer dit hjem at kende: adgang, materialer og de steder, der kræver ekstra omhu.",
+          "I Valby møder vi lejligheder og villaer på tværs af hele bydelen, fra klassiske kvarterer til nyere boligområder. Hverdagen er ofte fyldt med arbejde, børn og transport, og det er her en fast Zenmester gør en markant forskel. Hos Renzen matcher vi dig med en erfaren medarbejder, der lærer dit hjem at kende: adgang, materialer og de steder, der kræver ekstra omhu.",
           "Villaer, rækkehuse og lejligheder side om side. Vi tilpasser rengøringen til din bolig og frekvens, så hjemmet holder en jævn standard uden at du skal bruge weekender på gulvvask. Som medlem af Renzen Klub får du introtilbud fra 299 kr. og løbende medlemsrabat på fast aftale."
         ]
       },
@@ -339,8 +339,8 @@ const PRIVAT_RENGORING_CITY_COPY: Record<string, PrivatRengoringCityCopy> = {
   },
   "vanloese": {
     "heroTitle": "Privat rengøring i Vanløse.",
-    "heroDescription": "Få en forsikret Zenmester til dit hjem i Vanløse. Vi kender lejligheder og villaer i området omkring Vanløse Torv — og du ser prisen på under to minutter med Renzen Klub-fordele.",
-    "metaDescription": "Privat rengøring i Vanløse. Fast Zenmester, forsikrede medarbejdere og op til 26% servicefradrag. Book rengøringshjælp med Renzen Klub-fordele.",
+    "heroDescription": "Få en forsikret Zenmester til dit hjem i Vanløse. Vi hjælper i hele Vanløse, så du får mere ro, mere tid og en nemmere hverdag. Se din pris på under to minutter med Renzen Klub fordele.",
+    "metaDescription": "Privat rengøring i Vanløse. Fast Zenmester, forsikrede medarbejdere og op til 26% servicefradrag. Book rengøringshjælp med Renzen Klub fordele.",
     "editorialSections": [
       {
         "title": "Vanløse Torv, Jernbanebyen og Bellahøj — boliger vi kender",
@@ -368,8 +368,8 @@ const PRIVAT_RENGORING_CITY_COPY: Record<string, PrivatRengoringCityCopy> = {
   },
   "broenshoej": {
     "heroTitle": "Privat rengøring i Brønshøj.",
-    "heroDescription": "Få en forsikret Zenmester til dit hjem i Brønshøj. Vi kender murmestervillaer og lejligheder i området omkring Brønshøj Torv — og du ser prisen på under to minutter med Renzen Klub-fordele.",
-    "metaDescription": "Privat rengøring i Brønshøj. Fast Zenmester, forsikrede medarbejdere og op til 26% servicefradrag. Book rengøringshjælp med Renzen Klub-fordele.",
+    "heroDescription": "Få en forsikret Zenmester til dit hjem i Brønshøj. Vi hjælper i hele Brønshøj, så du får mere ro, mere tid og en nemmere hverdag. Se din pris på under to minutter med Renzen Klub fordele.",
+    "metaDescription": "Privat rengøring i Brønshøj. Fast Zenmester, forsikrede medarbejdere og op til 26% servicefradrag. Book rengøringshjælp med Renzen Klub fordele.",
     "editorialSections": [
       {
         "title": "Rengøring der passer til Brønshøj",
@@ -397,8 +397,8 @@ const PRIVAT_RENGORING_CITY_COPY: Record<string, PrivatRengoringCityCopy> = {
   },
   "kastrup": {
     "heroTitle": "Privat rengøring i Kastrup med fast Zenmester.",
-    "heroDescription": "Få en forsikret Zenmester til dit hjem i Kastrup. Vi kender villaer og lejligheder i området omkring Kastrupvej — og du ser prisen på under to minutter med Renzen Klub-fordele.",
-    "metaDescription": "Privat rengøring i Kastrup. Fast Zenmester, forsikrede medarbejdere og op til 26% servicefradrag. Book rengøringshjælp med Renzen Klub-fordele.",
+    "heroDescription": "Få en forsikret Zenmester til dit hjem i Kastrup. Vi hjælper i hele Kastrup, så du får mere ro, mere tid og en nemmere hverdag. Se din pris på under to minutter med Renzen Klub fordele.",
+    "metaDescription": "Privat rengøring i Kastrup. Fast Zenmester, forsikrede medarbejdere og op til 26% servicefradrag. Book rengøringshjælp med Renzen Klub fordele.",
     "editorialSections": [
       {
         "title": "Hverdagsliv i Kastrup",
@@ -426,8 +426,8 @@ const PRIVAT_RENGORING_CITY_COPY: Record<string, PrivatRengoringCityCopy> = {
   },
   "dragoer": {
     "heroTitle": "Privat rengøring i Dragør.",
-    "heroDescription": "Få en forsikret Zenmester til dit hjem i Dragør. Vi kender historiske huse og villaer i området omkring Dragør gamle by — og du ser prisen på under to minutter med Renzen Klub-fordele.",
-    "metaDescription": "Privat rengøring i Dragør. Fast Zenmester, forsikrede medarbejdere og op til 26% servicefradrag. Book rengøringshjælp med Renzen Klub-fordele.",
+    "heroDescription": "Få en forsikret Zenmester til dit hjem i Dragør. Vi hjælper i hele Dragør, så du får mere ro, mere tid og en nemmere hverdag. Se din pris på under to minutter med Renzen Klub fordele.",
+    "metaDescription": "Privat rengøring i Dragør. Fast Zenmester, forsikrede medarbejdere og op til 26% servicefradrag. Book rengøringshjælp med Renzen Klub fordele.",
     "editorialSections": [
       {
         "title": "Dragør gamle by, Sydstranden og havnen — boliger vi kender",
@@ -455,8 +455,8 @@ const PRIVAT_RENGORING_CITY_COPY: Record<string, PrivatRengoringCityCopy> = {
   },
   "hvidovre": {
     "heroTitle": "Privat rengøring i Hvidovre med fast Zenmester.",
-    "heroDescription": "Få en forsikret Zenmester til dit hjem i Hvidovre. Vi kender villaer og lejligheder i området omkring Hvidovre Stationsvej — og du ser prisen på under to minutter med Renzen Klub-fordele.",
-    "metaDescription": "Privat rengøring i Hvidovre. Fast Zenmester, forsikrede medarbejdere og op til 26% servicefradrag. Book rengøringshjælp med Renzen Klub-fordele.",
+    "heroDescription": "Få en forsikret Zenmester til dit hjem i Hvidovre. Vi hjælper i hele Hvidovre, så du får mere ro, mere tid og en nemmere hverdag. Se din pris på under to minutter med Renzen Klub fordele.",
+    "metaDescription": "Privat rengøring i Hvidovre. Fast Zenmester, forsikrede medarbejdere og op til 26% servicefradrag. Book rengøringshjælp med Renzen Klub fordele.",
     "editorialSections": [
       {
         "title": "Rengøring der passer til Hvidovre",
@@ -484,8 +484,8 @@ const PRIVAT_RENGORING_CITY_COPY: Record<string, PrivatRengoringCityCopy> = {
   },
   "roedovre": {
     "heroTitle": "Privat rengøring i Rødovre med fast Zenmester.",
-    "heroDescription": "Få en forsikret Zenmester til dit hjem i Rødovre. Vi kender villaer og lejligheder i området omkring Rødovre Centrum — og du ser prisen på under to minutter med Renzen Klub-fordele.",
-    "metaDescription": "Privat rengøring i Rødovre. Fast Zenmester, forsikrede medarbejdere og op til 26% servicefradrag. Book rengøringshjælp med Renzen Klub-fordele.",
+    "heroDescription": "Få en forsikret Zenmester til dit hjem i Rødovre. Vi hjælper i hele Rødovre, så du får mere ro, mere tid og en nemmere hverdag. Se din pris på under to minutter med Renzen Klub fordele.",
+    "metaDescription": "Privat rengøring i Rødovre. Fast Zenmester, forsikrede medarbejdere og op til 26% servicefradrag. Book rengøringshjælp med Renzen Klub fordele.",
     "editorialSections": [
       {
         "title": "Hverdagsliv i Rødovre",
@@ -513,8 +513,8 @@ const PRIVAT_RENGORING_CITY_COPY: Record<string, PrivatRengoringCityCopy> = {
   },
   "glostrup": {
     "heroTitle": "Privat rengøring i Glostrup med fast Zenmester.",
-    "heroDescription": "Få en forsikret Zenmester til dit hjem i Glostrup. Vi kender parcelhuse og lejligheder i området omkring Glostrup Centrum — og du ser prisen på under to minutter med Renzen Klub-fordele.",
-    "metaDescription": "Privat rengøring i Glostrup. Fast Zenmester, forsikrede medarbejdere og op til 26% servicefradrag. Book rengøringshjælp med Renzen Klub-fordele.",
+    "heroDescription": "Få en forsikret Zenmester til dit hjem i Glostrup. Vi hjælper i hele Glostrup, så du får mere ro, mere tid og en nemmere hverdag. Se din pris på under to minutter med Renzen Klub fordele.",
+    "metaDescription": "Privat rengøring i Glostrup. Fast Zenmester, forsikrede medarbejdere og op til 26% servicefradrag. Book rengøringshjælp med Renzen Klub fordele.",
     "editorialSections": [
       {
         "title": "Glostrup Centrum, Hvissinge og Ejby — boliger vi kender",
@@ -542,8 +542,8 @@ const PRIVAT_RENGORING_CITY_COPY: Record<string, PrivatRengoringCityCopy> = {
   },
   "broendby": {
     "heroTitle": "Privat rengøring i Brøndby med fast Zenmester.",
-    "heroDescription": "Få en forsikret Zenmester til dit hjem i Brøndby. Vi kender parcelhuse og lejligheder i området omkring Brøndbyvester — og du ser prisen på under to minutter med Renzen Klub-fordele.",
-    "metaDescription": "Privat rengøring i Brøndby. Fast Zenmester, forsikrede medarbejdere og op til 26% servicefradrag. Book rengøringshjælp med Renzen Klub-fordele.",
+    "heroDescription": "Få en forsikret Zenmester til dit hjem i Brøndby. Vi hjælper i hele Brøndby, så du får mere ro, mere tid og en nemmere hverdag. Se din pris på under to minutter med Renzen Klub fordele.",
+    "metaDescription": "Privat rengøring i Brøndby. Fast Zenmester, forsikrede medarbejdere og op til 26% servicefradrag. Book rengøringshjælp med Renzen Klub fordele.",
     "editorialSections": [
       {
         "title": "Rengøring der passer til Brøndby",
@@ -571,8 +571,8 @@ const PRIVAT_RENGORING_CITY_COPY: Record<string, PrivatRengoringCityCopy> = {
   },
   "broendby-strand": {
     "heroTitle": "Privat rengøring i Brøndby Strand.",
-    "heroDescription": "Få en forsikret Zenmester til dit hjem i Brøndby Strand. Vi kender lejligheder og rækkehuse i området omkring Brøndby Strand Centrum og kysten — og du ser prisen på under to minutter med Renzen Klub-fordele.",
-    "metaDescription": "Privat rengøring i Brøndby Strand. Fast Zenmester, forsikrede medarbejdere og op til 26% servicefradrag. Book rengøringshjælp med Renzen Klub-fordele.",
+    "heroDescription": "Få en forsikret Zenmester til dit hjem i Brøndby Strand. Vi hjælper i hele Brøndby Strand, så du får mere ro, mere tid og en nemmere hverdag. Se din pris på under to minutter med Renzen Klub fordele.",
+    "metaDescription": "Privat rengøring i Brøndby Strand. Fast Zenmester, forsikrede medarbejdere og op til 26% servicefradrag. Book rengøringshjælp med Renzen Klub fordele.",
     "editorialSections": [
       {
         "title": "Hverdagsliv i Brøndby Strand",
@@ -600,8 +600,8 @@ const PRIVAT_RENGORING_CITY_COPY: Record<string, PrivatRengoringCityCopy> = {
   },
   "herlev": {
     "heroTitle": "Privat rengøring i Herlev med fast Zenmester.",
-    "heroDescription": "Få en forsikret Zenmester til dit hjem i Herlev. Vi kender villaer, rækkehuse og lejligheder i området omkring Herlev Hovedgade — og du ser prisen på under to minutter med Renzen Klub-fordele.",
-    "metaDescription": "Privat rengøring i Herlev. Fast Zenmester, forsikrede medarbejdere og op til 26% servicefradrag. Book rengøringshjælp med Renzen Klub-fordele.",
+    "heroDescription": "Få en forsikret Zenmester til dit hjem i Herlev. Vi hjælper i hele Herlev, så du får mere ro, mere tid og en nemmere hverdag. Se din pris på under to minutter med Renzen Klub fordele.",
+    "metaDescription": "Privat rengøring i Herlev. Fast Zenmester, forsikrede medarbejdere og op til 26% servicefradrag. Book rengøringshjælp med Renzen Klub fordele.",
     "editorialSections": [
       {
         "title": "Herlev Hovedgade, Hjortespring og Skovlundevej — boliger vi kender",
@@ -629,8 +629,8 @@ const PRIVAT_RENGORING_CITY_COPY: Record<string, PrivatRengoringCityCopy> = {
   },
   "soeborg": {
     "heroTitle": "Privat rengøring i Søborg.",
-    "heroDescription": "Få en forsikret Zenmester til dit hjem i Søborg. Vi kender murmestervillaer og lejligheder i området omkring Søborg Hovedgade — og du ser prisen på under to minutter med Renzen Klub-fordele.",
-    "metaDescription": "Privat rengøring i Søborg. Fast Zenmester, forsikrede medarbejdere og op til 26% servicefradrag. Book rengøringshjælp med Renzen Klub-fordele.",
+    "heroDescription": "Få en forsikret Zenmester til dit hjem i Søborg. Vi hjælper i hele Søborg, så du får mere ro, mere tid og en nemmere hverdag. Se din pris på under to minutter med Renzen Klub fordele.",
+    "metaDescription": "Privat rengøring i Søborg. Fast Zenmester, forsikrede medarbejdere og op til 26% servicefradrag. Book rengøringshjælp med Renzen Klub fordele.",
     "editorialSections": [
       {
         "title": "Rengøring der passer til Søborg",
@@ -658,8 +658,8 @@ const PRIVAT_RENGORING_CITY_COPY: Record<string, PrivatRengoringCityCopy> = {
   },
   "ballerup": {
     "heroTitle": "Privat rengøring i Ballerup.",
-    "heroDescription": "Få en forsikret Zenmester til dit hjem i Ballerup. Vi kender rækkehuse og parcelhuse i området omkring Ballerup Centrum — og du ser prisen på under to minutter med Renzen Klub-fordele.",
-    "metaDescription": "Privat rengøring i Ballerup. Fast Zenmester, forsikrede medarbejdere og op til 26% servicefradrag. Book rengøringshjælp med Renzen Klub-fordele.",
+    "heroDescription": "Få en forsikret Zenmester til dit hjem i Ballerup. Vi hjælper i hele Ballerup, så du får mere ro, mere tid og en nemmere hverdag. Se din pris på under to minutter med Renzen Klub fordele.",
+    "metaDescription": "Privat rengøring i Ballerup. Fast Zenmester, forsikrede medarbejdere og op til 26% servicefradrag. Book rengøringshjælp med Renzen Klub fordele.",
     "editorialSections": [
       {
         "title": "Hverdagsliv i Ballerup",
@@ -687,8 +687,8 @@ const PRIVAT_RENGORING_CITY_COPY: Record<string, PrivatRengoringCityCopy> = {
   },
   "skovlunde": {
     "heroTitle": "Privat rengøring i Skovlunde.",
-    "heroDescription": "Få en forsikret Zenmester til dit hjem i Skovlunde. Vi kender parcelhuse og rækkehuse i området omkring Skovlunde Byvej — og du ser prisen på under to minutter med Renzen Klub-fordele.",
-    "metaDescription": "Privat rengøring i Skovlunde. Fast Zenmester, forsikrede medarbejdere og op til 26% servicefradrag. Book rengøringshjælp med Renzen Klub-fordele.",
+    "heroDescription": "Få en forsikret Zenmester til dit hjem i Skovlunde. Vi hjælper i hele Skovlunde, så du får mere ro, mere tid og en nemmere hverdag. Se din pris på under to minutter med Renzen Klub fordele.",
+    "metaDescription": "Privat rengøring i Skovlunde. Fast Zenmester, forsikrede medarbejdere og op til 26% servicefradrag. Book rengøringshjælp med Renzen Klub fordele.",
     "editorialSections": [
       {
         "title": "Skovlunde Byvej, Ballerup og Herlev — boliger vi kender",
@@ -716,8 +716,8 @@ const PRIVAT_RENGORING_CITY_COPY: Record<string, PrivatRengoringCityCopy> = {
   },
   "albertslund": {
     "heroTitle": "Privat rengøring i Albertslund.",
-    "heroDescription": "Få en forsikret Zenmester til dit hjem i Albertslund. Vi kender rækkehuse og parcelhuse i området omkring Albertslund Centrum — og du ser prisen på under to minutter med Renzen Klub-fordele.",
-    "metaDescription": "Privat rengøring i Albertslund. Fast Zenmester, forsikrede medarbejdere og op til 26% servicefradrag. Book rengøringshjælp med Renzen Klub-fordele.",
+    "heroDescription": "Få en forsikret Zenmester til dit hjem i Albertslund. Vi hjælper i hele Albertslund, så du får mere ro, mere tid og en nemmere hverdag. Se din pris på under to minutter med Renzen Klub fordele.",
+    "metaDescription": "Privat rengøring i Albertslund. Fast Zenmester, forsikrede medarbejdere og op til 26% servicefradrag. Book rengøringshjælp med Renzen Klub fordele.",
     "editorialSections": [
       {
         "title": "Rengøring der passer til Albertslund",
@@ -745,8 +745,8 @@ const PRIVAT_RENGORING_CITY_COPY: Record<string, PrivatRengoringCityCopy> = {
   },
   "taastrup": {
     "heroTitle": "Privat rengøring i Taastrup.",
-    "heroDescription": "Få en forsikret Zenmester til dit hjem i Taastrup. Vi kender rækkehuse, lejligheder og villaer i området omkring Taastrup Centrum — og du ser prisen på under to minutter med Renzen Klub-fordele.",
-    "metaDescription": "Privat rengøring i Taastrup. Fast Zenmester, forsikrede medarbejdere og op til 26% servicefradrag. Book rengøringshjælp med Renzen Klub-fordele.",
+    "heroDescription": "Få en forsikret Zenmester til dit hjem i Taastrup. Vi hjælper i hele Taastrup, så du får mere ro, mere tid og en nemmere hverdag. Se din pris på under to minutter med Renzen Klub fordele.",
+    "metaDescription": "Privat rengøring i Taastrup. Fast Zenmester, forsikrede medarbejdere og op til 26% servicefradrag. Book rengøringshjælp med Renzen Klub fordele.",
     "editorialSections": [
       {
         "title": "Hverdagsliv i Taastrup",
@@ -774,8 +774,8 @@ const PRIVAT_RENGORING_CITY_COPY: Record<string, PrivatRengoringCityCopy> = {
   },
   "vallensbaek": {
     "heroTitle": "Privat rengøring i Vallensbæk.",
-    "heroDescription": "Få en forsikret Zenmester til dit hjem i Vallensbæk. Vi kender rækkehuse og villaer i området omkring Vallensbæk Stationsplads — og du ser prisen på under to minutter med Renzen Klub-fordele.",
-    "metaDescription": "Privat rengøring i Vallensbæk. Fast Zenmester, forsikrede medarbejdere og op til 26% servicefradrag. Book rengøringshjælp med Renzen Klub-fordele.",
+    "heroDescription": "Få en forsikret Zenmester til dit hjem i Vallensbæk. Vi hjælper i hele Vallensbæk, så du får mere ro, mere tid og en nemmere hverdag. Se din pris på under to minutter med Renzen Klub fordele.",
+    "metaDescription": "Privat rengøring i Vallensbæk. Fast Zenmester, forsikrede medarbejdere og op til 26% servicefradrag. Book rengøringshjælp med Renzen Klub fordele.",
     "editorialSections": [
       {
         "title": "Vallensbæk Stationsplads, Kirkevang og kysten — boliger vi kender",
@@ -803,8 +803,8 @@ const PRIVAT_RENGORING_CITY_COPY: Record<string, PrivatRengoringCityCopy> = {
   },
   "ishoej": {
     "heroTitle": "Privat rengøring i Ishøj.",
-    "heroDescription": "Få en forsikret Zenmester til dit hjem i Ishøj. Vi kender lejligheder og parcelhuse i området omkring Ishøj Centrum — og du ser prisen på under to minutter med Renzen Klub-fordele.",
-    "metaDescription": "Privat rengøring i Ishøj. Fast Zenmester, forsikrede medarbejdere og op til 26% servicefradrag. Book rengøringshjælp med Renzen Klub-fordele.",
+    "heroDescription": "Få en forsikret Zenmester til dit hjem i Ishøj. Vi hjælper i hele Ishøj, så du får mere ro, mere tid og en nemmere hverdag. Se din pris på under to minutter med Renzen Klub fordele.",
+    "metaDescription": "Privat rengøring i Ishøj. Fast Zenmester, forsikrede medarbejdere og op til 26% servicefradrag. Book rengøringshjælp med Renzen Klub fordele.",
     "editorialSections": [
       {
         "title": "Rengøring der passer til Ishøj",
@@ -832,8 +832,8 @@ const PRIVAT_RENGORING_CITY_COPY: Record<string, PrivatRengoringCityCopy> = {
   },
   "greve": {
     "heroTitle": "Privat rengøring i Greve.",
-    "heroDescription": "Få en forsikret Zenmester til dit hjem i Greve. Vi kender parcelhuse og rækkehuse i området omkring Greve Centrum — og du ser prisen på under to minutter med Renzen Klub-fordele.",
-    "metaDescription": "Privat rengøring i Greve. Fast Zenmester, forsikrede medarbejdere og op til 26% servicefradrag. Book rengøringshjælp med Renzen Klub-fordele.",
+    "heroDescription": "Få en forsikret Zenmester til dit hjem i Greve. Vi hjælper i hele Greve, så du får mere ro, mere tid og en nemmere hverdag. Se din pris på under to minutter med Renzen Klub fordele.",
+    "metaDescription": "Privat rengøring i Greve. Fast Zenmester, forsikrede medarbejdere og op til 26% servicefradrag. Book rengøringshjælp med Renzen Klub fordele.",
     "editorialSections": [
       {
         "title": "Hverdagsliv i Greve",
@@ -861,8 +861,8 @@ const PRIVAT_RENGORING_CITY_COPY: Record<string, PrivatRengoringCityCopy> = {
   },
   "solroed-strand": {
     "heroTitle": "Privat rengøring i Solrød Strand.",
-    "heroDescription": "Få en forsikret Zenmester til dit hjem i Solrød Strand. Vi kender strandvillaer og parcelhuse i området omkring Solrød Center — og du ser prisen på under to minutter med Renzen Klub-fordele.",
-    "metaDescription": "Privat rengøring i Solrød Strand. Fast Zenmester, forsikrede medarbejdere og op til 26% servicefradrag. Book rengøringshjælp med Renzen Klub-fordele.",
+    "heroDescription": "Få en forsikret Zenmester til dit hjem i Solrød Strand. Vi hjælper i hele Solrød Strand, så du får mere ro, mere tid og en nemmere hverdag. Se din pris på under to minutter med Renzen Klub fordele.",
+    "metaDescription": "Privat rengøring i Solrød Strand. Fast Zenmester, forsikrede medarbejdere og op til 26% servicefradrag. Book rengøringshjælp med Renzen Klub fordele.",
     "editorialSections": [
       {
         "title": "Solrød Center, Solrød Strandvej og havnen — boliger vi kender",
@@ -890,8 +890,8 @@ const PRIVAT_RENGORING_CITY_COPY: Record<string, PrivatRengoringCityCopy> = {
   },
   "karlslunde": {
     "heroTitle": "Privat rengøring i Karlslunde.",
-    "heroDescription": "Få en forsikret Zenmester til dit hjem i Karlslunde. Vi kender villaer og parcelhuse i området omkring Karlslunde Strandvej — og du ser prisen på under to minutter med Renzen Klub-fordele.",
-    "metaDescription": "Privat rengøring i Karlslunde. Fast Zenmester, forsikrede medarbejdere og op til 26% servicefradrag. Book rengøringshjælp med Renzen Klub-fordele.",
+    "heroDescription": "Få en forsikret Zenmester til dit hjem i Karlslunde. Vi hjælper i hele Karlslunde, så du får mere ro, mere tid og en nemmere hverdag. Se din pris på under to minutter med Renzen Klub fordele.",
+    "metaDescription": "Privat rengøring i Karlslunde. Fast Zenmester, forsikrede medarbejdere og op til 26% servicefradrag. Book rengøringshjælp med Renzen Klub fordele.",
     "editorialSections": [
       {
         "title": "Rengøring der passer til Karlslunde",
@@ -919,8 +919,8 @@ const PRIVAT_RENGORING_CITY_COPY: Record<string, PrivatRengoringCityCopy> = {
   },
   "maaloev": {
     "heroTitle": "Privat rengøring i Måløv.",
-    "heroDescription": "Få en forsikret Zenmester til dit hjem i Måløv. Vi kender rækkehuse og parcelhuse i området omkring Måløv Bygade — og du ser prisen på under to minutter med Renzen Klub-fordele.",
-    "metaDescription": "Privat rengøring i Måløv. Fast Zenmester, forsikrede medarbejdere og op til 26% servicefradrag. Book rengøringshjælp med Renzen Klub-fordele.",
+    "heroDescription": "Få en forsikret Zenmester til dit hjem i Måløv. Vi hjælper i hele Måløv, så du får mere ro, mere tid og en nemmere hverdag. Se din pris på under to minutter med Renzen Klub fordele.",
+    "metaDescription": "Privat rengøring i Måløv. Fast Zenmester, forsikrede medarbejdere og op til 26% servicefradrag. Book rengøringshjælp med Renzen Klub fordele.",
     "editorialSections": [
       {
         "title": "Hverdagsliv i Måløv",
@@ -948,8 +948,8 @@ const PRIVAT_RENGORING_CITY_COPY: Record<string, PrivatRengoringCityCopy> = {
   },
   "smoerum": {
     "heroTitle": "Privat rengøring i Smørum.",
-    "heroDescription": "Få en forsikret Zenmester til dit hjem i Smørum. Vi kender villaer og rækkehuse i området omkring Smørum Bygade — og du ser prisen på under to minutter med Renzen Klub-fordele.",
-    "metaDescription": "Privat rengøring i Smørum. Fast Zenmester, forsikrede medarbejdere og op til 26% servicefradrag. Book rengøringshjælp med Renzen Klub-fordele.",
+    "heroDescription": "Få en forsikret Zenmester til dit hjem i Smørum. Vi hjælper i hele Smørum, så du får mere ro, mere tid og en nemmere hverdag. Se din pris på under to minutter med Renzen Klub fordele.",
+    "metaDescription": "Privat rengøring i Smørum. Fast Zenmester, forsikrede medarbejdere og op til 26% servicefradrag. Book rengøringshjælp med Renzen Klub fordele.",
     "editorialSections": [
       {
         "title": "Smørum Bygade, Stenløse og Måløv — boliger vi kender",
@@ -977,8 +977,8 @@ const PRIVAT_RENGORING_CITY_COPY: Record<string, PrivatRengoringCityCopy> = {
   },
   "kongens-lyngby": {
     "heroTitle": "Privat rengøring i Kongens Lyngby.",
-    "heroDescription": "Få en forsikret Zenmester til dit hjem i Kongens Lyngby. Vi kender villaer, rækkehuse og lejligheder i området omkring Lyngby Hovedgade — og du ser prisen på under to minutter med Renzen Klub-fordele.",
-    "metaDescription": "Privat rengøring i Kongens Lyngby. Fast Zenmester, forsikrede medarbejdere og op til 26% servicefradrag. Book rengøringshjælp med Renzen Klub-fordele.",
+    "heroDescription": "Få en forsikret Zenmester til dit hjem i Kongens Lyngby. Vi hjælper i hele Kongens Lyngby, så du får mere ro, mere tid og en nemmere hverdag. Se din pris på under to minutter med Renzen Klub fordele.",
+    "metaDescription": "Privat rengøring i Kongens Lyngby. Fast Zenmester, forsikrede medarbejdere og op til 26% servicefradrag. Book rengøringshjælp med Renzen Klub fordele.",
     "editorialSections": [
       {
         "title": "Rengøring der passer til Kongens Lyngby",
@@ -1006,8 +1006,8 @@ const PRIVAT_RENGORING_CITY_COPY: Record<string, PrivatRengoringCityCopy> = {
   },
   "gentofte": {
     "heroTitle": "Privat rengøring i Gentofte.",
-    "heroDescription": "Få en forsikret Zenmester til dit hjem i Gentofte. Vi kender villaer og lejligheder i området omkring Gentofte Hovedgade — og du ser prisen på under to minutter med Renzen Klub-fordele.",
-    "metaDescription": "Privat rengøring i Gentofte. Fast Zenmester, forsikrede medarbejdere og op til 26% servicefradrag. Book rengøringshjælp med Renzen Klub-fordele.",
+    "heroDescription": "Få en forsikret Zenmester til dit hjem i Gentofte. Vi hjælper i hele Gentofte, så du får mere ro, mere tid og en nemmere hverdag. Se din pris på under to minutter med Renzen Klub fordele.",
+    "metaDescription": "Privat rengøring i Gentofte. Fast Zenmester, forsikrede medarbejdere og op til 26% servicefradrag. Book rengøringshjælp med Renzen Klub fordele.",
     "editorialSections": [
       {
         "title": "Hverdagsliv i Gentofte",
@@ -1035,8 +1035,8 @@ const PRIVAT_RENGORING_CITY_COPY: Record<string, PrivatRengoringCityCopy> = {
   },
   "dyssegaard": {
     "heroTitle": "Privat rengøring i Dyssegård.",
-    "heroDescription": "Få en forsikret Zenmester til dit hjem i Dyssegård. Vi kender villaer og rækkehuse i området omkring Dyssegårdsvej — og du ser prisen på under to minutter med Renzen Klub-fordele.",
-    "metaDescription": "Privat rengøring i Dyssegård. Fast Zenmester, forsikrede medarbejdere og op til 26% servicefradrag. Book rengøringshjælp med Renzen Klub-fordele.",
+    "heroDescription": "Få en forsikret Zenmester til dit hjem i Dyssegård. Vi hjælper i hele Dyssegård, så du får mere ro, mere tid og en nemmere hverdag. Se din pris på under to minutter med Renzen Klub fordele.",
+    "metaDescription": "Privat rengøring i Dyssegård. Fast Zenmester, forsikrede medarbejdere og op til 26% servicefradrag. Book rengøringshjælp med Renzen Klub fordele.",
     "editorialSections": [
       {
         "title": "Dyssegårdsvej, Søborg og Hellerup — boliger vi kender",
@@ -1064,8 +1064,8 @@ const PRIVAT_RENGORING_CITY_COPY: Record<string, PrivatRengoringCityCopy> = {
   },
   "bagsvaerd": {
     "heroTitle": "Privat rengøring i Bagsværd.",
-    "heroDescription": "Få en forsikret Zenmester til dit hjem i Bagsværd. Vi kender villaer og lejligheder i området omkring Bagsværd Stationsplads — og du ser prisen på under to minutter med Renzen Klub-fordele.",
-    "metaDescription": "Privat rengøring i Bagsværd. Fast Zenmester, forsikrede medarbejdere og op til 26% servicefradrag. Book rengøringshjælp med Renzen Klub-fordele.",
+    "heroDescription": "Få en forsikret Zenmester til dit hjem i Bagsværd. Vi hjælper i hele Bagsværd, så du får mere ro, mere tid og en nemmere hverdag. Se din pris på under to minutter med Renzen Klub fordele.",
+    "metaDescription": "Privat rengøring i Bagsværd. Fast Zenmester, forsikrede medarbejdere og op til 26% servicefradrag. Book rengøringshjælp med Renzen Klub fordele.",
     "editorialSections": [
       {
         "title": "Rengøring der passer til Bagsværd",
@@ -1093,8 +1093,8 @@ const PRIVAT_RENGORING_CITY_COPY: Record<string, PrivatRengoringCityCopy> = {
   },
   "hellerup": {
     "heroTitle": "Privat rengøring i Hellerup.",
-    "heroDescription": "Få en forsikret Zenmester til dit hjem i Hellerup. Vi kender villaer og herskabslejligheder i området omkring Strandvejen — og du ser prisen på under to minutter med Renzen Klub-fordele.",
-    "metaDescription": "Privat rengøring i Hellerup. Fast Zenmester, forsikrede medarbejdere og op til 26% servicefradrag. Book rengøringshjælp med Renzen Klub-fordele.",
+    "heroDescription": "Få en forsikret Zenmester til dit hjem i Hellerup. Vi hjælper i hele Hellerup, så du får mere ro, mere tid og en nemmere hverdag. Se din pris på under to minutter med Renzen Klub fordele.",
+    "metaDescription": "Privat rengøring i Hellerup. Fast Zenmester, forsikrede medarbejdere og op til 26% servicefradrag. Book rengøringshjælp med Renzen Klub fordele.",
     "editorialSections": [
       {
         "title": "Hverdagsliv i Hellerup",
@@ -1122,8 +1122,8 @@ const PRIVAT_RENGORING_CITY_COPY: Record<string, PrivatRengoringCityCopy> = {
   },
   "charlottenlund": {
     "heroTitle": "Privat rengøring i Charlottenlund.",
-    "heroDescription": "Få en forsikret Zenmester til dit hjem i Charlottenlund. Vi kender patricievillaer og store lejligheder i området omkring Charlottenlund Strandvej — og du ser prisen på under to minutter med Renzen Klub-fordele.",
-    "metaDescription": "Privat rengøring i Charlottenlund. Fast Zenmester, forsikrede medarbejdere og op til 26% servicefradrag. Book rengøringshjælp med Renzen Klub-fordele.",
+    "heroDescription": "Få en forsikret Zenmester til dit hjem i Charlottenlund. Vi hjælper i hele Charlottenlund, så du får mere ro, mere tid og en nemmere hverdag. Se din pris på under to minutter med Renzen Klub fordele.",
+    "metaDescription": "Privat rengøring i Charlottenlund. Fast Zenmester, forsikrede medarbejdere og op til 26% servicefradrag. Book rengøringshjælp med Renzen Klub fordele.",
     "editorialSections": [
       {
         "title": "Charlottenlund Strandvej, Jægersborg og Ordrup — boliger vi kender",
@@ -1173,7 +1173,7 @@ export function buildPrivatRengoringCityPageConfig(
 
   const otherCities = PRIVAT_RENGORING_PRIORITY_1_CITIES.filter(
     (entry) => entry.slug !== city.slug,
-  );
+  ).slice(0, 8);
 
   return {
     slug: "privat-rengoring",

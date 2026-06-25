@@ -26,7 +26,7 @@ function DealsHubStructuredData() {
     "@type": "CollectionPage",
     name: "Renzen Deals Hub",
     description:
-      "Overblik over tilbud, rabatkoder og Renzen Klub-fordele på rengøring, flyt og havearbejde.",
+      "Overblik over tilbud, rabatkoder og Renzen Klub fordele på rengøring, flyt og havearbejde.",
     url: `${siteConfig.origin}/deals/`,
     isPartOf: {
       "@type": "WebSite",

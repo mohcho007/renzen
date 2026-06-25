@@ -17,7 +17,7 @@ const CITY_COPY = {
   koebenhavn: {
     heroTitle: "Privat rengøring i København med fast Zenmester.",
     heroDescription:
-      "Få en forsikret Zenmester til din københavnske lejlighed eller byhus. Vi kender byens tempo, parkeringszoner og trapper — og du ser prisen på under to minutter med Renzen Klub-fordele.",
+      "Få en forsikret Zenmester til din københavnske lejlighed eller byhus. Vi kender byens tempo, parkeringszoner og trapper, så du får mere ro i hverdagen. Se din pris på under to minutter med Renzen Klub fordele.",
     metaDescription:
       "Privat rengøring i København. Fast Zenmester til lejligheder og byhuse i hele Københavns Kommune — forsikrede medarbejdere, servicefradrag og medlemsfordele.",
     sections: [
@@ -146,8 +146,8 @@ for (const [slug, name, housing, landmarks, localNote] of REMAINING) {
     heroTitle: money
       ? `Privat rengøring i ${name} med fast Zenmester.`
       : `Privat rengøring i ${name}.`,
-    heroDescription: `Få en forsikret Zenmester til dit hjem i ${name}. Vi kender ${housing} i området omkring ${landmarks.split(",")[0]} — og du ser prisen på under to minutter med Renzen Klub-fordele.`,
-    metaDescription: `Privat rengøring i ${name}. Fast Zenmester, forsikrede medarbejdere og op til 26% servicefradrag. Book rengøringshjælp med Renzen Klub-fordele.`,
+    heroDescription: `Få en forsikret Zenmester til dit hjem i ${name}. Vi hjælper i hele ${name}, så du får mere ro, mere tid og en nemmere hverdag. Se din pris på under to minutter med Renzen Klub fordele.`,
+    metaDescription: `Privat rengøring i ${name}. Fast Zenmester, forsikrede medarbejdere og op til 26% servicefradrag. Book rengøringshjælp med Renzen Klub fordele.`,
     sections: [
       {
         title: titles[0](name, landmarks),

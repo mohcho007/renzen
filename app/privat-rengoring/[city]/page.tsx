@@ -74,7 +74,7 @@ export default async function PrivatRengoringCityPage({ params }: PageProps) {
         schema={[
           generateServiceSchema(
             `Privat rengøring i ${city.name}`,
-            `Professionel privat rengøring i ${city.name} med forsikrede Zenmestre og Renzen Klub-fordele.`,
+            `Professionel privat rengøring i ${city.name} med forsikrede Zenmestre og Renzen Klub fordele.`,
             pageUrl,
           ),
           generateFAQSchema(config.faqs),
