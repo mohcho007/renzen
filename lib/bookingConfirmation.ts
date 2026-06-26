@@ -9,7 +9,7 @@ export type BookingConfirmationExtra = {
   quantity: number;
 };
 
-export type BookingConfirmationSource = "book2" | "flyt";
+export type BookingConfirmationSource = "book2" | "flyt" | "airbnb";
 
 export type BookingConfirmationPayload = {
   bookingId: string;

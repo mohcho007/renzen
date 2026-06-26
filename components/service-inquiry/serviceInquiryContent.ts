@@ -364,14 +364,14 @@ export const serviceInquiryPages: Record<
     heroEyebrow: "Superhost · Hurtig turn-around",
     heroTitle: "Driftssikker klargøring mellem gæster.",
     heroDescription:
-      "Hurtig og pålidelig rengøring af din udlejningsbolig mellem gæster. Faste tjeklister, kalendersynkronisering og verificerede Zenmestre — vi vender tilbage med et uforpligtende tilbud inden for 24 timer.",
+      "Hurtig og pålidelig rengøring af din udlejningsbolig mellem gæster. Få en fast engangs pris med det samme — og book direkte via link i din e-mail.",
     heroImage: "/airbnb-rengoerng.avif",
     heroImageAlt: "Professionel Airbnb rengøring af udlejningsbolig",
     heroCornerImage: "/icons/house-bg (1).png",
     trustBadges: [
       "Verificerede Zenmestre",
       "Hurtig turn-around",
-      "Uforpligtende tilbud",
+      "Pris og booking på e-mail",
     ],
     stats: [
       ["4,8 ud af 5", "Kundevurdering"],
@@ -469,9 +469,9 @@ export const serviceInquiryPages: Record<
     ],
     faqs: serviceFAQs["airbnb-rengoring"],
     ctaTitle: "Klar til driftssikker Airbnb rengøring?",
-    formTitle: "Få et uforpligtende tilbud",
+    formTitle: "Få pris og book-link",
     formDescription:
-      "Udfyld formularen — vi vender tilbage med et skræddersyet tilbud uden binding.",
+      "Udfyld formularen — vi sender en fast engangs pris og et personligt book-link til din e-mail med det samme.",
     sizeFieldLabel: "Boligstørrelse",
     sizeFieldPlaceholder: "F.eks. 70 m²",
     klubPromoDescription:

@@ -1497,7 +1497,9 @@ export function ServiceInquiryWizard({
           ))}
       </dl>
       <p className={wizardStyles.summaryNote}>
-        Uforpligtende tilbud inden for 24 timer. Ingen betaling nu.
+        {serviceSlug === "airbnb-rengoring"
+          ? "Du modtager en fast engangs pris og et book-link på e-mail med det samme. Ingen betaling nu."
+          : "Uforpligtende tilbud inden for 24 timer. Ingen betaling nu."}
       </p>
     </>
   );
@@ -1512,8 +1514,18 @@ export function ServiceInquiryWizard({
             <div className={styles.successIcon}>✓</div>
             <h2 className={styles.successTitle}>Tak for din forespørgsel</h2>
             <p className={styles.successCopy}>
-              Vi har modtaget din forespørgsel om {serviceName.toLowerCase()}.
-              Du hører fra os inden for 24 timer på {email}.
+              {serviceSlug === "airbnb-rengoring" ? (
+                <>
+                  Vi har modtaget din forespørgsel om {serviceName.toLowerCase()}.
+                  Tjek {email} — du får en fast engangs pris og et link til at booke
+                  med det samme.
+                </>
+              ) : (
+                <>
+                  Vi har modtaget din forespørgsel om {serviceName.toLowerCase()}.
+                  Du hører fra os inden for 24 timer på {email}.
+                </>
+              )}
             </p>
             {!embedded && (
               <Link href={`/${serviceSlug}/`} className={styles.backBtn}>
@@ -2695,7 +2707,9 @@ export function ServiceInquiryWizard({
               <>
                 <h2 className={styles.question}>Dine kontaktoplysninger</h2>
                 <p className={styles.hint}>
-                  Vi sender dit tilbud til denne e-mail inden for 24 timer.
+                  {serviceSlug === "airbnb-rengoring"
+                    ? "Vi sender din pris og dit book-link til denne e-mail med det samme."
+                    : "Vi sender dit tilbud til denne e-mail inden for 24 timer."}
                 </p>
 
                 {serviceSlug === "kontorrengoring" && (

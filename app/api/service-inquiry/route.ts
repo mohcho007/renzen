@@ -1,4 +1,7 @@
+import { fetchAirbnbEngangsEstimateKr } from "@/lib/airbnbInquiryPricing";
+import { sendAirbnbInquiryEmails } from "@/lib/email/sendAirbnbInquiryEmails";
 import { sendServiceInquiryEmails } from "@/lib/email/sendServiceInquiryEmails";
+import { checkRateLimit, getClientIp } from "@/lib/rateLimit";
 import { NextRequest, NextResponse } from "next/server";
 import {
   COMMERCIAL_ENTRY_OPTIONS,
@@ -478,6 +481,14 @@ function validatePayload(body: unknown): { ok: true; data: ServiceInquiryPayload
 
 export async function POST(req: NextRequest) {
   try {
+    const clientIp = getClientIp(req);
+    if (!checkRateLimit(`service-inquiry:${clientIp}`, 8, 60_000)) {
+      return NextResponse.json(
+        { success: false, message: "For mange forespørgsler. Prøv igen om lidt." },
+        { status: 429 },
+      );
+    }
+
     const body = await req.json();
     const validation = validatePayload(body);
 
@@ -506,6 +517,16 @@ export async function POST(req: NextRequest) {
       } catch (webhookError) {
         console.error("[service-inquiry] webhook failed:", webhookError);
       }
+    }
+
+    if (inquiry.serviceSlug === "airbnb-rengoring") {
+      const details = inquiry.details as { sqm: number };
+      const { priceKr, source } = await fetchAirbnbEngangsEstimateKr(
+        details.sqm,
+        inquiry.preferredDate,
+      );
+      await sendAirbnbInquiryEmails(inquiry, priceKr, source);
+      return NextResponse.json({ success: true });
     }
 
     await sendServiceInquiryEmails(inquiry);
