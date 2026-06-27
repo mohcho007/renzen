@@ -61,12 +61,18 @@ export const BOOKING_CONFIRMATION_PREVIEW_PAYLOAD: BookingConfirmationPayload = 
   createdAt: "2026-06-23T10:00:00.000Z",
 };
 
+function isBookingConfirmationSource(
+  value: unknown,
+): value is BookingConfirmationSource {
+  return value === "book2" || value === "flyt" || value === "airbnb";
+}
+
 function isValidPayload(value: unknown): value is BookingConfirmationPayload {
   if (!value || typeof value !== "object") return false;
   const payload = value as BookingConfirmationPayload;
   return (
     typeof payload.bookingId === "string" &&
-    (payload.source === "book2" || payload.source === "flyt") &&
+    isBookingConfirmationSource(payload.source) &&
     typeof payload.firstName === "string" &&
     typeof payload.createdAt === "string"
   );

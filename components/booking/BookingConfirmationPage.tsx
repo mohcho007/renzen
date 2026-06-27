@@ -247,6 +247,10 @@ function ConfirmationContent({
               <Link href="/flytterengoring/" className="bcCtaSecondary">
                 Tilbage til flytterengøring
               </Link>
+            ) : payload.source === "airbnb" ? (
+              <Link href="/airbnb-rengoring/" className="bcCtaSecondary">
+                Tilbage til Airbnb rengøring
+              </Link>
             ) : payload.isKlub ? (
               <Link href="/klub/" className="bcCtaSecondary">
                 Læs om Renzen Klub
