@@ -1,5 +1,13 @@
+"use client";
+
 import Link from "next/link";
-import { useId } from "react";
+import {
+  type MouseEvent,
+  useEffect,
+  useId,
+  useRef,
+  useState,
+} from "react";
 import {
   KLUB_ANNUAL_KR,
   KLUB_ANNUAL_MONTHLY_EQUIVALENT_KR,
@@ -27,15 +35,103 @@ const shimmerLayers = [
 type KlubMembershipBadgeProps = {
   className?: string;
   klubHref?: string;
-  termsHref?: string;
 };
 
 export function KlubMembershipBadge({
   className = "",
   klubHref = "/klub/",
-  termsHref = "/handelsbetingelser/",
 }: KlubMembershipBadgeProps) {
   const uid = useId().replace(/:/g, "");
+  const ref = useRef<HTMLDivElement>(null);
+  const [flarePosition, setFlarePosition] = useState(0);
+  const [isHovering, setIsHovering] = useState(false);
+  const [smoothFlareTransition, setSmoothFlareTransition] = useState(false);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const enterTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const leaveTimeout1 = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const leaveTimeout2 = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const leaveTimeout3 = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const updatePreference = () =>
+      setPrefersReducedMotion(mediaQuery.matches);
+    updatePreference();
+    mediaQuery.addEventListener("change", updatePreference);
+    return () => mediaQuery.removeEventListener("change", updatePreference);
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      if (enterTimeout.current) clearTimeout(enterTimeout.current);
+      if (leaveTimeout1.current) clearTimeout(leaveTimeout1.current);
+      if (leaveTimeout2.current) clearTimeout(leaveTimeout2.current);
+      if (leaveTimeout3.current) clearTimeout(leaveTimeout3.current);
+    };
+  }, []);
+
+  const getFlarePosition = (clientX: number, clientY: number) => {
+    const rect = ref.current?.getBoundingClientRect();
+    if (!rect) return 0;
+
+    const xCenter = (rect.left + rect.right) / 2;
+    const yCenter = (rect.top + rect.bottom) / 2;
+
+    return (
+      (Math.abs(xCenter - clientX) + Math.abs(yCenter - clientY)) / 1.5
+    );
+  };
+
+  const onMouseEnter = (event: MouseEvent<HTMLDivElement>) => {
+    if (prefersReducedMotion) return;
+
+    if (leaveTimeout1.current) clearTimeout(leaveTimeout1.current);
+    if (leaveTimeout2.current) clearTimeout(leaveTimeout2.current);
+    if (leaveTimeout3.current) clearTimeout(leaveTimeout3.current);
+
+    setIsHovering(true);
+    setSmoothFlareTransition(false);
+    enterTimeout.current = setTimeout(
+      () => setSmoothFlareTransition(true),
+      350,
+    );
+
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        setFlarePosition(getFlarePosition(event.clientX, event.clientY));
+      });
+    });
+  };
+
+  const onMouseMove = (event: MouseEvent<HTMLDivElement>) => {
+    if (prefersReducedMotion) return;
+
+    setTimeout(
+      () => setFlarePosition(getFlarePosition(event.clientX, event.clientY)),
+      150,
+    );
+  };
+
+  const onMouseLeave = () => {
+    if (prefersReducedMotion) return;
+
+    if (enterTimeout.current) clearTimeout(enterTimeout.current);
+
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        setSmoothFlareTransition(false);
+        leaveTimeout1.current = setTimeout(
+          () => setFlarePosition((current) => -current / 4),
+          150,
+        );
+        leaveTimeout2.current = setTimeout(() => setFlarePosition(0), 300);
+        leaveTimeout3.current = setTimeout(() => {
+          setIsHovering(false);
+          setSmoothFlareTransition(true);
+        }, 500);
+      });
+    });
+  };
 
   const shimmerKeyframes = shimmerLayers
     .map(
@@ -50,7 +146,11 @@ export function KlubMembershipBadge({
 
   return (
     <div
+      ref={ref}
       className={`relative w-full max-w-[430px] -translate-y-[40px] rotate-[-2deg] motion-reduce:translate-y-0 motion-reduce:rotate-0 ${className}`}
+      onMouseEnter={onMouseEnter}
+      onMouseMove={onMouseMove}
+      onMouseLeave={onMouseLeave}
     >
       <style>{`
         ${shimmerKeyframes}
@@ -79,9 +179,20 @@ export function KlubMembershipBadge({
               key={color}
               className={`klub-shimmer-${uid} absolute inset-[-50%]`}
               style={{
-                transform: `rotate(${index * 22}deg)`,
+                transform: `rotate(${
+                  isHovering && !prefersReducedMotion
+                    ? flarePosition + index * 22
+                    : index * 22
+                }deg)`,
                 transformOrigin: "center center",
-                animation: `klubShimmer${uid}${index} 7s ease-in-out infinite`,
+                transition:
+                  isHovering && !smoothFlareTransition
+                    ? "transform 200ms ease-out"
+                    : "none",
+                animation:
+                  isHovering && !prefersReducedMotion
+                    ? "none"
+                    : `klubShimmer${uid}${index} 7s ease-in-out infinite`,
                 animationDelay: `${index * 0.35}s`,
                 willChange: "transform",
               }}
@@ -114,12 +225,14 @@ export function KlubMembershipBadge({
               <p className="mt-2 text-xs font-bold uppercase tracking-[0.14em] text-[#7b8781]">
                 Årsmedlemskab
               </p>
-              <div className="mt-0.5 flex items-end justify-between gap-3">
-                <p className="bg-gradient-to-br from-[#3a3f3c] via-[#2f7558] to-[#b8922a] bg-clip-text font-display text-[1.75rem] font-bold leading-tight text-transparent">
+              <p className="mt-0.5 flex items-end gap-2">
+                <span className="bg-gradient-to-br from-[#3a3f3c] via-[#2f7558] to-[#b8922a] bg-clip-text font-display text-[1.75rem] font-bold leading-tight text-transparent">
                   {klubAnnualLabel} kr.
-                </p>
-                <span className="font-display text-3xl text-[#2f7558]">✦</span>
-              </div>
+                </span>
+                <span className="font-display text-3xl leading-none text-[#2f7558]">
+                  ✦
+                </span>
+              </p>
             </div>
             <span className="shrink-0 rounded-full bg-[#f3d675] px-2.5 py-0.5 text-[11px] font-bold text-[#17251f]">
               Bedste værdi
@@ -135,13 +248,7 @@ export function KlubMembershipBadge({
 
           <p className="mt-3.5 text-[11px] font-medium leading-[1.45] text-[#78847e]">
             <span className="text-[#2f7558]">✦</span> Kreditter har
-            anvendelsesvilkår og kan ikke udbetales som kontanter.{" "}
-            <Link
-              href={termsHref}
-              className="font-semibold text-[#173c2c] underline decoration-[#bdccbd] underline-offset-2 transition-colors hover:text-[#2f7558]"
-            >
-              Se de fulde medlemsbetingelser.
-            </Link>
+            anvendelsesvilkår og kan ikke udbetales som kontanter.
           </p>
         </div>
       </div>
