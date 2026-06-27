@@ -114,23 +114,23 @@ export function KlubMembershipBadge({
               <p className="mt-2 text-xs font-bold uppercase tracking-[0.14em] text-[#7b8781]">
                 Årsmedlemskab
               </p>
-              <p className="mt-0.5 bg-gradient-to-br from-[#3a3f3c] via-[#2f7558] to-[#b8922a] bg-clip-text font-display text-[1.75rem] font-bold leading-tight text-transparent">
-                {klubAnnualLabel} kr.
-              </p>
+              <div className="mt-0.5 flex items-end justify-between gap-3">
+                <p className="bg-gradient-to-br from-[#3a3f3c] via-[#2f7558] to-[#b8922a] bg-clip-text font-display text-[1.75rem] font-bold leading-tight text-transparent">
+                  {klubAnnualLabel} kr.
+                </p>
+                <span className="font-display text-3xl text-[#2f7558]">✦</span>
+              </div>
             </div>
             <span className="shrink-0 rounded-full bg-[#f3d675] px-2.5 py-0.5 text-[11px] font-bold text-[#17251f]">
               Bedste værdi
             </span>
           </div>
 
-          <div className="mt-3.5 flex items-end justify-between gap-3">
-            <div>
-              <p className="text-sm font-semibold text-[#69756f]">Svarer til</p>
-              <p className="font-display text-xl font-bold text-[#2f7558]">
-                {klubMonthlyLabel} kr./md.
-              </p>
-            </div>
-            <span className="font-display text-3xl text-[#2f7558]">✦</span>
+          <div className="mt-3.5">
+            <p className="text-sm font-semibold text-[#69756f]">Svarer til</p>
+            <p className="font-display text-xl font-bold text-[#2f7558]">
+              {klubMonthlyLabel} kr./md.
+            </p>
           </div>
 
           <p className="mt-3.5 text-[11px] font-medium leading-[1.45] text-[#78847e]">
