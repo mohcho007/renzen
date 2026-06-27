@@ -10,6 +10,7 @@ import {
 } from "react";
 import { useRouter } from "next/navigation";
 import { useElements, useStripe } from "@stripe/react-stripe-js";
+import DealSummaryTrustPanel from "@/components/dealside/DealSummaryTrustPanel";
 import styles from "@/components/dealside/DealTypeformWizard.module.css";
 import flytStyles from "@/components/flytterengoring/FlytBookingWizard.module.css";
 import { WizardStepMeta } from "@/components/wizard/WizardExitButton";
@@ -34,7 +35,7 @@ import {
   saveBookingConfirmation,
   type BookingConfirmationPayload,
 } from "@/lib/bookingConfirmation";
-import { formatFlytKr, formatFlytReceiptKr } from "@/lib/flytterengoring";
+import { formatFlytReceiptKr } from "@/lib/flytterengoring";
 import type { L27CustomField } from "@/lib/flytterengoring";
 import {
   isBookableSlotInSpots,
@@ -562,46 +563,72 @@ function AirbnbBookWizardForm({ inquiry }: AirbnbBookWizardProps) {
   };
 
   const renderSummary = () => (
-    <div className={flytStyles.summaryPanelInner}>
-      <p className={styles.summaryEyebrow}>Din booking</p>
-      <h2 className={styles.summaryTitle}>Airbnb rengøring</h2>
-      <p className={styles.summaryPrice}>{formatFlytKr(lockedPriceKr)}</p>
-      <p className={styles.summarySub}>Engangs pris · låst fra din forespørgsel</p>
-      <dl className={styles.summaryList}>
-        <div className={styles.summaryRow}>
-          <dt>Adresse</dt>
-          <dd>
+    <div className={styles.receipt}>
+      <DealSummaryTrustPanel />
+
+      <p className={styles.receiptEarlyLabel}>Din booking</p>
+      <div className={styles.receiptHead}>
+        <p className={styles.receiptPackage}>Airbnb rengøring</p>
+        <p className={styles.receiptMeta}>Engangs pris · låst fra din forespørgsel</p>
+      </div>
+
+      <div className={styles.selectionGrid}>
+        <div
+          className={styles.selectionCell}
+          style={{ gridColumn: "1 / -1" }}
+        >
+          <span className={styles.selectionLabel}>Adresse</span>
+          <span className={styles.selectionValue}>
             {inquiry.address}, {inquiry.zip} {inquiry.city}
-          </dd>
+          </span>
         </div>
-        <div className={styles.summaryRow}>
-          <dt>Areal</dt>
-          <dd>{sqm} m²</dd>
+        <div className={styles.selectionCell}>
+          <span className={styles.selectionLabel}>Areal</span>
+          <span className={styles.selectionValue}>{sqm} m²</span>
         </div>
-        <div className={styles.summaryRow}>
-          <dt>Soveværelser</dt>
-          <dd>{inquiry.details.bedroomCount}</dd>
+        <div className={styles.selectionCell}>
+          <span className={styles.selectionLabel}>Soveværelser</span>
+          <span className={styles.selectionValue}>
+            {inquiry.details.bedroomCount}
+          </span>
         </div>
-        <div className={styles.summaryRow}>
-          <dt>Badeværelser</dt>
-          <dd>{inquiry.details.bathroomCount}</dd>
+        <div className={styles.selectionCell}>
+          <span className={styles.selectionLabel}>Badeværelser</span>
+          <span className={styles.selectionValue}>
+            {inquiry.details.bathroomCount}
+          </span>
         </div>
         {selectedDate && selectedSlot && (
-          <div className={styles.summaryRow}>
-            <dt>Tidspunkt</dt>
-            <dd>
-              {new Date(selectedDate + "T12:00:00").toLocaleDateString("da-DK", {
-                weekday: "long",
-                day: "numeric",
-                month: "long",
-              })}
-              , {selectedSlot.label}
-            </dd>
-          </div>
+          <>
+            <div className={styles.selectionCell}>
+              <span className={styles.selectionLabel}>Dato</span>
+              <span className={styles.selectionValue}>
+                {new Date(selectedDate + "T12:00:00").toLocaleDateString(
+                  "da-DK",
+                  { weekday: "long", day: "numeric", month: "long" },
+                )}
+              </span>
+            </div>
+            <div className={styles.selectionCell}>
+              <span className={styles.selectionLabel}>Tid</span>
+              <span className={styles.selectionValue}>{selectedSlot.label}</span>
+            </div>
+          </>
         )}
-      </dl>
-      <p className={styles.summaryNote}>
-        Du betaler først efter rengøringen. Ingen tilvalg eller abonnement.
+      </div>
+
+      <div className={styles.receiptSection}>
+        <div className={styles.receiptTotals}>
+          <div className={styles.receiptTotalNet}>
+            <span>Total</span>
+            <strong>{formatFlytReceiptKr(lockedPriceKr)}</strong>
+          </div>
+        </div>
+      </div>
+
+      <p className={styles.zeroToday}>
+        Du betaler først efter rengøringen
+        <small>Ingen tilvalg eller abonnement</small>
       </p>
     </div>
   );
