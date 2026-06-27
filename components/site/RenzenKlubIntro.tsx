@@ -1,19 +1,14 @@
 import Link from "next/link";
 import { ArrowRight, Check } from "lucide-react";
+import { KlubMembershipBadge } from "@/components/ui/klub-membership-badge";
 import {
   KLUB_ANNUAL_KR,
-  KLUB_ANNUAL_MONTHLY_EQUIVALENT_KR,
   KLUB_SAVINGS_EXAMPLE_ANNUAL_KR,
   KLUB_SAVINGS_EXAMPLE_FIRST_YEAR_KR,
   KLUB_SAVINGS_EXAMPLE_SQM,
   ZEN_CREDIT_ANNUAL_KR,
   ZEN_CREDIT_MONTHLY_KR,
 } from "@/data/pricing";
-
-const klubMonthlyLabel = KLUB_ANNUAL_MONTHLY_EQUIVALENT_KR.toLocaleString(
-  "da-DK",
-  { minimumFractionDigits: 2, maximumFractionDigits: 2 },
-);
 
 const klubBenefits = [
   { label: "Op til 20% medlemsrabat" },
@@ -94,38 +89,7 @@ export function RenzenKlubPromoSection({
 
           <div className="relative flex min-h-[380px] items-center justify-center overflow-hidden bg-[#dfe9dc] p-8">
             <div className="absolute -bottom-20 -right-20 h-72 w-72 rounded-full bg-[#f5d679]/70 lg:-bottom-auto lg:-top-24" />
-            <div className="relative w-full max-w-[430px] -translate-y-[40px] rotate-[-2deg] rounded-[18px] bg-[#fffdf9] p-7 shadow-[0_24px_55px_rgba(32,70,52,0.2)]">
-              <div className="flex items-center justify-between border-b border-[#e5e7e1] pb-5">
-                <div>
-                  <p className="text-xs font-bold uppercase tracking-[0.14em] text-[#7b8781]">
-                    Årsmedlemskab
-                  </p>
-                  <p className="mt-1 font-display text-3xl font-bold text-[#17251f]">
-                    {KLUB_ANNUAL_KR.toLocaleString("da-DK")} kr.
-                  </p>
-                </div>
-                <span className="rounded-full bg-[#f3d675] px-3 py-1 text-xs font-bold text-[#17251f]">
-                  Bedste værdi
-                </span>
-              </div>
-              <div className="mt-5 flex items-end justify-between gap-4">
-                <div>
-                  <p className="text-sm font-semibold text-[#69756f]">
-                    Svarer til
-                  </p>
-                  <p className="font-display text-2xl font-bold text-[#2f7558]">
-                    {klubMonthlyLabel} kr./md.
-                  </p>
-                </div>
-                <span className="font-display text-4xl text-[#2f7558]">
-                  ✦
-                </span>
-              </div>
-              <p className="mt-5 text-xs font-medium leading-5 text-[#78847e]">
-                Kreditter har anvendelsesvilkår og kan ikke udbetales som
-                kontanter. Se de fulde medlemsbetingelser.
-              </p>
-            </div>
+            <KlubMembershipBadge />
           </div>
         </div>
       </div>
