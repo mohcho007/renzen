@@ -1,4 +1,5 @@
-import { fetchAirbnbEngangsEstimateKr } from "@/lib/airbnbInquiryPricing";
+import { AirbnbInquiryConfigError } from "@/lib/airbnbInquiryToken";
+import { fetchAirbnbEngangsEstimateKr, fallbackAirbnbEngangsPriceKr } from "@/lib/airbnbInquiryPricing";
 import { sendAirbnbInquiryEmails } from "@/lib/email/sendAirbnbInquiryEmails";
 import { sendServiceInquiryEmails } from "@/lib/email/sendServiceInquiryEmails";
 import { checkRateLimit, getClientIp } from "@/lib/rateLimit";
@@ -76,6 +77,37 @@ function isValidPreferredTimeWindow(
 }
 
 export const dynamic = "force-dynamic";
+
+function isDevEnvironment() {
+  return process.env.NODE_ENV === "development";
+}
+
+function serviceInquiryErrorResponse(error: unknown) {
+  if (error instanceof AirbnbInquiryConfigError) {
+    return NextResponse.json(
+      {
+        success: false,
+        message: isDevEnvironment()
+          ? "AIRBNB_INQUIRY_TOKEN_SECRET mangler i .env (min. 16 tegn)."
+          : "Booking-linket kan ikke oprettes lige nu. Kontakt os på info@renzen.dk, så hjælper vi dig videre.",
+      },
+      { status: 503 },
+    );
+  }
+
+  const message = error instanceof Error ? error.message : String(error);
+  console.error("[service-inquiry] error:", error);
+
+  return NextResponse.json(
+    {
+      success: false,
+      message: isDevEnvironment()
+        ? message
+        : "Serverfejl. Prøv igen senere.",
+    },
+    { status: 500 },
+  );
+}
 
 function isValidEmail(value: string) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
@@ -521,10 +553,18 @@ export async function POST(req: NextRequest) {
 
     if (inquiry.serviceSlug === "airbnb-rengoring") {
       const details = inquiry.details as { sqm: number };
-      const { priceKr, source } = await fetchAirbnbEngangsEstimateKr(
-        details.sqm,
-        inquiry.preferredDate,
-      );
+      let priceKr: number;
+      let source: "l27" | "fallback";
+      try {
+        ({ priceKr, source } = await fetchAirbnbEngangsEstimateKr(
+          details.sqm,
+          inquiry.preferredDate,
+        ));
+      } catch (pricingError) {
+        console.error("[service-inquiry] airbnb pricing failed:", pricingError);
+        priceKr = fallbackAirbnbEngangsPriceKr(details.sqm);
+        source = "fallback";
+      }
       await sendAirbnbInquiryEmails(inquiry, priceKr, source);
       return NextResponse.json({ success: true });
     }
@@ -533,10 +573,6 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ success: true });
   } catch (error) {
-    console.error("[service-inquiry] error:", error);
-    return NextResponse.json(
-      { success: false, message: "Serverfejl. Prøv igen senere." },
-      { status: 500 },
-    );
+    return serviceInquiryErrorResponse(error);
   }
 }

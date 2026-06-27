@@ -27,15 +27,35 @@ export type AirbnbInquiryTokenPayload = {
   exp: number;
 };
 
+export class AirbnbInquiryConfigError extends Error {
+  constructor(message = "AIRBNB_INQUIRY_TOKEN_SECRET is not configured.") {
+    super(message);
+    this.name = "AirbnbInquiryConfigError";
+  }
+}
+
+let loggedDevTokenSecretWarning = false;
+
+export function isAirbnbInquiryTokenConfigured(): boolean {
+  const secret = process.env.AIRBNB_INQUIRY_TOKEN_SECRET;
+  return Boolean(secret && secret.trim().length >= 16);
+}
+
 function getTokenSecret(): string {
   const secret = process.env.AIRBNB_INQUIRY_TOKEN_SECRET;
   if (secret && secret.trim().length >= 16) {
     return secret.trim();
   }
   if (process.env.NODE_ENV === "development") {
+    if (!loggedDevTokenSecretWarning) {
+      loggedDevTokenSecretWarning = true;
+      console.warn(
+        "[airbnb-inquiry] AIRBNB_INQUIRY_TOKEN_SECRET missing — using dev fallback. Set a 16+ char secret in .env.local for production parity.",
+      );
+    }
     return "dev-airbnb-inquiry-token-secret";
   }
-  throw new Error("AIRBNB_INQUIRY_TOKEN_SECRET is not configured.");
+  throw new AirbnbInquiryConfigError();
 }
 
 function base64UrlEncode(value: string): string {
@@ -75,7 +95,7 @@ export function createAirbnbInquiryToken(
     city: inquiry.city.trim(),
     preferredDate: inquiry.preferredDate,
     entryMethod: inquiry.entryMethod,
-    entryOtherDetails: inquiry.entryOtherDetails.trim(),
+    entryOtherDetails: (inquiry.entryOtherDetails ?? "").trim(),
     firstName: inquiry.firstName.trim(),
     lastName: inquiry.lastName.trim(),
     email: inquiry.email.trim(),
