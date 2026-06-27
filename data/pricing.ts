@@ -50,10 +50,10 @@ export const INTRO_CLEANING_FROM_KR = Math.max(
   pricingConfig.introPrices[0].price - ZEN_CREDIT_MONTHLY_KR,
 );
 
-/** Biweekly visits per calendar year (used in Klub savings examples). */
-export const BIWEEKLY_VISITS_PER_YEAR = 26;
+/** Weekly visits per calendar year (used in Klub savings examples). */
+export const WEEKLY_VISITS_PER_YEAR = 52;
 
-/** Member-price cleaning savings for a reference home (100 m², every 2 weeks). */
+/** Member-price cleaning savings for a reference home (100 m², every week). */
 export function klubAnnualCleaningSavingsKr(
   sqm: number,
   frequencyDiscountPct: number,
@@ -64,16 +64,16 @@ export function klubAnnualCleaningSavingsKr(
   return Math.max(0, list - ongoingGross) * visitsPerYear;
 }
 
-const biweeklyFrequency = pricingConfig.frequencies.find(
-  (frequency) => frequency.id === "biweekly",
+const weeklyFrequency = pricingConfig.frequencies.find(
+  (frequency) => frequency.id === "weekly",
 );
 
 export const KLUB_SAVINGS_EXAMPLE_SQM = 100;
 
 export const KLUB_SAVINGS_EXAMPLE_ANNUAL_KR = klubAnnualCleaningSavingsKr(
   KLUB_SAVINGS_EXAMPLE_SQM,
-  biweeklyFrequency?.discountPct ?? 15,
-  BIWEEKLY_VISITS_PER_YEAR,
+  weeklyFrequency?.discountPct ?? 20,
+  WEEKLY_VISITS_PER_YEAR,
 );
 
 export const KLUB_SAVINGS_EXAMPLE_FIRST_YEAR_KR =

@@ -43,7 +43,7 @@ export function RenzenKlubPromoSection({
             kr. første år på din rengøring
           </h2>
           <p className="mt-4 max-w-2xl text-sm font-medium leading-6 text-[#52625a] sm:text-base sm:leading-7">
-            En bolig på {KLUB_SAVINGS_EXAMPLE_SQM} m² med rengøring hver 2. uge
+            En bolig på {KLUB_SAVINGS_EXAMPLE_SQM} m² med rengøring hver uge
             sparer ca. {KLUB_SAVINGS_EXAMPLE_ANNUAL_KR.toLocaleString("da-DK")}{" "}
             kr. om året med medlemspris. Som nyt medlem får du også{" "}
             {ZEN_CREDIT_MONTHLY_KR.toLocaleString("da-DK")} kr. i velkomstkredit
