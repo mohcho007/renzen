@@ -31,12 +31,15 @@ const klubMonthlyLabel = KLUB_ANNUAL_MONTHLY_EQUIVALENT_KR.toLocaleString(
 
 const klubAnnualLabel = KLUB_ANNUAL_KR.toLocaleString("da-DK");
 
+const cardBackground =
+  "linear-gradient(145deg, #ececec 0%, #ddd 28%, #c8c8c8 52%, #e5e5e5 78%, #d6d6d6 100%)";
+
 const overlayColors = [
-  "rgba(245, 214, 121, 0.35)",
-  "rgba(189, 204, 189, 0.3)",
-  "rgba(47, 117, 88, 0.22)",
-  "rgba(246, 244, 237, 0.45)",
-  "rgba(243, 214, 117, 0.28)",
+  "rgba(255, 255, 255, 0.55)",
+  "rgba(220, 220, 220, 0.45)",
+  "rgba(245, 214, 121, 0.28)",
+  "rgba(189, 204, 189, 0.22)",
+  "rgba(255, 255, 255, 0.4)",
 ];
 
 type KlubMembershipBadgeProps = {
@@ -286,7 +289,14 @@ export function KlubMembershipBadge({
           transition: "transform 200ms ease-out",
         }}
       >
-        <div className="relative overflow-hidden rounded-[18px] bg-[#fffdf9] p-7 shadow-[0_24px_55px_rgba(32,70,52,0.2)] ring-1 ring-[#e5e7e1]/80">
+        <div
+          className="relative overflow-hidden rounded-[18px] p-7 shadow-[0_24px_55px_rgba(32,70,52,0.2)] ring-1 ring-[#bbb]"
+          style={{ background: cardBackground }}
+        >
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-[4px] rounded-[14px] border border-[#bbb]"
+          />
           <div
             aria-hidden
             className="pointer-events-none absolute inset-0 mix-blend-overlay motion-reduce:hidden"
@@ -318,7 +328,7 @@ export function KlubMembershipBadge({
           </div>
 
           <div className="relative z-[1]">
-            <div className="flex items-start justify-between gap-4 border-b border-[#e5e7e1] pb-5">
+            <div className="flex items-start justify-between gap-4 border-b border-[#bbb]/70 pb-5">
               <div className="min-w-0">
                 <Link
                   href={klubHref}
