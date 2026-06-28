@@ -20,17 +20,21 @@ const klubMonthlyLabel = KLUB_ANNUAL_MONTHLY_EQUIVALENT_KR.toLocaleString(
 
 const klubAnnualLabel = KLUB_ANNUAL_KR.toLocaleString("da-DK");
 
-const cardBackground =
-  "linear-gradient(145deg, #ececec 0%, #ddd 28%, #c8c8c8 52%, #e5e5e5 78%, #d6d6d6 100%)";
+const overlayViewBox = { width: 430, height: 170 };
+const overlayPolygonPoints = `0,0 ${overlayViewBox.width},${overlayViewBox.height} ${overlayViewBox.width},0 0,${overlayViewBox.height}`;
 
-const shimmerLayers = [
-  "rgba(255, 255, 255, 0.55)",
-  "rgba(230, 230, 230, 0.42)",
-  "rgba(243, 214, 117, 0.32)",
-  "rgba(189, 204, 189, 0.26)",
-  "rgba(47, 117, 88, 0.16)",
-  "rgba(255, 255, 255, 0.38)",
-];
+const holographicLayers = [
+  { fill: "hsl(358, 100%, 62%)", offset: 0 },
+  { fill: "hsl(30, 100%, 50%)", offset: 10 },
+  { fill: "hsl(60, 100%, 50%)", offset: 20 },
+  { fill: "hsl(96, 100%, 50%)", offset: 30 },
+  { fill: "hsl(233, 85%, 47%)", offset: 40 },
+  { fill: "hsl(271, 85%, 47%)", offset: 50 },
+  { fill: "hsl(300, 20%, 35%)", offset: 60 },
+  { fill: "transparent", offset: 70 },
+  { fill: "transparent", offset: 80 },
+  { fill: "white", offset: 90 },
+] as const;
 
 type KlubMembershipBadgeProps = {
   className?: string;
@@ -43,9 +47,10 @@ export function KlubMembershipBadge({
 }: KlubMembershipBadgeProps) {
   const uid = useId().replace(/:/g, "");
   const ref = useRef<HTMLDivElement>(null);
-  const [flarePosition, setFlarePosition] = useState(0);
-  const [isHovering, setIsHovering] = useState(false);
-  const [smoothFlareTransition, setSmoothFlareTransition] = useState(false);
+  const [firstOverlayPosition, setFirstOverlayPosition] = useState(0);
+  const [disableInOutOverlayAnimation, setDisableInOutOverlayAnimation] =
+    useState(true);
+  const [disableOverlayAnimation, setDisableOverlayAnimation] = useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   const enterTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
   const leaveTimeout1 = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -70,7 +75,7 @@ export function KlubMembershipBadge({
     };
   }, []);
 
-  const getFlarePosition = (clientX: number, clientY: number) => {
+  const getFirstOverlayPosition = (clientX: number, clientY: number) => {
     const rect = ref.current?.getBoundingClientRect();
     if (!rect) return 0;
 
@@ -89,16 +94,18 @@ export function KlubMembershipBadge({
     if (leaveTimeout2.current) clearTimeout(leaveTimeout2.current);
     if (leaveTimeout3.current) clearTimeout(leaveTimeout3.current);
 
-    setIsHovering(true);
-    setSmoothFlareTransition(false);
+    setDisableOverlayAnimation(true);
+    setDisableInOutOverlayAnimation(false);
     enterTimeout.current = setTimeout(
-      () => setSmoothFlareTransition(true),
+      () => setDisableInOutOverlayAnimation(true),
       350,
     );
 
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
-        setFlarePosition(getFlarePosition(event.clientX, event.clientY));
+        setFirstOverlayPosition(
+          getFirstOverlayPosition(event.clientX, event.clientY),
+        );
       });
     });
   };
@@ -107,7 +114,10 @@ export function KlubMembershipBadge({
     if (prefersReducedMotion) return;
 
     setTimeout(
-      () => setFlarePosition(getFlarePosition(event.clientX, event.clientY)),
+      () =>
+        setFirstOverlayPosition(
+          getFirstOverlayPosition(event.clientX, event.clientY),
+        ),
       150,
     );
   };
@@ -119,26 +129,31 @@ export function KlubMembershipBadge({
 
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
-        setSmoothFlareTransition(false);
+        setDisableInOutOverlayAnimation(false);
         leaveTimeout1.current = setTimeout(
-          () => setFlarePosition((current) => -current / 4),
+          () => setFirstOverlayPosition((current) => -current / 4),
           150,
         );
-        leaveTimeout2.current = setTimeout(() => setFlarePosition(0), 300);
+        leaveTimeout2.current = setTimeout(() => setFirstOverlayPosition(0), 300);
         leaveTimeout3.current = setTimeout(() => {
-          setIsHovering(false);
-          setSmoothFlareTransition(true);
+          setDisableOverlayAnimation(false);
+          setDisableInOutOverlayAnimation(true);
         }, 500);
       });
     });
   };
 
-  const shimmerKeyframes = shimmerLayers
+  const overlayPosition = prefersReducedMotion ? 0 : firstOverlayPosition;
+  const overlayAnimating =
+    !prefersReducedMotion && !disableOverlayAnimation;
+
+  const overlayAnimations = holographicLayers
     .map(
       (_, index) => `
-    @keyframes klubShimmer${uid}${index} {
-      0%, 100% { transform: rotate(${index * 22}deg); }
-      50% { transform: rotate(${index * 22 + 14}deg); }
+    @keyframes klubOverlay${uid}${index + 1} {
+      0% { transform: rotate(${index * 10}deg); }
+      50% { transform: rotate(${(index + 1) * 10}deg); }
+      100% { transform: rotate(${index * 10}deg); }
     }
   `,
     )
@@ -153,59 +168,19 @@ export function KlubMembershipBadge({
       onMouseLeave={onMouseLeave}
     >
       <style>{`
-        ${shimmerKeyframes}
+        ${overlayAnimations}
         @media (prefers-reduced-motion: reduce) {
-          .klub-shimmer-${uid} {
+          .klub-overlay-${uid} {
             animation: none !important;
           }
         }
       `}</style>
 
-      <div
-        className="relative overflow-hidden rounded-[18px] p-5 shadow-[0_24px_55px_rgba(32,70,52,0.2)] ring-1 ring-[#bbb]"
-        style={{ background: cardBackground }}
-      >
+      <div className="relative overflow-hidden rounded-[18px] bg-[#ddd] p-5 shadow-[0_24px_55px_rgba(32,70,52,0.2)] ring-1 ring-[#bbb]">
         <div
           aria-hidden
           className="pointer-events-none absolute inset-[4px] rounded-[14px] border border-[#bbb]"
         />
-
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 mix-blend-overlay"
-        >
-          {shimmerLayers.map((color, index) => (
-            <div
-              key={color}
-              className={`klub-shimmer-${uid} absolute inset-[-50%]`}
-              style={{
-                transform: `rotate(${
-                  isHovering && !prefersReducedMotion
-                    ? flarePosition + index * 22
-                    : index * 22
-                }deg)`,
-                transformOrigin: "center center",
-                transition:
-                  isHovering && !smoothFlareTransition
-                    ? "transform 200ms ease-out"
-                    : "none",
-                animation:
-                  isHovering && !prefersReducedMotion
-                    ? "none"
-                    : `klubShimmer${uid}${index} 7s ease-in-out infinite`,
-                animationDelay: `${index * 0.35}s`,
-                willChange: "transform",
-              }}
-            >
-              <div
-                className="h-full w-full opacity-45 blur-md"
-                style={{
-                  background: `linear-gradient(135deg, transparent 40%, ${color} 50%, transparent 60%)`,
-                }}
-              />
-            </div>
-          ))}
-        </div>
 
         <div className="relative z-[1]">
           <div className="flex items-start justify-between gap-3 border-b border-[#bbb]/70 pb-3.5">
@@ -249,6 +224,57 @@ export function KlubMembershipBadge({
             anvendelsesvilkår og kan ikke udbetales som kontanter.
           </p>
         </div>
+
+        <svg
+          aria-hidden
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox={`0 0 ${overlayViewBox.width} ${overlayViewBox.height}`}
+          preserveAspectRatio="none"
+          className="pointer-events-none absolute inset-0 z-[2] h-full w-full"
+        >
+          <defs>
+            <filter id={`${uid}-blur`}>
+              <feGaussianBlur in="SourceGraphic" stdDeviation="3" />
+            </filter>
+            <mask id={`${uid}-mask`}>
+              <rect
+                width={overlayViewBox.width}
+                height={overlayViewBox.height}
+                fill="white"
+                rx="18"
+              />
+            </mask>
+          </defs>
+          <g
+            style={{ mixBlendMode: "overlay" }}
+            mask={`url(#${uid}-mask)`}
+          >
+            {holographicLayers.map((layer, index) => (
+              <g
+                key={layer.offset}
+                className={`klub-overlay-${uid}`}
+                style={{
+                  transform: `rotate(${overlayPosition + layer.offset}deg)`,
+                  transformOrigin: "center center",
+                  transition: !disableInOutOverlayAnimation
+                    ? "transform 200ms ease-out"
+                    : "none",
+                  animation: overlayAnimating
+                    ? `klubOverlay${uid}${index + 1} 5s infinite`
+                    : "none",
+                  willChange: "transform",
+                }}
+              >
+                <polygon
+                  points={overlayPolygonPoints}
+                  fill={layer.fill}
+                  filter={`url(#${uid}-blur)`}
+                  opacity="0.5"
+                />
+              </g>
+            ))}
+          </g>
+        </svg>
       </div>
     </div>
   );
