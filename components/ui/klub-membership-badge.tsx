@@ -23,17 +23,21 @@ const klubAnnualLabel = KLUB_ANNUAL_KR.toLocaleString("da-DK");
 const overlayViewBox = { width: 430, height: 170 };
 const overlayPolygonPoints = `0,0 ${overlayViewBox.width},${overlayViewBox.height} ${overlayViewBox.width},0 0,${overlayViewBox.height}`;
 
+// Subtle silver shimmer (Product Hunt style): mostly white/silver/transparent
+// with only faint, low-saturation holographic hints. Per-layer opacity is kept
+// very low so that when scaled up across the large card the bands read as a
+// gentle sheen rather than saturated rainbow wedges.
 const holographicLayers = [
-  { fill: "hsl(358, 100%, 62%)", offset: 0 },
-  { fill: "hsl(30, 100%, 50%)", offset: 10 },
-  { fill: "hsl(60, 100%, 50%)", offset: 20 },
-  { fill: "hsl(96, 100%, 50%)", offset: 30 },
-  { fill: "hsl(233, 85%, 47%)", offset: 40 },
-  { fill: "hsl(271, 85%, 47%)", offset: 50 },
-  { fill: "hsl(300, 20%, 35%)", offset: 60 },
-  { fill: "transparent", offset: 70 },
-  { fill: "transparent", offset: 80 },
-  { fill: "white", offset: 90 },
+  { fill: "hsl(350, 45%, 72%)", offset: 0, opacity: 0.1 },
+  { fill: "white", offset: 12, opacity: 0.16 },
+  { fill: "hsl(45, 45%, 72%)", offset: 24, opacity: 0.1 },
+  { fill: "transparent", offset: 36, opacity: 0 },
+  { fill: "hsl(150, 35%, 70%)", offset: 48, opacity: 0.1 },
+  { fill: "white", offset: 60, opacity: 0.16 },
+  { fill: "hsl(210, 40%, 72%)", offset: 72, opacity: 0.1 },
+  { fill: "transparent", offset: 84, opacity: 0 },
+  { fill: "hsl(275, 35%, 72%)", offset: 96, opacity: 0.1 },
+  { fill: "white", offset: 108, opacity: 0.16 },
 ] as const;
 
 type KlubMembershipBadgeProps = {
@@ -234,7 +238,7 @@ export function KlubMembershipBadge({
         >
           <defs>
             <filter id={`${uid}-blur`}>
-              <feGaussianBlur in="SourceGraphic" stdDeviation="3" />
+              <feGaussianBlur in="SourceGraphic" stdDeviation="6" />
             </filter>
             <mask id={`${uid}-mask`}>
               <rect
@@ -246,7 +250,7 @@ export function KlubMembershipBadge({
             </mask>
           </defs>
           <g
-            style={{ mixBlendMode: "overlay" }}
+            style={{ mixBlendMode: "overlay", opacity: 0.55 }}
             mask={`url(#${uid}-mask)`}
           >
             {holographicLayers.map((layer, index) => (
@@ -269,7 +273,7 @@ export function KlubMembershipBadge({
                   points={overlayPolygonPoints}
                   fill={layer.fill}
                   filter={`url(#${uid}-blur)`}
-                  opacity="0.5"
+                  opacity={layer.opacity}
                 />
               </g>
             ))}
