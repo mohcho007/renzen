@@ -23,21 +23,24 @@ const klubAnnualLabel = KLUB_ANNUAL_KR.toLocaleString("da-DK");
 const overlayViewBox = { width: 430, height: 170 };
 const overlayPolygonPoints = `0,0 ${overlayViewBox.width},${overlayViewBox.height} ${overlayViewBox.width},0 0,${overlayViewBox.height}`;
 
-// Subtle silver shimmer (Product Hunt style): mostly white/silver/transparent
-// with only faint, low-saturation holographic hints. Per-layer opacity is kept
-// very low so that when scaled up across the large card the bands read as a
-// gentle sheen rather than saturated rainbow wedges.
+// Premium brushed-silver shimmer (Product Hunt "Golden Kitty" recipe).
+// The live PH badge renders saturated wedges at opacity 0.5 under an
+// `overlay` blend on a flat #ddd base; the overlay-over-light-gray
+// interaction mutes them into a metallic sheen. We keep that structure but
+// lean the color hues toward silver (lower saturation, higher lightness) and
+// weight the white highlight wedges more heavily so the large card reads as
+// brushed metal with only a faint holographic hint rather than a rainbow.
 const holographicLayers = [
-  { fill: "hsl(350, 45%, 72%)", offset: 0, opacity: 0.1 },
-  { fill: "white", offset: 12, opacity: 0.16 },
-  { fill: "hsl(45, 45%, 72%)", offset: 24, opacity: 0.1 },
+  { fill: "hsl(350, 55%, 70%)", offset: 0, opacity: 0.16 },
+  { fill: "white", offset: 12, opacity: 0.32 },
+  { fill: "hsl(45, 55%, 70%)", offset: 24, opacity: 0.16 },
   { fill: "transparent", offset: 36, opacity: 0 },
-  { fill: "hsl(150, 35%, 70%)", offset: 48, opacity: 0.1 },
-  { fill: "white", offset: 60, opacity: 0.16 },
-  { fill: "hsl(210, 40%, 72%)", offset: 72, opacity: 0.1 },
+  { fill: "hsl(150, 42%, 68%)", offset: 48, opacity: 0.14 },
+  { fill: "white", offset: 60, opacity: 0.32 },
+  { fill: "hsl(210, 52%, 70%)", offset: 72, opacity: 0.16 },
   { fill: "transparent", offset: 84, opacity: 0 },
-  { fill: "hsl(275, 35%, 72%)", offset: 96, opacity: 0.1 },
-  { fill: "white", offset: 108, opacity: 0.16 },
+  { fill: "hsl(275, 42%, 70%)", offset: 96, opacity: 0.14 },
+  { fill: "white", offset: 108, opacity: 0.32 },
 ] as const;
 
 type KlubMembershipBadgeProps = {
@@ -180,10 +183,29 @@ export function KlubMembershipBadge({
         }
       `}</style>
 
-      <div className="relative overflow-hidden rounded-[18px] bg-[#ddd] p-5 shadow-[0_24px_55px_rgba(32,70,52,0.2)] ring-1 ring-[#bbb]">
+      <div
+        className="relative overflow-hidden rounded-[18px] p-5 shadow-[0_24px_55px_rgba(32,70,52,0.2)] ring-1 ring-[#b6b6b2]"
+        style={{
+          // Brushed-silver base: vertical metal gradient (light → mid → light)
+          // so the card reads as polished metal instead of flat grey.
+          background:
+            "linear-gradient(165deg, #f6f6f3 0%, #e6e6e2 20%, #cfcfca 52%, #dededb 80%, #f1f1ee 100%)",
+        }}
+      >
         <div
           aria-hidden
           className="pointer-events-none absolute inset-[4px] rounded-[14px] border border-[#bbb]"
+        />
+        {/* Static diagonal sheen — the polished-metal highlight that gives the
+            card its premium feel even when motion is disabled. */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 z-0 rounded-[18px]"
+          style={{
+            background:
+              "linear-gradient(115deg, rgba(255,255,255,0) 30%, rgba(255,255,255,0.55) 43%, rgba(255,255,255,0.12) 50%, rgba(255,255,255,0.5) 57%, rgba(255,255,255,0) 70%)",
+            mixBlendMode: "soft-light",
+          }}
         />
 
         <div className="relative z-[1]">
@@ -250,7 +272,7 @@ export function KlubMembershipBadge({
             </mask>
           </defs>
           <g
-            style={{ mixBlendMode: "overlay", opacity: 0.55 }}
+            style={{ mixBlendMode: "overlay", opacity: 0.78 }}
             mask={`url(#${uid}-mask)`}
           >
             {holographicLayers.map((layer, index) => (
