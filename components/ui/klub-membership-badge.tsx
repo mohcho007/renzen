@@ -23,24 +23,22 @@ const klubAnnualLabel = KLUB_ANNUAL_KR.toLocaleString("da-DK");
 const overlayViewBox = { width: 430, height: 170 };
 const overlayPolygonPoints = `0,0 ${overlayViewBox.width},${overlayViewBox.height} ${overlayViewBox.width},0 0,${overlayViewBox.height}`;
 
-// Premium brushed-silver shimmer (Product Hunt "Golden Kitty" recipe).
-// The live PH badge renders saturated wedges at opacity 0.5 under an
-// `overlay` blend on a flat #ddd base; the overlay-over-light-gray
-// interaction mutes them into a metallic sheen. We keep that structure but
-// lean the color hues toward silver (lower saturation, higher lightness) and
-// weight the white highlight wedges more heavily so the large card reads as
-// brushed metal with only a faint holographic hint rather than a rainbow.
+// Faint brushed-silver shimmer. The wedges sit under an `overlay` blend on a
+// light-grey base; to keep the card reading as clean polished metal (not a
+// rainbow wash) we desaturate the colour hints almost to grey and keep their
+// opacity very low. The white highlight wedges stay modest so the surface gets
+// a subtle metallic sheen without washing out the text.
 const holographicLayers = [
-  { fill: "hsl(350, 55%, 70%)", offset: 0, opacity: 0.16 },
-  { fill: "white", offset: 12, opacity: 0.32 },
-  { fill: "hsl(45, 55%, 70%)", offset: 24, opacity: 0.16 },
+  { fill: "hsl(350, 18%, 74%)", offset: 0, opacity: 0.06 },
+  { fill: "white", offset: 12, opacity: 0.16 },
+  { fill: "hsl(45, 18%, 74%)", offset: 24, opacity: 0.06 },
   { fill: "transparent", offset: 36, opacity: 0 },
-  { fill: "hsl(150, 42%, 68%)", offset: 48, opacity: 0.14 },
-  { fill: "white", offset: 60, opacity: 0.32 },
-  { fill: "hsl(210, 52%, 70%)", offset: 72, opacity: 0.16 },
+  { fill: "hsl(150, 16%, 72%)", offset: 48, opacity: 0.05 },
+  { fill: "white", offset: 60, opacity: 0.16 },
+  { fill: "hsl(210, 18%, 74%)", offset: 72, opacity: 0.06 },
   { fill: "transparent", offset: 84, opacity: 0 },
-  { fill: "hsl(275, 42%, 70%)", offset: 96, opacity: 0.14 },
-  { fill: "white", offset: 108, opacity: 0.32 },
+  { fill: "hsl(275, 16%, 74%)", offset: 96, opacity: 0.05 },
+  { fill: "white", offset: 108, opacity: 0.16 },
 ] as const;
 
 type KlubMembershipBadgeProps = {
@@ -203,7 +201,7 @@ export function KlubMembershipBadge({
           className="pointer-events-none absolute inset-0 z-0 rounded-[18px]"
           style={{
             background:
-              "linear-gradient(115deg, rgba(255,255,255,0) 30%, rgba(255,255,255,0.55) 43%, rgba(255,255,255,0.12) 50%, rgba(255,255,255,0.5) 57%, rgba(255,255,255,0) 70%)",
+              "linear-gradient(115deg, rgba(255,255,255,0) 32%, rgba(255,255,255,0.28) 45%, rgba(255,255,255,0.06) 50%, rgba(255,255,255,0.24) 55%, rgba(255,255,255,0) 68%)",
             mixBlendMode: "soft-light",
           }}
         />
@@ -272,7 +270,7 @@ export function KlubMembershipBadge({
             </mask>
           </defs>
           <g
-            style={{ mixBlendMode: "overlay", opacity: 0.78 }}
+            style={{ mixBlendMode: "overlay", opacity: 0.3 }}
             mask={`url(#${uid}-mask)`}
           >
             {holographicLayers.map((layer, index) => (
